@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medical-Grade Compression Socks — Nurse/Caregiver Edition</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  .pdp{display:grid; grid-template-columns:1.1fr 1fr; gap:48px;}
+  @media (max-width:860px){ .pdp{grid-template-columns:1fr;} }
+
+  /* Gallery */
+  .gallery-main{width:100%; aspect-ratio:1/1; background:var(--panel); border-radius:12px; overflow:hidden; margin-bottom:12px; position:relative; cursor:zoom-in;}
+  .gallery-main img{width:100%; height:100%; object-fit:cover; display:block;}
+  .zoom-lens{position:absolute; inset:0; background-repeat:no-repeat; background-size:200%; opacity:0; pointer-events:none; transition:opacity .12s ease; z-index:2;}
+  .gallery-main:hover .zoom-lens{opacity:1;}
+  @media (hover:none){ .zoom-lens{display:none;} .gallery-main{cursor:default;} }
+  .gallery-thumbs{display:grid; grid-template-columns:repeat(4,1fr); gap:8px;}
+  .gallery-thumbs button{border:2px solid transparent; border-radius:8px; overflow:hidden; padding:0; cursor:pointer; background:var(--panel); aspect-ratio:1/1; transition:border-color .2s ease, transform .2s ease, box-shadow .2s ease;}
+  .gallery-thumbs button:hover{transform:translateY(-3px); box-shadow:0 6px 14px rgba(0,0,0,.08);}
+  .gallery-thumbs button.active{border-color:var(--accent);}
+  .gallery-thumbs img{width:100%; height:100%; object-fit:cover; display:block; transition:transform .4s ease;}
+  .gallery-thumbs button:hover img{transform:scale(1.06);}
+  #mainImg{transition:opacity .25s ease;}
+
+  /* Info */
+  .price{font-size:28px; font-weight:600; margin:8px 0 4px;}
+  .price .compare{font-size:16px; color:var(--muted); text-decoration:line-through; margin-left:8px; font-weight:400;}
+  h1{font-size:30px; font-weight:600; margin-bottom:6px;}
+  .subtitle{color:var(--muted); font-size:15px; margin-bottom:16px;}
+  .tagline{font-style:italic; color:var(--accent-dark); font-size:15px; margin-bottom:16px;}
+  .badges{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 20px;}
+  .badge{font-size:12px; padding:6px 12px; border-radius:999px; background:var(--panel); color:var(--fg); border:1px solid var(--line); transition:background .2s ease, transform .2s ease; cursor:default;}
+  .badge:hover{background:var(--accent); color:#fff; transform:translateY(-2px);}
+
+  .option-group{margin-bottom:20px;}
+  .option-group label{display:block; font-size:13px; font-weight:600; margin-bottom:8px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted);}
+  .swatches{display:flex; gap:10px;}
+  .swatch{width:32px; height:32px; border-radius:50%; border:2px solid var(--line); cursor:pointer; transition:transform .2s ease, box-shadow .2s ease;}
+  .swatch:hover{transform:scale(1.15);}
+  .swatch.active{border-color:var(--accent); box-shadow:0 0 0 2px var(--bg), 0 0 0 4px var(--accent);}
+  .sizes{display:flex; gap:8px;}
+  .size-btn{padding:8px 16px; border:1px solid var(--line); border-radius:8px; background:#fff; font-size:14px; cursor:pointer; transition:border-color .2s ease, background .2s ease, transform .15s ease;}
+  .size-btn:hover{border-color:var(--accent); transform:translateY(-2px);}
+  .size-btn.active{border-color:var(--accent); background:var(--panel); font-weight:600;}
+
+  .cta{display:flex; gap:12px; margin:24px 0;}
+  .cta .btn{flex:1; padding:16px; border-radius:10px; text-transform:none; letter-spacing:normal; font-size:15px; border:1px solid var(--fg);}
+  .cta .btn-primary{background:var(--fg); color:#fff;}
+  .cta .btn-primary:hover{background:var(--fg); transform:translateY(-2px); box-shadow:0 8px 18px rgba(0,0,0,.18);}
+  .cta .btn-secondary{background:transparent; color:var(--fg); border:1px solid var(--fg);}
+  .cta .btn-secondary:hover{background:var(--panel); border-color:var(--fg); color:var(--fg); transform:translateY(-2px); box-shadow:none;}
+
+  .description{font-size:15px; margin:24px 0; color:var(--fg);}
+  .features{margin:24px 0;}
+  .features h3{font-size:14px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:12px;}
+  .features ul{list-style:none;}
+  .features li{padding:10px 0; border-bottom:1px solid var(--line); font-size:14px; display:flex; justify-content:space-between; gap:16px;}
+  .features li span:first-child{color:var(--muted); flex-shrink:0; width:140px;}
+
+  /* Tabs / spec sections */
+  .section{margin-top:56px;}
+  .section h2{font-size:20px; font-weight:600; margin-bottom:16px; border-bottom:1px solid var(--line); padding-bottom:8px; position:relative;}
+  .section h2::after{content:''; position:absolute; left:0; bottom:-1px; width:48px; height:2px; background:var(--accent); transform:scaleX(0); transform-origin:left; transition:transform .5s ease;}
+  .section.in-view h2::after{transform:scaleX(1);}
+  .grid-2{display:grid; grid-template-columns:repeat(2,1fr); gap:24px;}
+  @media (max-width:860px){ .grid-2{grid-template-columns:1fr;} }
+  .spec-card{background:var(--panel); border-radius:10px; padding:20px; transition:transform .25s ease, box-shadow .25s ease;}
+  .spec-card:hover{transform:translateY(-4px); box-shadow:0 10px 24px rgba(0,0,0,.08);}
+  .spec-card h4{font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:10px;}
+  .spec-card ul{padding-left:18px; font-size:14px;}
+  .spec-card li{margin-bottom:6px;}
+
+  .promo{background:var(--panel); border-radius:12px; padding:28px; margin-top:24px; transition:box-shadow .3s ease;}
+  .promo:hover{box-shadow:0 10px 28px rgba(0,0,0,.06);}
+  .promo h3{font-size:15px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:8px;}
+  .promo p{font-size:15px; margin-bottom:8px;}
+  .hashtags{color:var(--accent); font-size:14px;}
+
+  .bundle-note{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:16px; margin-top:20px; font-size:13px; color:var(--muted);}
+  .bundle-note a{color:var(--accent-dark); font-weight:600; text-decoration:none;}
+  .bundle-note a:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a href="index.html" class="logo-link"><img src="mend-logo.svg" alt="MEND Medical Apparel"></a>
+    <nav>
+      <a href="index.html#about">About</a>
+      <a href="index.html#products">Products</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </header>
+
+  <div class="pdp">
+    <!-- Gallery -->
+    <div>
+      <div class="gallery-main" id="galleryMain">
+        <img id="mainImg" src="Concept - Compression Socks - Ceil Blue - 2026-06-15-web.jpg" alt="Medical-Grade Compression Socks, Ceil Blue">
+        <div class="zoom-lens" id="zoomLens"></div>
+      </div>
+      <div class="gallery-thumbs">
+        <button class="active" data-color="Ceil Blue" onclick="setMain(this)"><img src="Concept - Compression Socks - Ceil Blue - 2026-06-15-web.jpg" alt="Ceil Blue compression socks"></button>
+        <button data-color="Navy" onclick="setMain(this)"><img src="Concept - Compression Socks - Navy - 2026-06-15-web.jpg" alt="Navy compression socks"></button>
+      </div>
+    </div>
+
+    <!-- Info -->
+    <div>
+      <h1>Medical-Grade Compression Socks — Nurse/Caregiver Edition</h1>
+      <div class="subtitle">20–30 mmHg Graduated Compression · Moisture-Wicking · Anti-Odor · Reinforced Heel &amp; Toe</div>
+      <div class="tagline">Built for the shift that never ends.</div>
+
+      <div class="price">$28.00 <span class="compare">$36.00</span></div>
+
+      <div class="badges">
+        <span class="badge" data-tooltip="Clinically supported 20-30 mmHg pressure that's firm at the ankle and eases upward — reduces leg fatigue and swelling over long shifts.">Medical-Grade Compression</span>
+        <span class="badge" data-tooltip="Pulls sweat away from skin to keep feet dry through double shifts and patient transfers.">Moisture-Wicking</span>
+        <span class="badge" data-tooltip="High-wear zones are double-reinforced so they hold up wash after wash, shift after shift.">Reinforced Heel &amp; Toe</span>
+        <span class="badge" data-tooltip="Odor-neutralizing fibers keep them fresh from morning huddle to end of shift.">Anti-Odor</span>
+        <span class="badge" data-tooltip="Hot-wash durable — built for daily wear and easy care.">Machine Washable</span>
+      </div>
+
+      <div class="option-group">
+        <label>Color</label>
+        <div class="swatches">
+          <div class="swatch active" style="background:#7EC8E3" data-color="Ceil Blue" title="Ceil Blue" data-tooltip="Ceil Blue — the classic medical-uniform tone, coordinates with most scrub colors." onclick="setColor(this)"></div>
+          <div class="swatch" style="background:#1F3A5F" data-color="Navy" title="Navy" data-tooltip="Navy — a deeper, more versatile tone that hides wear between washes." onclick="setColor(this)"></div>
+        </div>
+      </div>
+
+      <div class="option-group">
+        <label>Size</label>
+        <div class="sizes">
+          <div class="size-btn" data-tooltip="S/M — best for shoe size 5–9.">S/M</div>
+          <div class="size-btn active" data-tooltip="M/L — best for shoe size 8–11.">M/L</div>
+          <div class="size-btn" data-tooltip="L/XL — best for shoe size 10–13.">L/XL</div>
+        </div>
+      </div>
+
+      <div class="cta">
+        <div class="btn btn-primary">Add to Cart</div>
+        <div class="btn btn-secondary">Save for Later</div>
+      </div>
+
+      <div class="bundle-note">
+        Most nurses also grab the <a href="Product Detail - Residential Nurse Scrub Set.html">Comfort Scrubs — Residential Nurse Set</a> — bundle the two and save 12% on your Shift Kit.
+      </div>
+
+      <div class="description">
+        Built for the people who don't get to sit down. Medical-Grade Compression Socks deliver 20–30 mmHg graduated compression — firm at the ankle, easing upward — to keep blood flowing and legs feeling fresh through the longest shifts. Moisture-wicking fabric and built-in anti-odor fibers keep feet dry and comfortable, while reinforced heel and toe construction means they hold up to daily wear and hot-water washing, shift after shift.
+      </div>
+
+      <div class="features">
+        <h3>Specifications</h3>
+        <ul>
+          <li><span>Compression</span><span>20–30 mmHg, graduated</span></li>
+          <li><span>Fabric</span><span>Moisture-wicking knit with anti-odor fibers</span></li>
+          <li><span>Construction</span><span>Reinforced heel &amp; toe, ribbed compression zones</span></li>
+          <li><span>Sizing</span><span>S/M, M/L, L/XL</span></li>
+          <li><span>Colors</span><span>Ceil Blue, Navy</span></li>
+          <li><span>Care</span><span>Machine washable, hot-wash durable</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Spec deep-dive -->
+  <div class="section">
+    <h2>Why It's Different</h2>
+    <div class="grid-2">
+      <div class="spec-card">
+        <h4>Drugstore Socks</h4>
+        <ul>
+          <li>Flat, non-graduated compression — fades by midday</li>
+          <li>Generic fabric, holds moisture and odor</li>
+          <li>Heel and toe wear thin within weeks</li>
+          <li>One bland color, no brand fit with your scrubs</li>
+        </ul>
+      </div>
+      <div class="spec-card">
+        <h4>Comfort Socks</h4>
+        <ul>
+          <li>True 20–30 mmHg graduated compression, all shift long</li>
+          <li>Moisture-wicking, anti-odor knit stays fresh</li>
+          <li>Reinforced heel &amp; toe built for daily hot-washing</li>
+          <li>Ceil Blue and Navy — coordinates with Comfort Scrubs</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Promo / SEO -->
+  <div class="section">
+    <h2>Listing &amp; Promo Copy</h2>
+    <div class="promo">
+      <h3>SEO Title</h3>
+      <p>Medical-Grade Compression Socks for Nurses | 20-30 mmHg Graduated Compression</p>
+      <h3>Description</h3>
+      <p>20-30 mmHg graduated compression socks built for nurses, CNAs, and home health aides on their feet all day. Moisture-wicking, anti-odor, reinforced heel and toe — pairs with the Comfort Scrubs Residential Nurse Set for a complete shift kit.</p>
+      <h3>Tags</h3>
+      <p>compression socks for nurses, 20-30 mmHg compression socks, nurse caregiver socks, moisture wicking compression socks, anti-odor nurse socks, shift kit, comfort scrubs bundle</p>
+      <h3>Promo Blurb</h3>
+      <p>Built for the shift that never ends. Medical-grade 20–30 mmHg compression, moisture-wicking, anti-odor — pair with Comfort Scrubs and save 12% on your Shift Kit. <span class="hashtags">#ComfortScrubs #CompressionSocks #NurseLife #ShiftKit #MENDMedical</span></p>
+    </div>
+  </div>
+
+  <footer>
+    <p>Medical-Grade Compression Socks — Concept product detail page generated for internal review. Comfort Scrubs bundle line. Not yet listed for sale.</p>
+    <p>&copy; 2026 MEND Medical Apparel. All rights reserved.</p>
+  </footer>
+</div>
+
+<script src="main.js"></script>
+<script>
+function imgFilename(color){
+  return 'Concept - Compression Socks - ' + color + ' - 2026-06-15-web.jpg';
+}
+
+(function(){
+  var main = document.getElementById('galleryMain');
+  var lens = document.getElementById('zoomLens');
+  var img = document.getElementById('mainImg');
+  main.addEventListener('mousemove', function(e){
+    var rect = main.getBoundingClientRect();
+    var x = ((e.clientX - rect.left) / rect.width) * 100;
+    var y = ((e.clientY - rect.top) / rect.height) * 100;
+    lens.style.backgroundImage = "url('" + img.src + "')";
+    lens.style.backgroundPosition = x + '% ' + y + '%';
+  });
+})();
+
+function swapMainImg(src){
+  var img = document.getElementById('mainImg');
+  img.style.opacity = 0;
+  setTimeout(function(){
+    img.src = src;
+    img.style.opacity = 1;
+  }, 150);
+}
+
+function setMain(btn){
+  document.querySelectorAll('.gallery-thumbs button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  var color = btn.getAttribute('data-color');
+  swapMainImg(imgFilename(color));
+  document.querySelectorAll('.swatches .swatch').forEach(function(s){
+    s.classList.toggle('active', s.getAttribute('data-color') === color);
+  });
+}
+
+function setColor(swatch){
+  document.querySelectorAll('.swatches .swatch').forEach(function(s){ s.classList.remove('active'); });
+  swatch.classList.add('active');
+  var color = swatch.getAttribute('data-color');
+  swapMainImg(imgFilename(color));
+  document.querySelectorAll('.gallery-thumbs button').forEach(function(b){
+    b.classList.toggle('active', b.getAttribute('data-color') === color);
+  });
+}
+</script>
+</body>
+</html>
