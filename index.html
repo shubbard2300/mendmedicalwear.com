@@ -40,8 +40,22 @@
   h1{font-size:30px; font-weight:600; margin-bottom:6px;}
   .subtitle{color:var(--muted); font-size:15px; margin-bottom:16px;}
   .badges{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 20px;}
-  .badge{font-size:12px; padding:6px 12px; border-radius:999px; background:var(--panel); color:var(--fg); border:1px solid var(--line); transition:background .2s ease, transform .2s ease;}
+  .badge{position:relative; font-size:12px; padding:6px 12px; border-radius:999px; background:var(--panel); color:var(--fg); border:1px solid var(--line); transition:background .2s ease, transform .2s ease; cursor:default;}
   .badge:hover{background:var(--accent); color:#fff; transform:translateY(-2px);}
+  .badge[data-tooltip]::after{
+    content:attr(data-tooltip);
+    position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%) translateY(4px);
+    width:200px; padding:8px 10px; border-radius:8px;
+    background:var(--fg); color:var(--bg); font-size:12px; font-weight:400; line-height:1.4; text-align:center;
+    opacity:0; pointer-events:none; transition:opacity .2s ease, transform .2s ease; z-index:20;
+  }
+  .badge[data-tooltip]::before{
+    content:''; position:absolute; bottom:calc(100% + 2px); left:50%; transform:translateX(-50%);
+    border:6px solid transparent; border-top-color:var(--fg);
+    opacity:0; pointer-events:none; transition:opacity .2s ease; z-index:20;
+  }
+  .badge[data-tooltip]:hover::after, .badge[data-tooltip]:hover::before{ opacity:1; transform:translateX(-50%) translateY(0); }
+  .badge[data-tooltip]:hover::before{ transform:translateX(-50%); }
 
   .option-group{margin-bottom:20px;}
   .option-group label{display:block; font-size:13px; font-weight:600; margin-bottom:8px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted);}
@@ -139,11 +153,11 @@
       <div class="price">$68.00 <span class="compare">$92.00</span></div>
 
       <div class="badges">
-        <span class="badge">Machine Washable</span>
-        <span class="badge">Cotton / Merino Wool Blend</span>
-        <span class="badge">Hooded</span>
-        <span class="badge">Full Zip Closure</span>
-        <span class="badge">No Exposure, No Ties</span>
+        <span class="badge" data-tooltip="Toss it in with a regular load — holds up to repeated washing without losing softness or shape, no special hospital laundering needed.">Machine Washable</span>
+        <span class="badge" data-tooltip="A soft, breathable cotton and merino wool knit that feels like real clothing — warm, temperature-regulating, and gentle on sensitive skin.">Cotton / Merino Wool Blend</span>
+        <span class="badge" data-tooltip="Attached hood adds extra warmth and coverage for trips to and from appointments, or just staying cozy in bed.">Hooded</span>
+        <span class="badge" data-tooltip="A single smooth zipper from collar to hem replaces fumbling with snaps, ties, or buttons — easy to get in and out of, even with limited mobility.">Full Zip Closure</span>
+        <span class="badge" data-tooltip="No gaping back, no awkward tie-ups to manage — designed to stay closed and keep you covered, simple and discreet.">No Exposure, No Ties</span>
       </div>
 
       <div class="option-group">
