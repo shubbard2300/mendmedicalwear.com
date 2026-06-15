@@ -35,6 +35,9 @@
   .products{padding:72px 0; border-top:1px solid var(--line); text-align:center;}
   .products h2{font-size:30px; font-weight:600; margin-bottom:8px;}
   .products .sub{color:var(--muted); font-size:15px; margin-bottom:40px;}
+  .products-feature{margin-bottom:48px; border-radius:16px; overflow:hidden; max-width:640px; margin-left:auto; margin-right:auto; box-shadow:0 24px 60px rgba(0,0,0,.08);}
+  .products-feature img{width:100%; display:block; transition:transform .6s ease;}
+  .products-feature:hover img{transform:scale(1.03);}
   .product-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:24px;}
   .product-card{background:var(--panel); border-radius:14px; overflow:hidden; text-align:left; text-decoration:none; color:var(--fg); transition:transform .3s ease, box-shadow .3s ease; display:block;}
   .product-card:hover{transform:translateY(-6px); box-shadow:0 16px 36px rgba(0,0,0,.1);}
@@ -114,7 +117,10 @@
   <!-- Products -->
   <div class="section products" id="products">
     <h2>Products</h2>
-    <p class="sub">Comfort Wrap — available in five colors and patterns.</p>
+    <p class="sub">Comfort Wrap — available in five colors and patterns. Plus Comfort Scrubs for caregivers.</p>
+    <div class="products-feature">
+      <img src="Concept - Hospital Gown - Couple - 2026-06-15-web.jpg" alt="A woman and a man together, both wearing MEND Comfort Wrap recovery gowns">
+    </div>
     <div class="product-grid">
       <a class="product-card" href="Product Detail - Stylish Washable Hospital Gown.html">
         <div class="img-box">
@@ -163,6 +169,16 @@
         <div class="info">
           <div class="name">Comfort Wrap — Classic Print</div>
           <div class="price">Stylish Washable Hospital Gown</div>
+          <span class="status">View Product</span>
+        </div>
+      </a>
+      <a class="product-card" href="Product Detail - Residential Nurse Scrub Set.html">
+        <div class="img-box">
+          <img src="Concept - Nurse Scrubs - Female Front - 2026-06-15-web.jpg" alt="Comfort Scrubs - Residential Nurse Set">
+        </div>
+        <div class="info">
+          <div class="name">Comfort Scrubs — Residential Nurse Set</div>
+          <div class="price">For the caregivers, too</div>
           <span class="status">View Product</span>
         </div>
       </a>
