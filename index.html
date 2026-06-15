@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Comfort Wrap — Stylish Washable Hospital Gown</title>
+<title>MEND Medical Apparel — Comfort, Redesigned</title>
 <style>
   :root{
     --bg:#FAFAF8; --fg:#2B2B28; --muted:#8A857C; --line:#E3DFD6;
@@ -13,321 +13,193 @@
   html{scroll-behavior:smooth;}
   body{font-family:Helvetica, Arial, sans-serif; background:var(--bg); color:var(--fg); line-height:1.5;}
   .wrap{max-width:1100px; margin:0 auto; padding:32px 24px 80px;}
-  header{display:flex; justify-content:center; align-items:center; border-bottom:1px solid var(--line); padding-bottom:16px; margin-bottom:32px;}
-  header .brand{font-size:14px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted);}
-  header img{transition:transform .3s ease;}
+
+  header{display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--line); padding-bottom:16px; margin-bottom:0; position:sticky; top:0; background:var(--bg); z-index:50;}
+  header img{height:48px; transition:transform .3s ease;}
   header img:hover{transform:scale(1.04);}
-  .pdp{display:grid; grid-template-columns:1.1fr 1fr; gap:48px;}
-  @media (max-width:860px){ .pdp{grid-template-columns:1fr;} }
+  nav{display:flex; gap:28px;}
+  nav a{color:var(--fg); text-decoration:none; font-size:14px; letter-spacing:.06em; text-transform:uppercase; transition:color .2s ease;}
+  nav a:hover{color:var(--accent);}
 
-  /* Gallery */
-  .gallery-main{width:100%; aspect-ratio:2/3; background:var(--panel); border-radius:12px; overflow:hidden; margin-bottom:12px; position:relative; cursor:zoom-in;}
-  .gallery-main img{width:100%; height:100%; object-fit:cover; display:block;}
-  .zoom-lens{position:absolute; inset:0; background-repeat:no-repeat; background-size:200%; opacity:0; pointer-events:none; transition:opacity .12s ease; z-index:2;}
-  .gallery-main:hover .zoom-lens{opacity:1;}
-  @media (hover:none){ .zoom-lens{display:none;} .gallery-main{cursor:default;} }
-  .gallery-thumbs{display:grid; grid-template-columns:repeat(5,1fr); gap:8px;}
-  .gallery-thumbs button{border:2px solid transparent; border-radius:8px; overflow:hidden; padding:0; cursor:pointer; background:var(--panel); aspect-ratio:2/3; transition:border-color .2s ease, transform .2s ease, box-shadow .2s ease;}
-  .gallery-thumbs button:hover{transform:translateY(-3px); box-shadow:0 6px 14px rgba(0,0,0,.08);}
-  .gallery-thumbs button.active{border-color:var(--accent);}
-  .gallery-thumbs img{width:100%; height:100%; object-fit:cover; display:block; transition:transform .4s ease;}
-  .gallery-thumbs button:hover img{transform:scale(1.06);}
-  #mainImg{transition:opacity .25s ease;}
-
-  /* Info */
-  .price{font-size:28px; font-weight:600; margin:8px 0 4px;}
-  .price .compare{font-size:16px; color:var(--muted); text-decoration:line-through; margin-left:8px; font-weight:400;}
-  h1{font-size:30px; font-weight:600; margin-bottom:6px;}
-  .subtitle{color:var(--muted); font-size:15px; margin-bottom:16px;}
-  .badges{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 20px;}
-  .badge{position:relative; font-size:12px; padding:6px 12px; border-radius:999px; background:var(--panel); color:var(--fg); border:1px solid var(--line); transition:background .2s ease, transform .2s ease; cursor:default;}
-  .badge:hover{background:var(--accent); color:#fff; transform:translateY(-2px);}
-  .badge[data-tooltip]::after{
-    content:attr(data-tooltip);
-    position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%) translateY(4px);
-    width:200px; padding:8px 10px; border-radius:8px;
-    background:var(--fg); color:var(--bg); font-size:12px; font-weight:400; line-height:1.4; text-align:center;
-    opacity:0; pointer-events:none; transition:opacity .2s ease, transform .2s ease; z-index:20;
-  }
-  .badge[data-tooltip]::before{
-    content:''; position:absolute; bottom:calc(100% + 2px); left:50%; transform:translateX(-50%);
-    border:6px solid transparent; border-top-color:var(--fg);
-    opacity:0; pointer-events:none; transition:opacity .2s ease; z-index:20;
-  }
-  .badge[data-tooltip]:hover::after, .badge[data-tooltip]:hover::before{ opacity:1; transform:translateX(-50%) translateY(0); }
-  .badge[data-tooltip]:hover::before{ transform:translateX(-50%); }
-
-  .option-group{margin-bottom:20px;}
-  .option-group label{display:block; font-size:13px; font-weight:600; margin-bottom:8px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted);}
-  .swatches{display:flex; gap:10px;}
-  .swatch{width:32px; height:32px; border-radius:50%; border:2px solid var(--line); cursor:pointer; transition:transform .2s ease, box-shadow .2s ease;}
-  .swatch:hover{transform:scale(1.15);}
-  .swatch.active{border-color:var(--accent); box-shadow:0 0 0 2px var(--bg), 0 0 0 4px var(--accent);}
-  .swatch-pattern{
-    background-color:#EAF1F5;
-    background-image:
-      radial-gradient(circle at 25% 25%, #6F93B3 2px, transparent 3px),
-      radial-gradient(circle at 75% 75%, #6F93B3 2px, transparent 3px);
-    background-size:10px 10px;
-  }
-  .sizes{display:flex; gap:8px;}
-  .size-btn{padding:8px 16px; border:1px solid var(--line); border-radius:8px; background:#fff; font-size:14px; cursor:pointer; transition:border-color .2s ease, background .2s ease, transform .15s ease;}
-  .size-btn:hover{border-color:var(--accent); transform:translateY(-2px);}
-  .size-btn.active{border-color:var(--accent); background:var(--panel); font-weight:600;}
-
-  .cta{display:flex; gap:12px; margin:24px 0;}
-  .btn{flex:1; padding:16px; border-radius:10px; font-size:15px; font-weight:600; border:1px solid var(--fg); cursor:pointer; text-align:center; transition:transform .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease;}
-  .btn-primary{background:var(--fg); color:#fff;}
-  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 8px 18px rgba(0,0,0,.18);}
-  .btn-secondary{background:transparent; color:var(--fg);}
-  .btn-secondary:hover{background:var(--panel); transform:translateY(-2px);}
-
-  .description{font-size:15px; margin:24px 0; color:var(--fg);}
-  .features{margin:24px 0;}
-  .features h3{font-size:14px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:12px;}
-  .features ul{list-style:none;}
-  .features li{padding:10px 0; border-bottom:1px solid var(--line); font-size:14px; display:flex; justify-content:space-between; gap:16px;}
-  .features li span:first-child{color:var(--muted); flex-shrink:0; width:140px;}
-
-  /* Tabs / spec sections */
-  .section{margin-top:56px; opacity:0; transform:translateY(24px); transition:opacity .6s ease, transform .6s ease;}
+  /* Sections fade-in */
+  .section{opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease;}
   .section.in-view{opacity:1; transform:translateY(0);}
-  .section h2{font-size:20px; font-weight:600; margin-bottom:16px; border-bottom:1px solid var(--line); padding-bottom:8px; position:relative;}
-  .section h2::after{content:''; position:absolute; left:0; bottom:-1px; width:48px; height:2px; background:var(--accent); transform:scaleX(0); transform-origin:left; transition:transform .5s ease;}
-  .section.in-view h2::after{transform:scaleX(1);}
-  .grid-2{display:grid; grid-template-columns:repeat(2,1fr); gap:24px;}
-  @media (max-width:860px){ .grid-2{grid-template-columns:1fr;} }
-  .spec-card{background:var(--panel); border-radius:10px; padding:20px; transition:transform .25s ease, box-shadow .25s ease;}
-  .spec-card:hover{transform:translateY(-4px); box-shadow:0 10px 24px rgba(0,0,0,.08);}
-  .spec-card h4{font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:10px;}
-  .spec-card ul{padding-left:18px; font-size:14px;}
-  .spec-card li{margin-bottom:6px;}
 
-  .views-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:16px;}
-  @media (max-width:760px){ .views-grid{grid-template-columns:repeat(2,1fr);} }
-  .view-card{text-align:center; cursor:pointer;}
-  .view-card .img-box{aspect-ratio:2/3; background:var(--panel); border-radius:10px; overflow:hidden; margin-bottom:8px; transition:transform .3s ease, box-shadow .3s ease;}
-  .view-card .img-box:hover{transform:translateY(-4px); box-shadow:0 10px 24px rgba(0,0,0,.1);}
-  .view-card img{width:100%; height:100%; object-fit:cover; transition:transform .4s ease, opacity .15s ease;}
-  .view-card .img-box:hover img{transform:scale(1.05);}
-  .view-card span{font-size:13px; color:var(--muted);}
+  /* Hero */
+  .hero{text-align:center; padding:96px 0 72px;}
+  .hero .eyebrow{color:var(--accent); font-size:13px; letter-spacing:.16em; text-transform:uppercase; margin-bottom:16px; font-weight:600;}
+  .hero h1{font-size:48px; font-weight:600; line-height:1.15; margin-bottom:18px; letter-spacing:-.01em;}
+  .hero p{font-size:18px; color:var(--muted); max-width:560px; margin:0 auto 32px;}
+  .cta-row{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
+  .btn{display:inline-block; padding:14px 30px; border-radius:999px; font-size:14px; font-weight:600; letter-spacing:.04em; text-transform:uppercase; text-decoration:none; transition:transform .2s ease, box-shadow .2s ease, background .2s ease;}
+  .btn-primary{background:var(--accent); color:#fff;}
+  .btn-primary:hover{transform:translateY(-3px); box-shadow:0 10px 24px rgba(124,139,122,.35);}
+  .btn-secondary{background:transparent; color:var(--fg); border:1px solid var(--line);}
+  .btn-secondary:hover{transform:translateY(-3px); border-color:var(--accent); color:var(--accent);}
 
-  .promo{background:var(--panel); border-radius:12px; padding:28px; margin-top:24px; transition:box-shadow .3s ease;}
-  .promo:hover{box-shadow:0 10px 28px rgba(0,0,0,.06);}
-  .promo h3{font-size:15px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:8px;}
-  .promo p{font-size:15px; margin-bottom:8px;}
-  .hashtags{color:var(--accent); font-size:14px;}
+  .hero-img{margin:56px auto 0; max-width:340px; border-radius:16px; overflow:hidden; box-shadow:0 24px 60px rgba(0,0,0,.08);}
+  .hero-img img{width:100%; display:block; transition:transform .6s ease;}
+  .hero-img:hover img{transform:scale(1.04);}
 
-  footer{margin-top:64px; padding-top:24px; border-top:1px solid var(--line); color:var(--muted); font-size:12px; text-align:center;}
-  footer p{margin-bottom:6px;}
-  footer p:last-child{margin-bottom:0;}
+  /* About */
+  .about{padding:72px 0; border-top:1px solid var(--line);}
+  .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center;}
+  @media (max-width:860px){ .about-grid{grid-template-columns:1fr;} }
+  .about-grid img{width:100%; border-radius:14px; aspect-ratio:4/3; object-fit:cover; transition:transform .4s ease, box-shadow .4s ease;}
+  .about-grid img:hover{transform:translateY(-4px); box-shadow:0 16px 36px rgba(0,0,0,.1);}
+  .about h2{font-size:30px; font-weight:600; margin-bottom:16px;}
+  .about p{color:var(--muted); margin-bottom:14px; font-size:15px;}
+  .about ul{list-style:none; margin-top:20px;}
+  .about li{padding:10px 0; border-bottom:1px solid var(--line); font-size:14px; display:flex; gap:10px; align-items:flex-start;}
+  .about li::before{content:'✓'; color:var(--accent); font-weight:700; flex-shrink:0;}
+
+  /* Products */
+  .products{padding:72px 0; border-top:1px solid var(--line); text-align:center;}
+  .products h2{font-size:30px; font-weight:600; margin-bottom:8px;}
+  .products .sub{color:var(--muted); font-size:15px; margin-bottom:40px;}
+  .product-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:24px;}
+  .product-card{background:var(--panel); border-radius:14px; overflow:hidden; text-align:left; text-decoration:none; color:var(--fg); transition:transform .3s ease, box-shadow .3s ease; display:block;}
+  .product-card:hover{transform:translateY(-6px); box-shadow:0 16px 36px rgba(0,0,0,.1);}
+  .product-card .img-box{aspect-ratio:2/3; overflow:hidden;}
+  .product-card .img-box img{width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s ease;}
+  .product-card:hover .img-box img{transform:scale(1.06);}
+  .product-card .info{padding:16px;}
+  .product-card .info .name{font-weight:600; font-size:15px; margin-bottom:4px;}
+  .product-card .info .price{color:var(--accent); font-weight:600; font-size:14px;}
+  .product-card .info .status{display:inline-block; margin-top:8px; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); background:var(--bg); border:1px solid var(--line); padding:4px 10px; border-radius:999px;}
+  .product-card.soon{opacity:.6; cursor:default; pointer-events:none;}
+
+  /* Contact */
+  .contact{padding:72px 0; border-top:1px solid var(--line);}
+  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:48px;}
+  @media (max-width:860px){ .contact-grid{grid-template-columns:1fr;} }
+  .contact h2{font-size:30px; font-weight:600; margin-bottom:12px;}
+  .contact p{color:var(--muted); font-size:15px; margin-bottom:8px;}
+  .contact .detail{font-size:14px; margin-top:24px;}
+  .contact .detail strong{display:block; color:var(--fg); margin-bottom:4px;}
+  form{display:flex; flex-direction:column; gap:14px;}
+  label{font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:6px; display:block;}
+  input, textarea{width:100%; padding:12px 14px; border-radius:8px; border:1px solid var(--line); background:var(--panel); color:var(--fg); font-family:inherit; font-size:14px; transition:border-color .2s ease, box-shadow .2s ease;}
+  input:focus, textarea:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(124,139,122,.15);}
+  textarea{resize:vertical; min-height:120px;}
+  .form-msg{font-size:13px; color:var(--accent); display:none; margin-top:8px;}
+  .form-msg.show{display:block;}
+
+  footer{border-top:1px solid var(--line); margin-top:32px; padding-top:24px; text-align:center; color:var(--muted); font-size:12px; line-height:1.8;}
 </style>
 </head>
 <body>
 <div class="wrap">
+
   <header>
-    <img src="mend-logo.svg" alt="MEND Medical Apparel" style="height:64px;">
+    <img src="mend-logo.svg" alt="MEND Medical Apparel">
+    <nav>
+      <a href="#about">About</a>
+      <a href="#products">Products</a>
+      <a href="#contact">Contact</a>
+    </nav>
   </header>
 
-  <div class="pdp">
-    <!-- Gallery -->
-    <div>
-      <div class="gallery-main" id="galleryMain">
-        <img id="mainImg" src="Concept - Hospital Gown - Female Front - 2026-06-15-web.jpg" alt="Comfort Wrap gown, female model, front view">
-        <div class="zoom-lens" id="zoomLens"></div>
-      </div>
-      <div class="gallery-thumbs">
-        <button class="active" data-gender="female" data-view="front" onclick="setMain(this,'Concept - Hospital Gown - Female Front - 2026-06-15-web.jpg')"><img src="Concept - Hospital Gown - Female Front - 2026-06-15-web.jpg" alt="Female front"></button>
-        <button data-gender="female" data-view="back" onclick="setMain(this,'Concept - Hospital Gown - Female Back - 2026-06-15-web.jpg')"><img src="Concept - Hospital Gown - Female Back - 2026-06-15-web.jpg" alt="Female back"></button>
-        <button data-gender="male" data-view="front" onclick="setMain(this,'Concept - Hospital Gown - Male Front - 2026-06-15-web.jpg')"><img src="Concept - Hospital Gown - Male Front - 2026-06-15-web.jpg" alt="Male front"></button>
-        <button data-gender="male" data-view="back" onclick="setMain(this,'Concept - Hospital Gown - Male Back - 2026-06-15-web.jpg')"><img src="Concept - Hospital Gown - Male Back - 2026-06-15-web.jpg" alt="Male back"></button>
-        <button data-gender="" data-view="" onclick="setMain(this,'Concept - Hospital Gown - 2026-06-15-web.jpg')"><img src="Concept - Hospital Gown - 2026-06-15-web.jpg" alt="Original concept"></button>
-      </div>
+  <!-- Hero -->
+  <div class="section hero">
+    <div class="eyebrow">MEND Medical Apparel</div>
+    <h1>Recovery wear that feels<br>like home, not a hospital.</h1>
+    <p>Soft, washable, thoughtfully designed garments that replace the standard hospital gown — built for dignity, comfort, and ease for patients and caregivers alike.</p>
+    <div class="cta-row">
+      <a href="#products" class="btn btn-primary">Shop Comfort Wrap</a>
+      <a href="#about" class="btn btn-secondary">Our Story</a>
     </div>
+    <div class="hero-img">
+      <img src="Concept - Hospital Gown - 2026-06-15-web.jpg" alt="Comfort Wrap hospital gown">
+    </div>
+  </div>
 
-    <!-- Info -->
-    <div>
-      <h1>Comfort Wrap — The Stylish Washable Hospital Gown</h1>
-      <div class="subtitle">A premium, form-fitting recovery gown that replaces the traditional open-back tie gown — soft cotton/merino wool blend, hooded, full zip closure.</div>
-
-      <div class="price">$68.00 <span class="compare">$92.00</span></div>
-
-      <div class="badges">
-        <span class="badge" data-tooltip="Toss it in with a regular load — holds up to repeated washing without losing softness or shape, no special hospital laundering needed.">Machine Washable</span>
-        <span class="badge" data-tooltip="A soft, breathable cotton and merino wool knit that feels like real clothing — warm, temperature-regulating, and gentle on sensitive skin.">Cotton / Merino Wool Blend</span>
-        <span class="badge" data-tooltip="Attached hood adds extra warmth and coverage for trips to and from appointments, or just staying cozy in bed.">Hooded</span>
-        <span class="badge" data-tooltip="A single smooth zipper from collar to hem replaces fumbling with snaps, ties, or buttons — easy to get in and out of, even with limited mobility.">Full Zip Closure</span>
-        <span class="badge" data-tooltip="No gaping back, no awkward tie-ups to manage — designed to stay closed and keep you covered, simple and discreet.">No Exposure, No Ties</span>
-      </div>
-
-      <div class="option-group">
-        <label>Color</label>
-        <div class="swatches">
-          <div class="swatch active" style="background:#C9C5BC" data-color="" title="Heather Grey" onclick="setColor(this)"></div>
-          <div class="swatch" style="background:#C7D0C4" data-color="Sage" title="Soft Sage" onclick="setColor(this)"></div>
-          <div class="swatch" style="background:#C6CDD4" data-color="Blue" title="Dusty Blue" onclick="setColor(this)"></div>
-          <div class="swatch" style="background:#E3D9C8" data-color="Oatmeal" title="Oatmeal" onclick="setColor(this)"></div>
-          <div class="swatch swatch-pattern" data-color="Print" title="Classic Print (Retro Hospital Pattern)" onclick="setColor(this)"></div>
-        </div>
-      </div>
-
-      <div class="option-group">
-        <label>Closure Style</label>
-        <div class="sizes" id="closureGroup">
-          <div class="size-btn active" onclick="setClosure(this,'front')">Front Zip</div>
-          <div class="size-btn" onclick="setClosure(this,'back')">Back Zip</div>
-        </div>
-      </div>
-
-      <div class="option-group">
-        <label>Size</label>
-        <div class="sizes">
-          <div class="size-btn">S</div>
-          <div class="size-btn active">M</div>
-          <div class="size-btn">L</div>
-          <div class="size-btn">XL</div>
-        </div>
-      </div>
-
-      <div class="cta">
-        <div class="btn btn-primary">Add to Cart</div>
-        <div class="btn btn-secondary">Save for Later</div>
-      </div>
-
-      <div class="description">
-        Hospital gowns shouldn't feel like hospital gowns. Comfort Wrap is a knee-length, form-fitting robe made from a lightweight cotton/merino wool blend — soft against the skin, breathable, and durable enough for repeated hot-water washing. An attached hood adds warmth and a loungewear feel, while a full-length zipper (front or back) replaces the traditional gap-prone tie closure, so there's no exposure and no fumbling with ties. A discreet chest pocket holds a telemetry monitor, and shoulder-seam zips give clinicians quick IV access without removing the gown.
-      </div>
-
-      <div class="features">
-        <h3>Specifications</h3>
+  <!-- About -->
+  <div class="section about" id="about">
+    <div class="about-grid">
+      <img src="Concept - Hospital Gown - Female Front - Sage - 2026-06-15-web.jpg" alt="Comfort Wrap in sage green">
+      <div>
+        <h2>About MEND</h2>
+        <p>MEND Medical Apparel started with a simple frustration: hospital gowns are undignified, uncomfortable, and haven't changed in decades — thin paper-like fabric, gaping backs, and ties that never quite work.</p>
+        <p>We design recovery wear that actually feels good to wear. Soft cotton-merino blends, real zippers instead of fumbling closures, and styling you'd be comfortable wearing outside a hospital room — because comfort and dignity shouldn't be optional.</p>
         <ul>
-          <li><span>Fabric</span><span>Cotton / merino wool blend, stretch-knit, hot-wash durable</span></li>
-          <li><span>Fit</span><span>Form-fitting, graded S–XL (not one-size)</span></li>
-          <li><span>Length</span><span>Knee to mid-calf</span></li>
-          <li><span>Sleeves</span><span>Full-length, stretch cuffs</span></li>
-          <li><span>Closure</span><span>Full front or back zipper, soft fabric placket guard</span></li>
-          <li><span>Access features</span><span>Shoulder-seam zips for IV access, interior telemetry pocket</span></li>
-          <li><span>Care</span><span>Machine washable, commercial hot-wash durable</span></li>
+          <li>Designed with patients, caregivers, and clinicians</li>
+          <li>Machine washable, built to last</li>
+          <li>No exposure, no ties — full coverage by design</li>
         </ul>
       </div>
     </div>
   </div>
 
-  <!-- Front/back views -->
-  <div class="section">
-    <h2>Front &amp; Back Views — Male &amp; Female</h2>
-    <div class="views-grid">
-      <div class="view-card" data-gender="female" data-view="front" onclick="viewCardClick(this)">
-        <div class="img-box"><img id="viewImgFF" src="Concept - Hospital Gown - Female Front - 2026-06-15-web.jpg" alt="Female front view"></div>
-        <span>Female — Front (front zip, collar to hem)</span>
-      </div>
-      <div class="view-card" data-gender="female" data-view="back" onclick="viewCardClick(this)">
-        <div class="img-box"><img id="viewImgFB" src="Concept - Hospital Gown - Female Back - 2026-06-15-web.jpg" alt="Female back view"></div>
-        <span>Female — Back (zip replaces tie closure)</span>
-      </div>
-      <div class="view-card" data-gender="male" data-view="front" onclick="viewCardClick(this)">
-        <div class="img-box"><img id="viewImgMF" src="Concept - Hospital Gown - Male Front - 2026-06-15-web.jpg" alt="Male front view"></div>
-        <span>Male — Front (front zip, collar to hem)</span>
-      </div>
-      <div class="view-card" data-gender="male" data-view="back" onclick="viewCardClick(this)">
-        <div class="img-box"><img id="viewImgMB" src="Concept - Hospital Gown - Male Back - 2026-06-15-web.jpg" alt="Male back view"></div>
-        <span>Male — Back (zip replaces tie closure)</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Spec deep-dive -->
-  <div class="section">
-    <h2>Why It's Different</h2>
-    <div class="grid-2">
-      <div class="spec-card">
-        <h4>Traditional Hospital Gown</h4>
-        <ul>
-          <li>One-size, 54–60" sweep — loose, bulky fit</li>
-          <li>55/45 cotton-poly, stiff clinical feel</li>
-          <li>Open back, twill-tape neck/waist ties</li>
-          <li>Frequent gaps and exposure</li>
-          <li>Shoulder snaps for IV access</li>
-          <li>3–5" short sleeves</li>
-        </ul>
-      </div>
-      <div class="spec-card">
-        <h4>Comfort Wrap</h4>
-        <ul>
-          <li>Graded S–XL, form-fitting silhouette</li>
-          <li>Cotton/merino wool blend, soft drape, hot-wash durable</li>
-          <li>Full front or back zip — no gaps, no ties</li>
-          <li>Attached hood for warmth and a loungewear feel</li>
-          <li>Shoulder-seam zips for IV access</li>
-          <li>Full-length sleeves with stretch cuffs</li>
-          <li>Interior telemetry pocket with lead-wire slit</li>
-        </ul>
+  <!-- Products -->
+  <div class="section products" id="products">
+    <h2>Products</h2>
+    <p class="sub">Currently in development — Comfort Wrap is our first release.</p>
+    <div class="product-grid">
+      <a class="product-card" href="Product Detail - Stylish Washable Hospital Gown.html">
+        <div class="img-box">
+          <img src="Concept - Hospital Gown - 2026-06-15-web.jpg" alt="Comfort Wrap">
+        </div>
+        <div class="info">
+          <div class="name">Comfort Wrap</div>
+          <div class="price">Stylish Washable Hospital Gown</div>
+          <span class="status">View Product</span>
+        </div>
+      </a>
+      <div class="product-card soon">
+        <div class="img-box">
+          <img src="Concept - Hospital Gown - Female Front - Oatmeal - 2026-06-15-web.jpg" alt="Coming soon">
+        </div>
+        <div class="info">
+          <div class="name">More on the way</div>
+          <div class="price">New recovery essentials</div>
+          <span class="status">Coming Soon</span>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Promo / SEO -->
-  <div class="section">
-    <h2>Listing &amp; Promo Copy</h2>
-    <div class="promo">
-      <h3>SEO Title</h3>
-      <p>Comfort Wrap — Stylish Washable Hospital Gown with Hood &amp; Zipper Closure | Cotton Merino Wool Recovery Robe, Machine Washable</p>
-      <h3>Description</h3>
-      <p>Say goodbye to drafty, tie-back hospital gowns. Comfort Wrap is a soft cotton/merino wool blend recovery robe with an attached hood and full zipper closure — form-fitting, machine washable, and designed with a telemetry pocket and shoulder-zip IV access for real hospital use.</p>
-      <h3>Tags</h3>
-      <p>hospital gown, patient robe, recovery wear, adaptive clothing, zipper hospital gown, washable patient gown, post-surgery robe, hooded recovery gown, merino wool patient wear, hospital gift, comfort robe, telemetry pocket gown, IV access clothing</p>
-      <h3>Promo Blurb</h3>
-      <p>A hospital stay is hard enough — the gown shouldn't make it worse. Comfort Wrap is a soft, washable, zip-up alternative to the standard hospital gown, designed for dignity and ease for patients and caregivers alike. <span class="hashtags">#ComfortWrap #PatientCare #AdaptiveClothing #HospitalGiftIdea #RecoveryWear</span></p>
+  <!-- Contact -->
+  <div class="section contact" id="contact">
+    <div class="contact-grid">
+      <div>
+        <h2>Get in Touch</h2>
+        <p>Questions about Comfort Wrap, wholesale, or partnerships? Send us a note — we read every message.</p>
+        <div class="detail">
+          <strong>Email</strong>
+          hello@mendmedicalwear.com
+        </div>
+        <div class="detail">
+          <strong>Based in</strong>
+          Portland, OR
+        </div>
+      </div>
+      <form id="contactForm">
+        <div>
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div>
+          <label for="message">Message</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="border:none; cursor:pointer; align-self:flex-start;">Send Message</button>
+        <div class="form-msg" id="formMsg">Thanks for reaching out — we'll get back to you soon.</div>
+      </form>
     </div>
   </div>
 
   <footer>
-    <p>Comfort Wrap — Concept product detail page generated for internal review. Niche 4 of the Dropship Project. Not yet listed for sale.</p>
+    <p>MEND Medical Apparel — Comfort, redesigned for recovery.</p>
     <p>&copy; 2026 MEND Medical Apparel. All rights reserved.</p>
   </footer>
 </div>
 
 <script>
-var currentGender = 'female';
-var currentView = 'front';
-var currentColor = '';
-
-function imgFilename(){
-  var genderLabel = currentGender.charAt(0).toUpperCase() + currentGender.slice(1);
-  var viewLabel = currentView.charAt(0).toUpperCase() + currentView.slice(1);
-  var colorPart = currentColor ? (' - ' + currentColor) : '';
-  return 'Concept - Hospital Gown - ' + genderLabel + ' ' + viewLabel + colorPart + ' - 2026-06-15-web.jpg';
-}
-
-function updateMainImage(){
-  swapMainImg(imgFilename());
-  updateViewsGrid();
-}
-
-function viewFilename(gender, view){
-  var genderLabel = gender.charAt(0).toUpperCase() + gender.slice(1);
-  var viewLabel = view.charAt(0).toUpperCase() + view.slice(1);
-  var colorPart = currentColor ? (' - ' + currentColor) : '';
-  return 'Concept - Hospital Gown - ' + genderLabel + ' ' + viewLabel + colorPart + ' - 2026-06-15-web.jpg';
-}
-
-function updateViewsGrid(){
-  var ids = { female: { front: 'viewImgFF', back: 'viewImgFB' }, male: { front: 'viewImgMF', back: 'viewImgMB' } };
-  ['female','male'].forEach(function(gender){
-    ['front','back'].forEach(function(view){
-      var img = document.getElementById(ids[gender][view]);
-      var newSrc = viewFilename(gender, view);
-      if(img && img.src.indexOf(newSrc) === -1){
-        img.style.opacity = 0;
-        setTimeout(function(){
-          img.src = newSrc;
-          img.style.opacity = 1;
-        }, 150);
-      }
-    });
-  });
-}
-
 (function(){
   var sections = document.querySelectorAll('.section');
   var observer = new IntersectionObserver(function(entries){
@@ -341,80 +213,11 @@ function updateViewsGrid(){
   sections.forEach(function(s){ observer.observe(s); });
 })();
 
-(function(){
-  var main = document.getElementById('galleryMain');
-  var lens = document.getElementById('zoomLens');
-  var img = document.getElementById('mainImg');
-  main.addEventListener('mousemove', function(e){
-    var rect = main.getBoundingClientRect();
-    var x = ((e.clientX - rect.left) / rect.width) * 100;
-    var y = ((e.clientY - rect.top) / rect.height) * 100;
-    lens.style.backgroundImage = "url('" + img.src + "')";
-    lens.style.backgroundPosition = x + '% ' + y + '%';
-  });
-})();
-
-function setColor(swatch){
-  document.querySelectorAll('.swatches .swatch').forEach(function(s){ s.classList.remove('active'); });
-  swatch.classList.add('active');
-  currentColor = swatch.getAttribute('data-color') || '';
-  updateMainImage();
-}
-
-function swapMainImg(src){
-  var img = document.getElementById('mainImg');
-  img.style.opacity = 0;
-  setTimeout(function(){
-    img.src = src;
-    img.style.opacity = 1;
-  }, 150);
-}
-
-function setMain(btn, src){
-  document.querySelectorAll('.gallery-thumbs button').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-
-  var gender = btn.getAttribute('data-gender');
-  var view = btn.getAttribute('data-view');
-  if(gender){
-    currentGender = gender;
-    currentView = view;
-    document.querySelectorAll('#closureGroup .size-btn').forEach(function(b){
-      b.classList.toggle('active', b.textContent.trim().toLowerCase() === (view + ' zip'));
-    });
-    updateMainImage();
-  } else {
-    swapMainImg(src);
-  }
-}
-
-function viewCardClick(card){
-  currentGender = card.getAttribute('data-gender');
-  currentView = card.getAttribute('data-view');
-
-  document.querySelectorAll('.gallery-thumbs button').forEach(function(b){
-    var match = b.getAttribute('data-gender') === currentGender && b.getAttribute('data-view') === currentView;
-    b.classList.toggle('active', match);
-  });
-  document.querySelectorAll('#closureGroup .size-btn').forEach(function(b){
-    b.classList.toggle('active', b.textContent.trim().toLowerCase() === (currentView + ' zip'));
-  });
-
-  swapMainImg(imgFilename());
-  document.getElementById('galleryMain').scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
-
-function setClosure(btn, view){
-  currentView = view;
-  document.querySelectorAll('#closureGroup .size-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  updateMainImage();
-
-  document.querySelectorAll('.gallery-thumbs button').forEach(function(b){
-    var match = b.getAttribute('data-gender') === currentGender && b.getAttribute('data-view') === view;
-    b.classList.toggle('active', match);
-  });
-}
+document.getElementById('contactForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  document.getElementById('formMsg').classList.add('show');
+  this.reset();
+});
 </script>
 </body>
 </html>
