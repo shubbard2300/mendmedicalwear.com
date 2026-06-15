@@ -43,6 +43,16 @@
   .size-btn:hover{border-color:var(--accent); transform:translateY(-2px);}
   .size-btn.active{border-color:var(--accent); background:var(--panel); font-weight:600;}
 
+  .bundle-upsell{display:flex; gap:14px; align-items:flex-start; background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:16px; margin:20px 0 0;}
+  .bundle-upsell-thumb{width:60px; height:60px; border-radius:8px; overflow:hidden; flex-shrink:0; background:#fff;}
+  .bundle-upsell-thumb img{width:100%; height:100%; object-fit:cover; display:block;}
+  .bundle-upsell-label{font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-bottom:4px;}
+  .bundle-upsell-name{font-size:14px; font-weight:600; margin-bottom:4px;}
+  .bundle-upsell-desc{font-size:13px; color:var(--muted); margin-bottom:10px;}
+  .bundle-upsell-toggle{display:inline-flex; align-items:center; gap:8px; cursor:pointer; font-size:13px;}
+  .bundle-badge{background:var(--accent); color:#fff; padding:6px 12px; border-radius:999px; font-size:12px; transition:transform .2s ease;}
+  .bundle-upsell-toggle:hover .bundle-badge{transform:translateY(-2px);}
+
   .cta{display:flex; gap:12px; margin:24px 0;}
   .cta .btn{flex:1; padding:16px; border-radius:10px; text-transform:none; letter-spacing:normal; font-size:15px; border:1px solid var(--fg);}
   .cta .btn-primary{background:var(--fg); color:#fff;}
@@ -146,8 +156,21 @@
       </div>
 
       <div class="cta">
-        <div class="btn btn-primary">Add to Cart</div>
+        <div class="btn btn-primary" id="ctaPrimary">Add to Cart</div>
         <div class="btn btn-secondary">Save for Later</div>
+      </div>
+
+      <div class="bundle-upsell">
+        <div class="bundle-upsell-thumb"><img src="Concept - Compression Socks - Ceil Blue - 2026-06-15-web.jpg" alt="Medical-Grade Compression Socks — Nurse/Caregiver Edition"></div>
+        <div class="bundle-upsell-info">
+          <div class="bundle-upsell-label">Most nurses also grab these →</div>
+          <div class="bundle-upsell-name">Medical-Grade Compression Socks — Nurse/Caregiver Edition</div>
+          <div class="bundle-upsell-desc">20–30 mmHg graduated compression to keep your legs energized from first rounds to final charting. Pair with your scrub set — show up ready, go home recovered.</div>
+          <label class="bundle-upsell-toggle">
+            <input type="checkbox" id="bundleToggle" onchange="toggleBundle(this)">
+            <span class="bundle-badge">Bundle &amp; Save 12% — Complete Your Shift Kit</span>
+          </label>
+        </div>
       </div>
 
       <div class="description">
@@ -274,6 +297,11 @@ function updateViewsGrid(){
     lens.style.backgroundPosition = x + '% ' + y + '%';
   });
 })();
+
+function toggleBundle(checkbox){
+  var cta = document.getElementById('ctaPrimary');
+  cta.textContent = checkbox.checked ? 'Add Bundle to Cart — Save 12%' : 'Add to Cart';
+}
 
 function setColor(swatch){
   document.querySelectorAll('.swatches .swatch').forEach(function(s){ s.classList.remove('active'); });
