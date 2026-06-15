@@ -237,6 +237,7 @@
         </div>
         <button type="submit" class="btn btn-primary" style="border:none; cursor:pointer; align-self:flex-start;">Send Message</button>
         <div class="form-msg" id="formMsg">Thanks for reaching out — we'll get back to you soon.</div>
+        <div class="form-msg" id="formError" style="color:#c0392b;">Something went wrong — please email us directly at contact@stevenjhubbard.com.</div>
       </form>
     </div>
   </div>
@@ -251,8 +252,33 @@
 <script>
 document.getElementById('contactForm').addEventListener('submit', function(e){
   e.preventDefault();
-  document.getElementById('formMsg').classList.add('show');
-  this.reset();
+  var form = this;
+  var msg = document.getElementById('formMsg');
+  var err = document.getElementById('formError');
+  var btn = form.querySelector('button[type="submit"]');
+  msg.classList.remove('show');
+  err.classList.remove('show');
+  btn.disabled = true;
+
+  var data = {
+    name: form.name.value,
+    email: form.email.value,
+    message: form.message.value
+  };
+
+  fetch('/api/contact', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  }).then(function(res){
+    if(!res.ok) throw new Error('Request failed');
+    msg.classList.add('show');
+    form.reset();
+  }).catch(function(){
+    err.classList.add('show');
+  }).finally(function(){
+    btn.disabled = false;
+  });
 });
 </script>
 </body>
