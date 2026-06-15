@@ -4,19 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Comfort Wrap — Stylish Washable Hospital Gown</title>
+<link rel="stylesheet" href="styles.css">
 <style>
-  :root{
-    --bg:#FAFAF8; --fg:#2B2B28; --muted:#8A857C; --line:#E3DFD6;
-    --accent:#7C8B7A; --panel:#F1EEE7;
-  }
-  *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth;}
-  body{font-family:Helvetica, Arial, sans-serif; background:var(--bg); color:var(--fg); line-height:1.5;}
-  .wrap{max-width:1100px; margin:0 auto; padding:32px 24px 80px;}
-  header{display:flex; justify-content:center; align-items:center; border-bottom:1px solid var(--line); padding-bottom:16px; margin-bottom:32px;}
-  header .brand{font-size:14px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted);}
-  header img{transition:transform .3s ease;}
-  header img:hover{transform:scale(1.04);}
   .pdp{display:grid; grid-template-columns:1.1fr 1fr; gap:48px;}
   @media (max-width:860px){ .pdp{grid-template-columns:1fr;} }
 
@@ -40,22 +29,8 @@
   h1{font-size:30px; font-weight:600; margin-bottom:6px;}
   .subtitle{color:var(--muted); font-size:15px; margin-bottom:16px;}
   .badges{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 20px;}
-  .badge{position:relative; font-size:12px; padding:6px 12px; border-radius:999px; background:var(--panel); color:var(--fg); border:1px solid var(--line); transition:background .2s ease, transform .2s ease; cursor:default;}
+  .badge{font-size:12px; padding:6px 12px; border-radius:999px; background:var(--panel); color:var(--fg); border:1px solid var(--line); transition:background .2s ease, transform .2s ease; cursor:default;}
   .badge:hover{background:var(--accent); color:#fff; transform:translateY(-2px);}
-  .badge[data-tooltip]::after{
-    content:attr(data-tooltip);
-    position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%) translateY(4px);
-    width:200px; padding:8px 10px; border-radius:8px;
-    background:var(--fg); color:var(--bg); font-size:12px; font-weight:400; line-height:1.4; text-align:center;
-    opacity:0; pointer-events:none; transition:opacity .2s ease, transform .2s ease; z-index:20;
-  }
-  .badge[data-tooltip]::before{
-    content:''; position:absolute; bottom:calc(100% + 2px); left:50%; transform:translateX(-50%);
-    border:6px solid transparent; border-top-color:var(--fg);
-    opacity:0; pointer-events:none; transition:opacity .2s ease; z-index:20;
-  }
-  .badge[data-tooltip]:hover::after, .badge[data-tooltip]:hover::before{ opacity:1; transform:translateX(-50%) translateY(0); }
-  .badge[data-tooltip]:hover::before{ transform:translateX(-50%); }
 
   .option-group{margin-bottom:20px;}
   .option-group label{display:block; font-size:13px; font-weight:600; margin-bottom:8px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted);}
@@ -70,17 +45,21 @@
       radial-gradient(circle at 75% 75%, #6F93B3 2px, transparent 3px);
     background-size:10px 10px;
   }
+  .swatch-stripe{
+    background-color:#fff;
+    background-image: repeating-linear-gradient(90deg, #6F93B3 0 4px, #fff 4px 8px);
+  }
   .sizes{display:flex; gap:8px;}
   .size-btn{padding:8px 16px; border:1px solid var(--line); border-radius:8px; background:#fff; font-size:14px; cursor:pointer; transition:border-color .2s ease, background .2s ease, transform .15s ease;}
   .size-btn:hover{border-color:var(--accent); transform:translateY(-2px);}
   .size-btn.active{border-color:var(--accent); background:var(--panel); font-weight:600;}
 
   .cta{display:flex; gap:12px; margin:24px 0;}
-  .btn{flex:1; padding:16px; border-radius:10px; font-size:15px; font-weight:600; border:1px solid var(--fg); cursor:pointer; text-align:center; transition:transform .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease;}
-  .btn-primary{background:var(--fg); color:#fff;}
-  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 8px 18px rgba(0,0,0,.18);}
-  .btn-secondary{background:transparent; color:var(--fg);}
-  .btn-secondary:hover{background:var(--panel); transform:translateY(-2px);}
+  .cta .btn{flex:1; padding:16px; border-radius:10px; text-transform:none; letter-spacing:normal; font-size:15px; border:1px solid var(--fg);}
+  .cta .btn-primary{background:var(--fg); color:#fff;}
+  .cta .btn-primary:hover{background:var(--fg); transform:translateY(-2px); box-shadow:0 8px 18px rgba(0,0,0,.18);}
+  .cta .btn-secondary{background:transparent; color:var(--fg); border:1px solid var(--fg);}
+  .cta .btn-secondary:hover{background:var(--panel); border-color:var(--fg); color:var(--fg); transform:translateY(-2px); box-shadow:none;}
 
   .description{font-size:15px; margin:24px 0; color:var(--fg);}
   .features{margin:24px 0;}
@@ -90,8 +69,7 @@
   .features li span:first-child{color:var(--muted); flex-shrink:0; width:140px;}
 
   /* Tabs / spec sections */
-  .section{margin-top:56px; opacity:0; transform:translateY(24px); transition:opacity .6s ease, transform .6s ease;}
-  .section.in-view{opacity:1; transform:translateY(0);}
+  .section{margin-top:56px;}
   .section h2{font-size:20px; font-weight:600; margin-bottom:16px; border-bottom:1px solid var(--line); padding-bottom:8px; position:relative;}
   .section h2::after{content:''; position:absolute; left:0; bottom:-1px; width:48px; height:2px; background:var(--accent); transform:scaleX(0); transform-origin:left; transition:transform .5s ease;}
   .section.in-view h2::after{transform:scaleX(1);}
@@ -117,16 +95,17 @@
   .promo h3{font-size:15px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:8px;}
   .promo p{font-size:15px; margin-bottom:8px;}
   .hashtags{color:var(--accent); font-size:14px;}
-
-  footer{margin-top:64px; padding-top:24px; border-top:1px solid var(--line); color:var(--muted); font-size:12px; text-align:center;}
-  footer p{margin-bottom:6px;}
-  footer p:last-child{margin-bottom:0;}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <img src="mend-logo.svg" alt="MEND Medical Apparel" style="height:64px;">
+    <a href="index.html" class="logo-link"><img src="mend-logo.svg" alt="MEND Medical Apparel"></a>
+    <nav>
+      <a href="index.html#about">About</a>
+      <a href="index.html#products">Products</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
   </header>
 
   <div class="pdp">
@@ -163,29 +142,33 @@
       <div class="option-group">
         <label>Color</label>
         <div class="swatches">
-          <div class="swatch active" style="background:#C9C5BC" data-color="" title="Heather Grey" onclick="setColor(this)"></div>
-          <div class="swatch" style="background:#C7D0C4" data-color="Sage" title="Soft Sage" onclick="setColor(this)"></div>
-          <div class="swatch" style="background:#C6CDD4" data-color="Blue" title="Dusty Blue" onclick="setColor(this)"></div>
-          <div class="swatch" style="background:#E3D9C8" data-color="Oatmeal" title="Oatmeal" onclick="setColor(this)"></div>
-          <div class="swatch swatch-pattern" data-color="Print" title="Classic Print (Retro Hospital Pattern)" onclick="setColor(this)"></div>
+          <div class="swatch active" style="background:#C9C5BC" data-color="" title="Heather Grey" data-tooltip="Heather Grey — our versatile default, a soft neutral that suits any care setting." onclick="setColor(this)"></div>
+          <div class="swatch" style="background:#C7D0C4" data-color="Sage" title="Soft Sage" data-tooltip="Soft Sage — a calming green that's easy on the eyes during longer stays." onclick="setColor(this)"></div>
+          <div class="swatch" style="background:#C6CDD4" data-color="Blue" title="Dusty Blue" data-tooltip="Dusty Blue — a familiar, calm tone with a softer, more modern finish." onclick="setColor(this)"></div>
+          <div class="swatch" style="background:#E3D9C8" data-color="Oatmeal" title="Oatmeal" data-tooltip="Oatmeal — a warm, cozy neutral that feels more loungewear than hospital wear." onclick="setColor(this)"></div>
+          <div class="swatch swatch-pattern" data-color="Print" title="Classic Print (Retro Hospital Pattern)" data-tooltip="Classic Print — a nod to the retro hospital-gown pattern, reimagined in soft cotton-merino." onclick="setColor(this)"></div>
+          <div class="swatch" style="background:#2E3A4E" data-color="Navy" title="Navy" data-tooltip="Navy — a deeper, more tailored option for those who'd rather not feel like a patient." onclick="setColor(this)"></div>
+          <div class="swatch" style="background:#E6C7C2" data-color="Blush" title="Blush Pink" data-tooltip="Blush Pink — a soft, warm tone designed to feel gentle and comforting." onclick="setColor(this)"></div>
+          <div class="swatch" style="background:#4A4A48" data-color="Charcoal" title="Charcoal" data-tooltip="Charcoal — a modern, low-maintenance neutral that hides wear between washes." onclick="setColor(this)"></div>
+          <div class="swatch swatch-stripe" data-color="Stripe" title="Ticking Stripe" data-tooltip="Ticking Stripe — a timeless convalescent-style stripe with a fresh, modern fit." onclick="setColor(this)"></div>
         </div>
       </div>
 
       <div class="option-group">
         <label>Closure Style</label>
         <div class="sizes" id="closureGroup">
-          <div class="size-btn active" onclick="setClosure(this,'front')">Front Zip</div>
-          <div class="size-btn" onclick="setClosure(this,'back')">Back Zip</div>
+          <div class="size-btn active" data-tooltip="Front zip — easiest for self-dressing, the zipper sits within easy reach." onclick="setClosure(this,'front')">Front Zip</div>
+          <div class="size-btn" data-tooltip="Back zip — best for caregiver-assisted dressing, keeps the front clean and uninterrupted." onclick="setClosure(this,'back')">Back Zip</div>
         </div>
       </div>
 
       <div class="option-group">
         <label>Size</label>
         <div class="sizes">
-          <div class="size-btn">S</div>
-          <div class="size-btn active">M</div>
-          <div class="size-btn">L</div>
-          <div class="size-btn">XL</div>
+          <div class="size-btn" data-tooltip="S — best for chest 32–36in, height under 5'5&quot;.">S</div>
+          <div class="size-btn active" data-tooltip="M — best for chest 36–40in, height 5'5&quot;–5'9&quot;.">M</div>
+          <div class="size-btn" data-tooltip="L — best for chest 40–44in, height 5'9&quot;–6'1&quot;.">L</div>
+          <div class="size-btn" data-tooltip="XL — best for chest 44–48in, height over 6'1&quot;.">XL</div>
         </div>
       </div>
 
@@ -217,19 +200,19 @@
   <div class="section">
     <h2>Front &amp; Back Views — Male &amp; Female</h2>
     <div class="views-grid">
-      <div class="view-card" data-gender="female" data-view="front" onclick="viewCardClick(this)">
+      <div class="view-card" data-gender="female" data-view="front" data-tooltip="Click to preview this view in your selected color, on the main image above." onclick="viewCardClick(this)">
         <div class="img-box"><img id="viewImgFF" src="Concept - Hospital Gown - Female Front - 2026-06-15-web.jpg" alt="Female front view"></div>
         <span>Female — Front (front zip, collar to hem)</span>
       </div>
-      <div class="view-card" data-gender="female" data-view="back" onclick="viewCardClick(this)">
+      <div class="view-card" data-gender="female" data-view="back" data-tooltip="Click to preview this view in your selected color, on the main image above." onclick="viewCardClick(this)">
         <div class="img-box"><img id="viewImgFB" src="Concept - Hospital Gown - Female Back - 2026-06-15-web.jpg" alt="Female back view"></div>
         <span>Female — Back (zip replaces tie closure)</span>
       </div>
-      <div class="view-card" data-gender="male" data-view="front" onclick="viewCardClick(this)">
+      <div class="view-card" data-gender="male" data-view="front" data-tooltip="Click to preview this view in your selected color, on the main image above." onclick="viewCardClick(this)">
         <div class="img-box"><img id="viewImgMF" src="Concept - Hospital Gown - Male Front - 2026-06-15-web.jpg" alt="Male front view"></div>
         <span>Male — Front (front zip, collar to hem)</span>
       </div>
-      <div class="view-card" data-gender="male" data-view="back" onclick="viewCardClick(this)">
+      <div class="view-card" data-gender="male" data-view="back" data-tooltip="Click to preview this view in your selected color, on the main image above." onclick="viewCardClick(this)">
         <div class="img-box"><img id="viewImgMB" src="Concept - Hospital Gown - Male Back - 2026-06-15-web.jpg" alt="Male back view"></div>
         <span>Male — Back (zip replaces tie closure)</span>
       </div>
@@ -287,6 +270,7 @@
   </footer>
 </div>
 
+<script src="main.js"></script>
 <script>
 var currentGender = 'female';
 var currentView = 'front';
@@ -327,19 +311,6 @@ function updateViewsGrid(){
     });
   });
 }
-
-(function(){
-  var sections = document.querySelectorAll('.section');
-  var observer = new IntersectionObserver(function(entries){
-    entries.forEach(function(entry){
-      if(entry.isIntersecting){
-        entry.target.classList.add('in-view');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15 });
-  sections.forEach(function(s){ observer.observe(s); });
-})();
 
 (function(){
   var main = document.getElementById('galleryMain');
