@@ -91,10 +91,10 @@
 
   .views-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:16px;}
   @media (max-width:760px){ .views-grid{grid-template-columns:repeat(2,1fr);} }
-  .view-card{text-align:center;}
+  .view-card{text-align:center; cursor:pointer;}
   .view-card .img-box{aspect-ratio:2/3; background:var(--panel); border-radius:10px; overflow:hidden; margin-bottom:8px; transition:transform .3s ease, box-shadow .3s ease;}
   .view-card .img-box:hover{transform:translateY(-4px); box-shadow:0 10px 24px rgba(0,0,0,.1);}
-  .view-card img{width:100%; height:100%; object-fit:cover; transition:transform .4s ease;}
+  .view-card img{width:100%; height:100%; object-fit:cover; transition:transform .4s ease, opacity .15s ease;}
   .view-card .img-box:hover img{transform:scale(1.05);}
   .view-card span{font-size:13px; color:var(--muted);}
 
@@ -203,20 +203,20 @@
   <div class="section">
     <h2>Front &amp; Back Views — Male &amp; Female</h2>
     <div class="views-grid">
-      <div class="view-card">
-        <div class="img-box"><img src="Concept - Hospital Gown - Female Front - 2026-06-15-web.jpg" alt="Female front view"></div>
+      <div class="view-card" data-gender="female" data-view="front" onclick="viewCardClick(this)">
+        <div class="img-box"><img id="viewImgFF" src="Concept - Hospital Gown - Female Front - 2026-06-15-web.jpg" alt="Female front view"></div>
         <span>Female — Front (front zip, collar to hem)</span>
       </div>
-      <div class="view-card">
-        <div class="img-box"><img src="Concept - Hospital Gown - Female Back - 2026-06-15-web.jpg" alt="Female back view"></div>
+      <div class="view-card" data-gender="female" data-view="back" onclick="viewCardClick(this)">
+        <div class="img-box"><img id="viewImgFB" src="Concept - Hospital Gown - Female Back - 2026-06-15-web.jpg" alt="Female back view"></div>
         <span>Female — Back (zip replaces tie closure)</span>
       </div>
-      <div class="view-card">
-        <div class="img-box"><img src="Concept - Hospital Gown - Male Front - 2026-06-15-web.jpg" alt="Male front view"></div>
+      <div class="view-card" data-gender="male" data-view="front" onclick="viewCardClick(this)">
+        <div class="img-box"><img id="viewImgMF" src="Concept - Hospital Gown - Male Front - 2026-06-15-web.jpg" alt="Male front view"></div>
         <span>Male — Front (front zip, collar to hem)</span>
       </div>
-      <div class="view-card">
-        <div class="img-box"><img src="Concept - Hospital Gown - Male Back - 2026-06-15-web.jpg" alt="Male back view"></div>
+      <div class="view-card" data-gender="male" data-view="back" onclick="viewCardClick(this)">
+        <div class="img-box"><img id="viewImgMB" src="Concept - Hospital Gown - Male Back - 2026-06-15-web.jpg" alt="Male back view"></div>
         <span>Male — Back (zip replaces tie closure)</span>
       </div>
     </div>
@@ -287,6 +287,31 @@ function imgFilename(){
 
 function updateMainImage(){
   swapMainImg(imgFilename());
+  updateViewsGrid();
+}
+
+function viewFilename(gender, view){
+  var genderLabel = gender.charAt(0).toUpperCase() + gender.slice(1);
+  var viewLabel = view.charAt(0).toUpperCase() + view.slice(1);
+  var colorPart = currentColor ? (' - ' + currentColor) : '';
+  return 'Concept - Hospital Gown - ' + genderLabel + ' ' + viewLabel + colorPart + ' - 2026-06-15-web.jpg';
+}
+
+function updateViewsGrid(){
+  var ids = { female: { front: 'viewImgFF', back: 'viewImgFB' }, male: { front: 'viewImgMF', back: 'viewImgMB' } };
+  ['female','male'].forEach(function(gender){
+    ['front','back'].forEach(function(view){
+      var img = document.getElementById(ids[gender][view]);
+      var newSrc = viewFilename(gender, view);
+      if(img && img.src.indexOf(newSrc) === -1){
+        img.style.opacity = 0;
+        setTimeout(function(){
+          img.src = newSrc;
+          img.style.opacity = 1;
+        }, 150);
+      }
+    });
+  });
 }
 
 (function(){
@@ -347,6 +372,22 @@ function setMain(btn, src){
   } else {
     swapMainImg(src);
   }
+}
+
+function viewCardClick(card){
+  currentGender = card.getAttribute('data-gender');
+  currentView = card.getAttribute('data-view');
+
+  document.querySelectorAll('.gallery-thumbs button').forEach(function(b){
+    var match = b.getAttribute('data-gender') === currentGender && b.getAttribute('data-view') === currentView;
+    b.classList.toggle('active', match);
+  });
+  document.querySelectorAll('#closureGroup .size-btn').forEach(function(b){
+    b.classList.toggle('active', b.textContent.trim().toLowerCase() === (currentView + ' zip'));
+  });
+
+  swapMainImg(imgFilename());
+  document.getElementById('galleryMain').scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 function setClosure(btn, view){
