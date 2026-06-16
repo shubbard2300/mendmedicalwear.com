@@ -521,8 +521,10 @@ function drawPerson(t) {
 function drawAirbag(p, t) {
   const s = H / 506;
   const scaleP = easeInOut(p);
+  if (scaleP < 0.02) return; // guard against ctx.scale(0,0) crashing gradients
 
   ctx.save();
+  ctx.globalAlpha = Math.min(1, scaleP * 2);
   ctx.scale(scaleP, scaleP);
 
   // Outer glow
@@ -754,19 +756,27 @@ function seekDemo(e) {
   if (!playing) updateHUD(t);
 }
 
-// Initial frame
-drawScene(0);
-updateHUD(0);
+// Initial frame — draw after a tick so scroll-reveal opacity has resolved
+setTimeout(() => { drawScene(0); updateHUD(0); }, 50);
 
-// Auto-play when scrolled into view
+// Auto-play: fire on intersection (low threshold) OR on window load if already visible
 let autoPlayed = false;
+function startAutoPlay() {
+  if (autoPlayed) return;
+  autoPlayed = true;
+  setTimeout(() => { playing = true; lastTs = null; rafId = requestAnimationFrame(renderFrame); }, 400);
+}
+
 const vObs = new IntersectionObserver(entries => {
-  if (entries[0].isIntersecting && !autoPlayed) {
-    autoPlayed = true;
-    setTimeout(() => { playing = true; lastTs = null; rafId = requestAnimationFrame(renderFrame); }, 500);
-  }
-}, { threshold: 0.5 });
+  if (entries[0].isIntersecting) startAutoPlay();
+}, { threshold: 0.15 });
 vObs.observe(document.getElementById('vscreen'));
+
+// Fallback: if page loads with demo already in viewport
+window.addEventListener('load', () => {
+  const rect = document.getElementById('vscreen').getBoundingClientRect();
+  if (rect.top < window.innerHeight && rect.bottom > 0) startAutoPlay();
+});
 </script>
 </body>
 </html>
