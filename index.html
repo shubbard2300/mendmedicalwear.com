@@ -38,7 +38,12 @@
   /* Full-width hero banner */
   .hero-banner{position:relative; width:100vw; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw; height:520px; overflow:hidden; margin-bottom:0;}
   @media(max-width:640px){.hero-banner{height:340px;}}
-  .hero-banner img{width:100%; height:100%; object-fit:cover; object-position:center 30%; display:block; filter:brightness(0.82);}
+  @keyframes kenburns{
+    0%  { transform:scale(1.08) translateX(0px) translateY(0px); }
+    50% { transform:scale(1.13) translateX(-8px) translateY(-4px); }
+    100%{ transform:scale(1.08) translateX(0px) translateY(0px); }
+  }
+  .hero-banner img{width:100%; height:100%; object-fit:cover; object-position:center 30%; display:block; filter:brightness(0.82); animation:kenburns 14s ease-in-out infinite; transform-origin:center center;}
   .hero-banner-overlay{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:32px; background:linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.38) 100%);}
   .hero-banner-eyebrow{font-size:12px; letter-spacing:.22em; text-transform:uppercase; color:rgba(255,255,255,.75); margin-bottom:14px; font-weight:500;}
   .hero-banner-title{font-size:52px; font-weight:700; color:#fff; line-height:1.1; letter-spacing:-.02em; margin-bottom:16px; text-shadow:0 2px 24px rgba(0,0,0,.22);}
