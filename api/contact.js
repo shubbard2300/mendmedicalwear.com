@@ -23,7 +23,7 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'MEND Medical Apparel <onboarding@resend.dev>',
+        from: 'MEND Medical Apparel <no-reply@mendmedicalwear.com>',
         to: 'contact@stevenjhubbard.com',
         reply_to: email,
         subject: `New contact form message from ${name}`,
