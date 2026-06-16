@@ -38,6 +38,13 @@
   /* Full-width hero banner */
   .hero-banner{position:relative; width:100vw; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw; height:520px; overflow:hidden; margin-bottom:0;}
   @media(max-width:640px){.hero-banner{height:340px;}}
+  /* Slideshow */
+  .banner-slide{position:absolute; inset:0; opacity:0; transition:opacity 1.2s ease; pointer-events:none;}
+  .banner-slide.active{opacity:1; pointer-events:auto;}
+  .banner-slide img{width:100%; height:100%; object-fit:cover; object-position:center 30%; display:block; filter:brightness(0.82); animation:kenburns 7s ease-in-out forwards;}
+  .banner-dots{position:absolute; bottom:18px; left:50%; transform:translateX(-50%); display:flex; gap:8px; z-index:10;}
+  .banner-dot{width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,.35); border:none; cursor:pointer; padding:0; transition:background .2s, transform .2s;}
+  .banner-dot.active{background:#fff; transform:scale(1.3);}
   @keyframes kenburns{
     0%  { transform:scale(1.08) translateX(0px) translateY(0px); }
     50% { transform:scale(1.13) translateX(-8px) translateY(-4px); }
@@ -136,14 +143,29 @@
     </nav>
   </header>
 
-  <!-- Full-width Hero Banner -->
-  <div class="hero-banner">
-    <img src="MEND - Hero Banner - 2026-06-15.jpg" alt="A nurse in sage MEND scrubs holding the hand of a patient in a Comfort Wrap recovery gown">
-    <div class="hero-banner-overlay">
-      <div class="hero-banner-eyebrow">Washable Recovery Gowns · Nurse Scrubs · Compression Socks</div>
-      <h2 class="hero-banner-title">Because healing<br>should feel human.</h2>
-      <p class="hero-banner-sub">MEND makes soft, washable hospital gowns, residential nurse scrubs, and medical-grade compression socks — so patients feel like people, and caregivers feel like themselves.</p>
+  <!-- Full-width Hero Banner Slideshow -->
+  <div class="hero-banner" id="heroBanner">
+    <div class="banner-slide active">
+      <img src="MEND - Hero Banner - 2026-06-15.jpg" alt="MEND nurse and patient — emotional care moment">
     </div>
+    <div class="banner-slide">
+      <img src="Concept - Hospital Gown - Female Front - 2026-06-15-web.jpg" alt="MEND Washable Recovery Gown — Female Front">
+    </div>
+    <div class="banner-slide">
+      <img src="Concept - Nurse Scrubs - Female Front - 2026-06-15-web.jpg" alt="MEND Nurse Scrubs">
+    </div>
+    <div class="banner-slide">
+      <img src="Concept - Compression Socks - Ceil Blue - 2026-06-15-web.jpg" alt="MEND Compression Socks">
+    </div>
+    <div class="banner-slide">
+      <img src="Concept - Airbag Safety Collar - Lifestyle - 2026-06-16-web.jpg" alt="MEND AirGuard™ Inflatable Safety Collar">
+    </div>
+    <div class="hero-banner-overlay">
+      <div class="hero-banner-eyebrow">Washable Recovery Gowns · Nurse Scrubs · Compression Socks · AirGuard™</div>
+      <h2 class="hero-banner-title">Because healing<br>should feel human.</h2>
+      <p class="hero-banner-sub">MEND makes soft, washable hospital gowns, residential nurse scrubs, medical-grade compression socks, and the AirGuard™ fall-detection safety collar — so patients feel like people, and caregivers feel like themselves.</p>
+    </div>
+    <div class="banner-dots" id="bannerDots"></div>
   </div>
 
   <!-- Hero -->
@@ -405,6 +427,39 @@
   resetTimer();
 })();
 </script>
+<script>
+// ── Hero Banner Slideshow ──
+(function() {
+  const slides = document.querySelectorAll('.banner-slide');
+  const dotsEl = document.getElementById('bannerDots');
+  let cur = 0, timer;
+
+  slides.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'banner-dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => goTo(i));
+    dotsEl.appendChild(d);
+  });
+
+  function goTo(n) {
+    slides[cur].classList.remove('active');
+    dotsEl.children[cur].classList.remove('active');
+    // Re-trigger Ken Burns by cloning the img
+    const img = slides[n].querySelector('img');
+    const clone = img.cloneNode(true);
+    img.parentNode.replaceChild(clone, img);
+    cur = n;
+    slides[cur].classList.add('active');
+    dotsEl.children[cur].classList.add('active');
+    clearInterval(timer);
+    timer = setInterval(next, 5000);
+  }
+
+  function next() { goTo((cur + 1) % slides.length); }
+  timer = setInterval(next, 5000);
+})();
+</script>
+
 <script>
 document.getElementById('contactForm').addEventListener('submit', function(e){
   e.preventDefault();
