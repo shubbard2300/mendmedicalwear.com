@@ -128,7 +128,7 @@
 <div class="wrap">
   <header>
     <a href="index.html" class="logo-link">
-      <img src="MEND - Logo Mark - 2026-06-15-web.jpg" alt="MEND Medical Apparel">
+      <img src="mend-logo.svg" alt="MEND Medical Apparel">
     </a>
     <nav>
       <a href="index.html">Home</a>
@@ -588,8 +588,7 @@ function drawPhone(px, py, p, t) {
   roundRectFill(ctx, -pw/2, -ph/2, pw, ph, 10*s, '#1A2030');
   ctx.strokeStyle = 'rgba(255,255,255,0.15)';
   ctx.lineWidth = 1;
-  ctx.beginPath();
-  ctx.roundRect(-pw/2, -ph/2, pw, ph, 10*s);
+  rrPath(ctx, -pw/2, -ph/2, pw, ph, 10*s);
   ctx.stroke();
 
   // Screen
@@ -599,8 +598,7 @@ function drawPhone(px, py, p, t) {
   if (p > 0.5) {
     const ap = range(0.5, 0.85, p);
     ctx.fillStyle = `rgba(214,48,48,${ap * 0.9})`;
-    ctx.beginPath();
-    ctx.roundRect(-pw/2+6*s, -ph/2+14*s, pw-12*s, 28*s, 4*s);
+    rrPath(ctx, -pw/2+6*s, -ph/2+14*s, pw-12*s, 28*s, 4*s);
     ctx.fill();
 
     ctx.fillStyle = `rgba(255,255,255,${ap})`;
@@ -632,9 +630,22 @@ function drawPhone(px, py, p, t) {
   ctx.restore();
 }
 
-function roundRect(ctx, x, y, w, h, r, fill) {
+function rrPath(ctx, x, y, w, h, r) {
+  r = Math.min(r, w/2, h/2);
   ctx.beginPath();
-  ctx.roundRect(x, y, w, h, r);
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.arcTo(x + w, y,     x + w, y + r,     r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.arcTo(x + w, y + h, x + w - r, y + h, r);
+  ctx.lineTo(x + r, y + h);
+  ctx.arcTo(x,     y + h, x,     y + h - r,  r);
+  ctx.lineTo(x,     y + r);
+  ctx.arcTo(x,     y,     x + r, y,           r);
+  ctx.closePath();
+}
+function roundRect(ctx, x, y, w, h, r, fill) {
+  rrPath(ctx, x, y, w, h, r);
   ctx.fillStyle = fill;
   ctx.fill();
 }
