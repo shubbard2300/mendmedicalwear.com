@@ -27,6 +27,16 @@
   .hero p{font-size:18px; color:var(--muted); max-width:560px; margin:0 auto 32px;}
   .cta-row{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
 
+  /* Full-width hero banner */
+  .hero-banner{position:relative; width:100vw; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw; height:520px; overflow:hidden; margin-bottom:0;}
+  @media(max-width:640px){.hero-banner{height:340px;}}
+  .hero-banner img{width:100%; height:100%; object-fit:cover; object-position:center 30%; display:block; filter:brightness(0.82);}
+  .hero-banner-overlay{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:32px; background:linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.38) 100%);}
+  .hero-banner-eyebrow{font-size:12px; letter-spacing:.22em; text-transform:uppercase; color:rgba(255,255,255,.75); margin-bottom:14px; font-weight:500;}
+  .hero-banner-title{font-size:52px; font-weight:700; color:#fff; line-height:1.1; letter-spacing:-.02em; margin-bottom:16px; text-shadow:0 2px 24px rgba(0,0,0,.22);}
+  @media(max-width:640px){.hero-banner-title{font-size:32px;}}
+  .hero-banner-sub{font-size:17px; color:rgba(255,255,255,.88); max-width:520px; line-height:1.6; text-shadow:0 1px 8px rgba(0,0,0,.2);}
+
   /* Carousel */
   .hero-carousel{margin:56px auto 0; max-width:760px; position:relative;}
   .carousel-track{display:flex; gap:24px; align-items:stretch;}
@@ -112,6 +122,16 @@
       <a href="#contact">Contact</a>
     </nav>
   </header>
+
+  <!-- Full-width Hero Banner -->
+  <div class="hero-banner">
+    <img src="MEND - Hero Banner - 2026-06-15.jpg" alt="A nurse in sage MEND scrubs holding the hand of a patient in a Comfort Wrap recovery gown">
+    <div class="hero-banner-overlay">
+      <div class="hero-banner-eyebrow">MEND Medical Apparel</div>
+      <h2 class="hero-banner-title">Care, redesigned<br>from the inside out.</h2>
+      <p class="hero-banner-sub">Recovery wear built for dignity — for the people healing, and the people helping them do it.</p>
+    </div>
+  </div>
 
   <!-- Hero -->
   <div class="section hero">
