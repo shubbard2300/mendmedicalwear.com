@@ -1,0 +1,13 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="32" cy="32" r="32" fill="#2B2B28"/>
+  <!-- MEND cross mark, centered, white/teal on dark -->
+  <g stroke="#7FC49B" stroke-width="5" stroke-linecap="round" fill="none">
+    <!-- Vertical -->
+    <line x1="32" y1="14" x2="32" y2="50"/>
+    <!-- Horizontal -->
+    <line x1="14" y1="32" x2="50" y2="32"/>
+    <!-- Diagonal -->
+    <line x1="19" y1="19" x2="45" y2="45"/>
+  </g>
+</svg>
