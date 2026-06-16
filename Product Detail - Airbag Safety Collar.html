@@ -63,69 +63,49 @@
   .features li{padding:10px 0; border-bottom:1px solid var(--line); font-size:14px; display:flex; justify-content:space-between; gap:16px;}
   .features li span:first-child{color:var(--muted);}
 
-  /* ── DEMO SECTION ── */
+  /* ── VIDEO DEMO SECTION ── */
   .demo-section{margin:64px 0; padding:0;}
   .demo-section h2{font-size:26px; font-weight:600; margin-bottom:8px;}
-  .demo-section .demo-sub{color:var(--muted); font-size:15px; margin-bottom:40px;}
+  .demo-section .demo-sub{color:var(--muted); font-size:15px; margin-bottom:32px;}
 
-  .demo-stage{position:relative; background:#0F1318; border-radius:20px; overflow:hidden; padding:48px 40px 40px;}
-  .demo-title{text-align:center; color:#fff; font-size:14px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; margin-bottom:40px; opacity:.6;}
+  /* Video player shell */
+  .vplayer{background:#0A0D12; border-radius:20px; overflow:hidden; box-shadow:0 32px 80px rgba(0,0,0,.28);}
+  .vplayer-screen{position:relative; cursor:pointer; user-select:none;}
+  .vplayer-screen canvas{display:block; width:100%; height:auto;}
 
-  /* Timeline steps */
-  .timeline{display:flex; align-items:flex-start; gap:0; position:relative; margin-bottom:48px;}
-  .timeline::before{content:''; position:absolute; top:24px; left:calc(16.6% + 12px); right:calc(16.6% + 12px); height:2px; background:rgba(255,255,255,.1);}
-  .t-step{flex:1; text-align:center; position:relative;}
-  .t-dot{width:48px; height:48px; border-radius:50%; margin:0 auto 12px; display:flex; align-items:center; justify-content:center; font-size:20px; border:2px solid rgba(255,255,255,.1); background:#1A2030; transition:all .4s ease; position:relative; z-index:1;}
-  .t-step.active .t-dot{background:var(--accent); border-color:var(--accent); box-shadow:0 0 0 6px rgba(124,139,122,.2);}
-  .t-step.done .t-dot{background:#3a4a38; border-color:var(--accent);}
-  .t-label{color:rgba(255,255,255,.5); font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; line-height:1.4; transition:color .3s ease;}
-  .t-step.active .t-label, .t-step.done .t-label{color:rgba(255,255,255,.9);}
-  .t-time{color:rgba(255,255,255,.3); font-size:10px; margin-top:4px; font-variant-numeric:tabular-nums; transition:color .3s ease;}
-  .t-step.active .t-time, .t-step.done .t-time{color:var(--accent);}
+  /* Big play overlay */
+  .play-overlay{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(10,13,18,.55); transition:opacity .3s ease; pointer-events:none;}
+  .play-overlay.hidden{opacity:0;}
+  .play-btn-big{width:72px; height:72px; border-radius:50%; background:rgba(255,255,255,.92); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 32px rgba(0,0,0,.4); transition:transform .2s ease;}
+  .play-btn-big svg{width:26px; height:26px; fill:#0A0D12; margin-left:4px;}
+  .vplayer-screen:hover .play-btn-big{transform:scale(1.08);}
 
-  /* Animation canvas area */
-  .demo-canvas{position:relative; height:260px; display:flex; align-items:center; justify-content:center;}
+  /* HUD overlays on canvas */
+  .hud-badge{position:absolute; top:16px; left:20px; background:rgba(10,13,18,.7); backdrop-filter:blur(6px); color:#fff; font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:6px 12px; border-radius:6px; border:1px solid rgba(255,255,255,.1);}
+  .hud-ms{position:absolute; top:16px; right:20px; font-size:22px; font-weight:700; color:#fff; font-variant-numeric:tabular-nums; background:rgba(10,13,18,.7); backdrop-filter:blur(6px); padding:6px 14px; border-radius:8px; min-width:100px; text-align:right; letter-spacing:.02em;}
+  .hud-ms span{font-size:12px; font-weight:400; color:rgba(255,255,255,.5); margin-left:3px;}
+  .hud-alert{position:absolute; bottom:72px; left:50%; transform:translateX(-50%); background:#d63030; color:#fff; font-size:12px; font-weight:700; letter-spacing:.1em; padding:8px 20px; border-radius:8px; white-space:nowrap; opacity:0; transition:opacity .25s ease;}
+  .hud-alert.show{opacity:1;}
 
-  /* Person figure */
-  .figure{position:relative; width:200px; height:240px;}
-  .figure svg{width:100%; height:100%;}
+  /* Controls bar */
+  .vcontrols{background:#0F1318; padding:12px 18px 14px; display:flex; flex-direction:column; gap:10px;}
+  .vcontrols-top{display:flex; align-items:center; gap:14px;}
+  .vc-play{width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,.1); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:background .2s ease;}
+  .vc-play:hover{background:rgba(255,255,255,.18);}
+  .vc-play svg{fill:#fff; width:14px; height:14px; margin-left:2px;}
+  .vc-play.playing svg{margin-left:0;}
+  .vc-time{color:rgba(255,255,255,.5); font-size:12px; font-variant-numeric:tabular-nums; flex-shrink:0;}
+  .vc-title{color:rgba(255,255,255,.7); font-size:12px; flex:1; text-align:center; letter-spacing:.06em; text-transform:uppercase;}
+  .vc-replay{background:none; border:1px solid rgba(255,255,255,.15); color:rgba(255,255,255,.6); font-size:11px; padding:5px 12px; border-radius:6px; cursor:pointer; font-family:inherit; transition:border-color .2s, color .2s; white-space:nowrap;}
+  .vc-replay:hover{border-color:rgba(255,255,255,.4); color:#fff;}
 
-  /* Sensor pulse rings */
-  .pulse-ring{position:absolute; top:28px; left:50%; transform:translateX(-50%); width:20px; height:20px; opacity:0;}
-  .pulse-ring::before, .pulse-ring::after{content:''; position:absolute; inset:-8px; border-radius:50%; border:2px solid #7fba3a; animation:none;}
-  .pulse-ring.active::before{animation:pulseOut .9s ease-out infinite;}
-  .pulse-ring.active::after{animation:pulseOut .9s .45s ease-out infinite;}
-  @keyframes pulseOut{0%{opacity:.8; transform:scale(.6);} 100%{opacity:0; transform:scale(2.2);}}
+  /* Progress bar */
+  .vprogress{height:4px; background:rgba(255,255,255,.12); border-radius:2px; cursor:pointer; position:relative;}
+  .vprogress-fill{height:100%; background:var(--accent); border-radius:2px; width:0%; transition:width .1s linear; pointer-events:none;}
+  .vprogress:hover .vprogress-fill{background:#9fd49b;}
 
-  /* Airbag inflate */
-  .airbag{position:absolute; top:6px; left:50%; transform:translateX(-50%) scale(0); width:120px; height:100px; opacity:0; transition:none;}
-  .airbag.inflate{animation:inflateAirbag .18s cubic-bezier(.17,.67,.52,1.4) forwards;}
-  .airbag.inflate-hold{transform:translateX(-50%) scale(1); opacity:1;}
-  @keyframes inflateAirbag{0%{transform:translateX(-50%) scale(0); opacity:0;} 100%{transform:translateX(-50%) scale(1); opacity:1;}}
-
-  /* Tilt animation for the figure */
-  .figure-wrap{transition:transform .4s ease;}
-  .figure-wrap.tilting{animation:tiltFall .6s ease-in forwards;}
-  @keyframes tiltFall{0%{transform:rotate(0deg) translateY(0);} 40%{transform:rotate(-18deg) translateY(8px);} 60%{transform:rotate(-22deg) translateY(12px);} 100%{transform:rotate(-18deg) translateY(10px);}}
-
-  /* Alert flash */
-  .alert-flash{position:absolute; top:12px; right:20px; background:#e84040; color:#fff; font-size:10px; font-weight:700; letter-spacing:.08em; padding:5px 10px; border-radius:6px; opacity:0; transform:scale(.8); transition:opacity .2s ease, transform .2s ease;}
-  .alert-flash.show{opacity:1; transform:scale(1);}
-
-  /* ms counter */
-  .ms-counter{position:absolute; bottom:12px; left:50%; transform:translateX(-50%); color:rgba(255,255,255,.3); font-size:11px; font-variant-numeric:tabular-nums; letter-spacing:.04em; min-width:120px; text-align:center;}
-  .ms-counter.active{color:rgba(255,255,255,.7);}
-
-  /* Status bar */
-  .status-bar{background:rgba(255,255,255,.05); border-radius:10px; padding:12px 20px; display:flex; align-items:center; gap:12px;}
-  .status-dot{width:8px; height:8px; border-radius:50%; background:#3fba5a; flex-shrink:0; box-shadow:0 0 0 3px rgba(63,186,90,.2);}
-  .status-dot.alert{background:#e84040; box-shadow:0 0 0 3px rgba(232,64,64,.2);}
-  .status-text{color:rgba(255,255,255,.6); font-size:12px; flex:1;}
-  .status-text strong{color:rgba(255,255,255,.9);}
-
-  /* Replay button */
-  .replay-btn{margin-top:20px; display:block; width:100%; padding:12px; background:rgba(255,255,255,.06); color:rgba(255,255,255,.7); border:1px solid rgba(255,255,255,.1); border-radius:10px; font-size:13px; cursor:pointer; text-align:center; transition:background .2s ease, color .2s ease; font-family:inherit;}
-  .replay-btn:hover{background:rgba(255,255,255,.1); color:#fff;}
+  /* Caption strip */
+  .vcaption{font-size:12px; color:rgba(255,255,255,.45); text-align:center; margin-top:2px; min-height:18px; letter-spacing:.04em; transition:color .3s;}
 
   /* Stats row */
   .stats-row{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:48px;}
@@ -228,108 +208,41 @@
     </div>
   </div>
 
-  <!-- ── DEMO SECTION ── -->
+  <!-- ── VIDEO DEMO SECTION ── -->
   <div class="demo-section section">
     <h2>See It In Action</h2>
-    <p class="demo-sub">From fall detection to full deployment — in under 80 milliseconds.</p>
+    <p class="demo-sub">From fall detection to full airbag deployment — in under 80 milliseconds.</p>
 
-    <div class="demo-stage" id="demoStage">
-      <p class="demo-title">MEND AirGuard™ — Live Simulation</p>
-
-      <!-- Timeline -->
-      <div class="timeline">
-        <div class="t-step" id="step0">
-          <div class="t-dot">🟢</div>
-          <div class="t-label">Monitoring</div>
-          <div class="t-time">Always on</div>
-        </div>
-        <div class="t-step" id="step1">
-          <div class="t-dot">📡</div>
-          <div class="t-label">Fall Detected</div>
-          <div class="t-time">0 ms</div>
-        </div>
-        <div class="t-step" id="step2">
-          <div class="t-dot">⚡</div>
-          <div class="t-label">Trigger Fired</div>
-          <div class="t-time">12 ms</div>
-        </div>
-        <div class="t-step" id="step3">
-          <div class="t-dot">💨</div>
-          <div class="t-label">Inflating</div>
-          <div class="t-time">35 ms</div>
-        </div>
-        <div class="t-step" id="step4">
-          <div class="t-dot">🛡</div>
-          <div class="t-label">Protected</div>
-          <div class="t-time">80 ms</div>
-        </div>
-        <div class="t-step" id="step5">
-          <div class="t-dot">📱</div>
-          <div class="t-label">Alert Sent</div>
-          <div class="t-time">~2 sec</div>
-        </div>
-      </div>
-
-      <!-- Animation canvas -->
-      <div class="demo-canvas">
-        <div class="alert-flash" id="alertFlash">⚠ FALL DETECTED</div>
-        <div class="figure-wrap" id="figureWrap">
-          <div class="figure">
-            <!-- Airbag SVG overlay -->
-            <div class="airbag" id="airbag">
-              <svg viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg">
-                <!-- Main airbag cushion -->
-                <ellipse cx="60" cy="55" rx="54" ry="36" fill="rgba(124,185,120,0.85)" opacity=".9"/>
-                <!-- Inner highlight -->
-                <ellipse cx="54" cy="48" rx="30" ry="18" fill="rgba(255,255,255,0.18)"/>
-                <!-- MEND cross logo -->
-                <rect x="55" y="48" width="10" height="3" rx="1.5" fill="rgba(255,255,255,.7)"/>
-                <rect x="58.5" y="44.5" width="3" height="10" rx="1.5" fill="rgba(255,255,255,.7)"/>
-                <!-- Texture lines -->
-                <ellipse cx="60" cy="55" rx="53" ry="35" fill="none" stroke="rgba(80,140,80,.4)" stroke-width="1"/>
-                <ellipse cx="60" cy="55" rx="40" ry="26" fill="none" stroke="rgba(80,140,80,.3)" stroke-width="1"/>
-              </svg>
-            </div>
-            <!-- Pulse sensor indicator -->
-            <div class="pulse-ring" id="pulseRing"></div>
-            <!-- Person SVG -->
-            <svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
-              <!-- Body -->
-              <rect x="70" y="110" width="60" height="90" rx="8" fill="#7C8B7A" opacity=".8"/>
-              <!-- Legs -->
-              <rect x="74" y="190" width="22" height="46" rx="6" fill="#677866"/>
-              <rect x="104" y="190" width="22" height="46" rx="6" fill="#677866"/>
-              <!-- Arms -->
-              <rect x="40" y="112" width="28" height="16" rx="8" fill="#7C8B7A" opacity=".7" transform="rotate(15 54 120)"/>
-              <rect x="132" y="112" width="28" height="16" rx="8" fill="#7C8B7A" opacity=".7" transform="rotate(-15 146 120)"/>
-              <!-- Neck -->
-              <rect x="88" y="90" width="24" height="24" rx="4" fill="#c4a882"/>
-              <!-- Head -->
-              <ellipse cx="100" cy="72" rx="28" ry="32" fill="#c4a882"/>
-              <!-- Face features -->
-              <ellipse cx="92" cy="68" rx="4" ry="5" fill="#a07850" opacity=".4"/>
-              <ellipse cx="108" cy="68" rx="4" ry="5" fill="#a07850" opacity=".4"/>
-              <path d="M 92 82 Q 100 88 108 82" stroke="#a07850" stroke-width="2" fill="none" stroke-linecap="round" opacity=".5"/>
-              <!-- Hair -->
-              <ellipse cx="100" cy="46" rx="28" ry="16" fill="#6b4226" opacity=".7"/>
-              <!-- Collar device (deflated) -->
-              <rect x="82" y="100" width="36" height="10" rx="5" fill="#5a6b58" id="collarDeflated"/>
-              <!-- MEND logo on collar -->
-              <rect x="96" y="103" width="8" height="2.5" rx="1.2" fill="#9fd49b"/>
-              <rect x="98.5" y="101" width="2.5" height="7" rx="1.2" fill="#9fd49b"/>
-            </svg>
+    <div class="vplayer">
+      <!-- Screen -->
+      <div class="vplayer-screen" id="vscreen" onclick="togglePlay()">
+        <canvas id="demoCanvas" width="900" height="506"></canvas>
+        <!-- HUD overlays -->
+        <div class="hud-badge">MEND AirGuard™ — Live Simulation</div>
+        <div class="hud-ms" id="hudMs">—</div>
+        <div class="hud-alert" id="hudAlert">⚠ FALL DETECTED</div>
+        <!-- Big play button shown when paused -->
+        <div class="play-overlay" id="playOverlay">
+          <div class="play-btn-big">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
           </div>
         </div>
-        <div class="ms-counter" id="msCounter">Press "Run Demo" to start</div>
       </div>
-
-      <!-- Status bar -->
-      <div class="status-bar" id="statusBar">
-        <div class="status-dot" id="statusDot"></div>
-        <div class="status-text" id="statusText"><strong>AirGuard™ Active</strong> — Monitoring gait patterns. No anomalies detected.</div>
+      <!-- Controls -->
+      <div class="vcontrols">
+        <div class="vprogress" id="vprogress" onclick="seekDemo(event)">
+          <div class="vprogress-fill" id="vpFill"></div>
+        </div>
+        <div class="vcontrols-top">
+          <button class="vc-play" id="vcPlayBtn" onclick="togglePlay()" title="Play / Pause">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </button>
+          <span class="vc-time" id="vcTime">0:00 / 0:08</span>
+          <span class="vc-title">AirGuard™ Deployment Demo</span>
+          <button class="vc-replay" onclick="replayDemo()">↺ Replay</button>
+        </div>
+        <div class="vcaption" id="vcCaption">Press play to start the demo</div>
       </div>
-
-      <button class="replay-btn" id="replayBtn" onclick="runDemo()">▶ Run Demo</button>
     </div>
   </div>
 
@@ -393,7 +306,7 @@
 </div>
 
 <script>
-// Gallery
+// ── Gallery ──
 function setImg(btn, src, alt) {
   document.querySelectorAll('.gallery-thumbs button').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
@@ -402,121 +315,447 @@ function setImg(btn, src, alt) {
   setTimeout(() => { img.src = src; img.alt = alt; img.style.opacity = '1'; }, 200);
 }
 
-// Scroll reveal
+// ── Scroll reveal ──
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view'); });
 }, { threshold: 0.1 });
 document.querySelectorAll('.section').forEach(s => observer.observe(s));
 
-// ── DEMO ──
-let demoRunning = false;
+// ══════════════════════════════════════════
+// CANVAS VIDEO DEMO
+// ══════════════════════════════════════════
+const canvas = document.getElementById('demoCanvas');
+const ctx = canvas.getContext('2d');
+const W = canvas.width, H = canvas.height;
 
-function resetDemo() {
-  document.querySelectorAll('.t-step').forEach(s => s.classList.remove('active','done'));
-  document.getElementById('step0').classList.add('active');
-  document.getElementById('figureWrap').classList.remove('tilting');
-  document.getElementById('figureWrap').style.animation = 'none';
-  document.getElementById('airbag').className = 'airbag';
-  document.getElementById('airbag').style.opacity = '0';
-  document.getElementById('pulseRing').classList.remove('active');
-  document.getElementById('alertFlash').classList.remove('show');
-  document.getElementById('statusDot').classList.remove('alert');
-  document.getElementById('statusText').innerHTML = '<strong>AirGuard™ Active</strong> — Monitoring gait patterns. No anomalies detected.';
-  document.getElementById('msCounter').className = 'ms-counter';
-  document.getElementById('msCounter').textContent = '';
-  document.getElementById('replayBtn').textContent = '▶ Run Demo';
-}
+// Total demo duration in seconds
+const TOTAL = 8.5;
 
-function activateStep(stepId) {
-  const prev = parseInt(stepId.replace('step','')) - 1;
-  if (prev >= 0) document.getElementById('step'+prev).classList.replace('active','done');
-  document.getElementById(stepId).classList.add('active');
-}
+// Playback state
+let playing = false;
+let t = 0;          // current time in seconds
+let lastTs = null;
+let rafId = null;
 
-function msCount(from, to, duration, suffix, cb) {
-  const el = document.getElementById('msCounter');
-  el.classList.add('active');
-  const start = performance.now();
-  function tick(now) {
-    const p = Math.min((now - start) / duration, 1);
-    const val = Math.round(from + (to - from) * p);
-    el.textContent = val + suffix;
-    if (p < 1) requestAnimationFrame(tick); else { el.textContent = to + suffix; if(cb) cb(); }
+// ── Scene keyframes (t in seconds) ──
+// 0.0–1.8  : idle walking, sensors pulsing green
+// 1.8–2.2  : anomaly flash, figure starts tilting
+// 2.2–2.6  : trigger fired label, tilt continues
+// 2.6–3.0  : CO₂ fires, airbag begins inflating
+// 3.0–3.4  : airbag fully inflated
+// 3.4–5.5  : deployed state, green glow
+// 5.5–7.0  : alert sent, phone graphic
+// 7.0–8.5  : fade to "Protected" end card
+
+function easeInOut(x) { return x < 0.5 ? 2*x*x : 1-Math.pow(-2*x+2,2)/2; }
+function clamp(v,a,b){ return Math.max(a,Math.min(b,v)); }
+function lerp(a,b,t){ return a+(b-a)*t; }
+function invlerp(a,b,v){ return clamp((v-a)/(b-a),0,1); }
+function range(t0,t1,v){ return easeInOut(invlerp(t0,t1,v)); }
+
+// Skin / brand colours
+const SKIN  = '#C4A882';
+const HAIR  = '#6B4226';
+const SHIRT = '#7C8B7A';
+const PANT  = '#677866';
+const COLLAR= '#4A5C48';
+const TEAL  = '#7FC49B';
+const BG1   = '#0A0D12';
+const BG2   = '#111720';
+
+function drawScene(t) {
+  // Background gradient
+  const bg = ctx.createLinearGradient(0, 0, 0, H);
+  bg.addColorStop(0, '#0D1520');
+  bg.addColorStop(1, '#070A0F');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // Subtle grid
+  ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+  ctx.lineWidth = 1;
+  for (let x = 0; x < W; x += 60) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
+  for (let y = 0; y < H; y += 60) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
+
+  // Floor line
+  const floorY = H * 0.82;
+  ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(0, floorY); ctx.lineTo(W, floorY); ctx.stroke();
+
+  // ── Figure position ──
+  const cx = W / 2, cy = H * 0.38;
+
+  // Figure tilt angle: 0 → -32deg over 1.8–2.8s, then hold
+  const tiltP = range(1.8, 2.8, t);
+  const tiltAngle = -32 * tiltP * (Math.PI / 180);
+
+  // Drop due to fall
+  const dropY = lerp(0, H * 0.09, tiltP);
+
+  ctx.save();
+  ctx.translate(cx, cy + dropY);
+  ctx.rotate(tiltAngle);
+
+  drawPerson(t);
+
+  ctx.restore();
+
+  // ── Sensor wave rings (idle phase) ──
+  if (t < 1.8) {
+    const pulseT = (t % 1.2) / 1.2;
+    for (let i = 0; i < 2; i++) {
+      const p = ((pulseT + i * 0.5) % 1);
+      const r = lerp(18, 60, p);
+      const alpha = (1 - p) * 0.5;
+      ctx.beginPath();
+      ctx.arc(cx, cy - H*0.1 + dropY, r, 0, Math.PI*2);
+      ctx.strokeStyle = `rgba(127,196,155,${alpha})`;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
   }
-  requestAnimationFrame(tick);
-}
 
-async function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-
-async function runDemo() {
-  if (demoRunning) return;
-  demoRunning = true;
-  document.getElementById('replayBtn').textContent = '⏳ Running...';
-  resetDemo();
-  await sleep(300);
-
-  // Step 0: monitoring (already active)
-  document.getElementById('msCounter').textContent = 'Monitoring...';
-
-  await sleep(1400);
-
-  // Step 1: fall detected
-  activateStep('step1');
-  document.getElementById('statusDot').classList.add('alert');
-  document.getElementById('statusText').innerHTML = '<strong>⚠ ANOMALY DETECTED</strong> — Fall signature identified. Triggering deployment sequence.';
-  document.getElementById('alertFlash').classList.add('show');
-  document.getElementById('pulseRing').classList.add('active');
-
-  // Start tilt
-  const fw = document.getElementById('figureWrap');
-  fw.style.animation = '';
-  fw.style.transition = 'transform .55s ease-in';
-  fw.style.transform = 'rotate(-20deg) translateY(10px)';
-
-  msCount(0, 12, 600, ' ms');
-  await sleep(600);
-
-  // Step 2: trigger fired
-  activateStep('step2');
-  document.getElementById('statusText').innerHTML = '<strong>⚡ TRIGGER FIRED</strong> — CO₂ valve open. Inflating cushion.';
-  msCount(12, 35, 500, ' ms');
-  await sleep(500);
-
-  // Step 3: inflating
-  activateStep('step3');
-  const airbag = document.getElementById('airbag');
-  airbag.className = 'airbag inflate';
-  msCount(35, 80, 400, ' ms');
-  await sleep(420);
-  airbag.className = 'airbag inflate-hold';
-
-  // Step 4: protected
-  activateStep('step4');
-  document.getElementById('alertFlash').classList.remove('show');
-  document.getElementById('statusDot').classList.remove('alert');
-  document.getElementById('statusText').innerHTML = '<strong>🛡 PROTECTED</strong> — Head and neck cushion fully deployed. Monitoring impact.';
-  document.getElementById('msCounter').textContent = '80 ms — Fully deployed';
-  await sleep(1000);
-
-  // Step 5: alert sent
-  activateStep('step5');
-  document.getElementById('step4').classList.replace('active','done');
-  document.getElementById('statusText').innerHTML = '<strong>📱 ALERT SENT</strong> — Emergency contacts notified with GPS location. Medical team dispatched.';
-  await sleep(1200);
-
-  demoRunning = false;
-  document.getElementById('replayBtn').textContent = '↺ Replay Demo';
-}
-
-// Auto-run when section scrolls into view
-let autoRan = false;
-const demoObserver = new IntersectionObserver(entries => {
-  if (entries[0].isIntersecting && !autoRan) {
-    autoRan = true;
-    setTimeout(runDemo, 600);
+  // ── Alert flash (1.8–2.4s) ──
+  if (t >= 1.8 && t < 2.4) {
+    const fp = range(1.8, 2.0, t) * (1 - range(2.2, 2.4, t));
+    ctx.fillStyle = `rgba(214,48,48,${fp * 0.18})`;
+    ctx.fillRect(0, 0, W, H);
   }
-}, { threshold: 0.4 });
-demoObserver.observe(document.getElementById('demoStage'));
+
+  // ── Airbag inflation (2.6–3.2s) ──
+  const bagP = range(2.6, 3.2, t);
+  if (bagP > 0) {
+    ctx.save();
+    ctx.translate(cx, cy + dropY);
+    ctx.rotate(tiltAngle);
+    drawAirbag(bagP, t);
+    ctx.restore();
+  }
+
+  // ── Alert sent phone (5.5–7.5s) ──
+  if (t >= 5.5) {
+    const phoneP = range(5.5, 6.2, t);
+    drawPhone(W * 0.78, H * 0.3, phoneP, t);
+  }
+
+  // ── End card (7.5–8.5s) ──
+  if (t >= 7.5) {
+    const endP = range(7.5, 8.2, t);
+    ctx.fillStyle = `rgba(10,13,18,${endP * 0.82})`;
+    ctx.fillRect(0, 0, W, H);
+    if (endP > 0.3) {
+      const textAlpha = range(7.8, 8.3, t);
+      ctx.textAlign = 'center';
+      ctx.fillStyle = `rgba(127,196,155,${textAlpha})`;
+      ctx.font = `bold ${Math.round(H*0.065)}px Inter,sans-serif`;
+      ctx.fillText('Protected.', W/2, H/2 - 20);
+      ctx.fillStyle = `rgba(255,255,255,${textAlpha * 0.5})`;
+      ctx.font = `${Math.round(H*0.028)}px Inter,sans-serif`;
+      ctx.fillText('MEND AirGuard™ deployed in under 80ms', W/2, H/2 + 28);
+      ctx.textAlign = 'left';
+    }
+  }
+
+  // ── HUD ms counter ──
+  updateHUD(t);
+}
+
+function drawPerson(t) {
+  const s = H / 506; // scale factor
+
+  // Legs
+  roundRect(ctx, -22*s, 80*s, 18*s, 55*s, 6*s, PANT);
+  roundRect(ctx, 4*s,   80*s, 18*s, 55*s, 6*s, PANT);
+
+  // Body
+  roundRect(ctx, -28*s, -5*s, 56*s, 88*s, 8*s, SHIRT);
+
+  // Arms
+  ctx.save();
+  ctx.translate(-28*s, 10*s);
+  ctx.rotate(0.25);
+  roundRect(ctx, -26*s, -7*s, 28*s, 14*s, 7*s, SHIRT);
+  ctx.restore();
+
+  ctx.save();
+  ctx.translate(28*s, 10*s);
+  ctx.rotate(-0.25);
+  roundRect(ctx, -2*s, -7*s, 28*s, 14*s, 7*s, SHIRT);
+  ctx.restore();
+
+  // Neck
+  roundRect(ctx, -10*s, -22*s, 20*s, 22*s, 4*s, SKIN);
+
+  // Head
+  ctx.beginPath();
+  ctx.ellipse(0, -52*s, 24*s, 28*s, 0, 0, Math.PI*2);
+  ctx.fillStyle = SKIN;
+  ctx.fill();
+
+  // Hair
+  ctx.beginPath();
+  ctx.ellipse(0, -68*s, 24*s, 14*s, 0, 0, Math.PI*2);
+  ctx.fillStyle = HAIR;
+  ctx.fill();
+
+  // Eyes
+  ctx.fillStyle = 'rgba(100,64,30,0.5)';
+  ctx.beginPath(); ctx.ellipse(-8*s, -54*s, 3.5*s, 4*s, 0, 0, Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.ellipse( 8*s, -54*s, 3.5*s, 4*s, 0, 0, Math.PI*2); ctx.fill();
+
+  // Collar device (deflated band)
+  const collarAlpha = t < 2.6 ? 1 : Math.max(0, 1 - range(2.6, 3.0, t));
+  if (collarAlpha > 0) {
+    ctx.save();
+    ctx.globalAlpha = collarAlpha;
+    roundRect(ctx, -20*s, -10*s, 40*s, 10*s, 5*s, COLLAR);
+    // MEND cross
+    ctx.fillStyle = TEAL;
+    ctx.fillRect(-2*s, -8*s, 4*s, 2*s);
+    ctx.fillRect(-1*s, -10*s, 2*s, 6*s);
+    ctx.restore();
+  }
+}
+
+function drawAirbag(p, t) {
+  const s = H / 506;
+  const scaleP = easeInOut(p);
+
+  ctx.save();
+  ctx.scale(scaleP, scaleP);
+
+  // Outer glow
+  const glowGrad = ctx.createRadialGradient(0, -40*s, 10*s, 0, -40*s, 80*s);
+  glowGrad.addColorStop(0, 'rgba(127,196,155,0.25)');
+  glowGrad.addColorStop(1, 'rgba(127,196,155,0)');
+  ctx.fillStyle = glowGrad;
+  ctx.beginPath();
+  ctx.ellipse(0, -40*s, 80*s, 56*s, 0, 0, Math.PI*2);
+  ctx.fill();
+
+  // Main bag
+  const bagGrad = ctx.createRadialGradient(-14*s, -55*s, 5*s, 0, -44*s, 60*s);
+  bagGrad.addColorStop(0, 'rgba(160,220,175,0.92)');
+  bagGrad.addColorStop(0.6, 'rgba(100,175,130,0.88)');
+  bagGrad.addColorStop(1, 'rgba(60,130,90,0.75)');
+  ctx.beginPath();
+  ctx.ellipse(0, -46*s, 56*s, 38*s, 0, 0, Math.PI*2);
+  ctx.fillStyle = bagGrad;
+  ctx.fill();
+
+  // Inner highlight
+  ctx.beginPath();
+  ctx.ellipse(-10*s, -58*s, 28*s, 16*s, -0.3, 0, Math.PI*2);
+  ctx.fillStyle = 'rgba(255,255,255,0.18)';
+  ctx.fill();
+
+  // Seam lines
+  ctx.strokeStyle = 'rgba(40,100,60,0.35)';
+  ctx.lineWidth = 1.5*s;
+  ctx.beginPath(); ctx.ellipse(0, -46*s, 55*s, 37*s, 0, 0, Math.PI*2); ctx.stroke();
+  ctx.beginPath(); ctx.ellipse(0, -46*s, 38*s, 24*s, 0, 0, Math.PI*2); ctx.stroke();
+
+  // MEND cross logo on bag
+  ctx.fillStyle = 'rgba(255,255,255,0.75)';
+  roundRect(ctx, -6*s, -50*s, 12*s, 3*s, 1.5*s, 'rgba(255,255,255,0.75)');
+  roundRect(ctx, -1.5*s, -55*s, 3*s, 13*s, 1.5*s, 'rgba(255,255,255,0.75)');
+
+  // Pulse glow when deployed
+  if (t >= 3.2) {
+    const glowT = (t - 3.2) % 1.5 / 1.5;
+    const gr = 50 + glowT * 40;
+    ctx.beginPath();
+    ctx.ellipse(0, -46*s, gr*s, gr*0.65*s, 0, 0, Math.PI*2);
+    ctx.strokeStyle = `rgba(127,196,155,${(1-glowT)*0.3})`;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  }
+
+  ctx.restore();
+}
+
+function drawPhone(px, py, p, t) {
+  if (p <= 0) return;
+  const s = p;
+  const pw = 70 * s, ph = 120 * s;
+
+  ctx.save();
+  ctx.globalAlpha = p;
+  ctx.translate(px, py);
+
+  // Phone body
+  roundRectFill(ctx, -pw/2, -ph/2, pw, ph, 10*s, '#1A2030');
+  ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.roundRect(-pw/2, -ph/2, pw, ph, 10*s);
+  ctx.stroke();
+
+  // Screen
+  roundRectFill(ctx, -pw/2+4*s, -ph/2+10*s, pw-8*s, ph-20*s, 6*s, '#0D1520');
+
+  // Alert on screen
+  if (p > 0.5) {
+    const ap = range(0.5, 0.85, p);
+    ctx.fillStyle = `rgba(214,48,48,${ap * 0.9})`;
+    ctx.beginPath();
+    ctx.roundRect(-pw/2+6*s, -ph/2+14*s, pw-12*s, 28*s, 4*s);
+    ctx.fill();
+
+    ctx.fillStyle = `rgba(255,255,255,${ap})`;
+    ctx.font = `bold ${Math.round(7*s)}px Inter,sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.fillText('FALL DETECTED', 0, -ph/2+28*s);
+
+    ctx.fillStyle = `rgba(255,255,255,${ap*0.65})`;
+    ctx.font = `${Math.round(5*s)}px Inter,sans-serif`;
+    ctx.fillText('Mary · GPS sent', 0, -ph/2+38*s);
+
+    // Pulsing dot
+    const dotT = ((t - 5.5) % 0.8) / 0.8;
+    ctx.beginPath();
+    ctx.arc(0, -ph/2+52*s, (4 + dotT*6)*s, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(127,196,155,${(1-dotT)*0.6})`;
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(0, -ph/2+52*s, 4*s, 0, Math.PI*2);
+    ctx.fillStyle = TEAL;
+    ctx.fill();
+
+    ctx.fillStyle = `rgba(255,255,255,${ap*0.5})`;
+    ctx.font = `${Math.round(5*s)}px Inter,sans-serif`;
+    ctx.fillText('Emergency contacts notified', 0, -ph/2+64*s);
+    ctx.textAlign = 'left';
+  }
+
+  ctx.restore();
+}
+
+function roundRect(ctx, x, y, w, h, r, fill) {
+  ctx.beginPath();
+  ctx.roundRect(x, y, w, h, r);
+  ctx.fillStyle = fill;
+  ctx.fill();
+}
+function roundRectFill(ctx, x, y, w, h, r, fill) {
+  roundRect(ctx, x, y, w, h, r, fill);
+}
+
+// HUD captions per time segment
+const CAPTIONS = [
+  [0,    1.8,  '🟢  Monitoring — AirGuard™ active, sensors calibrated to your gait'],
+  [1.8,  2.2,  '⚠️  Anomaly detected — fall signature identified in 12ms'],
+  [2.2,  2.6,  '⚡  Trigger fired — CO₂ valve opens, inflation sequence initiated'],
+  [2.6,  3.2,  '💨  Inflating — protective cushion deploying around head and neck'],
+  [3.2,  5.5,  '🛡  Protected — full deployment in under 80ms, impact absorbed'],
+  [5.5,  7.5,  '📱  Alert sent — emergency contacts notified with GPS in ~2 seconds'],
+  [7.5,  8.5,  '✅  MEND AirGuard™ — because every second before impact matters'],
+];
+
+function updateHUD(t) {
+  // ms counter
+  const hudMs = document.getElementById('hudMs');
+  if (t < 1.8) {
+    hudMs.innerHTML = '—';
+  } else if (t < 5.5) {
+    const ms = Math.min(80, Math.round(lerp(0, 80, invlerp(1.8, 3.2, t))));
+    hudMs.innerHTML = `${ms}<span>ms</span>`;
+    hudMs.style.color = t < 3.2 ? '#e84040' : '#7FC49B';
+  } else {
+    hudMs.innerHTML = `80<span>ms</span>`;
+    hudMs.style.color = '#7FC49B';
+  }
+
+  // Alert badge
+  const alert = document.getElementById('hudAlert');
+  const showAlert = t >= 1.8 && t < 3.2;
+  alert.classList.toggle('show', showAlert);
+
+  // Caption
+  const cap = document.getElementById('vcCaption');
+  for (const [s, e, txt] of CAPTIONS) {
+    if (t >= s && t < e) { cap.textContent = txt; break; }
+  }
+
+  // Progress bar
+  const pct = Math.min(100, (t / TOTAL) * 100);
+  document.getElementById('vpFill').style.width = pct + '%';
+
+  // Time display
+  const secs = Math.floor(t);
+  const total = Math.floor(TOTAL);
+  document.getElementById('vcTime').textContent =
+    `0:${String(secs).padStart(2,'0')} / 0:${String(total).padStart(2,'0')}`;
+
+  // Play/pause icon swap
+  const btn = document.getElementById('vcPlayBtn');
+  if (playing) {
+    btn.innerHTML = `<svg viewBox="0 0 24 24" style="fill:#fff;width:14px;height:14px;margin-left:0"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>`;
+  } else {
+    btn.innerHTML = `<svg viewBox="0 0 24 24" style="fill:#fff;width:14px;height:14px;margin-left:2px"><polygon points="5,3 19,12 5,21"/></svg>`;
+  }
+
+  // Play overlay
+  document.getElementById('playOverlay').classList.toggle('hidden', playing);
+}
+
+function renderFrame(ts) {
+  if (!playing) return;
+  if (lastTs !== null) {
+    const dt = (ts - lastTs) / 1000;
+    t = Math.min(t + dt, TOTAL);
+  }
+  lastTs = ts;
+  drawScene(t);
+  if (t < TOTAL) {
+    rafId = requestAnimationFrame(renderFrame);
+  } else {
+    playing = false;
+    updateHUD(t);
+  }
+}
+
+function togglePlay() {
+  if (t >= TOTAL) { replayDemo(); return; }
+  playing = !playing;
+  if (playing) {
+    lastTs = null;
+    rafId = requestAnimationFrame(renderFrame);
+  } else {
+    cancelAnimationFrame(rafId);
+    updateHUD(t);
+  }
+}
+
+function replayDemo() {
+  cancelAnimationFrame(rafId);
+  t = 0; lastTs = null; playing = true;
+  rafId = requestAnimationFrame(renderFrame);
+}
+
+function seekDemo(e) {
+  const bar = document.getElementById('vprogress');
+  const rect = bar.getBoundingClientRect();
+  const p = clamp((e.clientX - rect.left) / rect.width, 0, 1);
+  t = p * TOTAL;
+  drawScene(t);
+  if (!playing) updateHUD(t);
+}
+
+// Initial frame
+drawScene(0);
+updateHUD(0);
+
+// Auto-play when scrolled into view
+let autoPlayed = false;
+const vObs = new IntersectionObserver(entries => {
+  if (entries[0].isIntersecting && !autoPlayed) {
+    autoPlayed = true;
+    setTimeout(() => { playing = true; lastTs = null; rafId = requestAnimationFrame(renderFrame); }, 500);
+  }
+}, { threshold: 0.5 });
+vObs.observe(document.getElementById('vscreen'));
 </script>
 </body>
 </html>
