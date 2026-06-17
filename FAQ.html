@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script>document.documentElement.classList.add("js")</script>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ — MEND Medical Apparel</title>
+<meta name="description" content="Frequently asked questions about MEND Medical Apparel — recovery gowns, nurse scrubs, compression socks, AirGuard™ safety collar, shipping, returns, and more.">
+<link rel="canonical" href="https://mendmedicalwear.com/FAQ.html">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XT2M4KBL2R"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XT2M4KBL2R');</script>
+<link rel="stylesheet" href="styles.css">
+<style>
+  .page-hero{padding:64px 0 48px; border-bottom:1px solid var(--line); margin-bottom:56px;}
+  .page-hero .eyebrow{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); font-weight:600; margin-bottom:12px;}
+  .page-hero h1{font-size:40px; font-weight:700; margin-bottom:12px; letter-spacing:-.01em;}
+  .page-hero p{color:var(--muted); font-size:16px; max-width:560px;}
+
+  .faq-nav{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:48px;}
+  .faq-nav a{font-size:13px; padding:7px 16px; border-radius:999px; border:1px solid var(--line); color:var(--fg); text-decoration:none; transition:border-color .2s, background .2s, color .2s;}
+  .faq-nav a:hover{border-color:var(--accent); background:var(--panel); color:var(--accent);}
+
+  .faq-group{margin-bottom:56px;}
+  .faq-group h2{font-size:18px; font-weight:600; margin-bottom:20px; padding-bottom:10px; border-bottom:2px solid var(--accent); display:inline-block;}
+
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-q{width:100%; text-align:left; background:none; border:none; padding:20px 0; font-size:15px; font-weight:600; color:var(--fg); cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:16px; font-family:inherit; line-height:1.4;}
+  .faq-q:hover{color:var(--accent);}
+  .faq-icon{flex-shrink:0; width:22px; height:22px; border-radius:50%; border:1px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:14px; transition:transform .25s ease, border-color .2s, background .2s; color:var(--muted);}
+  .faq-item.open .faq-icon{transform:rotate(45deg); border-color:var(--accent); background:var(--accent); color:#fff;}
+  .faq-a{display:none; padding:0 0 20px; font-size:14px; color:var(--muted); line-height:1.75; max-width:680px;}
+  .faq-item.open .faq-a{display:block;}
+  .faq-a a{color:var(--accent); text-decoration:none;}
+  .faq-a a:hover{text-decoration:underline;}
+
+  .faq-cta{margin-top:64px; background:var(--panel); border-radius:16px; padding:40px; text-align:center;}
+  .faq-cta h3{font-size:22px; font-weight:600; margin-bottom:8px;}
+  .faq-cta p{color:var(--muted); font-size:15px; margin-bottom:24px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a href="index.html" class="logo-link">
+      <img src="mend-logo.svg" alt="MEND Medical Apparel">
+    </a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="index.html#products">Products</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </header>
+
+  <div class="page-hero section">
+    <div class="eyebrow">Support</div>
+    <h1>Frequently Asked Questions</h1>
+    <p>Everything you need to know about our products, orders, and technology. Can't find an answer? <a href="index.html#contact" style="color:var(--accent); text-decoration:none;">Contact us →</a></p>
+  </div>
+
+  <div class="faq-nav section">
+    <a href="#products">Products</a>
+    <a href="#airguard">AirGuard™</a>
+    <a href="#sizing">Sizing & Fit</a>
+    <a href="#orders">Orders & Shipping</a>
+    <a href="#returns">Returns</a>
+    <a href="#care">Care Instructions</a>
+  </div>
+
+  <!-- Products -->
+  <div class="faq-group section" id="products">
+    <h2>Products</h2>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggle(this)">What makes MEND gowns different from standard hospital gowns? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Standard hospital gowns are designed for clinical utility — not for the person wearing them. MEND recovery gowns are made from a soft cotton-merino blend, close fully at the back with a dignified design, and feature short sleeves with a front zip for IV and catheter access. They're machine washable, available in multiple colors, and built to feel like loungewear, not a paper sheet.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggle(this)">Are MEND products available for hospital or facility purchasing? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Yes. We offer bulk pricing for hospitals, rehabilitation centers, assisted living facilities, and home health agencies. Please <a href="index.html#contact">contact us</a> for a wholesale quote and to discuss customization options including embroidered logos.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggle(this)">Are the products FDA-cleared or CE-marked? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Our apparel products (recovery gowns, scrubs, compression socks) are consumer medical-grade apparel and do not require FDA clearance. The MEND AirGuard™ inflatable safety collar is a medical device and is currently <strong>pending FDA 510(k) clearance and CE Mark</strong>. It is available for pre-order only and will ship only after regulatory clearance is received.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggle(this)">What compression level are the MEND socks? <span class="faq-icon">+</span></button>
+      <div class="faq-a">MEND Compression Socks provide 20–30 mmHg graduated compression — the clinical standard for nurses, caregivers, and patients on their feet all day or recovering from surgery. This level is appropriate for most adults and is often recommended by physicians for DVT prevention and edema management. Always consult your doctor if you have a diagnosed circulatory condition.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggle(this)">Can I customize products with our facility's logo or colors? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Yes, for bulk orders of 24+ units we offer embroidery customization on gowns and scrubs. Colors are available across our standard palette. Lead time for custom orders is approximately 3–4 weeks. Contact us at <a href="index.html#contact">contact@mendmedicalwear.com</a> to discuss.</div>
+    </div>
+  </div>
+
+  <!-- AirGuard -->
+  <div class="faq-group section" id="airguard">
+    <h2>AirGuard™ Safety Collar</h2>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggle(this)">How does the AirGuard™ detect a fall? <span class="faq-icon">+</span></button>
+      <div class="faq-a">The AirGuard™ uses a 6-axis IMU (inertial measurement unit) — a combination of accelerometer and gyroscope — sampling motion 800 times per second. Our proprietary FallSense™ AI algorithm runs on the device's embedded processor and is trained to distinguish a genuine fall from normal activities like sitting down quickly, bending over, or bumping into furniture. The algorithm calibrates to the wearer's individual gait and movement patterns over the first few days of use.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggle(this)">What happens after it deploys? <span class="faq-icon">+</span></button>
+      <div class="faq-a">After deployment: (1) the airbag cushion remains inflated for several minutes to protect during the recovery period, (2) the MEND Guardian App sends an automatic alert with GPS location to your designated emergency contacts within ~2 seconds, and (3) the device logs the fall event for review. A replacement CO₂ canister ships automatically if you have our Guardian subscription. The fabric shell is machine washable — only the CO₂ canister needs replacement after each deployment.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggle(this)">What is the false trigger rate? <span class="faq-icon">+</span></button>
+      <div class="faq-a">In our clinical trials, the AirGuard™ had a false trigger rate of under 0.5% — meaning fewer than 1 in 200 wearable-days resulted in an unintended deployment. For context, the device handles high-motion activities like walking on uneven terrain, light exercise, and household tasks without triggering. If a false trigger does occur, replacement CO₂ canisters are available at cost.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggle(this)">When will the AirGuard™ ship? <span class="faq-icon">+</span></button>
+      <div class="faq-a">The AirGuard™ is currently in pre-order. Estimated ship date is <strong>Q3 2026</strong>, pending FDA 510(k) clearance. Pre-order customers will be notified first and charged only at time of shipment. You can cancel your pre-order at any time before shipment with a full refund.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggle(this)">Is the AirGuard™ comfortable to wear all day? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Yes. The deflated collar weighs 210g — similar to a light scarf — and is designed to sit flat against the collarbone and shoulders. The fabric shell is breathable and machine washable. Most wearers in our beta program reported forgetting they were wearing it within the first few days.</div>
+    </div>
+  </div>
+
+  <!-- Sizing -->
+  <div class="faq-group section" id="sizing">
+    <h2>Sizing & Fit</h2>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggle(this)">How do I find my size? <span class="faq-icon">+</span></button>
+      <div class="faq-a">MEND gowns and scrubs are sized XS–3XL. Our sizing runs true to standard US sizing. For gowns, we recommend ordering your usual top size for the best fit. For compression socks, measure the circumference of your calf at its widest point and refer to our size chart: S/M (12–16"), L/XL (16–20"), XL/XXL (20"+).</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggle(this)">Do you offer extended sizing? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Yes. All MEND garments are available through 3XL. We believe recovery wear should fit every body. If you need sizing outside our standard range, please contact us — we accommodate custom sizing for bulk facility orders.</div>
+    </div>
+  </div>
+
+  <!-- Orders & Shipping -->
+  <div class="faq-group section" id="orders">
+    <h2>Orders & Shipping</h2>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggle(this)">Where do you ship? <span class="faq-icon">+</span></button>
+      <div class="faq-a">We currently ship to all 50 US states and US territories. International shipping to Canada, the UK, and the EU is coming in late 2026. Sign up for our mailing list to be notified when international shipping opens.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggle(this)">How long does shipping take? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Standard shipping (free on all orders): 5–7 business days. Expedited shipping (2–3 business days): $12. Overnight shipping: $28. All orders ship from Portland, OR. You'll receive a tracking number via email once your order ships.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggle(this)">Can I change or cancel my order? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Yes, orders can be changed or cancelled within 24 hours of placing them. After 24 hours, orders enter our fulfillment queue and may have already shipped. Contact us immediately at <a href="index.html#contact">contact@mendmedicalwear.com</a> if you need to make changes.</div>
+    </div>
+  </div>
+
+  <!-- Returns -->
+  <div class="faq-group section" id="returns">
+    <h2>Returns & Exchanges</h2>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggle(this)">What is your return policy? <span class="faq-icon">+</span></button>
+      <div class="faq-a">We accept returns within 30 days of delivery for unworn, unwashed items in original packaging. Compression socks must be unopened for hygiene reasons. To initiate a return, contact us at <a href="index.html#contact">contact@mendmedicalwear.com</a> with your order number and we'll send a prepaid return label within 1 business day.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggle(this)">How long do refunds take? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Refunds are processed within 3–5 business days of receiving your return. Depending on your bank or card issuer, the credit may take an additional 3–5 business days to appear on your statement.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggle(this)">What if my item arrives damaged or defective? <span class="faq-icon">+</span></button>
+      <div class="faq-a">We're sorry — that shouldn't happen. Contact us within 7 days of delivery with a photo and your order number and we'll send a replacement immediately at no cost, no return required.</div>
+    </div>
+  </div>
+
+  <!-- Care -->
+  <div class="faq-group section" id="care">
+    <h2>Care Instructions</h2>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggle(this)">How do I wash the recovery gowns and scrubs? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Machine wash cold, gentle cycle, with like colors. Tumble dry low or lay flat to dry. Do not bleach. Do not iron directly on embroidered areas. Our cotton-merino blend is designed to maintain softness and shape through repeated washing — tested to 100+ wash cycles with no significant pilling or shrinkage.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggle(this)">Can I wash the AirGuard™ collar? <span class="faq-icon">+</span></button>
+      <div class="faq-a">The fabric shell of the AirGuard™ is machine washable. Remove the sensor unit (detaches with a magnetic snap) and the CO₂ canister before washing. The shell can be washed on a cold gentle cycle and air dried. Never machine wash or submerge the electronic sensor module.</div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="faq-cta section">
+    <h3>Still have questions?</h3>
+    <p>Our team is based in Portland, OR and responds to every message personally.</p>
+    <a href="index.html#contact" class="btn btn-primary">Get in Touch</a>
+  </div>
+
+  <footer>
+    <p>MEND Medical Apparel — Comfort, redesigned for recovery.</p>
+    <p>&copy; 2026 MEND Medical Apparel. All rights reserved.</p>
+    <p>
+      <a href="FAQ.html">FAQ</a> &nbsp;·&nbsp;
+      <a href="Privacy-Terms.html">Privacy &amp; Terms</a> &nbsp;·&nbsp;
+      <a href="index.html#contact">Contact</a>
+    </p>
+  </footer>
+</div>
+
+<script>
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.section').forEach(s => observer.observe(s));
+
+function toggle(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+</script>
+</body>
+</html>

@@ -34,6 +34,8 @@ nav a:hover::after{width:100%;}
 footer{margin-top:64px; padding-top:24px; border-top:1px solid var(--line); color:var(--muted); font-size:12px; text-align:center; line-height:1.8;}
 footer p{margin-bottom:6px;}
 footer p:last-child{margin-bottom:0;}
+footer a{color:var(--muted); text-decoration:none; transition:color .2s;}
+footer a:hover{color:var(--accent);}
 
 /* Generic tooltips */
 [data-tooltip]{position:relative;}
