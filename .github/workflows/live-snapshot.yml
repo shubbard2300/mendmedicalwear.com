@@ -1,0 +1,87 @@
+name: Snapshot live site files
+# Temporary workflow: downloads files that exist only on the live Vercel
+# deployment of mendmedicalwear.com and commits them to this branch so the
+# repo and the live site can be merged. Delete after use.
+
+on:
+  push:
+    branches: [claude/mendmedical-wear-status-rq65fx]
+    paths: ['.github/workflows/live-snapshot.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/mendmedical-wear-status-rq65fx
+
+      - name: Download live files
+        run: |
+          set -u
+          mkdir -p live-snapshot
+          : > live-snapshot/manifest.txt
+          download() {
+            f="$1"
+            url="https://mendmedicalwear.com/${f// /%20}"
+            if curl -fsSL --retry 2 --max-time 60 -o "live-snapshot/$f" "$url"; then
+              echo "OK   $f" >> live-snapshot/manifest.txt
+            else
+              echo "MISS $f" >> live-snapshot/manifest.txt
+              rm -f "live-snapshot/$f"
+            fi
+          }
+          while IFS= read -r f; do
+            [ -n "$f" ] && download "$f"
+          done <<'EOF'
+          index.html
+          Product Detail - AirGuard Collar.html
+          Product Detail - Stylish Washable Hospital Gown.html
+          Product Detail - Residential Nurse Scrub Set.html
+          Product Detail - Compression Socks.html
+          styles.css
+          main.js
+          pdp.css
+          sitemap.xml
+          robots.txt
+          favicon.svg
+          favicon.ico
+          favicon-16x16.png
+          favicon-32x32.png
+          apple-touch-icon.png
+          mend-logo.svg
+          MEND-Logo.png
+          Concept - AirGuard Collar - 2026-06-17-web.jpg
+          Concept - Nurse Scrubs - Female Front - Navy - 2026-06-17-web.jpg
+          Concept - Nurse Scrubs - Female Back - Navy - 2026-06-17-web.jpg
+          Concept - Nurse Scrubs - Male Front - Navy - 2026-06-17-web.jpg
+          Concept - Nurse Scrubs - Male Back - Navy - 2026-06-17-web.jpg
+          Concept - Nurse Scrubs - Female Front - Charcoal - 2026-06-17-web.jpg
+          Concept - Nurse Scrubs - Female Back - Charcoal - 2026-06-17-web.jpg
+          Concept - Nurse Scrubs - Male Front - Charcoal - 2026-06-17-web.jpg
+          Concept - Nurse Scrubs - Male Back - Charcoal - 2026-06-17-web.jpg
+          Concept - Nurse Scrubs - Female Front - Ceil Blue - 2026-06-17-web.jpg
+          Concept - Nurse Scrubs - Female Back - Ceil Blue - 2026-06-17-web.jpg
+          Concept - Nurse Scrubs - Male Front - Ceil Blue - 2026-06-17-web.jpg
+          Concept - Nurse Scrubs - Male Back - Ceil Blue - 2026-06-17-web.jpg
+          Concept - Compression Socks - Sage - 2026-06-18-web.jpg
+          Concept - Compression Socks - Charcoal - 2026-06-18-web.jpg
+          Concept - Compression Socks - Heather Grey - 2026-06-18-web.jpg
+          Concept - Compression Socks - Black - 2026-06-18-web.jpg
+          Concept - Compression Socks - Non-Slip Sole Detail - 2026-06-18-web.jpg
+          Concept - Compression Socks - Non-Slip Worn - 2026-06-18-web.jpg
+          Concept - Compression Socks - Webbing Detail - 2026-06-18-web.jpg
+          EOF
+          cat live-snapshot/manifest.txt
+
+      - name: Commit snapshot
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A live-snapshot
+          git commit -m "Snapshot live mendmedicalwear.com files for merge" || echo "nothing to commit"
+          git push
