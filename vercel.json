@@ -1,0 +1,14 @@
+{
+  "redirects": [
+    {
+      "source": "/Product Detail - AirGuard Collar.html",
+      "destination": "/Product Detail - Airbag Safety Collar.html",
+      "permanent": true
+    },
+    {
+      "source": "/Concept - AirGuard Collar - 2026-06-17-web.jpg",
+      "destination": "/Concept - Airbag Safety Collar - Lifestyle - 2026-06-16-web.jpg",
+      "permanent": true
+    }
+  ]
+}
