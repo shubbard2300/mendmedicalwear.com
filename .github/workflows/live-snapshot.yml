@@ -1,12 +1,10 @@
 name: Snapshot live site files
-# Temporary workflow: downloads files that exist only on the live Vercel
-# deployment of mendmedicalwear.com and commits them to this branch so the
-# repo and the live site can be merged. Delete after use.
+# Temporary workflow (v2): recovers image binaries that exist only on the
+# archived June-19 Vercel deployment, using a temporary share token to pass
+# Vercel deployment protection. Files are written straight into the repo
+# root. Delete this workflow after use.
 
 on:
-  push:
-    branches: [claude/mendmedical-wear-status-rq65fx]
-    paths: ['.github/workflows/live-snapshot.yml']
   workflow_dispatch:
 
 permissions:
@@ -20,41 +18,37 @@ jobs:
         with:
           ref: claude/mendmedical-wear-status-rq65fx
 
-      - name: Download live files
+      - name: Download archived deployment binaries
         run: |
           set -u
-          mkdir -p live-snapshot
-          : > live-snapshot/manifest.txt
+          BASE="https://mend-medical-nqyq3iq1b-gamecat2300-6951s-projects.vercel.app"
+          SHARE="eicilpKyghFlNE5uW3FY87mlZiMLsrC3"
+          JAR="$(mktemp)"
+          # Establish the protection-bypass cookie via the share link
+          curl -fsSL -c "$JAR" -b "$JAR" "$BASE/?_vercel_share=$SHARE" -o /dev/null || true
+          : > snapshot-manifest.txt
           download() {
             f="$1"
-            url="https://mendmedicalwear.com/${f// /%20}"
-            if curl -fsSL --retry 2 --max-time 60 -o "live-snapshot/$f" "$url"; then
-              echo "OK   $f" >> live-snapshot/manifest.txt
+            url="$BASE/${f// /%20}"
+            if curl -fsSL -b "$JAR" -c "$JAR" --retry 2 --max-time 90 -o "$f" "$url"; then
+              # Guard against auth HTML masquerading as an image
+              if file "$f" | grep -qiE 'image|icon|data'; then
+                echo "OK   $f" >> snapshot-manifest.txt
+              else
+                echo "BAD  $f ($(file -b "$f" | head -c 40))" >> snapshot-manifest.txt
+                rm -f "$f"
+              fi
             else
-              echo "MISS $f" >> live-snapshot/manifest.txt
-              rm -f "live-snapshot/$f"
+              echo "MISS $f" >> snapshot-manifest.txt
+              rm -f "$f"
             fi
           }
           while IFS= read -r f; do
             [ -n "$f" ] && download "$f"
           done <<'EOF'
-          index.html
-          Product Detail - AirGuard Collar.html
-          Product Detail - Stylish Washable Hospital Gown.html
-          Product Detail - Residential Nurse Scrub Set.html
-          Product Detail - Compression Socks.html
-          styles.css
-          main.js
-          pdp.css
-          sitemap.xml
-          robots.txt
-          favicon.svg
           favicon.ico
           favicon-16x16.png
           favicon-32x32.png
-          apple-touch-icon.png
-          mend-logo.svg
-          MEND-Logo.png
           Concept - AirGuard Collar - 2026-06-17-web.jpg
           Concept - Nurse Scrubs - Female Front - Navy - 2026-06-17-web.jpg
           Concept - Nurse Scrubs - Female Back - Navy - 2026-06-17-web.jpg
@@ -76,12 +70,12 @@ jobs:
           Concept - Compression Socks - Non-Slip Worn - 2026-06-18-web.jpg
           Concept - Compression Socks - Webbing Detail - 2026-06-18-web.jpg
           EOF
-          cat live-snapshot/manifest.txt
+          cat snapshot-manifest.txt
 
-      - name: Commit snapshot
+      - name: Commit recovered files
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A live-snapshot
-          git commit -m "Snapshot live mendmedicalwear.com files for merge" || echo "nothing to commit"
+          git add -A
+          git commit -m "Recover archived-deployment images into repo root" || echo "nothing to commit"
           git push
