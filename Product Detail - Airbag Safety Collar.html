@@ -703,7 +703,7 @@ const CAPTIONS = [
 function updateHUD(t) {
   const hudMs = document.getElementById('hudMs');
   if (t<2)      { hudMs.innerHTML='—'; hudMs.style.color=C.dim; }
-  else if (t<5) { hudMs.innerHTML=`${Math.min(80,Math.round(lerp(0,80,invlerp(2,3.5,t)))}<span>ms</span>`; hudMs.style.color=t<3.5?'#E8503A':'#4EC9A0'; }
+  else if (t<5) { hudMs.innerHTML=`${Math.min(80,Math.round(lerp(0,80,invlerp(2,3.5,t))))}<span>ms</span>`; hudMs.style.color=t<3.5?'#E8503A':'#4EC9A0'; }
   else          { hudMs.innerHTML='80<span>ms</span>'; hudMs.style.color='#4EC9A0'; }
 
   document.getElementById('hudAlert').classList.toggle('show', t>=2&&t<5);
@@ -759,5 +759,6 @@ function startAutoPlay(){ if(autoPlayed)return; autoPlayed=true; setTimeout(()=>
 new IntersectionObserver(e=>{ if(e[0].isIntersecting) startAutoPlay(); },{threshold:0.15}).observe(document.getElementById('vscreen'));
 window.addEventListener('load',()=>{ const r=document.getElementById('vscreen').getBoundingClientRect(); if(r.top<window.innerHeight&&r.bottom>0) startAutoPlay(); });
 </script>
+<script src="main.js"></script>
 </body>
 </html>
