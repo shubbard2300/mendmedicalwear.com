@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEND Medical Apparel — Comfort Wrap Recovery Gowns & Scrubs</title>
+<meta name="description" content="MEND Medical Apparel makes soft, washable recovery gowns, residential nurse scrubs, and compression socks designed for dignity and comfort — for patients and caregivers alike.">
+<link rel="canonical" href="https://mendmedicalwear.com/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "MEND Medical Apparel",
+  "url": "https://mendmedicalwear.com/",
+  "logo": "https://mendmedicalwear.com/mend-logo.svg",
+  "description": "Soft, washable recovery wear that replaces the standard hospital gown — built for dignity, comfort, and ease for patients and caregivers alike."
+}
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XT2M4KBL2R"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XT2M4KBL2R');
+</script>
+<script>document.documentElement.classList.add("js")</script>
+<link rel="stylesheet" href="styles.css">
+<style>
+  header{margin-bottom:0;}
+
+  /* Hero */
+  .hero{text-align:center; padding:96px 0 72px;}
+  .hero .eyebrow{color:var(--accent); font-size:13px; letter-spacing:.16em; text-transform:uppercase; margin-bottom:16px; font-weight:600;}
+  .hero h1{font-size:48px; font-weight:600; line-height:1.15; margin-bottom:18px; letter-spacing:-.01em;}
+  .hero p{font-size:18px; color:var(--muted); max-width:560px; margin:0 auto 32px;}
+  .cta-row{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
+
+  /* Full-width hero banner */
+  .hero-banner{position:relative; width:100vw; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw; height:520px; overflow:hidden; margin-bottom:0;}
+  @media(max-width:640px){.hero-banner{height:340px;}}
+  /* Slideshow */
+  .banner-slide{position:absolute; inset:0; opacity:0; transition:opacity 1.2s ease; pointer-events:none;}
+  .banner-slide.active{opacity:1; pointer-events:auto;}
+  .banner-slide img{width:100%; height:100%; object-fit:cover; object-position:center 30%; display:block; filter:brightness(0.82); animation:kenburns 7s ease-in-out forwards;}
+  .banner-dots{position:absolute; bottom:18px; left:50%; transform:translateX(-50%); display:flex; gap:8px; z-index:10;}
+  .banner-dot{width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,.35); border:none; cursor:pointer; padding:0; transition:background .2s, transform .2s;}
+  .banner-dot.active{background:#fff; transform:scale(1.3);}
+  @keyframes kenburns{
+    0%  { transform:scale(1.08) translateX(0px) translateY(0px); }
+    50% { transform:scale(1.13) translateX(-8px) translateY(-4px); }
+    100%{ transform:scale(1.08) translateX(0px) translateY(0px); }
+  }
+  .hero-banner img{width:100%; height:100%; object-fit:cover; object-position:center 30%; display:block; filter:brightness(0.82); animation:kenburns 14s ease-in-out infinite; transform-origin:center center;}
+  .hero-banner-overlay{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:32px; background:linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.38) 100%);}
+  .hero-banner-eyebrow{font-size:12px; letter-spacing:.22em; text-transform:uppercase; color:rgba(255,255,255,.75); margin-bottom:14px; font-weight:500;}
+  .hero-banner-title{font-size:52px; font-weight:700; color:#fff; line-height:1.1; letter-spacing:-.02em; margin-bottom:16px; text-shadow:0 2px 24px rgba(0,0,0,.22);}
+  @media(max-width:640px){.hero-banner-title{font-size:32px;}}
+  .hero-banner-sub{font-size:17px; color:rgba(255,255,255,.88); max-width:520px; line-height:1.6; text-shadow:0 1px 8px rgba(0,0,0,.2);}
+
+  /* Carousel */
+  .hero-carousel{margin:56px auto 0; max-width:760px; position:relative;}
+  .carousel-track{display:flex; gap:24px; align-items:stretch;}
+  .carousel-slide{flex:0 0 100%; display:none; gap:24px; align-items:center;}
+  .carousel-slide.active{display:flex;}
+  @media(max-width:640px){.carousel-slide{flex-direction:column;}}
+  .carousel-img{flex:0 0 260px; border-radius:16px; overflow:hidden; box-shadow:0 24px 60px rgba(0,0,0,.1);}
+  .carousel-img img{width:100%; height:340px; object-fit:cover; display:block; transition:transform .6s ease;}
+  .carousel-slide.active .carousel-img img{transform:scale(1.0);}
+  @media(max-width:640px){.carousel-img{flex:none; width:100%; max-width:280px; margin:0 auto;}}
+  .carousel-quote{flex:1; text-align:left; display:flex; flex-direction:column; justify-content:center; padding:8px 0;}
+  .carousel-quote blockquote{font-size:18px; line-height:1.6; color:var(--fg); font-style:italic; margin:0 0 20px; position:relative; padding-left:20px;}
+  .carousel-quote blockquote::before{content:'\201C'; position:absolute; left:0; top:-4px; font-size:36px; color:var(--accent); line-height:1; font-style:normal;}
+  .carousel-quote cite{font-size:13px; color:var(--muted); font-style:normal; display:flex; align-items:center; gap:8px; padding-left:20px;}
+  .carousel-quote cite strong{color:var(--fg); font-weight:600;}
+  .carousel-stars{color:#e8a838; font-size:14px; letter-spacing:2px; margin-bottom:12px; padding-left:20px;}
+  .carousel-label{display:inline-block; font-size:11px; letter-spacing:.1em; text-transform:uppercase; background:var(--panel); border:1px solid var(--line); border-radius:999px; padding:4px 12px; color:var(--muted); margin-bottom:16px; padding-left:20px; margin-left:20px;}
+  .carousel-nav{display:flex; align-items:center; justify-content:center; gap:12px; margin-top:28px;}
+  .carousel-dot{width:8px; height:8px; border-radius:50%; background:var(--line); border:none; cursor:pointer; padding:0; transition:background .2s, transform .2s;}
+  .carousel-dot.active{background:var(--accent); transform:scale(1.3);}
+  .carousel-btn{background:none; border:1px solid var(--line); border-radius:50%; width:36px; height:36px; cursor:pointer; font-size:16px; color:var(--fg); display:flex; align-items:center; justify-content:center; transition:border-color .2s, background .2s;}
+  .carousel-btn:hover{border-color:var(--accent); background:var(--panel);}
+
+  /* About */
+  .about{padding:72px 0; border-top:1px solid var(--line);}
+  .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center;}
+  @media (max-width:860px){ .about-grid{grid-template-columns:1fr;} }
+  .about-grid img{width:100%; border-radius:14px; aspect-ratio:4/3; object-fit:cover; transition:transform .4s ease, box-shadow .4s ease;}
+  .about-grid img:hover{transform:translateY(-4px); box-shadow:0 16px 36px rgba(0,0,0,.1);}
+  .about h2{font-size:30px; font-weight:600; margin-bottom:16px;}
+  .about p{color:var(--muted); margin-bottom:14px; font-size:15px;}
+  .about ul{list-style:none; margin-top:20px;}
+  .about li{padding:10px 0; border-bottom:1px solid var(--line); font-size:14px; display:flex; gap:10px; align-items:flex-start;}
+  .about li::before{content:'✓'; color:var(--accent); font-weight:700; flex-shrink:0;}
+
+  /* Products */
+  .products{padding:72px 0; border-top:1px solid var(--line); text-align:center;}
+  .products h2{font-size:30px; font-weight:600; margin-bottom:8px;}
+  .products .sub{color:var(--muted); font-size:15px; margin-bottom:40px;}
+  .products-feature{margin-bottom:48px; border-radius:16px; overflow:hidden; max-width:640px; margin-left:auto; margin-right:auto; box-shadow:0 24px 60px rgba(0,0,0,.08);}
+  .products-feature img{width:100%; display:block; transition:transform .6s ease;}
+  .products-feature:hover img{transform:scale(1.03);}
+  .product-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:24px;}
+  .product-card{background:var(--panel); border-radius:14px; overflow:hidden; text-align:left; text-decoration:none; color:var(--fg); transition:transform .3s ease, box-shadow .3s ease; display:block;}
+  .product-card:hover{transform:translateY(-6px); box-shadow:0 16px 36px rgba(0,0,0,.1);}
+  .product-card .img-box{aspect-ratio:2/3; overflow:hidden;}
+  .product-card .img-box img{width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s ease;}
+  .product-card:hover .img-box img{transform:scale(1.06);}
+  .product-card .info{padding:16px;}
+  .product-card .info .name{font-weight:600; font-size:15px; margin-bottom:4px;}
+  .product-card .info .price{color:var(--accent); font-weight:600; font-size:14px;}
+  .product-card .info .status{display:inline-block; margin-top:8px; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); background:var(--bg); border:1px solid var(--line); padding:4px 10px; border-radius:999px;}
+  .product-card.soon{opacity:.6; cursor:default; pointer-events:none;}
+
+  /* Contact */
+  .contact{padding:72px 0; border-top:1px solid var(--line);}
+  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:48px;}
+  @media (max-width:860px){ .contact-grid{grid-template-columns:1fr;} }
+  .contact h2{font-size:30px; font-weight:600; margin-bottom:12px;}
+  .contact p{color:var(--muted); font-size:15px; margin-bottom:8px;}
+  .contact .detail{font-size:14px; margin-top:24px;}
+  .contact .detail strong{display:block; color:var(--fg); margin-bottom:4px;}
+  form{display:flex; flex-direction:column; gap:14px;}
+  label{font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:6px; display:block;}
+  input, textarea{width:100%; padding:12px 14px; border-radius:8px; border:1px solid var(--line); background:var(--panel); color:var(--fg); font-family:inherit; font-size:14px; transition:border-color .2s ease, box-shadow .2s ease;}
+  input:focus, textarea:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(124,139,122,.15);}
+  textarea{resize:vertical; min-height:120px;}
+  .form-msg{font-size:13px; color:var(--accent); display:none; margin-top:8px;}
+  .form-msg.show{display:block;}
+
+  footer{margin-top:32px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="#about" class="logo-link"><img src="mend-logo.svg" alt="MEND Medical Apparel"></a>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#products">Products</a>
+      <a href="Product Detail - Stylish Washable Hospital Gown.html">Shop</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Full-width Hero Banner Slideshow -->
+  <div class="hero-banner" id="heroBanner">
+    <div class="banner-slide active">
+      <img src="MEND - Hero Banner - 2026-06-15.jpg" alt="MEND nurse and patient — emotional care moment">
+    </div>
+    <div class="banner-slide">
+      <img src="Concept - Hospital Gown - Female Front - 2026-06-15-web.jpg" alt="MEND Washable Recovery Gown — Female Front">
+    </div>
+    <div class="banner-slide">
+      <img src="Concept - Nurse Scrubs - Female Front - 2026-06-15-web.jpg" alt="MEND Nurse Scrubs">
+    </div>
+    <div class="banner-slide">
+      <img src="Concept - Compression Socks - Ceil Blue - 2026-06-15-web.jpg" alt="MEND Compression Socks">
+    </div>
+    <div class="banner-slide">
+      <img src="Concept - Airbag Safety Collar - Lifestyle - 2026-06-16-web.jpg" alt="MEND AirGuard™ Inflatable Safety Collar">
+    </div>
+    <div class="hero-banner-overlay">
+      <div class="hero-banner-eyebrow">Washable Recovery Gowns · Nurse Scrubs · Compression Socks · AirGuard™</div>
+      <h2 class="hero-banner-title">Because healing<br>should feel human.</h2>
+      <p class="hero-banner-sub">MEND makes soft, washable hospital gowns, residential nurse scrubs, medical-grade compression socks, and the AirGuard™ fall-detection safety collar — so patients feel like people, and caregivers feel like themselves.</p>
+    </div>
+    <div class="banner-dots" id="bannerDots"></div>
+  </div>
+
+  <!-- Hero -->
+  <div class="section hero">
+    <div class="eyebrow">MEND Medical Apparel</div>
+    <h1>Recovery wear that feels<br>like home, not a hospital.</h1>
+    <p>Soft, washable, thoughtfully designed garments that replace the standard hospital gown — built for dignity, comfort, and ease for patients and caregivers alike.</p>
+    <div class="cta-row">
+      <a href="#products" class="btn btn-primary">Shop Comfort Wrap</a>
+      <a href="#about" class="btn btn-secondary">Our Story</a>
+    </div>
+    <div class="hero-carousel">
+      <div class="carousel-track">
+
+        <div class="carousel-slide active">
+          <div class="carousel-img"><a href="Product Detail - Stylish Washable Hospital Gown.html"><img src="Concept - Hospital Gown - 2026-06-15-web.jpg" alt="Comfort Wrap — Heather Grey"></a></div>
+          <div class="carousel-quote">
+            <div class="carousel-label">Comfort Wrap Gown</div>
+            <div class="carousel-stars">★★★★★</div>
+            <blockquote>After my knee surgery I actually felt like a person, not a patient. The zipper makes everything easier and the hood was a bonus — I wore it for two weeks straight.</blockquote>
+            <cite><strong>Margaret T.</strong> — Portland, OR · Hip Recovery</cite>
+          </div>
+        </div>
+
+        <div class="carousel-slide">
+          <div class="carousel-img"><a href="Product Detail - Stylish Washable Hospital Gown.html"><img src="Concept - Hospital Gown - Couple - 2026-06-15-web.jpg" alt="Comfort Wrap — Couple"></a></div>
+          <div class="carousel-quote">
+            <div class="carousel-label">Comfort Wrap Gown</div>
+            <div class="carousel-stars">★★★★★</div>
+            <blockquote>My husband and I both needed surgery within a month of each other. We ordered two. The difference in how we felt wearing these versus a standard gown was night and day.</blockquote>
+            <cite><strong>Sandra & Rob K.</strong> — Eugene, OR · Post-Op Recovery</cite>
+          </div>
+        </div>
+
+        <div class="carousel-slide">
+          <div class="carousel-img"><a href="Product Detail - Residential Nurse Scrub Set.html"><img src="Concept - Nurse Scrubs - Female Front - 2026-06-15-web.jpg" alt="Comfort Scrubs"></a></div>
+          <div class="carousel-quote">
+            <div class="carousel-label">Comfort Scrubs</div>
+            <div class="carousel-stars">★★★★★</div>
+            <blockquote>I'm a home health aide and I've worn a lot of scrubs. These are the softest I've ever had and they still look professional. My clients notice the difference too.</blockquote>
+            <cite><strong>Dani R.</strong> — Seattle, WA · Home Health Aide</cite>
+          </div>
+        </div>
+
+        <div class="carousel-slide">
+          <div class="carousel-img"><a href="Product Detail - Stylish Washable Hospital Gown.html"><img src="Concept - Hospital Gown - Male Front - Blue - Latino - 2026-06-15-web.jpg" alt="Comfort Wrap — Blue"></a></div>
+          <div class="carousel-quote">
+            <div class="carousel-label">Comfort Wrap — Blue</div>
+            <div class="carousel-stars">★★★★★</div>
+            <blockquote>I was in the hospital for three days and this gown made it bearable. The short sleeves were perfect — the nurses could reach my IV without any fuss.</blockquote>
+            <cite><strong>Carlos M.</strong> — San Jose, CA · Cardiac Recovery</cite>
+          </div>
+        </div>
+
+        <div class="carousel-slide">
+          <div class="carousel-img"><a href="Product Detail - Compression Socks.html"><img src="Concept - Compression Socks - Ceil Blue - 2026-06-15-web.jpg" alt="Compression Socks"></a></div>
+          <div class="carousel-quote">
+            <div class="carousel-label">Compression Socks</div>
+            <div class="carousel-stars">★★★★★</div>
+            <blockquote>I'm on my feet for 12-hour shifts. These are the first compression socks that actually feel good from start to finish — not just the first two hours.</blockquote>
+            <cite><strong>Priya N.</strong> — Chicago, IL · ICU Nurse</cite>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="carousel-nav">
+        <button class="carousel-btn" id="carouselPrev">&#8592;</button>
+        <button class="carousel-dot active" data-idx="0"></button>
+        <button class="carousel-dot" data-idx="1"></button>
+        <button class="carousel-dot" data-idx="2"></button>
+        <button class="carousel-dot" data-idx="3"></button>
+        <button class="carousel-dot" data-idx="4"></button>
+        <button class="carousel-btn" id="carouselNext">&#8594;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- About -->
+  <div class="section about" id="about">
+    <div class="about-grid">
+      <img src="MEND - About - Happy Family - 2026-06-15-web.jpg" alt="A happy multigenerational family at home on the Oregon coast">
+      <div>
+        <h2>About MEND</h2>
+        <p>MEND Medical Apparel started with a simple frustration: hospital gowns are undignified, uncomfortable, and haven't changed in decades — thin paper-like fabric, gaping backs, and ties that never quite work.</p>
+        <p>This idea has roots that go back further than us. My father was a respiratory therapist on the Oregon Coast, and at one point ran five stores up and down the coast supplying oxygen concentrators, approved hospital walkers, canes, and other medical equipment. Behind the paperwork and the red tape, what he actually did — every day — was help people. We're carrying that forward.</p>
+        <p>We design recovery wear that actually feels good to wear. Soft cotton-merino blends, real zippers instead of fumbling closures, and styling you'd be comfortable wearing outside a hospital room — because a hospital stay should still be stylish and respectful, not just bearable.</p>
+        <ul>
+          <li>Designed with patients, caregivers, and clinicians</li>
+          <li>Machine washable, built to last</li>
+          <li>No exposure, no ties — full coverage by design</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Products -->
+  <div class="section products" id="products">
+    <h2>Products</h2>
+    <p class="sub">Comfort Wrap — available in five colors and patterns. Plus Comfort Scrubs for caregivers.</p>
+    <div class="products-feature">
+      <img src="Concept - Hospital Gown - Couple - 2026-06-15-web.jpg" alt="A woman and a man together, both wearing MEND Comfort Wrap recovery gowns">
+    </div>
+    <div class="product-grid">
+      <a class="product-card" href="Product Detail - Stylish Washable Hospital Gown.html">
+        <div class="img-box">
+          <img src="Concept - Hospital Gown - 2026-06-15-web.jpg" alt="Comfort Wrap - Heather Grey">
+        </div>
+        <div class="info">
+          <div class="name">Comfort Wrap — Heather Grey</div>
+          <div class="price">Stylish Washable Hospital Gown</div>
+          <span class="status">View Product</span>
+        </div>
+      </a>
+      <a class="product-card" href="Product Detail - Stylish Washable Hospital Gown.html">
+        <div class="img-box">
+          <img src="Concept - Hospital Gown - Male Front - Sage - 2026-06-15-web.jpg" alt="Comfort Wrap - Sage">
+        </div>
+        <div class="info">
+          <div class="name">Comfort Wrap — Sage</div>
+          <div class="price">Stylish Washable Hospital Gown</div>
+          <span class="status">View Product</span>
+        </div>
+      </a>
+      <a class="product-card" href="Product Detail - Stylish Washable Hospital Gown.html">
+        <div class="img-box">
+          <img src="Concept - Hospital Gown - Male Front - Blue - Latino - 2026-06-15-web.jpg" alt="Comfort Wrap - Blue">
+        </div>
+        <div class="info">
+          <div class="name">Comfort Wrap — Blue</div>
+          <div class="price">Stylish Washable Hospital Gown</div>
+          <span class="status">View Product</span>
+        </div>
+      </a>
+      <a class="product-card" href="Product Detail - Stylish Washable Hospital Gown.html">
+        <div class="img-box">
+          <img src="Concept - Hospital Gown - Male Front - Oatmeal - Black - 2026-06-15-web.jpg" alt="Comfort Wrap - Oatmeal">
+        </div>
+        <div class="info">
+          <div class="name">Comfort Wrap — Oatmeal</div>
+          <div class="price">Stylish Washable Hospital Gown</div>
+          <span class="status">View Product</span>
+        </div>
+      </a>
+      <a class="product-card" href="Product Detail - Stylish Washable Hospital Gown.html">
+        <div class="img-box">
+          <img src="Concept - Hospital Gown - Female Front - Print - 2026-06-15-web.jpg" alt="Comfort Wrap - Classic Print">
+        </div>
+        <div class="info">
+          <div class="name">Comfort Wrap — Classic Print</div>
+          <div class="price">Stylish Washable Hospital Gown</div>
+          <span class="status">View Product</span>
+        </div>
+      </a>
+      <a class="product-card" href="Product Detail - Residential Nurse Scrub Set.html">
+        <div class="img-box">
+          <img src="Concept - Nurse Scrubs - Female Front - 2026-06-15-web.jpg" alt="Comfort Scrubs - Residential Nurse Set">
+        </div>
+        <div class="info">
+          <div class="name">Comfort Scrubs — Residential Nurse Set</div>
+          <div class="price">For the caregivers, too</div>
+          <span class="status">View Product</span>
+        </div>
+      </a>
+      <a class="product-card" href="Product Detail - Compression Socks.html">
+        <div class="img-box">
+          <img src="Concept - Compression Socks - Ceil Blue - 2026-06-15-web.jpg" alt="Medical-Grade Compression Socks - Nurse/Caregiver Edition">
+        </div>
+        <div class="info">
+          <div class="name">Compression Socks — Nurse/Caregiver Edition</div>
+          <div class="price">$28.00</div>
+          <span class="status">View Product</span>
+        </div>
+      </a>
+      <a class="product-card" href="Product Detail - Airbag Safety Collar.html">
+        <div class="img-box">
+          <img src="Concept - Airbag Safety Collar - Default - 2026-06-16-web.jpg" alt="MEND AirGuard — Inflatable Fall-Detection Safety Collar">
+        </div>
+        <div class="info">
+          <div class="name">AirGuard™ — Inflatable Safety Collar</div>
+          <div class="price">$299 · Pre-Order</div>
+          <span class="status">New · View Product</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Contact -->
+  <div class="section contact" id="contact">
+    <div class="contact-grid">
+      <div>
+        <h2>Get in Touch</h2>
+        <p>Questions about Comfort Wrap, wholesale, or partnerships? Send us a note — we read every message.</p>
+        <div class="detail">
+          <strong>Email</strong>
+          contact@stevenjhubbard.com
+        </div>
+        <div class="detail">
+          <strong>Based in</strong>
+          Portland, OR
+        </div>
+      </div>
+      <form id="contactForm">
+        <div>
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div>
+          <label for="message">Message</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="border:none; cursor:pointer; align-self:flex-start;">Send Message</button>
+        <div class="form-msg" id="formMsg">Thanks for reaching out — we'll get back to you soon.</div>
+        <div class="form-msg" id="formError" style="color:#c0392b;">Something went wrong — please email us directly at contact@stevenjhubbard.com.</div>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p>MEND Medical Apparel — Comfort, redesigned for recovery.</p>
+    <p>&copy; 2026 MEND Medical Apparel. All rights reserved.</p>
+    <p><a href="FAQ.html">FAQ</a> &nbsp;·&nbsp; <a href="Privacy-Terms.html">Privacy &amp; Terms</a> &nbsp;·&nbsp; <a href="#contact">Contact</a></p>
+  </footer>
+</div>
+
+<script src="main.js"></script>
+<script>
+(function(){
+  var slides = document.querySelectorAll('.carousel-slide');
+  var dots = document.querySelectorAll('.carousel-dot');
+  var cur = 0;
+  var timer;
+
+  function show(n){
+    slides[cur].classList.remove('active');
+    dots[cur].classList.remove('active');
+    cur = (n + slides.length) % slides.length;
+    slides[cur].classList.add('active');
+    dots[cur].classList.add('active');
+  }
+
+  function next(){ show(cur + 1); resetTimer(); }
+  function prev(){ show(cur - 1); resetTimer(); }
+
+  function resetTimer(){
+    clearInterval(timer);
+    timer = setInterval(next, 5000);
+  }
+
+  document.getElementById('carouselNext').addEventListener('click', next);
+  document.getElementById('carouselPrev').addEventListener('click', prev);
+  dots.forEach(function(d){
+    d.addEventListener('click', function(){ show(+this.dataset.idx); resetTimer(); });
+  });
+
+  resetTimer();
+})();
+</script>
+<script>
+// ── Hero Banner Slideshow ──
+(function() {
+  const slides = document.querySelectorAll('.banner-slide');
+  const dotsEl = document.getElementById('bannerDots');
+  let cur = 0, timer;
+
+  slides.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'banner-dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => goTo(i));
+    dotsEl.appendChild(d);
+  });
+
+  function goTo(n) {
+    slides[cur].classList.remove('active');
+    dotsEl.children[cur].classList.remove('active');
+    // Re-trigger Ken Burns by cloning the img
+    const img = slides[n].querySelector('img');
+    const clone = img.cloneNode(true);
+    img.parentNode.replaceChild(clone, img);
+    cur = n;
+    slides[cur].classList.add('active');
+    dotsEl.children[cur].classList.add('active');
+    clearInterval(timer);
+    timer = setInterval(next, 5000);
+  }
+
+  function next() { goTo((cur + 1) % slides.length); }
+  timer = setInterval(next, 5000);
+})();
+</script>
+
+<script>
+document.getElementById('contactForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  var form = this;
+  var msg = document.getElementById('formMsg');
+  var err = document.getElementById('formError');
+  var btn = form.querySelector('button[type="submit"]');
+  msg.classList.remove('show');
+  err.classList.remove('show');
+  btn.disabled = true;
+
+  var data = {
+    name: form.name.value,
+    email: form.email.value,
+    message: form.message.value
+  };
+
+  fetch('/api/contact', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  }).then(function(res){
+    if(!res.ok) throw new Error('Request failed');
+    msg.classList.add('show');
+    form.reset();
+  }).catch(function(){
+    err.classList.add('show');
+  }).finally(function(){
+    btn.disabled = false;
+  });
+});
+</script>
+</body>
+</html>
