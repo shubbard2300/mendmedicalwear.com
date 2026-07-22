@@ -1,49 +1,144 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Karla:ital,wght@0,400..700;1,400..700&display=swap');
 
+/* ── MEND design tokens — linen, pine & clay ─────────────────── */
 :root{
-  --bg:#FAFAF8; --fg:#2B2B28; --muted:#8A857C; --line:#E3DFD6;
-  --accent:#7C8B7A; --accent-dark:#677866; --panel:#F1EEE7;
+  --bg:#F7F3EA;            /* warm linen */
+  --bg-rgb:247,243,234;
+  --fg:#25322B;            /* deep pine ink */
+  --muted:#77715F;         /* dry-grass grey */
+  --line:#E0D8C6;          /* undyed thread */
+  --line-strong:#C9BFA8;
+  --panel:#EFE9DB;         /* raw calico */
+  --accent:#4E6B57;        /* pine green */
+  --accent-dark:#3C5645;
+  --clay:#C06B47;          /* terracotta thread — sharp accent */
+  --clay-soft:#E9CBB4;
+  --cream:#FBF8F1;
+  --font-display:'Fraunces', Georgia, serif;
+  --font-body:'Karla', 'Gill Sans', Verdana, sans-serif;
+  --shadow-soft:0 18px 44px rgba(37,50,43,.10);
 }
+
 *{box-sizing:border-box; margin:0; padding:0;}
 html{scroll-behavior:smooth;}
-body{font-family:'Inter', Helvetica, Arial, sans-serif; background:var(--bg); color:var(--fg); line-height:1.6; -webkit-font-smoothing:antialiased;}
-.wrap{max-width:1100px; margin:0 auto; padding:32px 24px 80px;}
+body{
+  font-family:var(--font-body);
+  color:var(--fg);
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  /* layered linen weave: faint warm glow + crosshatch threads */
+  background:
+    radial-gradient(1100px 520px at 50% -8%, rgba(192,107,71,.055), transparent 62%),
+    repeating-linear-gradient(0deg, rgba(37,50,43,.016) 0 1px, transparent 1px 7px),
+    repeating-linear-gradient(90deg, rgba(37,50,43,.016) 0 1px, transparent 1px 7px),
+    var(--bg);
+}
+::selection{background:var(--clay); color:var(--cream);}
 
-/* Header / nav */
-header{display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--line); padding-bottom:16px; margin-bottom:32px; position:sticky; top:0; background:var(--bg); z-index:50;}
+h1,h2,h3{
+  font-family:var(--font-display);
+  font-weight:550;
+  letter-spacing:-.015em;
+  line-height:1.12;
+}
+h1 em, h2 em, h3 em{font-style:italic; font-weight:500; color:var(--clay);}
+
+.wrap{max-width:1100px; margin:0 auto; padding:24px 24px 80px;}
+
+/* ── Header / nav ────────────────────────────────────────────── */
+header{
+  display:flex; justify-content:space-between; align-items:center;
+  border-bottom:1px solid var(--line);
+  padding:14px 4px; margin-bottom:32px;
+  position:sticky; top:0; z-index:50;
+  background:rgba(var(--bg-rgb), .88);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
 header .logo-link{display:flex; align-items:center;}
-header img{height:48px; transition:transform .3s ease;}
-header img:hover{transform:scale(1.04);}
-nav{display:flex; gap:28px;}
-nav a{color:var(--fg); text-decoration:none; font-size:13px; letter-spacing:.08em; text-transform:uppercase; font-weight:500; position:relative; padding-bottom:2px; transition:color .2s ease;}
-nav a::after{content:''; position:absolute; left:0; bottom:-2px; width:0; height:2px; background:var(--accent); transition:width .25s ease;}
-nav a:hover{color:var(--accent);}
-nav a:hover::after{width:100%;}
+header img{height:46px; transition:transform .3s ease;}
+header img:hover{transform:scale(1.04) rotate(-1deg);}
+nav{display:flex; gap:26px;}
+nav a{
+  color:var(--fg); text-decoration:none;
+  font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; font-weight:700;
+  position:relative; padding-bottom:4px; transition:color .2s ease;
+}
+/* running-stitch underline */
+nav a::after{
+  content:''; position:absolute; left:0; right:0; bottom:0; height:2px;
+  background-image:repeating-linear-gradient(90deg, var(--clay) 0 6px, transparent 6px 10px);
+  transform:scaleX(0); transform-origin:left;
+  transition:transform .3s ease;
+}
+nav a:hover{color:var(--accent-dark);}
+nav a:hover::after{transform:scaleX(1);}
+@media (max-width:640px){
+  header{flex-wrap:wrap; gap:8px 16px;}
+  header img{height:38px;}
+  nav{gap:16px; flex-wrap:wrap;}
+  nav a{font-size:11px; letter-spacing:.1em;}
+}
 
-/* Section scroll-reveal */
-.js .section{opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease;}
+/* ── Section scroll-reveal ───────────────────────────────────── */
+.js .section{opacity:0; transform:translateY(26px); transition:opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1);}
 .js .section.in-view{opacity:1; transform:translateY(0);}
 
-/* Pill CTA buttons */
-.btn{display:inline-block; padding:14px 30px; border-radius:999px; font-size:14px; font-weight:600; letter-spacing:.04em; text-transform:uppercase; text-decoration:none; cursor:pointer; border:none; text-align:center; transition:transform .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease, border-color .2s ease;}
-.btn-primary{background:var(--accent); color:#fff;}
-.btn-primary:hover{transform:translateY(-3px); box-shadow:0 12px 26px rgba(124,139,122,.32); background:var(--accent-dark);}
-.btn-secondary{background:transparent; color:var(--fg); border:1px solid var(--line);}
-.btn-secondary:hover{transform:translateY(-3px); border-color:var(--accent); color:var(--accent);}
+/* ── Buttons — sewn-patch pills ──────────────────────────────── */
+.btn{
+  display:inline-block; padding:15px 32px; border-radius:999px;
+  font-family:var(--font-body);
+  font-size:13.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+  text-decoration:none; cursor:pointer; border:none; text-align:center;
+  transition:transform .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease, border-color .2s ease, outline-color .2s ease;
+}
+.btn-primary{
+  background:var(--accent); color:var(--cream);
+  outline:1px dashed rgba(251,248,241,.55); outline-offset:-5px; /* stitched label */
+}
+.btn-primary:hover{
+  transform:translateY(-3px);
+  background:var(--accent-dark);
+  box-shadow:0 14px 30px rgba(60,86,69,.32);
+  outline-color:rgba(251,248,241,.85);
+}
+.btn-secondary{
+  background:transparent; color:var(--fg);
+  box-shadow:inset 0 0 0 1px var(--line-strong);
+}
+.btn-secondary:hover{
+  transform:translateY(-3px);
+  color:var(--clay);
+  box-shadow:inset 0 0 0 1px var(--clay), 0 10px 24px rgba(192,107,71,.14);
+}
 
-footer{margin-top:64px; padding-top:24px; border-top:1px solid var(--line); color:var(--muted); font-size:12px; text-align:center; line-height:1.8;}
+/* ── Footer — thread & needle sign-off ───────────────────────── */
+footer{
+  margin-top:72px; padding-top:30px;
+  border-top:1px dashed var(--line-strong);
+  color:var(--muted); font-size:12.5px; text-align:center; line-height:1.9;
+  position:relative;
+}
+footer::before{
+  content:'✚';
+  position:absolute; top:-11px; left:50%; transform:translateX(-50%);
+  background:var(--bg); padding:0 14px;
+  color:var(--clay); font-size:14px; line-height:1;
+}
 footer p{margin-bottom:6px;}
+footer p:first-child{font-family:var(--font-display); font-style:italic; font-size:15px; color:var(--fg);}
 footer p:last-child{margin-bottom:0;}
-footer a{color:var(--muted); text-decoration:none; transition:color .2s;}
-footer a:hover{color:var(--accent);}
+footer a{color:var(--muted); text-decoration:none; border-bottom:1px dashed transparent; transition:color .2s, border-color .2s;}
+footer a:hover{color:var(--clay); border-bottom-color:var(--clay);}
 
-/* Generic tooltips */
+/* ── Generic tooltips ────────────────────────────────────────── */
 [data-tooltip]{position:relative;}
 [data-tooltip]::after{
   content:attr(data-tooltip);
   position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%) translateY(4px);
-  width:200px; padding:8px 10px; border-radius:8px;
-  background:var(--fg); color:var(--bg); font-size:12px; font-weight:400; line-height:1.4; text-align:center;
+  width:210px; padding:9px 12px; border-radius:10px;
+  background:var(--fg); color:var(--cream); font-family:var(--font-body);
+  font-size:12px; font-weight:400; letter-spacing:0; text-transform:none; line-height:1.45; text-align:center;
   opacity:0; pointer-events:none; transition:opacity .2s ease, transform .2s ease; z-index:30;
 }
 [data-tooltip]::before{
@@ -53,3 +148,9 @@ footer a:hover{color:var(--accent);}
 }
 [data-tooltip]:hover::after, [data-tooltip]:hover::before{ opacity:1; transform:translateX(-50%) translateY(0); }
 [data-tooltip]:hover::before{ transform:translateX(-50%); }
+
+/* ── Motion safety ───────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *, *::before, *::after{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important;}
+}
