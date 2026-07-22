@@ -113,10 +113,19 @@ header.scrolled{border-color:var(--line);}
 .hero-note{font-size:13px; color:var(--faint);}
 .hero-note b{color:var(--slate); font-weight:600;}
 
-/* Device render (CSS placeholder until photography lands) */
+/* Hero illustration — person wearing MEND Pulse (swap for photography via prompt #7) */
+.hero-illo{width:min(520px,88vw); height:auto; display:block;
+  filter:drop-shadow(0 30px 60px rgba(20,40,70,.14));
+  animation:illo-float 9s ease-in-out infinite;}
+@keyframes illo-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+
+/* Device render (CSS) */
 .device-stage{position:relative; display:flex; align-items:center; justify-content:center; padding:30px 0 70px;}
 .device-stage::before{content:''; position:absolute; width:560px; height:560px; border-radius:50%;
   background:radial-gradient(circle at 50% 42%, rgba(63,168,224,.22), rgba(46,107,230,.06) 55%, transparent 72%); pointer-events:none;}
+.design .device-stage{padding:56px 0 20px;}
+.design .device-stage::before{background:radial-gradient(circle at 50% 45%, rgba(63,168,224,.16), transparent 68%);}
+.design .device{width:min(240px,60vw);}
 .device{position:relative; width:min(330px,72vw); aspect-ratio:0.62; border-radius:56px;
   background:linear-gradient(160deg,#FDFDFC 0%,#F2F3F2 55%,#E9EBEA 100%);
   box-shadow:var(--shadow-lift), inset 0 1.5px 0 rgba(255,255,255,.9), inset 0 -10px 24px rgba(30,45,60,.06);
@@ -338,16 +347,7 @@ footer a:hover{color:#fff;}
         <p class="hero-note"><b>$129</b> · FDA 510(k) cleared · Works with the MEND App · No monthly device fee</p>
       </div>
       <div class="device-stage">
-        <div class="device" role="img" aria-label="MEND Pulse blood pressure monitor showing a reading of 118 over 76, heart rate 62">
-          <div class="screen">
-            <div class="reading-sys num">118</div>
-            <div class="reading-dia num">/ 76</div>
-            <div class="reading-hr"><span class="hr-dot"></span><span class="num">62 bpm</span></div>
-            <div class="sync-tag">synced · care team notified</div>
-          </div>
-          <div class="halo-btn" aria-hidden="true"></div>
-          <div class="seam" aria-hidden="true"></div>
-        </div>
+        <img class="hero-illo" src="mend-pulse-hero.svg" alt="A woman at her kitchen table takes a blood pressure reading with the MEND Pulse cuff on her upper arm while the reading syncs to her phone">
         <div class="spec-float sf-1"><b>±3 mmHg</b>clinical-grade accuracy</div>
         <div class="spec-float sf-2"><b>6 months</b>per USB-C charge</div>
         <div class="spec-float sf-3"><b>One touch</b>measure &amp; sync</div>
@@ -412,6 +412,18 @@ footer a:hover{color:#fff;}
     <span class="kicker rv">Industrial design</span>
     <h2 class="rv">Instruments should feel this considered.</h2>
     <p class="lede rv rv-d1">A seamless ceramic-white unibody with satin graphite accents. No visible screws. No seams to find. The OLED display sleeps invisibly beneath smoked glass and wakes only when you need it — like equipment from a sickbay a few decades ahead of ours.</p>
+    <div class="device-stage rv rv-d2">
+      <div class="device" role="img" aria-label="MEND Pulse blood pressure monitor showing a reading of 118 over 76, heart rate 62">
+        <div class="screen">
+          <div class="reading-sys num">118</div>
+          <div class="reading-dia num">/ 76</div>
+          <div class="reading-hr"><span class="hr-dot"></span><span class="num">62 bpm</span></div>
+          <div class="sync-tag">synced · care team notified</div>
+        </div>
+        <div class="halo-btn" aria-hidden="true"></div>
+        <div class="seam" aria-hidden="true"></div>
+      </div>
+    </div>
     <div class="design-grid">
       <div class="dcard rv"><h3>Hidden-until-lit display</h3><p>A high-contrast OLED rests beneath smoked glass, invisible at rest. Readings surface in calm, oversized type that can be read across a room — or without reading glasses.</p></div>
       <div class="dcard rv rv-d1"><h3>Capacitive halo button</h3><p>A single touch surface with a soft LED halo — its light breathes while measuring and settles to a steady ring when your reading has safely reached your care team.</p></div>
