@@ -22,8 +22,20 @@
       return "Hi there! I'm Hailie. Ask me anything about MEND's products, shipping, sizing, or returns.";
     if (has(/who are you|your name|what are you/))
       return "I'm Hailie, MEND's virtual concierge. I can answer questions about our recovery wear, prices, shipping, and more — by text or voice.";
+    // Intent words (wash, logo, shipping, returns…) must be checked before
+    // product nouns, or "how do I wash the gown" answers with gown specs.
     if (has(/price|cost|how much/))
       return "The Comfort Wrap gown is $68, Comfort Scrubs are $74, and Compression Socks are $28. Coming soon: the AirGuard collar at $89, MEND Pulse at $129, and MEND Oxi at $59. Standard US shipping is free.";
+    if (has(/wash|clean|care instruction|laundry|dry\b/))
+      return "Machine wash cold on gentle, tumble dry low, no bleach. Our fabrics are tested to over 100 wash cycles. For the AirGuard, remove the sensor and CO2 canister first — the fabric shell is washable.";
+    if (has(/logo|custom|brand|embroider|wholesale|bulk|facility order/))
+      return "Yes — for bulk orders of 24 or more units we embroider your facility's logo on gowns and scrubs, with about a 3 to 4 week lead time, and we offer wholesale pricing for hospitals and care agencies. Try the Brand-It preview on any product page, or reach out through the contact form.";
+    if (has(/ship|deliver|arrive|international|canada|\buk\b|europe/))
+      return "We ship to all 50 US states with free standard shipping in 5 to 7 business days. Expedited is $12 for 2 to 3 days, overnight is $28. International shipping to Canada, the UK, and the EU is coming late 2026.";
+    if (has(/return|refund|exchange/))
+      return "You can return unworn, unwashed items within 30 days of delivery — we'll email you a prepaid label. Compression socks need to be unopened. Refunds process within 3 to 5 business days of us receiving the return.";
+    if (has(/\bsize|sizing|what size|fit\b/))
+      return "Gowns and scrubs run XS to 3XL, true to standard US sizing — order your usual top size. Socks are sized by calf circumference: S/M for 12 to 16 inches, L/XL for 16 to 20, and XL/XXL above that. Need something outside that range? Contact us and we'll help.";
     if (has(/gown|comfort wrap|hospital wear/))
       return "The Comfort Wrap is our stylish washable hospital gown — $68, in Heather Grey, Sage, Blue, Oatmeal, and a Classic Print, sizes XS to 3XL. It closes fully at the back and has a front zip for IV access, in a soft cotton-merino blend.";
     if (has(/scrub/))
@@ -36,18 +48,10 @@
       return "MEND Pulse is our wireless upper-arm blood pressure monitor, coming soon at $129. You can find details on its product page.";
     if (has(/oxi|oximeter|oxygen|spo2/))
       return "MEND Oxi is our fingertip pulse oximeter, coming soon at $59. Check its product page for details.";
-    if (has(/ship|deliver|how long|arrive/))
-      return "We ship to all 50 US states with free standard shipping in 5 to 7 business days. Expedited is $12 for 2 to 3 days, overnight is $28. International shipping to Canada, the UK, and the EU is coming late 2026.";
-    if (has(/return|refund|exchange/))
-      return "You can return unworn, unwashed items within 30 days of delivery — we'll email you a prepaid label. Compression socks need to be unopened. Refunds process within 3 to 5 business days of us receiving the return.";
+    if (has(/how long|delivery time/))
+      return "Standard shipping is free and takes 5 to 7 business days. Expedited is $12 for 2 to 3 days, and overnight is $28.";
     if (has(/damaged|defect|broken/))
       return "If something arrives damaged, contact us within 7 days with a photo and your order number and we'll send a free replacement — no return needed.";
-    if (has(/size|sizing|fit\b/))
-      return "Gowns and scrubs run XS to 3XL, true to standard US sizing — order your usual top size. Socks are sized by calf circumference. Need something outside that range? Contact us and we'll help.";
-    if (has(/wash|clean|care|laundry/))
-      return "Machine wash cold on gentle, tumble dry low, no bleach. Our fabrics are tested to over 100 wash cycles. For the AirGuard, remove the sensor and CO2 canister first — the fabric shell is washable.";
-    if (has(/logo|custom|brand|embroider|wholesale|bulk|facility|hospital order/))
-      return "Yes — for bulk orders of 24 or more units we embroider your facility's logo, with about a 3 to 4 week lead time, and we offer wholesale pricing for hospitals and care agencies. Try the Brand-It preview on any product page, or reach out through the contact form.";
     if (has(/contact|email|phone|reach|human|person/))
       return "You can reach the MEND team at contact@stevenjhubbard.com, or through the contact form at the bottom of the homepage. We're based in Portland, Oregon.";
     if (has(/fda|cleared|ce mark|regulat/))
