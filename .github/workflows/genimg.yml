@@ -24,18 +24,23 @@ jobs:
         run: |
           python3 - <<'EOF'
           import urllib.parse, urllib.request, time, os
+          os.makedirs("gen", exist_ok=True)
 
           BASE = "https://image.pollinations.ai/prompt/"
 
           shots = [
-            ("MEND Pulse - Hero - Model - 2026-07-23-web.jpg", 1152, 1152, 41,
-             "photorealistic lifestyle photograph, woman in her early 40s seated at a bright scandinavian kitchen table, taking a blood pressure reading with a premium upper-arm monitor on her bare upper arm, soft woven light grey fabric cuff with seamless ceramic-white device, smoked glass screen glowing 118/76 in white digits, relaxed soft smile looking at the device, morning coffee and smartphone showing a clean blue health app on the table, natural window light, pale warm background, editorial calm, 35mm f2.0, high end medical device advertising photography"),
-            ("MEND Oxi - Hero - Model - 2026-07-23-web.jpg", 1152, 1152, 17,
-             "photorealistic warm portrait photograph, silver-haired man in his 70s wearing a cardigan, seated in a sunlit living room armchair, holding up his hand with a ceramic-white fingertip pulse oximeter clipped on his index finger, small dark glass screen glowing SpO2 98, reading it with a reassured slight smile, golden hour window light, dignified independent mood, shallow depth of field, high end medical device advertising photography"),
-            ("MEND Pulse - Card - Model - 2026-07-23-web.jpg", 832, 1248, 7,
-             "photorealistic vertical photograph, woman in her early 40s in soft blue top at a bright kitchen table, premium white blood pressure monitor cuff on her upper arm with smoked glass screen showing 118/76, calm confident expression, natural window light, pale neutral background, editorial medical device photography, 50mm"),
-            ("MEND Oxi - Card - Model - 2026-07-23-web.jpg", 832, 1248, 23,
-             "photorealistic vertical photograph, older man with silver hair in sage green sweater, warm smile, holding up index finger wearing a ceramic-white fingertip pulse oximeter with glowing dark glass screen showing SpO2 98, soft bright living room background, natural light, editorial medical device photography, 50mm"),
+            ("gen/pulse-a.jpg", 1152, 1152, 101,
+             "photorealistic lifestyle photograph, woman in her 40s at a bright kitchen table, a white inflatable blood pressure cuff is wrapped snugly around her bare upper arm above the elbow exactly like at a doctors office, the fabric band fully encircles her arm, a small white monitor unit sits on the cuff, her hands rest calmly on the table, relaxed soft smile, natural window light, editorial medical advertising photography, 35mm"),
+            ("gen/pulse-b.jpg", 1152, 1152, 202,
+             "professional advertising photograph of a woman measuring her blood pressure at home, white upper arm blood pressure cuff wrapped around her left upper arm, band encircling the arm above the elbow, compact white device attached to the cuff showing 118 over 76, she sits at a wooden table with coffee, warm morning light, photorealistic, shallow depth of field"),
+            ("gen/pulse-c.jpg", 832, 1248, 303,
+             "vertical photorealistic photo, smiling woman seated sideways showing her upper arm with a white blood pressure cuff wrapped around it like a sleeve band, small screen on the cuff glowing 118/76, bright scandinavian kitchen behind her, natural light, editorial healthcare photography"),
+            ("gen/oxi-a.jpg", 1152, 1152, 404,
+             "photorealistic photograph, silver haired man in his 70s in an armchair, a small white fingertip pulse oximeter is clipped onto the end of his index finger, his fingertip is inserted inside the clip like a clothespin covering the fingertip, tiny screen shows 98, he smiles gently at his hand, golden hour living room light, medical advertising photography"),
+            ("gen/oxi-b.jpg", 1152, 1152, 505,
+             "professional healthcare advertising photo, close view of an older mans hand with a white clip-style pulse oximeter clamped over his index fingertip, the finger disappears inside the small white device, display reads SpO2 98, his warm smiling face soft in the background, sunlit living room, photorealistic, 50mm"),
+            ("gen/oxi-c.jpg", 832, 1248, 606,
+             "vertical photorealistic photo, older woman with grey curly hair in a warm cardigan seated by a window, small white pulse oximeter clipped on her index fingertip with the fingertip inside the device, screen glowing 98, she looks at it reassured, soft daylight, editorial healthcare photography"),
           ]
 
           for fname, w, h, seed, prompt in shots:
@@ -61,5 +66,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          git commit -m "Add AI-generated model photography for MEND Pulse and MEND Oxi" || echo "nothing to commit"
+          git commit -m "Model photography round 2: device worn on body, multiple variants" || echo "nothing to commit"
           git push
