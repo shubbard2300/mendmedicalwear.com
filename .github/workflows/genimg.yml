@@ -29,18 +29,22 @@ jobs:
           BASE = "https://image.pollinations.ai/prompt/"
 
           shots = [
-            ("gen/pulse-a.jpg", 1152, 1152, 101,
-             "photorealistic lifestyle photograph, woman in her 40s at a bright kitchen table, a white inflatable blood pressure cuff is wrapped snugly around her bare upper arm above the elbow exactly like at a doctors office, the fabric band fully encircles her arm, a small white monitor unit sits on the cuff, her hands rest calmly on the table, relaxed soft smile, natural window light, editorial medical advertising photography, 35mm"),
-            ("gen/pulse-b.jpg", 1152, 1152, 202,
-             "professional advertising photograph of a woman measuring her blood pressure at home, white upper arm blood pressure cuff wrapped around her left upper arm, band encircling the arm above the elbow, compact white device attached to the cuff showing 118 over 76, she sits at a wooden table with coffee, warm morning light, photorealistic, shallow depth of field"),
-            ("gen/pulse-c.jpg", 832, 1248, 303,
-             "vertical photorealistic photo, smiling woman seated sideways showing her upper arm with a white blood pressure cuff wrapped around it like a sleeve band, small screen on the cuff glowing 118/76, bright scandinavian kitchen behind her, natural light, editorial healthcare photography"),
-            ("gen/oxi-a.jpg", 1152, 1152, 404,
-             "photorealistic photograph, silver haired man in his 70s in an armchair, a small white fingertip pulse oximeter is clipped onto the end of his index finger, his fingertip is inserted inside the clip like a clothespin covering the fingertip, tiny screen shows 98, he smiles gently at his hand, golden hour living room light, medical advertising photography"),
-            ("gen/oxi-b.jpg", 1152, 1152, 505,
-             "professional healthcare advertising photo, close view of an older mans hand with a white clip-style pulse oximeter clamped over his index fingertip, the finger disappears inside the small white device, display reads SpO2 98, his warm smiling face soft in the background, sunlit living room, photorealistic, 50mm"),
-            ("gen/oxi-c.jpg", 832, 1248, 606,
-             "vertical photorealistic photo, older woman with grey curly hair in a warm cardigan seated by a window, small white pulse oximeter clipped on her index fingertip with the fingertip inside the device, screen glowing 98, she looks at it reassured, soft daylight, editorial healthcare photography"),
+            ("gen/p1.jpg", 1152, 1152, 11,
+             "professional stock photo, smiling middle aged woman sitting at kitchen table using an omron style automatic digital blood pressure monitor, white fabric cuff wrapped around her upper arm connected by tube to a small white monitor on the table with digital display reading 118 76, morning light, photorealistic, healthcare advertising"),
+            ("gen/p2.jpg", 1152, 1152, 22,
+             "photorealistic healthcare photo, home health nurse measuring blood pressure of a smiling senior woman using an automatic upper arm blood pressure cuff, white cuff wrapped around the patients upper arm, digital monitor showing reading, bright living room, natural light, editorial"),
+            ("gen/p3.jpg", 832, 1248, 33,
+             "stock photography, woman checking her blood pressure at home with digital upper arm monitor, cuff on upper arm, display showing 118 over 76, seated at wooden table with coffee cup, soft window light, vertical composition, photorealistic"),
+            ("gen/p4.jpg", 832, 1248, 44,
+             "photorealistic vertical photo, close up of female arm with white blood pressure cuff wrapped around upper arm, small digital monitor showing 118 76, blurred bright kitchen background with smiling woman, healthcare product photography"),
+            ("gen/o1.jpg", 1152, 1152, 55,
+             "professional stock photo, fingertip pulse oximeter clipped on an elderly mans index finger, red led light glowing inside the clip, small display showing 98, closeup of his hand resting on armchair with his warm smiling face softly blurred behind, photorealistic, healthcare"),
+            ("gen/o2.jpg", 1152, 1152, 66,
+             "photorealistic medical photo, hand of senior patient with white pulse oximeter clamped on index finger measuring oxygen saturation, oximeter display reads 98 SpO2, warm home setting, shallow depth of field, stock photography"),
+            ("gen/o3.jpg", 832, 1248, 77,
+             "stock photography vertical, elderly woman with silver curly hair smiling while a fingertip pulse oximeter is clipped on her finger, display showing 98, cozy cardigan, seated by bright window, photorealistic healthcare advertising"),
+            ("gen/o4.jpg", 832, 1248, 88,
+             "photorealistic vertical closeup, mans hand with a classic white fingertip pulse oximeter device clipped over the index finger like a clothespin, screen shows 98, soft sunlit living room bokeh background, product photography"),
           ]
 
           for fname, w, h, seed, prompt in shots:
@@ -66,5 +70,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          git commit -m "Model photography round 2: device worn on body, multiple variants" || echo "nothing to commit"
+          git commit -m "Model photography round 3: category-familiar prompts" || echo "nothing to commit"
           git push
