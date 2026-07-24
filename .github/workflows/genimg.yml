@@ -1,0 +1,62 @@
+name: Generate product photography
+# Temporary workflow: generates photorealistic model shots for MEND Pulse and
+# MEND Oxi via the free pollinations.ai image API (Flux), and commits them to
+# the branch for review. Delete after use.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/mendmedical-wear-status-rq65fx
+
+      - name: Generate images
+        run: |
+          python3 - <<'EOF'
+          import urllib.parse, urllib.request, time, os
+
+          BASE = "https://image.pollinations.ai/prompt/"
+
+          shots = [
+            ("MEND Pulse - Hero - Model - 2026-07-23-web.jpg", 1152, 1152, 41,
+             "photorealistic lifestyle photograph, woman in her early 40s seated at a bright scandinavian kitchen table, taking a blood pressure reading with a premium upper-arm monitor on her bare upper arm, soft woven light grey fabric cuff with seamless ceramic-white device, smoked glass screen glowing 118/76 in white digits, relaxed soft smile looking at the device, morning coffee and smartphone showing a clean blue health app on the table, natural window light, pale warm background, editorial calm, 35mm f2.0, high end medical device advertising photography"),
+            ("MEND Oxi - Hero - Model - 2026-07-23-web.jpg", 1152, 1152, 17,
+             "photorealistic warm portrait photograph, silver-haired man in his 70s wearing a cardigan, seated in a sunlit living room armchair, holding up his hand with a ceramic-white fingertip pulse oximeter clipped on his index finger, small dark glass screen glowing SpO2 98, reading it with a reassured slight smile, golden hour window light, dignified independent mood, shallow depth of field, high end medical device advertising photography"),
+            ("MEND Pulse - Card - Model - 2026-07-23-web.jpg", 832, 1248, 7,
+             "photorealistic vertical photograph, woman in her early 40s in soft blue top at a bright kitchen table, premium white blood pressure monitor cuff on her upper arm with smoked glass screen showing 118/76, calm confident expression, natural window light, pale neutral background, editorial medical device photography, 50mm"),
+            ("MEND Oxi - Card - Model - 2026-07-23-web.jpg", 832, 1248, 23,
+             "photorealistic vertical photograph, older man with silver hair in sage green sweater, warm smile, holding up index finger wearing a ceramic-white fingertip pulse oximeter with glowing dark glass screen showing SpO2 98, soft bright living room background, natural light, editorial medical device photography, 50mm"),
+          ]
+
+          for fname, w, h, seed, prompt in shots:
+            url = BASE + urllib.parse.quote(prompt) + f"?width={w}&height={h}&model=flux&nologo=true&seed={seed}"
+            for attempt in range(4):
+                try:
+                    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+                    data = urllib.request.urlopen(req, timeout=300).read()
+                    if len(data) > 30000 and (data[:3] == b'\xff\xd8\xff' or data[:8] == b'\x89PNG\r\n\x1a\n'):
+                        open(fname, "wb").write(data)
+                        print("OK ", fname, len(data))
+                        break
+                    print("BAD payload", fname, len(data))
+                except Exception as e:
+                    print("ERR", fname, attempt, e)
+                time.sleep(20)
+            else:
+                print("FAILED", fname)
+          EOF
+
+      - name: Commit images
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Add AI-generated model photography for MEND Pulse and MEND Oxi" || echo "nothing to commit"
+          git push
