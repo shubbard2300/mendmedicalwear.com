@@ -4,6 +4,9 @@ name: Generate product photography
 # the branch for review. Delete after use.
 
 on:
+  push:
+    branches: [claude/mendmedical-wear-status-rq65fx]
+    paths: ['.github/workflows/genimg.yml']
   workflow_dispatch:
 
 permissions:
