@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200" role="img" aria-label="MEND App shown on a phone: patient profile, synced reading, and secure transmission progress">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset=".6" stop-color="#EEF4FB"/>
+      <stop offset="1" stop-color="#E6EFF9"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#2E6BE6"/>
+      <stop offset="1" stop-color="#3FA8E0"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F7FAFD"/>
+      <stop offset="1" stop-color="#EDF3FA"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".5" cy=".45" r=".6">
+      <stop offset="0" stop-color="#3FA8E0" stop-opacity=".28"/>
+      <stop offset="1" stop-color="#3FA8E0" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="26" stdDeviation="30" flood-color="#142846" flood-opacity=".18"/>
+    </filter>
+  </defs>
+
+  <rect width="800" height="1200" fill="url(#bg)"/>
+  <circle cx="400" cy="560" r="430" fill="url(#glow)"/>
+
+  <!-- Phone -->
+  <g filter="url(#soft)">
+    <rect x="215" y="200" width="370" height="760" rx="56" fill="#0D1620"/>
+    <rect x="229" y="214" width="342" height="732" rx="44" fill="url(#screen)"/>
+  </g>
+
+  <!-- Header -->
+  <text x="257" y="286" font-family="-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="24" font-weight="700" fill="#1B2430">Good morning</text>
+  <text x="543" y="284" text-anchor="end" font-family="-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="15" font-weight="700" letter-spacing="2" fill="#8FA0B3">MEND</text>
+
+  <!-- Patient card -->
+  <rect x="253" y="312" width="294" height="96" rx="20" fill="#FFFFFF" stroke="#E4EAF1" stroke-width="2"/>
+  <text x="273" y="344" font-family="-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" font-weight="700" letter-spacing="1.6" fill="#8FA0B3">PATIENT</text>
+  <circle cx="292" cy="376" r="19" fill="url(#accent)"/>
+  <text x="292" y="381" text-anchor="middle" font-family="-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#FFFFFF">AR</text>
+  <text x="322" y="372" font-family="-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="16" font-weight="700" fill="#1B2430">Alex Rivera</text>
+  <text x="322" y="392" font-family="-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" font-weight="600" fill="#8FA0B3">MEND Pulse · connected</text>
+
+  <!-- Reading card -->
+  <rect x="253" y="424" width="294" height="104" rx="20" fill="#FFFFFF" stroke="#E4EAF1" stroke-width="2"/>
+  <text x="273" y="456" font-family="-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" font-weight="700" letter-spacing="1.6" fill="#8FA0B3">NEW READING · 7:04 AM</text>
+  <text x="273" y="500" font-family="-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="34" font-weight="700" fill="#1B2430">118/76</text>
+  <text x="400" y="500" font-family="-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="17" font-weight="600" fill="#5A6B7E">62 bpm</text>
+
+  <!-- Transmission card -->
+  <rect x="253" y="544" width="294" height="228" rx="20" fill="#FFFFFF" stroke="#E4EAF1" stroke-width="2"/>
+  <text x="273" y="576" font-family="-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" font-weight="700" letter-spacing="1.6" fill="#8FA0B3">SENDING TO DR. OSEI</text>
+
+  <g font-family="-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="600" fill="#5A6B7E">
+    <circle cx="285" cy="606" r="11" fill="#E5F5EC"/>
+    <path d="M279.5 606l4 4 7-8" fill="none" stroke="#1E9E62" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="308" y="611">Imported &amp; translated</text>
+
+    <circle cx="285" cy="644" r="11" fill="#E5F5EC"/>
+    <path d="M279.5 644l4 4 7-8" fill="none" stroke="#1E9E62" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="308" y="649">Sanitized &amp; formatted</text>
+
+    <circle cx="285" cy="682" r="11" fill="#E5F5EC"/>
+    <path d="M279.5 682l4 4 7-8" fill="none" stroke="#1E9E62" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="308" y="687">Encrypted · AES-256</text>
+
+    <circle cx="285" cy="720" r="11" fill="none" stroke="#BFD3F5" stroke-width="3"/>
+    <path d="M285 709a11 11 0 018.5 4" fill="none" stroke="#2E6BE6" stroke-width="3" stroke-linecap="round"/>
+    <text x="308" y="725">Transmitting securely…</text>
+  </g>
+
+  <!-- Delivered chip -->
+  <rect x="253" y="788" width="294" height="58" rx="16" fill="#E5F5EC"/>
+  <path d="M275 817l6 6 11-13" fill="none" stroke="#177E4D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="304" y="822" font-family="-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="13.5" font-weight="700" fill="#177E4D">Yesterday — delivered &amp; confirmed</text>
+
+  <!-- Home indicator -->
+  <rect x="352" y="916" width="96" height="6" rx="3" fill="#C9D6E4"/>
+
+  <!-- Caption -->
+  <text x="400" y="1042" text-anchor="middle" font-family="-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="34" font-weight="700" fill="#1B2430">MEND App</text>
+  <text x="400" y="1082" text-anchor="middle" font-family="-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="600" fill="#5A6B7E">The hub of connected care</text>
+  <rect x="310" y="1108" width="180" height="34" rx="17" fill="none" stroke="#BFD3F5" stroke-width="2"/>
+  <text x="400" y="1130" text-anchor="middle" font-family="-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="13" font-weight="700" letter-spacing="1.4" fill="#2E6BE6">HIPAA-COMPLIANT</text>
+</svg>
