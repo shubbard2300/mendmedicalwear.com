@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEND App — The Hub of Connected Care | MEND Medical</title>
+<meta name="description" content="The MEND App connects every MEND device to your care team through a HIPAA-compliant data transmission protocol. Choose a patient, take a reading — the app imports, sanitizes, encrypts, and delivers your data to your provider automatically.">
+<link rel="canonical" href="https://mendmedicalwear.com/Product%20Detail%20-%20MEND%20App.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#0B1B2B">
+<meta property="og:type" content="product">
+<meta property="og:site_name" content="MEND Medical">
+<meta property="og:title" content="MEND App — The Hub of Connected Care">
+<meta property="og:description" content="Every MEND device. Every reading. Encrypted, translated to your provider's format, and delivered automatically — with confirmation at both ends.">
+<meta property="product:price:amount" content="0.00">
+<meta property="product:price:currency" content="USD">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "MEND App",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "iOS, Android",
+  "description": "Companion app for MEND connected health devices. Imports device readings, sanitizes and transforms them to your provider's format, encrypts them, and delivers them via SFTP or OAuth 2.0 over a HIPAA-compliant pipeline — with automatic retry and confirmation to both patient and provider.",
+  "offers": { "@type": "Offer", "price": "0.00", "priceCurrency": "USD" },
+  "publisher": { "@type": "Organization", "name": "MEND Medical" }
+}
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XT2M4KBL2R"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XT2M4KBL2R');</script>
+<script>document.documentElement.classList.add("js")</script>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style>
+/* ─────────────────────────────────────────────────────────
+   MEND APP — design tokens
+   Calm, premium, intelligent. More Apple than hospital.
+   ───────────────────────────────────────────────────────── */
+:root{
+  --white:#FBFCFE;
+  --mist:#F2F5F9;
+  --ink:#1B2430;
+  --slate:#5A6B7E;
+  --faint:#8FA0B3;
+  --line:#E4EAF1;
+  --blue:#2E6BE6;
+  --blue-deep:#1E4FC2;
+  --cyan:#3FA8E0;
+  --green:#1E9E62;
+  --green-soft:#E5F5EC;
+  --red:#D6455D;
+  --red-soft:#FBE9EC;
+  --night:#0B1B2B;
+  --night-2:#122536;
+  --glass:rgba(255,255,255,.62);
+  --glass-line:rgba(255,255,255,.55);
+  --radius-lg:28px; --radius-md:18px; --radius-sm:12px;
+  --shadow-soft:0 24px 60px rgba(20,40,70,.10);
+  --shadow-lift:0 34px 80px rgba(20,40,70,.16);
+  --grad-hero:linear-gradient(180deg,#FFFFFF 0%,#EEF4FB 60%,#E6EFF9 100%);
+  --grad-accent:linear-gradient(100deg,#2E6BE6,#3FA8E0);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Inter,Roboto,Helvetica,Arial,sans-serif;
+  background:var(--white); color:var(--ink);
+  font-size:17px; line-height:1.6; -webkit-font-smoothing:antialiased;
+  letter-spacing:-.006em;
+}
+.wrap{max-width:1140px; margin:0 auto; padding:0 28px;}
+section{padding:104px 0;}
+h2{font-size:clamp(30px,4.4vw,46px); font-weight:700; letter-spacing:-.028em; line-height:1.08; text-wrap:balance;}
+h3{letter-spacing:-.015em;}
+.kicker{display:block; font-size:13px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--blue); margin-bottom:16px;}
+.lede{font-size:20px; color:var(--slate); max-width:620px; margin-top:18px; line-height:1.6;}
+.num{font-variant-numeric:tabular-nums;}
+
+/* ── Nav ── */
+header{
+  position:sticky; top:0; z-index:200;
+  background:rgba(251,252,254,.78); backdrop-filter:blur(18px) saturate(1.4);
+  border-bottom:1px solid transparent; transition:border-color .3s ease;
+}
+header.scrolled{border-color:var(--line);}
+.nav{display:flex; align-items:center; justify-content:space-between; max-width:1140px; margin:0 auto; padding:14px 28px;}
+.nav-brand{display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--ink); font-weight:700; font-size:16px; letter-spacing:-.01em;}
+.nav-brand .cross{width:30px;height:30px;border-radius:9px;background:var(--grad-accent);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.nav-brand small{font-weight:500;color:var(--faint);letter-spacing:.02em;}
+.nav-links{display:flex; gap:30px; align-items:center;}
+.nav-links a{font-size:14px; font-weight:500; color:var(--slate); text-decoration:none; transition:color .2s;}
+.nav-links a:hover{color:var(--ink);}
+.nav-links .pill{background:var(--ink); color:#fff; padding:9px 20px; border-radius:999px; font-weight:600; transition:background .25s, transform .25s;}
+.nav-links .pill:hover{background:var(--blue); color:#fff; transform:translateY(-1px);}
+@media(max-width:760px){.nav-links a:not(.pill){display:none;}}
+
+/* ── Buttons ── */
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding:16px 32px; border-radius:999px; font-size:16px; font-weight:600; letter-spacing:-.01em;
+  text-decoration:none; cursor:pointer; border:none; font-family:inherit;
+  transition:transform .25s cubic-bezier(.3,.7,.3,1), box-shadow .25s ease, background .25s ease, color .25s ease, border-color .25s ease;}
+.btn-primary{background:var(--ink); color:#fff; box-shadow:0 10px 28px rgba(27,36,48,.22);}
+.btn-primary:hover{background:var(--blue); transform:translateY(-2px); box-shadow:0 16px 36px rgba(46,107,230,.32);}
+.btn-quiet{background:transparent; color:var(--ink); border:1.5px solid var(--line);}
+.btn-quiet:hover{border-color:var(--blue); color:var(--blue); transform:translateY(-2px);}
+.btn-glass{background:var(--glass); color:var(--ink); border:1px solid var(--glass-line); backdrop-filter:blur(10px);}
+.btn-glass:hover{background:#fff; transform:translateY(-2px);}
+
+/* ── Hero ── */
+.hero{background:var(--grad-hero); padding:96px 0 40px; overflow:hidden; position:relative;}
+.hero-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:40px; align-items:center;}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr;}}
+.hero h1{font-size:clamp(46px,7vw,76px); font-weight:700; letter-spacing:-.035em; line-height:1.02; margin:10px 0 18px;}
+.hero h1 span{background:var(--grad-accent); -webkit-background-clip:text; background-clip:text; color:transparent;}
+.hero .sub{font-size:21px; color:var(--slate); max-width:520px; line-height:1.55; margin-bottom:36px;}
+.hero-ctas{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:26px;}
+.hero-note{font-size:13px; color:var(--faint);}
+.hero-note b{color:var(--slate); font-weight:600;}
+
+/* Phone mockup */
+.phone-stage{position:relative; display:flex; align-items:center; justify-content:center; padding:30px 0 50px;}
+.phone-stage::before{content:''; position:absolute; width:560px; height:560px; border-radius:50%;
+  background:radial-gradient(circle at 50% 42%, rgba(63,168,224,.22), rgba(46,107,230,.06) 55%, transparent 72%); pointer-events:none;}
+.phone{position:relative; width:min(300px,80vw); aspect-ratio:0.485; border-radius:44px; background:#0D1620; padding:12px;
+  box-shadow:var(--shadow-lift), inset 0 0 0 1.5px rgba(255,255,255,.08);
+  animation:phone-float 8s ease-in-out infinite;}
+@keyframes phone-float{0%,100%{transform:translateY(0) rotate(-.4deg);}50%{transform:translateY(-12px) rotate(.4deg);}}
+.phone-screen{width:100%; height:100%; border-radius:34px; background:linear-gradient(180deg,#F7FAFD,#EDF3FA); overflow:hidden; display:flex; flex-direction:column; padding:20px 16px; gap:10px;}
+.ps-head{display:flex; justify-content:space-between; align-items:center;}
+.ps-head b{font-size:14px; letter-spacing:-.01em;}
+.ps-head span{font-size:10px; color:var(--faint); font-weight:600;}
+.ps-card{background:#fff; border:1px solid var(--line); border-radius:16px; padding:12px 14px;}
+.ps-card .l{font-size:9.5px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); margin-bottom:6px;}
+.ps-patient{display:flex; align-items:center; gap:10px;}
+.ps-patient .avatar{width:32px; height:32px; border-radius:50%; background:var(--grad-accent); color:#fff; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; flex-shrink:0;}
+.ps-patient b{display:block; font-size:13px;}
+.ps-patient small{font-size:10px; color:var(--faint); font-weight:600;}
+.ps-patient .chg{margin-left:auto; font-size:10px; color:var(--blue); font-weight:700;}
+.ps-row{display:flex; align-items:center; gap:10px; font-size:12px; font-weight:600; color:var(--ink);}
+.ps-row .dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);flex-shrink:0;}
+.ps-row small{margin-left:auto; color:var(--faint); font-weight:500; font-size:10.5px;}
+.ps-progress{display:flex; flex-direction:column; gap:7px; margin-top:2px;}
+.ps-step{display:flex; align-items:center; gap:8px; font-size:10.5px; font-weight:600; color:var(--slate);}
+.ps-step .tick{width:14px; height:14px; border-radius:50%; background:var(--green-soft); color:var(--green); display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+.ps-step .tick svg{width:8px; height:8px; stroke:var(--green); stroke-width:3; fill:none; stroke-linecap:round; stroke-linejoin:round;}
+.ps-step .spin{width:14px; height:14px; border-radius:50%; border:2px solid rgba(46,107,230,.25); border-top-color:var(--blue); flex-shrink:0; animation:spin 1s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.ps-delivered{margin-top:2px; padding:9px 12px; border-radius:12px; background:var(--green-soft); color:#177E4D; font-size:11px; font-weight:700; display:flex; align-items:center; gap:8px;}
+.ps-delivered svg{width:13px;height:13px;stroke:#177E4D;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+.spec-float{position:absolute; background:var(--glass); border:1px solid var(--glass-line);
+  backdrop-filter:blur(14px); border-radius:14px; padding:10px 16px; font-size:12.5px; font-weight:600;
+  color:var(--slate); box-shadow:var(--shadow-soft); white-space:nowrap; z-index:3;}
+.spec-float b{display:block; color:var(--ink); font-size:14px;}
+.sf-1{top:14%; left:0;} .sf-2{top:46%; right:-2%;} .sf-3{bottom:14%; left:4%;}
+@media(max-width:520px){.spec-float{display:none;}}
+
+/* ── Statement strip ── */
+.statement{background:var(--white); text-align:center; padding:120px 0;}
+.statement p{font-size:clamp(26px,3.8vw,40px); font-weight:600; letter-spacing:-.025em; line-height:1.25;
+  max-width:860px; margin:0 auto; text-wrap:balance;}
+.statement p em{font-style:normal; color:var(--blue);}
+.statement .who{margin-top:30px; display:flex; gap:10px; flex-wrap:wrap; justify-content:center;}
+.statement .who span{font-size:13px; font-weight:600; color:var(--slate); background:var(--mist);
+  border:1px solid var(--line); border-radius:999px; padding:8px 16px;}
+
+/* ── Features ── */
+.features{background:var(--mist); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+.feat-hero{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:20px; margin-top:52px;}
+.fcard{background:#fff; border:1px solid var(--line); border-radius:var(--radius-md); padding:30px 26px;
+  transition:transform .3s cubic-bezier(.3,.7,.3,1), box-shadow .3s ease;}
+.fcard:hover{transform:translateY(-5px); box-shadow:var(--shadow-soft);}
+.fcard .fi{width:48px; height:48px; border-radius:14px; background:linear-gradient(135deg,#EAF1FD,#E8F6FD);
+  display:flex; align-items:center; justify-content:center; margin-bottom:18px;}
+.fcard .fi svg{width:22px; height:22px; stroke:var(--blue); fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round;}
+.fcard h3{font-size:17px; font-weight:700; margin-bottom:7px;}
+.fcard p{font-size:14.5px; color:var(--slate); line-height:1.55;}
+.feat-more{display:grid; grid-template-columns:repeat(auto-fit,minmax(215px,1fr)); gap:12px; margin-top:14px;}
+.fmini{display:flex; align-items:center; gap:12px; background:#fff; border:1px solid var(--line);
+  border-radius:var(--radius-sm); padding:15px 18px; font-size:14.5px; font-weight:600; color:var(--ink);
+  transition:transform .25s ease, border-color .25s ease;}
+.fmini:hover{transform:translateY(-3px); border-color:#BFD3F5;}
+.fmini svg{width:18px;height:18px;stroke:var(--blue);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+
+/* ── Protocol (the sketch, productized) ── */
+.protocol{background:var(--night); color:#E8EFF6; position:relative; overflow:hidden;}
+.protocol::before{content:''; position:absolute; width:720px; height:720px; border-radius:50%; filter:blur(130px);
+  background:rgba(46,107,230,.24); top:-260px; right:-200px;}
+.protocol::after{content:''; position:absolute; width:600px; height:600px; border-radius:50%; filter:blur(140px);
+  background:rgba(63,168,224,.12); bottom:-300px; left:-220px;}
+.protocol .kicker{color:var(--cyan);}
+.protocol h2{color:#F4F8FC;}
+.protocol .lede{color:#9FB2C6;}
+.pipeline{position:relative; z-index:2; margin-top:60px; max-width:760px; margin-left:auto; margin-right:auto;}
+.pstep{position:relative; display:flex; gap:22px; padding:0 0 40px;}
+.pstep:last-child{padding-bottom:0;}
+.pstep .rail{display:flex; flex-direction:column; align-items:center; flex-shrink:0;}
+.pstep .node{width:52px; height:52px; border-radius:16px; background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.14); backdrop-filter:blur(8px);
+  display:flex; align-items:center; justify-content:center; flex-shrink:0; position:relative; z-index:2;
+  transition:background .3s ease, border-color .3s ease, transform .3s ease;}
+.pstep:hover .node{background:rgba(63,168,224,.14); border-color:rgba(63,168,224,.5); transform:scale(1.06);}
+.pstep .node svg{width:24px; height:24px; stroke:var(--cyan); fill:none; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round;}
+.pstep .cord{flex:1; width:2px; margin-top:8px;
+  background:repeating-linear-gradient(180deg, rgba(63,168,224,.55) 0 5px, transparent 5px 11px);
+  animation:cord-flow 1.3s linear infinite;}
+@keyframes cord-flow{to{background-position:0 11px;}}
+.pstep:last-child .cord{display:none;}
+.pstep .body{padding-top:4px;}
+.pstep .snum{font-size:11px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:#5E88A5; display:block; margin-bottom:5px;}
+.pstep h3{font-size:19px; font-weight:700; color:#EAF2F9; margin-bottom:7px;}
+.pstep p{font-size:14.5px; color:#93A8BD; line-height:1.65; max-width:520px;}
+.ptags{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;}
+.ptag{font-size:11px; font-weight:700; letter-spacing:.05em; padding:5px 12px; border-radius:999px;
+  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14); color:#AFC4D8;}
+.ptag.ok{background:rgba(30,158,98,.16); border-color:rgba(30,158,98,.45); color:#5ED49E;}
+.ptag.warn{background:rgba(214,69,93,.14); border-color:rgba(214,69,93,.45); color:#F08CA0;}
+/* Fail / retry loop card */
+.retry-card{position:relative; z-index:2; margin:52px auto 0; max-width:760px;
+  border-radius:var(--radius-md); border:1px solid rgba(214,69,93,.35);
+  background:rgba(214,69,93,.08); padding:26px 28px; display:flex; gap:18px; align-items:flex-start;}
+.retry-card .ri{width:44px; height:44px; border-radius:13px; background:rgba(214,69,93,.16);
+  border:1px solid rgba(214,69,93,.4); display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+.retry-card .ri svg{width:22px; height:22px; stroke:#F08CA0; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round;}
+.retry-card h3{font-size:16px; font-weight:700; color:#F6D9DF; margin-bottom:5px;}
+.retry-card p{font-size:14px; color:#C8A9B2; line-height:1.6;}
+.retry-card p b{color:#F6D9DF;}
+/* Success card */
+.success-card{position:relative; z-index:2; margin:16px auto 0; max-width:760px;
+  border-radius:var(--radius-md); border:1px solid rgba(30,158,98,.4);
+  background:rgba(30,158,98,.09); padding:26px 28px; display:flex; gap:18px; align-items:flex-start;}
+.success-card .ri{width:44px; height:44px; border-radius:13px; background:rgba(30,158,98,.18);
+  border:1px solid rgba(30,158,98,.45); display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+.success-card .ri svg{width:22px; height:22px; stroke:#5ED49E; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round;}
+.success-card h3{font-size:16px; font-weight:700; color:#D8F2E4; margin-bottom:5px;}
+.success-card p{font-size:14px; color:#9FC7B2; line-height:1.6;}
+.success-card p b{color:#D8F2E4;}
+
+/* ── Security ── */
+.security .sec-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:16px; margin-top:52px;}
+.scard{background:#fff; border:1px solid var(--line); border-radius:var(--radius-md); padding:28px 26px;
+  transition:transform .3s ease, box-shadow .3s ease;}
+.scard:hover{transform:translateY(-4px); box-shadow:var(--shadow-soft);}
+.scard .si{width:46px; height:46px; border-radius:13px; background:linear-gradient(135deg,#EAF1FD,#E8F6FD);
+  display:flex; align-items:center; justify-content:center; margin-bottom:16px;}
+.scard .si svg{width:22px; height:22px; stroke:var(--blue); fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round;}
+.scard h3{font-size:16px; font-weight:700; margin-bottom:7px;}
+.scard p{font-size:14px; color:var(--slate); line-height:1.6;}
+
+/* ── Devices ── */
+.devices{background:var(--mist); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+.dev-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px; margin-top:52px;}
+.dev-card{display:block; background:#fff; border:1px solid var(--line); border-radius:var(--radius-md);
+  overflow:hidden; text-decoration:none; color:var(--ink);
+  transition:transform .3s cubic-bezier(.3,.7,.3,1), box-shadow .3s ease, border-color .3s ease;}
+.dev-card:hover{transform:translateY(-6px); box-shadow:var(--shadow-lift); border-color:#BFD3F5;}
+.dev-card img{width:100%; aspect-ratio:4/3; object-fit:cover; display:block;}
+.dev-card .db{padding:20px 22px 24px;}
+.dev-card h3{font-size:17px; font-weight:700; margin-bottom:5px;}
+.dev-card p{font-size:13.5px; color:var(--slate); line-height:1.55;}
+.dev-card .go{display:inline-flex; align-items:center; gap:6px; margin-top:12px; font-size:13.5px; font-weight:700; color:var(--blue);}
+.dev-card .go svg{width:14px; height:14px; stroke:var(--blue); fill:none; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; transition:transform .25s ease;}
+.dev-card:hover .go svg{transform:translateX(3px);}
+
+/* ── Specs ── */
+.spec-table{margin-top:48px; background:#fff; border:1px solid var(--line); border-radius:var(--radius-lg);
+  overflow:hidden; box-shadow:var(--shadow-soft);}
+.spec-table .row{display:grid; grid-template-columns:240px 1fr; padding:17px 30px; font-size:15px; transition:background .2s ease;}
+.spec-table .row:hover{background:#F7FAFD;}
+.spec-table .row + .row{border-top:1px solid var(--line);}
+.spec-table .k{font-weight:600; color:var(--slate);}
+.spec-table .v{color:var(--ink); font-variant-numeric:tabular-nums;}
+@media(max-width:640px){.spec-table .row{grid-template-columns:1fr; gap:2px; padding:14px 22px;}}
+.cert-strip{display:flex; gap:10px; flex-wrap:wrap; margin-top:26px;}
+.cert-strip span{font-size:12.5px; font-weight:700; letter-spacing:.04em; color:var(--slate);
+  border:1px solid var(--line); background:#fff; border-radius:999px; padding:8px 16px;}
+
+/* ── CTA ── */
+.cta-final{background:var(--night); color:#fff; text-align:center; padding:140px 0; position:relative; overflow:hidden;}
+.cta-final::before{content:''; position:absolute; left:50%; top:-30%; transform:translateX(-50%);
+  width:900px; height:600px; border-radius:50%; filter:blur(130px); background:rgba(46,107,230,.30);}
+.cta-final h2{font-size:clamp(38px,6vw,64px); color:#fff; position:relative; z-index:2;}
+.cta-final p{font-size:19px; color:#9FB2C6; margin:20px auto 44px; max-width:520px; position:relative; z-index:2;}
+.cta-final .row{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; position:relative; z-index:2;}
+.cta-final .btn-primary{background:#fff; color:var(--night); box-shadow:0 14px 40px rgba(0,0,0,.35);}
+.cta-final .btn-primary:hover{background:var(--cyan); color:#fff;}
+.cta-final .btn-quiet{color:#D7E3EF; border-color:rgba(255,255,255,.28);}
+.cta-final .btn-quiet:hover{border-color:var(--cyan); color:var(--cyan);}
+
+footer{background:var(--night); color:#5E7690; text-align:center; font-size:13px; padding:0 24px 56px; line-height:1.9;}
+footer .rule{width:min(1140px,90%); margin:0 auto 34px; border-top:1px solid rgba(255,255,255,.08);}
+footer a{color:#8FB4D9; text-decoration:none;}
+footer a:hover{color:#fff;}
+
+/* ── Reveal (gated: content visible without JS) ── */
+.js .rv{opacity:0; transform:translateY(28px); transition:opacity .8s cubic-bezier(.2,.6,.2,1), transform .8s cubic-bezier(.2,.6,.2,1);}
+.js .rv.in{opacity:1; transform:translateY(0);}
+.js .rv-d1{transition-delay:.08s;} .js .rv-d2{transition-delay:.16s;} .js .rv-d3{transition-delay:.24s;}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important;}
+  .js .rv{opacity:1 !important; transform:none !important;}
+}
+</style>
+</head>
+<body>
+
+<header id="hdr">
+  <div class="nav">
+    <a class="nav-brand" href="index.html">
+      <span class="cross"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><line x1="12" y1="4" x2="12" y2="20"/><line x1="4" y1="12" x2="20" y2="12"/></svg></span>
+      MEND&nbsp;<small>Medical</small>
+    </a>
+    <nav class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#protocol">How It Works</a>
+      <a href="#security">Security</a>
+      <a href="#devices">Devices</a>
+      <a href="#specs">Specs</a>
+      <a href="#get-started" class="pill">Get the App</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="kicker">MEND Medical · Connected Care Platform</span>
+        <h1>MEND <span>App</span></h1>
+        <p class="sub">The hub of the MEND ecosystem. Every device reading is imported, checked, encrypted, and delivered to your provider — automatically, and with confirmation at both ends.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="#get-started">Get the App</a>
+          <a class="btn btn-glass" href="#protocol">See How Data Travels</a>
+        </div>
+        <p class="hero-note"><b>Free</b> · iOS &amp; Android · HIPAA-compliant transmission · Works with every MEND device</p>
+      </div>
+      <div class="phone-stage">
+        <div class="phone" role="img" aria-label="MEND App showing a patient profile, a synced blood pressure reading, and a transmission in progress with each protocol step checked off">
+          <div class="phone-screen">
+            <div class="ps-head"><b>Good morning</b><span>MEND</span></div>
+            <div class="ps-card">
+              <div class="l">Patient</div>
+              <div class="ps-patient">
+                <span class="avatar">AR</span>
+                <div><b>Alex Rivera</b><small>MEND Pulse · connected</small></div>
+                <span class="chg">Change</span>
+              </div>
+            </div>
+            <div class="ps-card">
+              <div class="l">New Reading · 7:04 AM</div>
+              <div class="ps-row"><span class="dot"></span>118/76 · 62 bpm<small>MEND Pulse</small></div>
+            </div>
+            <div class="ps-card">
+              <div class="l">Sending to Dr. Osei</div>
+              <div class="ps-progress">
+                <div class="ps-step"><span class="tick"><svg viewBox="0 0 24 24"><path d="M5 13l5 5L20 7"/></svg></span>Imported &amp; translated</div>
+                <div class="ps-step"><span class="tick"><svg viewBox="0 0 24 24"><path d="M5 13l5 5L20 7"/></svg></span>Sanitized &amp; formatted</div>
+                <div class="ps-step"><span class="tick"><svg viewBox="0 0 24 24"><path d="M5 13l5 5L20 7"/></svg></span>Encrypted</div>
+                <div class="ps-step"><span class="spin" aria-hidden="true"></span>Transmitting securely…</div>
+              </div>
+            </div>
+            <div class="ps-delivered"><svg viewBox="0 0 24 24"><path d="M5 13l5 5L20 7"/></svg>Yesterday's reading — delivered &amp; confirmed</div>
+          </div>
+        </div>
+        <div class="spec-float sf-1"><b>Automatic</b>no manual steps</div>
+        <div class="spec-float sf-2"><b>Encrypted</b>end to end</div>
+        <div class="spec-float sf-3"><b>Confirmed</b>at both ends</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STATEMENT -->
+<div class="statement">
+  <div class="wrap">
+    <p class="rv">A reading that never reaches your care team might as well not exist. The MEND App exists so that <em>every reading arrives</em> — translated into your provider's format, encrypted the whole way, and confirmed when it lands.</p>
+    <div class="who rv rv-d1">
+      <span>Remote Patient Monitoring</span><span>Chronic Care Management</span><span>Post-discharge</span><span>Multi-patient households</span><span>Home health caregivers</span>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="wrap">
+    <span class="kicker rv">Capability</span>
+    <h2 class="rv">One app.<br>Every MEND device. Every patient.</h2>
+    <div class="feat-hero">
+      <div class="fcard rv">
+        <div class="fi"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c.6-3.4 2.8-5 5.5-5s4.9 1.6 5.5 5"/><circle cx="17" cy="9" r="2.4"/><path d="M15.5 15.3c2.6.2 4.4 1.7 5 4.7"/></svg></div>
+        <h3>Choose the patient first</h3>
+        <p>Households aren't one person. Pick a profile before each session and every reading files itself under the right patient — and reaches the right provider.</p>
+      </div>
+      <div class="fcard rv rv-d1">
+        <div class="fi"><svg viewBox="0 0 24 24"><path d="M7 8l10 8-5 4V4l5 4-10 8"/></svg></div>
+        <h3>Two-way device link</h3>
+        <p>The app talks with your MEND devices, not just at them — pulling readings in, pushing firmware and settings out, over an encrypted Bluetooth link.</p>
+      </div>
+      <div class="fcard rv rv-d2">
+        <div class="fi"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h10M4 17h13"/><path d="M18 15l3 2-3 2"/></svg></div>
+        <h3>Speaks your provider's language</h3>
+        <p>Every clinic wants data its own way. The app transforms each reading into the exact format your provider's system expects before it ever leaves your phone.</p>
+      </div>
+      <div class="fcard rv rv-d3">
+        <div class="fi"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 10-2.3 5.6"/><path d="M20 8v4h-4"/></svg></div>
+        <h3>Never lose a reading</h3>
+        <p>If a transmission fails — dead spot, dropped Wi-Fi, server hiccup — the app tells you plainly and retries automatically until delivery is confirmed.</p>
+      </div>
+    </div>
+    <div class="feat-more">
+      <div class="fmini rv"><svg viewBox="0 0 24 24"><rect x="6" y="4" width="12" height="16" rx="4"/><path d="M10 16h4"/><circle cx="12" cy="10" r="2.2"/></svg>Works with MEND Pulse</div>
+      <div class="fmini rv"><svg viewBox="0 0 24 24"><path d="M8 4h8v6a4 4 0 01-8 0V4z"/><path d="M12 14v6"/></svg>Works with MEND Oxi</div>
+      <div class="fmini rv"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 8v4l2.6 1.6"/></svg>Real-time sync status</div>
+      <div class="fmini rv"><svg viewBox="0 0 24 24"><path d="M4 17l4.5-5 3.5 3 4-6 4 4"/><path d="M3 21h18"/></svg>Trends &amp; history per patient</div>
+      <div class="fmini rv"><svg viewBox="0 0 24 24"><path d="M4 6h16v10H9l-5 4V6z"/></svg>Provider messages</div>
+      <div class="fmini rv"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.4-2.8 8.4-7 10-4.2-1.6-7-5.6-7-10V6l7-3z"/><path d="M9 12l2 2 4-4.5"/></svg>HIPAA-compliant pipeline</div>
+      <div class="fmini rv"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="13" rx="2.5"/><path d="M3 8l9 6 9-6"/></svg>Provider delivery receipts</div>
+      <div class="fmini rv"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c.6-3.4 2.8-5 5.5-5s4.9 1.6 5.5 5"/><circle cx="17" cy="9" r="2.4"/><path d="M15.5 15.3c2.6.2 4.4 1.7 5 4.7"/></svg>Multi-patient profiles</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROTOCOL — the Device Data Transmission Protocol, step by step -->
+<section class="protocol" id="protocol">
+  <div class="wrap">
+    <span class="kicker rv">Device Data Transmission Protocol</span>
+    <h2 class="rv">How a reading becomes<br>a delivered record.</h2>
+    <p class="lede rv rv-d1">Under the calm surface is a rigorous, HIPAA-compliant pipeline. Every reading from every MEND device travels the same seven steps — and you can watch each one check off in the app.</p>
+
+    <div class="pipeline rv rv-d2">
+      <div class="pstep">
+        <div class="rail">
+          <div class="node"><svg viewBox="0 0 24 24"><rect x="6" y="4" width="12" height="16" rx="4"/><path d="M10 16h4"/><circle cx="12" cy="10" r="2.2"/></svg></div>
+          <div class="cord" aria-hidden="true"></div>
+        </div>
+        <div class="body">
+          <span class="snum">Step 01 · Capture</span>
+          <h3>Your device takes the reading</h3>
+          <p>MEND Pulse, MEND Oxi, or any MEND device measures as usual. The app keeps a live two-way link with the device, so the handoff starts the moment the reading exists.</p>
+          <div class="ptags"><span class="ptag">Bluetooth 5.3</span><span class="ptag">Encrypted at the radio</span></div>
+        </div>
+      </div>
+
+      <div class="pstep">
+        <div class="rail">
+          <div class="node"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c.6-3.4 2.8-5 5.5-5s4.9 1.6 5.5 5"/><path d="M16 8h5M18.5 5.5v5"/></svg></div>
+          <div class="cord" aria-hidden="true"></div>
+        </div>
+        <div class="body">
+          <span class="snum">Step 02 · Identify</span>
+          <h3>The app confirms the patient</h3>
+          <p>Before anything moves, the reading is attached to the right profile — the patient you chose in the app. In multi-patient homes, nothing ever files under the wrong name.</p>
+          <div class="ptags"><span class="ptag">Per-patient profiles</span><span class="ptag">Right record, every time</span></div>
+        </div>
+      </div>
+
+      <div class="pstep">
+        <div class="rail">
+          <div class="node"><svg viewBox="0 0 24 24"><path d="M12 3v10M8.5 9.5L12 13l3.5-3.5"/><path d="M5 15v3a2.5 2.5 0 002.5 2.5h9A2.5 2.5 0 0019 18v-3"/></svg></div>
+          <div class="cord" aria-hidden="true"></div>
+        </div>
+        <div class="body">
+          <span class="snum">Step 03 · Import</span>
+          <h3>Data is imported &amp; translated</h3>
+          <p>Raw device output is imported and translated into structured JSON — a clean, universal representation of the measurement, its timestamp, the device it came from, and the patient it belongs to.</p>
+          <div class="ptags"><span class="ptag">Raw → structured JSON</span><span class="ptag">Timestamped &amp; attributed</span></div>
+        </div>
+      </div>
+
+      <div class="pstep">
+        <div class="rail">
+          <div class="node"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.4-2.8 8.4-7 10-4.2-1.6-7-5.6-7-10V6l7-3z"/><path d="M9 12l2 2 4-4.5"/></svg></div>
+          <div class="cord" aria-hidden="true"></div>
+        </div>
+        <div class="body">
+          <span class="snum">Step 04 · Sanitize &amp; Transform</span>
+          <h3>Cleaned, checked, and reshaped for your provider</h3>
+          <p>The reading is sanitized — validated, range-checked, stripped of anything malformed — then transformed into the exact record format your provider's system requires. Their format, not ours.</p>
+          <div class="ptags"><span class="ptag">Validation &amp; range checks</span><span class="ptag">Client-specific format</span></div>
+        </div>
+      </div>
+
+      <div class="pstep">
+        <div class="rail">
+          <div class="node"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10" rx="2.5"/><path d="M8 10V7a4 4 0 118 0v3"/><circle cx="12" cy="15" r="1.6"/></svg></div>
+          <div class="cord" aria-hidden="true"></div>
+        </div>
+        <div class="body">
+          <span class="snum">Step 05 · Encrypt</span>
+          <h3>Sealed before it leaves your phone</h3>
+          <p>The formatted record is encrypted on-device before transmission begins. From here on, the data is unreadable to everything except its destination.</p>
+          <div class="ptags"><span class="ptag">AES-256</span><span class="ptag">Encrypted before transit</span></div>
+        </div>
+      </div>
+
+      <div class="pstep">
+        <div class="rail">
+          <div class="node"><svg viewBox="0 0 24 24"><path d="M12 20V10"/><path d="M8.5 13.5L12 10l3.5 3.5"/><path d="M7 17.5a5 5 0 01.6-9.9 6 6 0 0111.6 1.6 4 4 0 01-1.2 7.8"/></svg></div>
+          <div class="cord" aria-hidden="true"></div>
+        </div>
+        <div class="body">
+          <span class="snum">Step 06 · Transmit &amp; Deliver</span>
+          <h3>Secure hand-off to your provider</h3>
+          <p>The encrypted record travels over TLS and is delivered straight into your provider's system — via secure SFTP drop or an OAuth 2.0 authenticated API, whichever your clinic uses. Both paths are HIPAA-compliant.</p>
+          <div class="ptags"><span class="ptag">SFTP (HIPAA)</span><span class="ptag">OAuth 2.0</span><span class="ptag">TLS in transit</span></div>
+        </div>
+      </div>
+
+      <div class="pstep">
+        <div class="rail">
+          <div class="node"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="13" rx="2.5"/><path d="M3 8l9 6 9-6"/></svg></div>
+        </div>
+        <div class="body">
+          <span class="snum">Step 07 · Confirm</span>
+          <h3>Both ends know it arrived</h3>
+          <p>Your provider receives a confirmation email that new data has landed, and the app shows you a delivery receipt. No wondering, no assuming — a closed loop, every single reading.</p>
+          <div class="ptags"><span class="ptag ok">Success → shown in app</span><span class="ptag">Confirmation email to provider</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="retry-card rv">
+      <div class="ri"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 10-2.3 5.6"/><path d="M20 8v4h-4"/></svg></div>
+      <div>
+        <h3>If any step fails — you'll know, and it tries again</h3>
+        <p>A failed import or interrupted transmission is reported to you in plain language, and the app <b>automatically retries</b> until the reading is delivered and confirmed. Nothing is silently dropped, ever.</p>
+      </div>
+    </div>
+    <div class="success-card rv">
+      <div class="ri"><svg viewBox="0 0 24 24"><path d="M5 13l5 5L20 7"/></svg></div>
+      <div>
+        <h3>When it succeeds — the loop closes</h3>
+        <p>Success flows back the way it came: <b>delivered to your provider, confirmed by email, receipted in your app.</b> That's the whole protocol. You just took a reading.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECURITY -->
+<section class="security" id="security">
+  <div class="wrap">
+    <span class="kicker rv">Privacy &amp; security</span>
+    <h2 class="rv">Health data deserves<br>armored transport.</h2>
+    <p class="lede rv rv-d1">The transmission protocol was designed HIPAA-first — not retrofitted. Your readings are protected at every stage: on the device, on your phone, in transit, and at rest.</p>
+    <div class="sec-grid">
+      <div class="scard rv"><div class="si"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.4-2.8 8.4-7 10-4.2-1.6-7-5.6-7-10V6l7-3z"/></svg></div><h3>HIPAA-compliant by design</h3><p>Every path a reading can take — SFTP drop or OAuth 2.0 API — meets HIPAA transmission requirements. There is no non-compliant route through the system.</p></div>
+      <div class="scard rv rv-d1"><div class="si"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10" rx="2.5"/><path d="M8 10V7a4 4 0 118 0v3"/></svg></div><h3>Encrypted end to end</h3><p>AES-256 on your phone before transit, TLS on the wire, encryption at rest in the MEND Cloud. Data is sealed before it ever leaves your hand.</p></div>
+      <div class="scard rv rv-d2"><div class="si"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-4 3.5-6 7-6s6.2 2 7 6"/><path d="M17.5 3.5l1 1 2-2.2"/></svg></div><h3>Authenticated delivery</h3><p>Provider endpoints are verified and authenticated — keyed SFTP or OAuth 2.0 tokens — so records can only land where they're supposed to.</p></div>
+      <div class="scard rv rv-d3"><div class="si"><svg viewBox="0 0 24 24"><path d="M5 4h14v16l-3.5-2.5L12 20l-3.5-2.5L5 20V4z"/><path d="M9 8.5h6M9 12h4"/></svg></div><h3>Receipts, not guesses</h3><p>Every delivery generates a confirmation to the provider and a receipt in your app. An auditable trail of what was sent, when, and where it arrived.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- DEVICES -->
+<section class="devices" id="devices">
+  <div class="wrap">
+    <span class="kicker rv">Works with</span>
+    <h2 class="rv">The devices on the other end<br>of the wire.</h2>
+    <p class="lede rv rv-d1">The MEND App is free, and it's the companion to every connected MEND device — with more on the way.</p>
+    <div class="dev-grid">
+      <a class="dev-card rv" href="Product Detail - MEND Pulse.html">
+        <img src="MEND Pulse - Model - 2026-07-24-web.jpg" alt="Woman wearing the MEND Pulse blood pressure monitor on her upper arm">
+        <div class="db">
+          <h3>MEND Pulse</h3>
+          <p>Wireless blood pressure monitor. One button, clinical-grade accuracy, automatic sync.</p>
+          <span class="go">See MEND Pulse <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+      </a>
+      <a class="dev-card rv rv-d1" href="Product Detail - MEND Oxi.html">
+        <img src="MEND Oxi - Model - 2026-07-24-web.jpg" alt="MEND Oxi fingertip pulse oximeter clipped on a patient's finger">
+        <div class="db">
+          <h3>MEND Oxi</h3>
+          <p>Fingertip pulse oximeter. SpO₂ and pulse in seconds, shared the moment the clip comes off.</p>
+          <span class="go">See MEND Oxi <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+      </a>
+      <a class="dev-card rv rv-d2" href="Product Detail - AirGuard Collar.html">
+        <img src="Concept - AirGuard Collar - 2026-06-17-web.jpg" alt="AirGuard fall-detection collar concept">
+        <div class="db">
+          <h3>AirGuard Collar</h3>
+          <p>Wearable fall detection that calls for help the instant it's needed. Coming soon to the MEND App.</p>
+          <span class="go">See AirGuard <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- SPECS -->
+<section id="specs">
+  <div class="wrap">
+    <span class="kicker rv">Technical specifications</span>
+    <h2 class="rv">The fine print, printed large.</h2>
+    <div class="spec-table rv rv-d1">
+      <div class="row"><span class="k">Price</span><span class="v">Free — included with every MEND device</span></div>
+      <div class="row"><span class="k">Platforms</span><span class="v">iOS 16+ · Android 12+</span></div>
+      <div class="row"><span class="k">Device Connectivity</span><span class="v">Bluetooth 5.3 Low Energy · encrypted two-way link</span></div>
+      <div class="row"><span class="k">Data Format</span><span class="v">Device-native → structured JSON → provider-specific record format</span></div>
+      <div class="row"><span class="k">Data Validation</span><span class="v">Sanitization, range checks, and schema validation before transmission</span></div>
+      <div class="row"><span class="k">Encryption</span><span class="v">AES-256 on device · TLS 1.3 in transit · encrypted at rest</span></div>
+      <div class="row"><span class="k">Provider Delivery</span><span class="v">Secure SFTP (HIPAA) or OAuth 2.0 authenticated API</span></div>
+      <div class="row"><span class="k">Delivery Assurance</span><span class="v">Automatic retry on failure · nothing dropped silently</span></div>
+      <div class="row"><span class="k">Confirmation</span><span class="v">Success/fail status in app · confirmation email to provider</span></div>
+      <div class="row"><span class="k">Patient Profiles</span><span class="v">Up to 8 per household · per-profile history and provider routing</span></div>
+      <div class="row"><span class="k">Offline Behavior</span><span class="v">Readings queue on device and transmit when connectivity returns</span></div>
+      <div class="row"><span class="k">Compliance</span><span class="v">HIPAA-compliant transmission pipeline · encrypted MEND Cloud</span></div>
+    </div>
+    <div class="cert-strip rv rv-d2">
+      <span>HIPAA-compliant pipeline</span><span>AES-256</span><span>TLS 1.3</span><span>OAuth 2.0</span><span>SFTP delivery</span><span>iOS &amp; Android</span>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-final" id="get-started">
+  <div class="wrap">
+    <h2 class="rv">Healthcare, Connected.</h2>
+    <p class="rv rv-d1">The MEND App is free and arrives alongside every MEND device — through participating care programs and direct from MEND Medical.</p>
+    <div class="row rv rv-d2">
+      <a class="btn btn-primary" href="index.html#contact">Get Started</a>
+      <a class="btn btn-quiet" href="index.html#contact">Talk to Your Provider</a>
+      <a class="btn btn-quiet" href="#protocol">See the Protocol</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="rule"></div>
+  <p><b style="color:#B9CBDD;">MEND Medical</b> — connected care for the people you love.</p>
+  <p>The MEND App is a concept product page. Protocol and compliance details shown as design targets. Not yet available for download.</p>
+  <p><a href="index.html">Home</a> &nbsp;·&nbsp; <a href="FAQ.html">FAQ</a> &nbsp;·&nbsp; <a href="Privacy-Terms.html">Privacy &amp; Terms</a> &nbsp;·&nbsp; <a href="index.html#contact">Contact</a></p>
+</footer>
+
+<script>
+// Sticky nav hairline
+(function(){
+  var h = document.getElementById('hdr');
+  addEventListener('scroll', function(){ h.classList.toggle('scrolled', scrollY > 8); }, {passive:true});
+})();
+// Scroll reveal
+(function(){
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:.14});
+  document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
+})();
+// Phone mock: cycle the "Transmitting…" step to "Delivered ✓" and back
+(function(){
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var steps = document.querySelectorAll('.ps-progress .ps-step');
+  if(!steps.length) return;
+  var last = steps[steps.length-1];
+  var spinHTML = '<span class="spin" aria-hidden="true"></span>Transmitting securely…';
+  var doneHTML = '<span class="tick"><svg viewBox="0 0 24 24"><path d="M5 13l5 5L20 7"/></svg></span>Delivered · provider confirmed';
+  var delivered = false;
+  setInterval(function(){
+    delivered = !delivered;
+    last.innerHTML = delivered ? doneHTML : spinHTML;
+  }, 4000);
+})();
+</script>
+</body>
+</html>
