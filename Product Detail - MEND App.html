@@ -112,21 +112,53 @@ header.scrolled{border-color:var(--line);}
 .hero{background:var(--grad-hero); padding:96px 0 40px; overflow:hidden; position:relative;}
 .hero-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:40px; align-items:center;}
 @media(max-width:900px){.hero-grid{grid-template-columns:1fr;}}
+.hero-kicker-row{display:flex; align-items:center; gap:12px; margin-bottom:4px;}
+.hero-icon{width:34px; height:34px; border-radius:10px; background:var(--grad-accent); flex-shrink:0;
+  display:flex; align-items:center; justify-content:center; box-shadow:0 8px 18px rgba(46,107,230,.28);}
+.hero-icon svg{width:17px; height:17px; stroke:#fff; fill:none; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round;}
 .hero h1{font-size:clamp(46px,7vw,76px); font-weight:700; letter-spacing:-.035em; line-height:1.02; margin:10px 0 18px;}
 .hero h1 span{background:var(--grad-accent); -webkit-background-clip:text; background-clip:text; color:transparent;}
-.hero .sub{font-size:21px; color:var(--slate); max-width:520px; line-height:1.55; margin-bottom:36px;}
+.hero .sub{font-size:21px; color:var(--slate); max-width:520px; line-height:1.55; margin-bottom:32px;}
 .hero-ctas{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:26px;}
+
+/* App-store-style download badges */
+.store-row{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:24px;}
+.store-badge{display:inline-flex; align-items:center; gap:10px; padding:10px 20px 10px 16px; border-radius:13px;
+  background:var(--ink); color:#fff; text-decoration:none;
+  transition:transform .25s cubic-bezier(.3,.7,.3,1), box-shadow .25s ease, background .25s ease;
+  box-shadow:0 10px 26px rgba(20,30,45,.18);}
+.store-badge:hover{background:var(--blue); transform:translateY(-2px); box-shadow:0 16px 34px rgba(46,107,230,.32);}
+.store-badge svg{width:22px; height:22px; flex-shrink:0;}
+.store-badge span{display:flex; flex-direction:column; line-height:1.2;}
+.store-badge small{font-size:10px; color:rgba(255,255,255,.7); font-weight:500;}
+.store-badge b{font-size:15px; font-weight:700; letter-spacing:-.01em;}
+
+/* Trust chip row */
+.trust-row{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px;}
+.trust-chip{display:inline-flex; align-items:center; gap:7px; font-size:13px; font-weight:600; color:var(--slate);
+  background:var(--glass); border:1px solid var(--glass-line); backdrop-filter:blur(8px);
+  border-radius:999px; padding:8px 15px;}
+.trust-chip svg{width:15px; height:15px; stroke:var(--blue); fill:none; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; flex-shrink:0;}
 .hero-note{font-size:13px; color:var(--faint);}
 .hero-note b{color:var(--slate); font-weight:600;}
 
-/* Phone mockup */
-.phone-stage{position:relative; display:flex; align-items:center; justify-content:center; padding:30px 0 50px;}
-.phone-stage::before{content:''; position:absolute; width:560px; height:560px; border-radius:50%;
-  background:radial-gradient(circle at 50% 42%, rgba(63,168,224,.22), rgba(46,107,230,.06) 55%, transparent 72%); pointer-events:none;}
-.phone{position:relative; width:min(300px,80vw); aspect-ratio:0.485; border-radius:44px; background:#0D1620; padding:12px;
-  box-shadow:var(--shadow-lift), inset 0 0 0 1.5px rgba(255,255,255,.08);
-  animation:phone-float 8s ease-in-out infinite;}
-@keyframes phone-float{0%,100%{transform:translateY(0) rotate(-.4deg);}50%{transform:translateY(-12px) rotate(.4deg);}}
+/* Hero visual — layered phone composition */
+.phone-stage{position:relative; display:flex; align-items:center; justify-content:center; padding:44px 0 60px;}
+.phone-stage::before{content:''; position:absolute; width:620px; height:620px; border-radius:50%;
+  background:radial-gradient(circle at 46% 40%, rgba(63,168,224,.26), rgba(46,107,230,.08) 55%, transparent 74%); pointer-events:none;}
+.phone-stage::after{content:''; position:absolute; width:340px; height:340px; border-radius:50%; filter:blur(60px);
+  background:rgba(46,107,230,.14); left:6%; bottom:6%; pointer-events:none;}
+.phone{position:relative; width:min(280px,74vw); aspect-ratio:0.485; border-radius:44px; background:#0D1620; padding:12px;
+  box-shadow:var(--shadow-lift), inset 0 0 0 1.5px rgba(255,255,255,.08);}
+.phone-front{z-index:2; animation:phone-float 8s ease-in-out infinite; transform:rotate(3deg);}
+.phone-back{position:absolute; left:6%; top:-2%; width:min(230px,60vw); opacity:.9; filter:saturate(.92);
+  transform:rotate(-11deg); z-index:1; animation:phone-float-back 9s ease-in-out infinite;}
+.phone-back .ps-head b{font-size:12px;} .phone-back .l{font-size:8.5px;}
+.phone-back .ps-card{padding:10px 11px;} .phone-back .ps-row{font-size:10.5px;}
+.phone-back .spark{height:28px;}
+@keyframes phone-float{0%,100%{transform:rotate(3deg) translateY(0);}50%{transform:rotate(3deg) translateY(-12px);}}
+@keyframes phone-float-back{0%,100%{transform:rotate(-11deg) translateY(0);}50%{transform:rotate(-11deg) translateY(-8px);}}
+@media(max-width:640px){.phone-back{display:none;}.phone-front{transform:rotate(0);} @keyframes phone-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}}
 .phone-screen{width:100%; height:100%; border-radius:34px; background:linear-gradient(180deg,#F7FAFD,#EDF3FA); overflow:hidden; display:flex; flex-direction:column; padding:20px 16px; gap:10px;}
 .ps-head{display:flex; justify-content:space-between; align-items:center;}
 .ps-head b{font-size:14px; letter-spacing:-.01em;}
@@ -149,12 +181,27 @@ header.scrolled{border-color:var(--line);}
 @keyframes spin{to{transform:rotate(360deg);}}
 .ps-delivered{margin-top:2px; padding:9px 12px; border-radius:12px; background:var(--green-soft); color:#177E4D; font-size:11px; font-weight:700; display:flex; align-items:center; gap:8px;}
 .ps-delivered svg{width:13px;height:13px;stroke:#177E4D;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+.spark{display:flex; align-items:flex-end; gap:3px; height:34px; margin-top:2px;}
+.spark i{flex:1; border-radius:2px 2px 0 0; background:linear-gradient(180deg,#7FB0F2,#2E6BE6); opacity:.85;}
+
+/* Floating toast notification — the "just landed" push notification */
+.toast-card{position:absolute; z-index:4; top:2%; right:-4%; display:flex; align-items:center; gap:11px;
+  background:rgba(255,255,255,.86); border:1px solid var(--glass-line); backdrop-filter:blur(16px) saturate(1.3);
+  border-radius:16px; padding:12px 18px 12px 14px; box-shadow:var(--shadow-lift); max-width:250px;
+  animation:toast-in 8s ease-in-out infinite;}
+@keyframes toast-in{0%,8%{opacity:0; transform:translateY(-10px) scale(.96);}16%,86%{opacity:1; transform:translateY(0) scale(1);}96%,100%{opacity:0; transform:translateY(-6px) scale(.98);}}
+.toast-card .td{width:34px; height:34px; border-radius:10px; background:var(--green-soft); flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;}
+.toast-card .td svg{width:17px; height:17px; stroke:#177E4D; fill:none; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round;}
+.toast-card b{display:block; font-size:12.5px; color:var(--ink); line-height:1.3;}
+.toast-card small{font-size:10.5px; color:var(--faint); font-weight:600;}
+
 .spec-float{position:absolute; background:var(--glass); border:1px solid var(--glass-line);
   backdrop-filter:blur(14px); border-radius:14px; padding:10px 16px; font-size:12.5px; font-weight:600;
   color:var(--slate); box-shadow:var(--shadow-soft); white-space:nowrap; z-index:3;}
 .spec-float b{display:block; color:var(--ink); font-size:14px;}
-.sf-1{top:14%; left:0;} .sf-2{top:46%; right:-2%;} .sf-3{bottom:14%; left:4%;}
-@media(max-width:520px){.spec-float{display:none;}}
+.sf-1{bottom:8%; left:-4%;} .sf-2{top:40%; right:-8%;}
+@media(max-width:640px){.spec-float, .toast-card{display:none;}}
 
 /* ── Statement strip ── */
 .statement{background:var(--white); text-align:center; padding:120px 0;}
@@ -328,17 +375,46 @@ footer a:hover{color:#fff;}
   <div class="wrap">
     <div class="hero-grid">
       <div>
-        <span class="kicker">MEND Medical · Connected Care Platform</span>
+        <div class="hero-kicker-row">
+          <span class="hero-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="4" x2="12" y2="20"/><line x1="4" y1="12" x2="20" y2="12"/></svg></span>
+          <span class="kicker" style="margin-bottom:0;">MEND Medical · Connected Care Platform</span>
+        </div>
         <h1>MEND <span>App</span></h1>
         <p class="sub">The hub of the MEND ecosystem. Every device reading is imported, checked, encrypted, and delivered to your provider — automatically, and with confirmation at both ends.</p>
         <div class="hero-ctas">
           <a class="btn btn-primary" href="#get-started">Get the App</a>
           <a class="btn btn-glass" href="#protocol">See How Data Travels</a>
         </div>
-        <p class="hero-note"><b>Free</b> · iOS &amp; Android · HIPAA-compliant transmission · Works with every MEND device</p>
+        <div class="store-row">
+          <a class="store-badge" href="#get-started" aria-label="Download on the App Store">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 3c.1 1.2-.3 2.4-1 3.3-.8.9-2 1.6-3.2 1.5-.1-1.2.4-2.4 1.1-3.2.8-.9 2-1.5 3.1-1.6zM20.7 17.6c-.6 1.3-1.3 2.6-2.3 3.7-.9 1-1.9 2-3.3 2-1.3 0-1.7-.8-3.2-.8-1.5 0-2 .8-3.2.8-1.3 0-2.4-1.1-3.3-2.1-2-2.3-3.5-6.4-1.5-9.5 1-1.6 2.7-2.6 4.5-2.6 1.4 0 2.1.9 3.3.9 1.1 0 1.9-.9 3.4-.9 1.1 0 2.7.6 3.7 1.9-3.2 1.8-2.7 6.3.9 7.6"/></svg>
+            <span><small>Download on the</small><b>App Store</b></span>
+          </a>
+          <a class="store-badge" href="#get-started" aria-label="Get it on Google Play">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3l14 9-14 9V3z"/></svg>
+            <span><small>Get it on</small><b>Google Play</b></span>
+          </a>
+        </div>
+        <div class="trust-row">
+          <span class="trust-chip"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.4-2.8 8.4-7 10-4.2-1.6-7-5.6-7-10V6l7-3z"/></svg>HIPAA-compliant</span>
+          <span class="trust-chip"><svg viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg>iOS 16+ &amp; Android 12+</span>
+          <span class="trust-chip"><svg viewBox="0 0 24 24"><path d="M4 13c0-5 3.5-9 8-9s8 4 8 9c0 4-2 7-4 7-1.5 0-2-1-4-1s-2.5 1-4 1c-2 0-4-3-4-7z"/></svg>Free, always</span>
+        </div>
+        <p class="hero-note">Works with every MEND device — <b>MEND Pulse</b>, <b>MEND Oxi</b>, and more on the way.</p>
       </div>
       <div class="phone-stage">
-        <div class="phone" role="img" aria-label="MEND App showing a patient profile, a synced blood pressure reading, and a transmission in progress with each protocol step checked off">
+        <div class="phone phone-back" aria-hidden="true">
+          <div class="phone-screen">
+            <div class="ps-head"><b>Trends</b><span>MEND</span></div>
+            <div class="ps-card">
+              <div class="l">Weekly Blood Pressure</div>
+              <div class="spark"><i style="height:66%"></i><i style="height:74%"></i><i style="height:58%"></i><i style="height:64%"></i><i style="height:52%"></i><i style="height:48%"></i><i style="height:44%"></i></div>
+            </div>
+            <div class="ps-card"><div class="ps-row"><span class="dot"></span>SpO₂ · 98%<small>MEND Oxi</small></div></div>
+            <div class="ps-card"><div class="ps-row"><span class="dot"></span>Health Score · 92<small>Great</small></div></div>
+          </div>
+        </div>
+        <div class="phone phone-front" role="img" aria-label="MEND App showing a patient profile, a synced blood pressure reading, and a transmission in progress with each protocol step checked off">
           <div class="phone-screen">
             <div class="ps-head"><b>Good morning</b><span>MEND</span></div>
             <div class="ps-card">
@@ -365,9 +441,12 @@ footer a:hover{color:#fff;}
             <div class="ps-delivered"><svg viewBox="0 0 24 24"><path d="M5 13l5 5L20 7"/></svg>Yesterday's reading — delivered &amp; confirmed</div>
           </div>
         </div>
+        <div class="toast-card" aria-hidden="true">
+          <span class="td"><svg viewBox="0 0 24 24"><path d="M5 13l5 5L20 7"/></svg></span>
+          <div><b>Synced to Dr. Osei</b><small>Just now · delivery confirmed</small></div>
+        </div>
         <div class="spec-float sf-1"><b>Automatic</b>no manual steps</div>
         <div class="spec-float sf-2"><b>Encrypted</b>end to end</div>
-        <div class="spec-float sf-3"><b>Confirmed</b>at both ends</div>
       </div>
     </div>
   </div>
@@ -562,7 +641,7 @@ footer a:hover{color:#fff;}
     <p class="lede rv rv-d1">The MEND App is free, and it's the companion to every connected MEND device — with more on the way.</p>
     <div class="dev-grid">
       <a class="dev-card rv" href="Product Detail - MEND Pulse.html">
-        <img src="MEND Pulse - Model - 2026-07-24-web.jpg" alt="Woman wearing the MEND Pulse blood pressure monitor on her upper arm">
+        <img src="MEND Pulse - Model - 2026-07-26-web.jpg" alt="Woman wearing the MEND Pulse blood pressure monitor on her upper arm">
         <div class="db">
           <h3>MEND Pulse</h3>
           <p>Wireless blood pressure monitor. One button, clinical-grade accuracy, automatic sync.</p>
