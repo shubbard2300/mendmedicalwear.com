@@ -8,7 +8,7 @@ var revealObserver = new IntersectionObserver(function(entries) {
       revealObserver.unobserve(entry.target);
     }
   });
-}, { threshold: 0.12 });
+}, { threshold: 0, rootMargin: '0px 0px -10% 0px' });
 
 document.querySelectorAll('.section').forEach(function(el) {
   revealObserver.observe(el);
