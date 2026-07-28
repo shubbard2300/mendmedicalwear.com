@@ -759,5 +759,6 @@ function startAutoPlay(){ if(autoPlayed)return; autoPlayed=true; setTimeout(()=>
 new IntersectionObserver(e=>{ if(e[0].isIntersecting) startAutoPlay(); },{threshold:0.15}).observe(document.getElementById('vscreen'));
 window.addEventListener('load',()=>{ const r=document.getElementById('vscreen').getBoundingClientRect(); if(r.top<window.innerHeight&&r.bottom>0) startAutoPlay(); });
 </script>
+<script src="hailie.js" defer></script>
 </body>
 </html>
