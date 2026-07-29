@@ -431,9 +431,12 @@
       <img src="MEND - About - Happy Family - 2026-06-15-web.jpg" alt="A happy multigenerational family at home on the Oregon coast">
       <div>
         <h2>About MEND</h2>
-        <p>MEND Medical Apparel started with a simple frustration: hospital gowns are undignified, uncomfortable, and haven't changed in decades — thin paper-like fabric, gaping backs, and ties that never quite work.</p>
-        <p>This idea has roots that go back further than us. My father was a respiratory therapist on the Oregon Coast, and at one point ran five stores up and down the coast supplying oxygen concentrators, approved hospital walkers, canes, and other medical equipment. Behind the paperwork and the red tape, what he actually did — every day — was help people. We're carrying that forward.</p>
-        <p>We design recovery wear that actually feels good to wear. Soft cotton-merino blends, real zippers — made from repurposed bamboo instead of metal — instead of fumbling closures, and styling you'd be comfortable wearing outside a hospital room — because a hospital stay should still be stylish and respectful, not just bearable.</p>
+        <p>MEND Medical Apparel was born from a simple belief: healing deserves dignity.</p>
+        <p>For generations, the hospital gown has remained virtually unchanged—thin, uncomfortable, awkwardly open in the back, and fastened with ties that never seem to stay where they should. At a time when people are often at their most vulnerable, we've accepted clothing that makes them feel anything but comfortable.</p>
+        <p>Our story began long before MEND. My father was a respiratory therapist on the Oregon Coast who eventually operated five medical supply stores serving coastal communities. He provided oxygen concentrators, mobility equipment, walkers, canes, and countless other essentials. But the equipment was never the point. What mattered were the people. Every prescription filled, every delivery made, every conversation was about helping someone regain a measure of comfort, confidence, and independence.</p>
+        <p>That philosophy became the foundation of MEND Medical Apparel.</p>
+        <p>We create recovery wear that feels as thoughtful as the care behind it. Garments crafted from exceptionally soft cotton-merino blends. Smooth bamboo-derived zipper components that replace cold, cumbersome metal hardware. Designs that simplify dressing for patients, caregivers, and clinicians alike. Most importantly, apparel with a timeless, understated style that people can wear with confidence—inside a hospital, during recovery at home, or beyond.</p>
+        <p>Because recovery is deeply personal. The clothing you wear during that journey should offer comfort, preserve dignity, and remind you that being a patient should never mean giving up your sense of self.</p>
         <ul>
           <li>Designed with patients, caregivers, and clinicians</li>
           <li>Machine washable, built to last</li>
@@ -652,7 +655,7 @@
         <p>Questions about Comfort Wrap, wholesale, or partnerships? Send us a note — we read every message.</p>
         <div class="detail">
           <strong>Email</strong>
-          contact@stevenjhubbard.com
+          contact@mendmedicalwear.com
         </div>
         <div class="detail">
           <strong>Based in</strong>
@@ -674,7 +677,7 @@
         </div>
         <button type="submit" class="btn btn-primary" style="border:none; cursor:pointer; align-self:flex-start;">Send Message</button>
         <div class="form-msg" id="formMsg">Thanks for reaching out — we'll get back to you soon.</div>
-        <div class="form-msg" id="formError" style="color:#c0392b;">Something went wrong — please email us directly at contact@stevenjhubbard.com.</div>
+        <div class="form-msg" id="formError" style="color:#c0392b;">Something went wrong — please email us directly at contact@mendmedicalwear.com.</div>
       </form>
     </div>
   </div>
@@ -688,38 +691,6 @@
 
 <script src="main.js"></script>
 <script>
-// Contact form → /api/contact (Resend email forwarding)
-document.getElementById('contactForm').addEventListener('submit', function(e){
-  e.preventDefault();
-  var form = this;
-  var msg = document.getElementById('formMsg');
-  var err = document.getElementById('formError');
-  var btn = form.querySelector('button[type="submit"]');
-  msg.classList.remove('show');
-  err.classList.remove('show');
-  btn.disabled = true;
-
-  var data = {
-    name: form.name.value,
-    email: form.email.value,
-    message: form.message.value
-  };
-
-  fetch('/api/contact', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  }).then(function(res){
-    if(!res.ok) throw new Error('Request failed');
-    msg.classList.add('show');
-    form.reset();
-  }).catch(function(){
-    err.classList.add('show');
-  }).finally(function(){
-    btn.disabled = false;
-  });
-});
-
 // Hero carousel
 (function(){
   var carousel = document.getElementById('heroCarousel');
