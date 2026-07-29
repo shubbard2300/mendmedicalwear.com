@@ -457,3 +457,35 @@ window.showTab = window.showTab || function(id, btn) {
     openModal(config.src || href, config.extract, config.label, config.inlineStyles);
   });
 })();
+
+// Product-card mini slideshow — cards with multiple photos (color/angle variants)
+// crossfade between them automatically, pausing while the card is hovered so
+// shoppers get a still, zoomed-in look rather than a photo fading mid-hover.
+(function() {
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('.img-box[data-carousel]').forEach(function(box) {
+    var imgs = box.querySelectorAll('img');
+    if (imgs.length < 2 || reduceMotion) return;
+    var dots = box.querySelectorAll('.img-dot');
+    var i = 0;
+    var timer = null;
+    function show(next) {
+      imgs[i].classList.remove('active');
+      if (dots[i]) dots[i].classList.remove('active');
+      i = (next + imgs.length) % imgs.length;
+      imgs[i].classList.add('active');
+      if (dots[i]) dots[i].classList.add('active');
+    }
+    function start() {
+      stop();
+      timer = setInterval(function() { show(i + 1); }, 3200);
+    }
+    function stop() {
+      if (timer) { clearInterval(timer); timer = null; }
+    }
+    var card = box.closest('.product-card');
+    card.addEventListener('mouseenter', stop);
+    card.addEventListener('mouseleave', start);
+    start();
+  });
+})();
