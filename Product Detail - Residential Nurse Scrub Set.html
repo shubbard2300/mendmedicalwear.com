@@ -333,7 +333,7 @@
             <span>Drop your logo here or click to upload</span>
             <span class="sub">PNG with transparency recommended · SVG · JPG</span>
           </div>
-          <canvas id="brandItCanvas"></canvas>
+          <canvas id="brandItCanvas" class="brand-it-canvas"></canvas>
         </div>
         <div class="brand-it-actions">
           <a class="btn btn-secondary" id="brandItDownload" style="display:none;" download="mend-brand-preview.png">Download Preview</a>
@@ -441,7 +441,7 @@ function viewCardClick(card){
   swapMainImg(imgFilename());
   document.getElementById('galleryMain').scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
-initBrandIt('Comfort Scrubs');
+initBrandIt('Comfort Scrubs', 'Concept - Nurse Scrubs - Female Front - 2026-06-15-web.jpg', {x:560, y:282, w:120, h:78});
 </script>
 </body>
 </html>

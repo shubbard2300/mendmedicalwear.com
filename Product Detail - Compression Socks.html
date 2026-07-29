@@ -439,7 +439,7 @@
             <span>Drop your logo here or click to upload</span>
             <span class="sub">PNG with transparency recommended · SVG · JPG</span>
           </div>
-          <canvas id="brandItCanvas"></canvas>
+          <canvas id="brandItCanvas" class="brand-it-canvas"></canvas>
         </div>
         <div class="brand-it-actions">
           <a class="btn btn-secondary" id="brandItDownload" style="display:none;" download="mend-brand-preview.png">Download Preview</a>
@@ -536,7 +536,7 @@ function updateSwatchActive(color){
     lens.style.backgroundPosition = x + '% ' + y + '%';
   });
 })();
-initBrandIt('Compression Socks');
+initBrandIt('Compression Socks', 'Concept - Compression Socks - Ceil Blue - 2026-06-15-web.jpg', {x:255, y:125, w:250, h:110});
 </script>
 </body>
 </html>

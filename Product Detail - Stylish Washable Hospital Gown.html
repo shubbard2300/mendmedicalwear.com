@@ -362,7 +362,7 @@
             <span>Drop your logo here or click to upload</span>
             <span class="sub">PNG with transparency recommended · SVG · JPG</span>
           </div>
-          <canvas id="brandItCanvas"></canvas>
+          <canvas id="brandItCanvas" class="brand-it-canvas"></canvas>
         </div>
         <div class="brand-it-actions">
           <a class="btn btn-secondary" id="brandItDownload" style="display:none;" download="mend-brand-preview.png">Download Preview</a>
@@ -499,7 +499,7 @@ function setClosure(btn, view){
     b.classList.toggle('active', match);
   });
 }
-initBrandIt('Comfort Wrap Gown');
+initBrandIt('Comfort Wrap Gown', 'Concept - Hospital Gown - 2026-06-15-web.jpg', {x:550, y:330, w:135, h:100});
 </script>
 </body>
 </html>
