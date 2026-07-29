@@ -97,8 +97,12 @@ if (logoLink) {
   });
 }
 
-// Brand-It logo customizer (called per PDP)
-window.initBrandIt = function(productLabel) {
+// Brand-It logo customizer (called per PDP).
+// photoSrc + logoBox (native-pixel {x,y,w,h} on that photo) make the preview
+// show the uploaded logo composited directly onto the real product photo,
+// at the spot the MEND mark normally sits — not a generic disconnected
+// mockup card. Omit both to fall back to the old generic label-card preview.
+window.initBrandIt = function(productLabel, photoSrc, logoBox) {
   var drop      = document.getElementById('brandItDrop');
   var fileInput = document.getElementById('brandItFile');
   var canvas    = document.getElementById('brandItCanvas');
@@ -120,37 +124,77 @@ window.initBrandIt = function(productLabel) {
     ctx.closePath();
   }
 
-  function drawMockup(logo) {
+  function drawLogoFit(logo, x, y, w, h) {
+    var ratio = Math.min(w / logo.width, h / logo.height);
+    var lw = logo.width * ratio, lh = logo.height * ratio;
+    ctx.drawImage(logo, x + (w-lw)/2, y + (h-lh)/2, lw, lh);
+  }
+
+  function drawWatermark(W, H) {
+    ctx.fillStyle = 'rgba(255,255,255,.85)';
+    ctx.font = '400 10px Inter,sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText('custom branding preview · mendmedicalwear.com', W-10, H-10);
+  }
+
+  // ── Photo-composite mode: draw the real product photo, then overlay the
+  // uploaded logo directly on top of it at logoBox. ──
+  function drawOnPhoto(photo, logo) {
+    var maxW = 560;
+    var scale = Math.min(1, maxW / photo.width);
+    var W = Math.round(photo.width * scale), H = Math.round(photo.height * scale);
+    canvas.width = W; canvas.height = H;
+
+    ctx.drawImage(photo, 0, 0, W, H);
+
+    var bx = logoBox.x * scale, by = logoBox.y * scale, bw = logoBox.w * scale, bh = logoBox.h * scale;
+
+    if (logo) {
+      drawLogoFit(logo, bx, by, bw, bh);
+    } else {
+      ctx.save();
+      ctx.strokeStyle = 'rgba(255,255,255,.85)';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([6, 5]);
+      ctx.strokeRect(bx, by, bw, bh);
+      ctx.restore();
+      ctx.fillStyle = 'rgba(0,0,0,.55)';
+      roundRect(bx, by + bh + 8, 128, 22, 6); ctx.fill();
+      ctx.fillStyle = '#fff';
+      ctx.font = '600 10px Inter,sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('YOUR LOGO GOES HERE', bx + 64, by + bh + 23);
+    }
+
+    drawWatermark(W, H);
+    canvas.style.display = 'block';
+    if (placeholder) placeholder.style.display = 'none';
+  }
+
+  // ── Fallback generic label-card mode (used only if no photo/logoBox given) ──
+  function drawGenericCard(logo) {
     var W = 600, H = 380;
     canvas.width = W; canvas.height = H;
 
-    // Background
     ctx.fillStyle = '#F1EEE7';
     ctx.fillRect(0, 0, W, H);
 
-    // Fabric grid
     ctx.strokeStyle = 'rgba(227,223,214,.6)';
     ctx.lineWidth = 1;
     for (var x = 0; x < W; x += 18) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
     for (var y = 0; y < H; y += 18) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
 
-    // Label patch
     var pw = 260, ph = 180, px = (W-pw)/2, py = (H-ph)/2 - 16;
     ctx.shadowColor = 'rgba(0,0,0,.12)'; ctx.shadowBlur = 24; ctx.shadowOffsetY = 8;
     ctx.fillStyle = '#fff';
     roundRect(px, py, pw, ph, 12); ctx.fill();
     ctx.shadowColor = 'transparent'; ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
 
-    // Accent bar
     ctx.fillStyle = '#7C8B7A';
     roundRect(px, py, pw, 6, {tl:12, tr:12, br:0, bl:0}); ctx.fill();
 
-    // Logo or placeholder
     if (logo) {
-      var maxW = pw - 48, maxH = ph - 56;
-      var ratio = Math.min(maxW / logo.width, maxH / logo.height);
-      var lw = logo.width * ratio, lh = logo.height * ratio;
-      ctx.drawImage(logo, px + (pw-lw)/2, py + 28 + (ph-56-lh)/2, lw, lh);
+      drawLogoFit(logo, px + 24, py + 28, pw - 48, ph - 56);
     } else {
       ctx.fillStyle = '#C8C4BC';
       ctx.font = '600 13px Inter,sans-serif';
@@ -158,20 +202,17 @@ window.initBrandIt = function(productLabel) {
       ctx.fillText('YOUR LOGO HERE', W/2, py + ph/2 + 6);
     }
 
-    // Label below patch
     ctx.fillStyle = '#8A857C';
     ctx.font = '500 11px Inter,sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText((productLabel || 'MEND Medical').toUpperCase(), W/2, py + ph + 26);
 
-    // Stitch marks
     ctx.strokeStyle = '#7C8B7A'; ctx.lineWidth = 1.5;
     [[px-8,py-8],[px+pw+8,py-8],[px-8,py+ph+8],[px+pw+8,py+ph+8]].forEach(function(c) {
       ctx.beginPath(); ctx.moveTo(c[0]-6,c[1]); ctx.lineTo(c[0]+6,c[1]); ctx.stroke();
       ctx.beginPath(); ctx.moveTo(c[0],c[1]-6); ctx.lineTo(c[0],c[1]+6); ctx.stroke();
     });
 
-    // Watermark
     ctx.fillStyle = 'rgba(138,133,124,.28)';
     ctx.font = '400 10px Inter,sans-serif';
     ctx.textAlign = 'right';
@@ -181,7 +222,25 @@ window.initBrandIt = function(productLabel) {
     if (placeholder) placeholder.style.display = 'none';
   }
 
-  drawMockup(null);
+  var photo = null;
+  var usePhoto = !!(photoSrc && logoBox);
+
+  function drawMockup(logo) {
+    if (usePhoto) {
+      if (photo) drawOnPhoto(photo, logo);
+      // else: photo hasn't loaded yet — onload handler below will call drawMockup again
+    } else {
+      drawGenericCard(logo);
+    }
+  }
+
+  if (usePhoto) {
+    photo = new Image();
+    photo.onload = function() { drawMockup(null); };
+    photo.src = photoSrc;
+  } else {
+    drawMockup(null);
+  }
 
   function handleFile(file) {
     if (!file || !file.type.startsWith('image/')) return;
@@ -212,7 +271,8 @@ window.initBrandIt = function(productLabel) {
     drawMockup(null);
     if (dlBtn) dlBtn.style.display = 'none';
     resetBtn.style.display = 'none';
-    if (placeholder) placeholder.style.display = '';
+    // drawMockup(null) already hides the static placeholder and redraws the
+    // canvas in its empty state — don't re-show the placeholder on top of it.
   });
 };
 

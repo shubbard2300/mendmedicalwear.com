@@ -195,7 +195,7 @@
       <div class="price">$68.00 <span class="compare">$92.00</span></div>
 
       <div class="badges">
-        <span class="badge" data-tooltip="Toss it in with a regular load — holds up to repeated washing without losing softness or shape, no special hospital laundering needed.">Machine Washable</span>
+        <span class="badge" data-tooltip="Toss it in with a regular load — tested to 100+ wash cycles with no significant pilling or shrinkage, no special hospital laundering needed.">Machine Washable</span>
         <span class="badge" data-tooltip="A soft, breathable cotton and merino wool knit that feels like real clothing — warm, temperature-regulating, and gentle on sensitive skin.">Cotton / Merino Wool Blend</span>
         <span class="badge" data-tooltip="Attached hood adds extra warmth and coverage for trips to and from appointments, or just staying cozy in bed.">Hooded</span>
         <span class="badge" data-tooltip="A single smooth zipper from collar to hem replaces fumbling with snaps, ties, or buttons — easy to get in and out of, even with limited mobility. Made from repurposed bamboo, not metal, so it's MRI-safe.">Bamboo Zip Closure</span>
@@ -236,7 +236,7 @@
       </div>
 
       <div class="cta">
-        <div class="btn btn-primary">Add to Cart</div>
+        <div class="btn btn-primary">Pre-Order Now</div>
         <div class="btn btn-secondary">Save for Later</div>
       </div>
 
@@ -253,7 +253,7 @@
           <li><span>Sleeves</span><span>Full-length, stretch cuffs</span></li>
           <li><span>Closure</span><span>Full front or back zipper — repurposed bamboo (metal-free, MRI-safe), soft fabric placket guard</span></li>
           <li><span>Access features</span><span>Shoulder-seam zips for IV access, interior telemetry pocket</span></li>
-          <li><span>Care</span><span>Machine washable, commercial hot-wash durable</span></li>
+          <li><span>Care</span><span>Machine washable, tested to 100+ wash cycles with no significant pilling or shrinkage</span></li>
         </ul>
       </div>
     </div>
@@ -362,7 +362,7 @@
             <span>Drop your logo here or click to upload</span>
             <span class="sub">PNG with transparency recommended · SVG · JPG</span>
           </div>
-          <canvas id="brandItCanvas"></canvas>
+          <canvas id="brandItCanvas" class="brand-it-canvas"></canvas>
         </div>
         <div class="brand-it-actions">
           <a class="btn btn-secondary" id="brandItDownload" style="display:none;" download="mend-brand-preview.png">Download Preview</a>
@@ -499,7 +499,7 @@ function setClosure(btn, view){
     b.classList.toggle('active', match);
   });
 }
-initBrandIt('Comfort Wrap Gown');
+initBrandIt('Comfort Wrap Gown', 'Concept - Hospital Gown - 2026-06-15-web.jpg', {x:550, y:330, w:135, h:100});
 </script>
 </body>
 </html>

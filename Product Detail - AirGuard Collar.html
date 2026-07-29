@@ -281,7 +281,7 @@
             <span>Drop your logo here or click to upload</span>
             <span class="sub">PNG with transparency recommended · SVG · JPG</span>
           </div>
-          <canvas id="brandItCanvas"></canvas>
+          <canvas id="brandItCanvas" class="brand-it-canvas"></canvas>
         </div>
         <div class="brand-it-actions">
           <a class="btn btn-secondary" id="brandItDownload" style="display:none;" download="mend-brand-preview.png">Download Preview</a>
@@ -322,7 +322,7 @@ document.getElementById('notifyForm').addEventListener('submit', function(e){
   document.getElementById('notifyMsg').classList.add('show');
   this.reset();
 });
-initBrandIt('AirGuard Collar');
+initBrandIt('AirGuard Collar', 'Concept - AirGuard Collar - 2026-06-17-web.jpg', {x:410, y:635, w:150, h:70});
 </script>
 </body>
 </html>
