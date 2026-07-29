@@ -691,38 +691,6 @@
 
 <script src="main.js"></script>
 <script>
-// Contact form → /api/contact (Resend email forwarding)
-document.getElementById('contactForm').addEventListener('submit', function(e){
-  e.preventDefault();
-  var form = this;
-  var msg = document.getElementById('formMsg');
-  var err = document.getElementById('formError');
-  var btn = form.querySelector('button[type="submit"]');
-  msg.classList.remove('show');
-  err.classList.remove('show');
-  btn.disabled = true;
-
-  var data = {
-    name: form.name.value,
-    email: form.email.value,
-    message: form.message.value
-  };
-
-  fetch('/api/contact', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  }).then(function(res){
-    if(!res.ok) throw new Error('Request failed');
-    msg.classList.add('show');
-    form.reset();
-  }).catch(function(){
-    err.classList.add('show');
-  }).finally(function(){
-    btn.disabled = false;
-  });
-});
-
 // Hero carousel
 (function(){
   var carousel = document.getElementById('heroCarousel');

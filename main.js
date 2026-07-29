@@ -215,3 +215,185 @@ window.initBrandIt = function(productLabel) {
     if (placeholder) placeholder.style.display = '';
   });
 };
+
+// Contact form → /api/contact (Resend email forwarding)
+// Delegated so this works whether #contactForm is the original section on
+// index.html or a copy injected into the Contact modal on any other page.
+document.addEventListener('submit', function(e) {
+  if (e.target.id !== 'contactForm') return;
+  e.preventDefault();
+  var form = e.target;
+  var msg = form.querySelector('#formMsg');
+  var err = form.querySelector('#formError');
+  var btn = form.querySelector('button[type="submit"]');
+  msg.classList.remove('show');
+  err.classList.remove('show');
+  btn.disabled = true;
+
+  var data = {
+    name: form.name.value,
+    email: form.email.value,
+    message: form.message.value
+  };
+
+  fetch('/api/contact', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  }).then(function(res) {
+    if (!res.ok) throw new Error('Request failed');
+    msg.classList.add('show');
+    form.reset();
+  }).catch(function() {
+    err.classList.add('show');
+  }).finally(function() {
+    btn.disabled = false;
+  });
+});
+
+// FAQ accordion (used by injected FAQ content — FAQ.html itself defines the
+// same function locally, which simply takes precedence there)
+window.toggle = window.toggle || function(btn) {
+  var item = btn.closest('.faq-item');
+  var isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(function(i) { i.classList.remove('open'); });
+  if (!isOpen) item.classList.add('open');
+};
+
+// Privacy/Terms tab switcher (used by injected Privacy & Terms content)
+window.showTab = window.showTab || function(id, btn) {
+  document.querySelectorAll('.doc-panel').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.doc-tab').forEach(function(b) { b.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+};
+
+// ── Popup modals for FAQ, Privacy & Terms, and Contact ──
+// Every page links to these with plain hrefs (FAQ.html, Privacy-Terms.html,
+// index.html#contact) so navigation still works with JS disabled; here we
+// intercept those exact links and show the content in an overlay instead.
+(function() {
+  var MODAL_SOURCES = {
+    'FAQ.html': { extract: '#modalBody', label: 'Frequently Asked Questions', inlineStyles: true },
+    'Privacy-Terms.html': { extract: '#modalBody', label: 'Privacy & Terms', inlineStyles: true },
+    'index.html#contact': { extract: '#contact', label: 'Get in Touch' },
+    '#contact': { extract: '#contact', label: 'Get in Touch', src: 'index.html' }
+  };
+
+  var style = document.createElement('style');
+  style.textContent = [
+    // Self-contained palette so extracted content (which uses var(--accent) etc.)
+    // renders correctly even on pages that never loaded styles.css.
+    '.mend-modal-panel{--bg:#FAFAF8; --fg:#2B2B28; --muted:#8A857C; --line:#E3DFD6; --accent:#7C8B7A; --accent-dark:#677866; --panel:#F1EEE7;}',
+    '.mend-modal-overlay{position:fixed; inset:0; z-index:1000; display:flex; align-items:flex-start; justify-content:center;',
+    '  padding:6vh 20px; background:rgba(30,28,24,0); overflow-y:auto; opacity:0; pointer-events:none;',
+    '  transition:opacity .3s ease, background .3s ease;}',
+    '.mend-modal-overlay.mend-open{opacity:1; pointer-events:auto; background:rgba(30,28,24,.5);}',
+    '.mend-modal-panel{position:relative; background:var(--bg); color:var(--fg); width:100%; max-width:720px; border-radius:20px;',
+    '  padding:44px 40px 56px; box-shadow:0 30px 80px rgba(0,0,0,.28); transform:translateY(18px) scale(.98); opacity:0;',
+    '  transition:transform .35s cubic-bezier(.2,.7,.2,1), opacity .3s ease; font-family:"Inter",Helvetica,Arial,sans-serif;}',
+    '.mend-modal-overlay.mend-open .mend-modal-panel{transform:translateY(0) scale(1); opacity:1;}',
+    '.mend-modal-panel .wrap{max-width:none; padding:0; margin:0;}',
+    '.mend-modal-close{position:absolute; top:18px; right:18px; width:36px; height:36px; border-radius:50%; border:1px solid var(--line);',
+    '  background:#fff; color:var(--fg); font-size:18px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center;',
+    '  transition:transform .2s ease, border-color .2s ease, color .2s ease;}',
+    '.mend-modal-close:hover{transform:rotate(90deg); border-color:var(--accent); color:var(--accent);}',
+    '.mend-modal-loading{padding:60px 0; text-align:center; color:var(--muted); font-size:14px;}',
+    '.mend-modal-panel .page-hero{padding-top:0; margin-top:0;}',
+    // Contact form, scoped to the modal panel only — never leaks onto the
+    // host page's own forms/inputs (several PDPs have their own).
+    '.mend-modal-panel .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:40px;}',
+    '@media(max-width:640px){.mend-modal-panel .contact-grid{grid-template-columns:1fr;}}',
+    '.mend-modal-panel .contact-grid h2{font-size:24px; font-weight:600; margin-bottom:12px;}',
+    '.mend-modal-panel .contact-grid > div > p{color:var(--muted); font-size:15px; margin-bottom:8px;}',
+    '.mend-modal-panel .detail{font-size:14px; margin-top:20px; padding:12px 14px; border-radius:10px; border:1px solid var(--line);}',
+    '.mend-modal-panel .detail strong{display:block; color:var(--fg); margin-bottom:4px;}',
+    '.mend-modal-panel form{display:flex; flex-direction:column; gap:14px;}',
+    '.mend-modal-panel label{font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:6px; display:block;}',
+    '.mend-modal-panel input, .mend-modal-panel textarea{width:100%; padding:12px 14px; border-radius:8px; border:1px solid var(--line); background:var(--panel); color:var(--fg); font-family:inherit; font-size:14px;}',
+    '.mend-modal-panel input:focus, .mend-modal-panel textarea:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(124,139,122,.15);}',
+    '.mend-modal-panel textarea{resize:vertical; min-height:110px;}',
+    '.mend-modal-panel .form-msg{font-size:13px; color:var(--accent); display:none; margin-top:8px;}',
+    '.mend-modal-panel .form-msg.show{display:block;}',
+    '@media(max-width:640px){.mend-modal-panel{padding:36px 22px 44px; border-radius:16px;}}',
+    '@media (prefers-reduced-motion: reduce){',
+    '  .mend-modal-overlay, .mend-modal-panel{transition:none !important;}',
+    '}'
+  ].join('\n');
+  document.head.appendChild(style);
+
+  var overlay = document.createElement('div');
+  overlay.className = 'mend-modal-overlay';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
+  overlay.innerHTML = '<div class="mend-modal-panel"><button type="button" class="mend-modal-close" aria-label="Close">✕</button><div class="mend-modal-body"><div class="mend-modal-loading">Loading…</div></div></div>';
+  document.body.appendChild(overlay);
+
+  var panelBody = overlay.querySelector('.mend-modal-body');
+  var lastFocused = null;
+
+  function closeModal() {
+    overlay.classList.remove('mend-open');
+    document.body.style.overflow = '';
+    if (lastFocused) lastFocused.focus();
+  }
+
+  var injectedFrom = {};
+
+  // FAQ.html and Privacy-Terms.html each carry their own inline <style> in
+  // <head> (accordion, tabs, legal-doc layout) that a page like a PDP never
+  // loaded. Their rules only ever target their own narrowly-scoped classes
+  // (.faq-*, .page-hero, .doc-tab, .legal-*), so cloning that <style> block
+  // in is safe. We do NOT do this for the Contact source (index.html) —
+  // its inline styles use bare element selectors (form, label, input,
+  // textarea) that would leak onto other pages' own forms; the contact
+  // form's look is instead hand-written above, scoped to .mend-modal-panel.
+  function ensureSourceStyles(doc, src) {
+    if (injectedFrom[src]) return;
+    injectedFrom[src] = true;
+    doc.querySelectorAll('head style').forEach(function(styleEl) {
+      var clone = document.createElement('style');
+      clone.setAttribute('data-modal-source', src);
+      clone.textContent = styleEl.textContent;
+      document.head.appendChild(clone);
+    });
+  }
+
+  function openModal(src, extractSelector, label, inlineStyles) {
+    lastFocused = document.activeElement;
+    panelBody.innerHTML = '<div class="mend-modal-loading">Loading…</div>';
+    overlay.classList.add('mend-open');
+    document.body.style.overflow = 'hidden';
+    overlay.querySelector('.mend-modal-close').focus();
+
+    fetch(src).then(function(res) {
+      if (!res.ok) throw new Error('Fetch failed');
+      return res.text();
+    }).then(function(html) {
+      var doc = new DOMParser().parseFromString(html, 'text/html');
+      if (inlineStyles) ensureSourceStyles(doc, src);
+      var content = doc.querySelector(extractSelector);
+      panelBody.innerHTML = content ? content.innerHTML : '<p>Sorry, something went wrong loading "' + label + '".</p>';
+      panelBody.querySelectorAll('.section').forEach(function(el) { el.classList.add('in-view'); });
+    }).catch(function() {
+      window.location.href = src;
+    });
+  }
+
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay || e.target.closest('.mend-modal-close')) closeModal();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && overlay.classList.contains('mend-open')) closeModal();
+  });
+
+  document.addEventListener('click', function(e) {
+    var a = e.target.closest('a[href]');
+    if (!a) return;
+    var href = a.getAttribute('href');
+    var config = MODAL_SOURCES[href];
+    if (!config) return;
+    e.preventDefault();
+    openModal(config.src || href, config.extract, config.label, config.inlineStyles);
+  });
+})();

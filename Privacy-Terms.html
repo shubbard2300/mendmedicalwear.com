@@ -63,6 +63,7 @@
     </nav>
   </header>
 
+  <div id="modalBody">
   <div class="page-hero section">
     <div class="eyebrow">Legal</div>
     <h1>Privacy &amp; Terms</h1>
@@ -235,6 +236,7 @@
       </div>
     </div>
   </div>
+  </div>
 
   <footer>
     <p>MEND Medical Apparel — Comfort, redesigned for recovery.</p>
@@ -247,6 +249,7 @@
   </footer>
 </div>
 
+<script src="main.js"></script>
 <script>
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view'); });

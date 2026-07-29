@@ -60,6 +60,7 @@
     </nav>
   </header>
 
+  <div id="modalBody">
   <div class="page-hero section">
     <div class="eyebrow">Support</div>
     <h1>Frequently Asked Questions</h1>
@@ -216,6 +217,7 @@
     <p>Our team is based in Portland, OR and responds to every message personally.</p>
     <a href="index.html#contact" class="btn btn-primary">Get in Touch</a>
   </div>
+  </div>
 
   <footer>
     <p>MEND Medical Apparel — Comfort, redesigned for recovery.</p>
@@ -228,6 +230,7 @@
   </footer>
 </div>
 
+<script src="main.js"></script>
 <script>
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view'); });
