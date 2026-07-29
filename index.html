@@ -204,10 +204,15 @@
 
   /* About */
   .about{padding:72px 0; border-top:1px solid var(--line);}
-  .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center;}
+  .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start;}
   @media (max-width:860px){ .about-grid{grid-template-columns:1fr;} }
-  .about-grid img{width:100%; border-radius:14px; aspect-ratio:4/3; object-fit:cover; transition:transform .4s ease, box-shadow .4s ease;}
-  .about-grid img:hover{transform:translateY(-6px); box-shadow:0 20px 40px rgba(0,0,0,.13);}
+  .about-images{display:flex; flex-direction:column; gap:20px;}
+  .about-images img{width:100%; display:block; border-radius:14px; object-fit:cover; transition:transform .4s ease, box-shadow .4s ease;}
+  .about-images img:hover{transform:translateY(-6px); box-shadow:0 20px 40px rgba(0,0,0,.13);}
+  .about-img-main{aspect-ratio:1/1;}
+  .about-img-row{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+  .about-img-row img{aspect-ratio:2/3;}
+  @media (max-width:480px){ .about-img-row{grid-template-columns:1fr;} .about-img-row img{aspect-ratio:4/3;} }
   .about h2{font-size:30px; font-weight:600; margin-bottom:16px; position:relative; display:inline-block; padding-bottom:8px;}
   .about p{color:var(--muted); margin-bottom:14px; font-size:15px;}
   .about ul{list-style:none; margin-top:20px;}
@@ -442,7 +447,13 @@
   <!-- About -->
   <div class="section about" id="about">
     <div class="about-grid">
-      <img src="MEND - About - Happy Family - 2026-06-15-web.jpg" alt="A happy multigenerational family at home on the Oregon coast">
+      <div class="about-images">
+        <img class="about-img-main" src="MEND - About - Happy Family - 2026-06-15-web.jpg" alt="A happy multigenerational family at home on the Oregon coast">
+        <div class="about-img-row">
+          <img src="MEND - About - Medical Supply Store - 2026-07-29-web.jpg" alt="A warm, sunlit home-medical-equipment supply store on the Oregon coast, with an oxygen concentrator, folded robes, and canes">
+          <img src="MEND - About - Caregiver Moment - 2026-07-29-web.jpg" alt="A caregiver tenderly helping a smiling senior into a soft zip-front recovery robe at home">
+        </div>
+      </div>
       <div>
         <h2>About MEND</h2>
         <p>MEND Medical Apparel was born from a simple belief: healing deserves dignity.</p>
