@@ -627,7 +627,7 @@ window.showTab = window.showTab || function(id, btn) {
       '<div class="mend-lead-eyebrow">' + esc(cfg.eyebrow) + '</div>',
       '<h2 class="mend-lead-title" id="' + titleId + '">' + esc(cfg.title) + '</h2>',
       '<p class="mend-lead-subtitle">' + esc(cfg.subtitle) + '</p>',
-      '<form class="mend-lead-form" data-lead-type="' + type + '">',
+      '<form class="mend-lead-form" data-lead-type="' + esc(type) + '">',
       fields,
       '<button type="submit" class="btn btn-primary">' + esc(cfg.submitLabel) + '</button>',
       '<div class="mend-form-error" role="alert"></div>',
