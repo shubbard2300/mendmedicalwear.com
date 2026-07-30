@@ -109,7 +109,7 @@
   .size-btn.active{border-color:var(--accent); background:var(--panel); font-weight:600;}
 
   .cta{display:flex; gap:12px; margin:24px 0;}
-  .cta .btn{flex:1; padding:16px; border-radius:10px; text-transform:none; letter-spacing:normal; font-size:15px; border:1px solid var(--line); overflow:hidden; position:relative;}
+  .cta .btn{flex:1; padding:16px; border-radius:10px; text-transform:none; letter-spacing:normal; font-size:15px; border:1px solid var(--line); overflow:hidden; position:relative; font-family:inherit; cursor:pointer; text-align:center;}
   .cta .btn-primary{background:var(--accent); color:#fff;}
   .cta .btn-primary:hover{background:var(--accent-dark); transform:translateY(-3px); box-shadow:0 14px 30px rgba(124,139,122,.38); letter-spacing:.07em;}
   .cta .btn-secondary{background:transparent; color:var(--fg); border:1.5px solid var(--line);}
@@ -152,7 +152,7 @@
 </style>
   <link rel="stylesheet" href="pdp.css">
 </head>
-<body>
+<body data-sticky-cta data-sticky-cta-product="Comfort Wrap — The Stylish Washable Hospital Gown">
 <div class="wrap">
   <header>
     <a href="index.html" class="logo-link"><svg viewBox="0 0 320 90" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MEND Medical Apparel logo">
@@ -236,8 +236,8 @@
       </div>
 
       <div class="cta">
-        <div class="btn btn-primary">Pre-Order Now</div>
-        <div class="btn btn-secondary">Save for Later</div>
+        <button type="button" class="btn btn-primary" data-modal="reserve" data-product="Comfort Wrap — The Stylish Washable Hospital Gown">Pre-Order Now</button>
+        <button type="button" class="btn btn-secondary" data-modal="waitlist" data-product="Comfort Wrap — The Stylish Washable Hospital Gown">Save for Later</button>
       </div>
 
       <div class="description">

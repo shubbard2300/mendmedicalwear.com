@@ -132,29 +132,9 @@ nav a:hover::after{
 .card-cta-row{display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;}
 .card-cta-row .btn{flex:1 1 auto; min-width:fit-content;}
 
-/* Sticky floating Reserve CTA — present on every page that opts in via
-   `<body data-sticky-cta>`. Desktop: a corner pill. Mobile: a full-width
-   bottom bar, since a small floating pill is easy to miss on a phone. */
-.mend-sticky-cta{
-  position:fixed; z-index:900; cursor:pointer; border:none; font-family:inherit; font-weight:700;
-  letter-spacing:.04em; text-transform:uppercase; background:var(--accent); color:#fff;
-  box-shadow:0 14px 34px rgba(0,0,0,.22);
-  transition:transform .3s cubic-bezier(.34,1.56,.64,1), opacity .3s ease, background .2s ease, box-shadow .25s ease;
-  opacity:0; pointer-events:none;
-}
-.mend-sticky-cta.show{opacity:1; pointer-events:auto;}
-.mend-sticky-cta:hover{background:var(--accent-dark); box-shadow:0 18px 40px rgba(0,0,0,.3);}
-@media(min-width:641px){
-  .mend-sticky-cta{left:24px; bottom:24px; padding:15px 28px; border-radius:999px; font-size:13px; transform:translateY(14px) scale(.94);}
-  .mend-sticky-cta.show{transform:translateY(0) scale(1);}
-  .mend-sticky-cta .sticky-cta-mobile{display:none;}
-}
-@media(max-width:640px){
-  .mend-sticky-cta{left:0; right:0; bottom:0; width:100%; padding:16px; font-size:14px; border-radius:0; box-shadow:0 -8px 24px rgba(0,0,0,.16); transform:translateY(100%); padding-bottom:calc(16px + env(safe-area-inset-bottom));}
-  .mend-sticky-cta.show{transform:translateY(0);}
-  .mend-sticky-cta .sticky-cta-desktop{display:none;}
-}
-@media (prefers-reduced-motion: reduce){ .mend-sticky-cta{transition:opacity .15s linear !important; transform:none !important;} }
+/* .mend-sticky-cta rules moved to main.js (self-injected <style>) — several
+   pages that use this CTA (Pulse/Oxi/App) don't load this stylesheet at all,
+   the same reason the modal system injects its own self-contained styles. */
 
 footer{margin-top:64px; padding-top:24px; border-top:1px solid var(--line); color:var(--muted); font-size:12px; text-align:center; line-height:1.8;}
 footer a{position:relative; padding-bottom:2px;}
