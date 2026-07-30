@@ -156,6 +156,9 @@
   .hero-banner-title{font-size:52px; font-weight:700; color:#fff; line-height:1.1; letter-spacing:-.02em; margin-bottom:16px; text-shadow:0 2px 24px rgba(0,0,0,.22);}
   @media(max-width:640px){.hero-banner-title{font-size:32px;}}
   .hero-banner-sub{font-size:17px; color:rgba(255,255,255,.88); max-width:520px; line-height:1.6; text-shadow:0 1px 8px rgba(0,0,0,.2);}
+  .hero-banner-cta-row{display:flex; gap:14px; flex-wrap:wrap; justify-content:center; margin-top:28px;}
+  .hero-banner-overlay .btn-secondary{background:rgba(255,255,255,.08); color:#fff; border-color:rgba(255,255,255,.55);}
+  .hero-banner-overlay .btn-secondary:hover{background:rgba(255,255,255,.16); border-color:#fff; color:#fff;}
 
   /* Hero Carousel */
   .hero-carousel{position:relative; overflow:hidden;}
@@ -205,11 +208,24 @@
   /* About */
   .about{padding:92px 0;}
   /* Fade-edged section dividers instead of hard full-width lines */
-  .about, .products, .testimonials, .contact{position:relative;}
-  .about::before, .products::before, .testimonials::before, .contact::before{
+  .about, .products, .partners, .testimonials, .contact{position:relative;}
+  .about::before, .products::before, .partners::before, .testimonials::before, .contact::before{
     content:''; position:absolute; top:0; left:0; right:0; height:1px;
     background:linear-gradient(90deg, transparent, var(--line) 20%, var(--line) 80%, transparent);
   }
+
+  /* Business audiences: Healthcare Facilities / Distributors & Companies */
+  .partners{padding:92px 0; text-align:center;}
+  .partners h2{font-size:30px; font-weight:600; margin-bottom:8px; position:relative; display:inline-block; padding-bottom:8px;}
+  .partners .sub{color:var(--muted); font-size:15px; margin-bottom:48px; max-width:560px; margin-left:auto; margin-right:auto;}
+  .partners-grid{display:grid; grid-template-columns:1fr 1fr; gap:28px; text-align:left;}
+  @media(max-width:760px){.partners-grid{grid-template-columns:1fr;}}
+  .partner-card{background:var(--panel); border-radius:16px; padding:36px; transition:transform .3s ease, box-shadow .3s ease;}
+  .partner-card:hover{transform:translateY(-6px); box-shadow:0 20px 44px rgba(0,0,0,.1);}
+  .partner-card .partner-eyebrow{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent-dark); font-weight:600; margin-bottom:10px;}
+  .partner-card h3{font-size:20px; font-weight:600; margin-bottom:10px;}
+  .partner-card p{color:var(--muted); font-size:14px; line-height:1.65; margin-bottom:24px;}
+  .partner-cta-row{display:flex; gap:12px; flex-wrap:wrap;}
   .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start;}
   @media (max-width:860px){ .about-grid{grid-template-columns:1fr;} }
   .about-images{display:flex; flex-direction:column; gap:20px;}
@@ -237,7 +253,7 @@
   .product-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:28px;}
   .product-card{background:var(--panel); border-radius:14px; overflow:hidden; text-align:left; text-decoration:none; color:var(--fg); transition:transform .3s ease, box-shadow .3s ease; display:block;}
   .product-card:hover{transform:translateY(-6px); box-shadow:0 16px 36px rgba(0,0,0,.1);}
-  .product-card .img-box{aspect-ratio:2/3; overflow:hidden; position:relative;}
+  .product-card .img-box{display:block; aspect-ratio:2/3; overflow:hidden; position:relative;}
   .product-card .img-box img{width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s ease;}
   .product-card:hover .img-box img{transform:scale(1.06);}
   /* Mini slideshow — cards with multiple photos crossfade between them automatically */
@@ -288,12 +304,13 @@
   .contact h2{font-size:30px; font-weight:600; margin-bottom:12px; position:relative; display:inline-block; padding-bottom:8px;}
 
   /* Animated accent underline that draws in as each section heading scrolls into view */
-  .about h2::after, .products h2::after, .testimonials > h2::after, .contact h2::after{
+  .about h2::after, .products h2::after, .partners h2::after, .testimonials > h2::after, .contact h2::after{
     content:''; position:absolute; left:0; bottom:0; width:48px; height:3px; background:var(--accent);
     border-radius:2px; transform:scaleX(0); transform-origin:left; transition:transform .6s cubic-bezier(.4,0,.2,1) .1s;
   }
   .js .about.in-view h2::after,
   .js .products.in-view h2::after,
+  .js .partners.in-view h2::after,
   .js .testimonials.in-view > h2::after,
   .js .contact.in-view h2::after{transform:scaleX(1);}
   .contact p{color:var(--muted); font-size:15px; margin-bottom:8px;}
@@ -319,11 +336,13 @@
   .to-top{position:fixed; right:24px; bottom:24px; width:44px; height:44px; border-radius:50%; background:var(--accent); color:#fff; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:18px; box-shadow:0 10px 26px rgba(0,0,0,.16); opacity:0; transform:translateY(14px) scale(.9); pointer-events:none; transition:opacity .3s ease, transform .3s cubic-bezier(.34,1.56,.64,1), background .2s ease; z-index:60;}
   .to-top.show{opacity:1; transform:translateY(0) scale(1); pointer-events:auto;}
   .to-top:hover{background:var(--accent-dark); transform:translateY(-4px) scale(1.06);}
+  /* Clear the mobile full-width sticky Reserve bar (main.js / styles.css) */
+  @media(max-width:640px){ .to-top{bottom:84px;} }
 
   footer{margin-top:32px;}
 </style>
 </head>
-<body>
+<body data-sticky-cta>
 <div class="wrap">
 
   <header>
@@ -341,6 +360,7 @@
       <a href="#products">Products</a>
       <a href="Product Detail - Stylish Washable Hospital Gown.html">Shop</a>
       <a href="#contact">Contact</a>
+      <button type="button" class="btn btn-primary btn-sm nav-reserve" data-modal="reserve">Reserve Your Order</button>
     </nav>
   </header>
 
@@ -362,9 +382,13 @@
       <img src="Concept - Airbag Safety Collar - Lifestyle - 2026-06-16-web.jpg" alt="MEND AirGuard™ Fall-Detection Safety Collar">
     </div>
     <div class="hero-banner-overlay">
-      <div class="hero-banner-eyebrow">Washable Recovery Gowns · Nurse Scrubs · Compression Socks · AirGuard™ · MEND Pulse · MEND Oxi · MEND App</div>
-      <h2 class="hero-banner-title">Because healing<br>should feel human.</h2>
-      <p class="hero-banner-sub">MEND makes soft, washable hospital gowns, residential nurse scrubs, medical-grade compression socks, the AirGuard™ fall-detection safety collar, and a connected health lineup — MEND Pulse, MEND Oxi, and the MEND App — so patients feel like people, and caregivers feel like themselves.</p>
+      <div class="hero-banner-eyebrow">Founding Customer Program · First Production Run</div>
+      <h2 class="hero-banner-title">Premium Recovery Apparel.<br>Better Than Hospital Gowns.</h2>
+      <p class="hero-banner-sub">Designed for comfort, privacy &amp; dignity. Reserve your spot today — no payment required until your order ships.</p>
+      <div class="hero-banner-cta-row">
+        <button type="button" class="btn btn-primary" data-modal="reserve">Reserve Yours Today</button>
+        <button type="button" class="btn btn-secondary" data-modal="facilityQuote">For Healthcare Providers</button>
+      </div>
     </div>
     <div class="banner-dots" id="bannerDots"></div>
   </div>
@@ -396,7 +420,8 @@
           <h2>Soft, washable hospital gowns that protect your dignity.</h2>
           <p>Made for real bodies and real recovery — they hold their shape, close the way they should, and skip the open-back dread.</p>
           <div class="cta-row">
-            <a href="Product Detail - Stylish Washable Hospital Gown.html" class="btn btn-primary">Shop Comfort Wrap</a>
+            <button type="button" class="btn btn-primary" data-modal="reserve" data-product="Comfort Wrap">Reserve Comfort Wrap</button>
+            <a href="Product Detail - Stylish Washable Hospital Gown.html" class="btn btn-secondary">Learn More</a>
           </div>
         </div>
         <div class="slide-img">
@@ -411,7 +436,8 @@
           <h2>Residential nurse scrubs built for home-care shifts.</h2>
           <p>Durable, breathable, and stylish enough to feel like you instead of a uniform — shift after shift.</p>
           <div class="cta-row">
-            <a href="Product Detail - Residential Nurse Scrub Set.html" class="btn btn-primary">Shop Comfort Scrubs</a>
+            <button type="button" class="btn btn-primary" data-modal="reserve" data-product="Comfort Scrubs — Residential Nurse Set">Reserve Comfort Scrubs</button>
+            <a href="Product Detail - Residential Nurse Scrub Set.html" class="btn btn-secondary">Learn More</a>
           </div>
         </div>
         <div class="slide-img">
@@ -426,7 +452,8 @@
           <h2>Medical-grade compression socks that go the distance.</h2>
           <p>Graduated compression eases tired legs and keeps circulation moving — comfortable from the first hour to the twelfth.</p>
           <div class="cta-row">
-            <a href="Product Detail - Compression Socks.html" class="btn btn-primary">Shop Compression Socks</a>
+            <button type="button" class="btn btn-primary" data-modal="reserve" data-product="Compression Socks — Nurse/Caregiver Edition">Reserve Compression Socks</button>
+            <a href="Product Detail - Compression Socks.html" class="btn btn-secondary">Learn More</a>
           </div>
         </div>
         <div class="slide-img">
@@ -441,8 +468,8 @@
           <h2>AirGuard™ fall-detection collar — help before the fall does.</h2>
           <p>It senses a fall the instant it happens and calls for help, so independence never has to mean being alone.</p>
           <div class="cta-row">
-            <a href="Product Detail - AirGuard Collar.html" class="btn btn-primary">Learn More</a>
-            <a href="Product Detail - AirGuard Collar.html#notifyForm" class="btn btn-secondary">Get Notified</a>
+            <button type="button" class="btn btn-primary" data-modal="waitlist" data-product="AirGuard™ Fall-Detection Collar">Join Waitlist</button>
+            <a href="Product Detail - AirGuard Collar.html" class="btn btn-secondary">Learn More</a>
           </div>
         </div>
         <div class="slide-img">
@@ -505,103 +532,171 @@
       <img src="Concept - Hospital Gown - Couple - 2026-06-15-web.jpg" alt="A woman and a man together, both wearing MEND Comfort Wrap recovery gowns">
     </div>
     <div class="product-grid">
-      <a class="product-card" href="Product Detail - Stylish Washable Hospital Gown.html">
-        <div class="img-box" data-carousel>
+      <div class="product-card">
+        <a href="Product Detail - Stylish Washable Hospital Gown.html" class="img-box" data-carousel>
           <img class="active" src="Concept - Hospital Gown - Female Front - 2026-06-15-web.jpg" alt="Comfort Wrap — Stylish Washable Hospital Gown, women's fit">
           <img src="Concept - Hospital Gown - Female Back - 2026-06-15-web.jpg" alt="Comfort Wrap — Stylish Washable Hospital Gown, women's fit, back view showing the zipper">
           <img src="Concept - Hospital Gown - Female Front - Sage - 2026-06-15-web.jpg" alt="Comfort Wrap — Stylish Washable Hospital Gown, women's fit, sage color">
           <div class="img-dots" aria-hidden="true"><span class="img-dot active"></span><span class="img-dot"></span><span class="img-dot"></span></div>
-        </div>
+        </a>
         <div class="info">
           <div class="name">Comfort Wrap — Women's</div>
           <div class="price">Stylish Washable Hospital Gown · 9 colors &amp; patterns</div>
-          <span class="logo-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Custom Logo</span>
-          <span class="status">View Product</span>
+          <div class="badge-row">
+            <span class="badge badge-early">Founding Customer Pricing</span>
+            <span class="logo-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Custom Logo</span>
+          </div>
+          <div class="card-cta-row">
+            <button type="button" class="btn btn-primary btn-sm" data-modal="reserve" data-product="Comfort Wrap — Women's">Reserve</button>
+            <a href="Product Detail - Stylish Washable Hospital Gown.html" class="btn btn-secondary btn-sm">Learn More</a>
+          </div>
         </div>
-      </a>
-      <a class="product-card" href="Product Detail - Stylish Washable Hospital Gown.html">
-        <div class="img-box" data-carousel>
+      </div>
+      <div class="product-card">
+        <a href="Product Detail - Stylish Washable Hospital Gown.html" class="img-box" data-carousel>
           <img class="active" src="Concept - Hospital Gown - Male Front - 2026-06-15-web.jpg" alt="Comfort Wrap — Stylish Washable Hospital Gown, men's fit">
           <img src="Concept - Hospital Gown - Male Back - 2026-06-15-web.jpg" alt="Comfort Wrap — Stylish Washable Hospital Gown, men's fit, back view showing the zipper">
           <img src="Concept - Hospital Gown - Male Front - Sage - 2026-06-15-web.jpg" alt="Comfort Wrap — Stylish Washable Hospital Gown, men's fit, sage color">
           <div class="img-dots" aria-hidden="true"><span class="img-dot active"></span><span class="img-dot"></span><span class="img-dot"></span></div>
-        </div>
+        </a>
         <div class="info">
           <div class="name">Comfort Wrap — Men's</div>
           <div class="price">Stylish Washable Hospital Gown · 9 colors &amp; patterns</div>
-          <span class="logo-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Custom Logo</span>
-          <span class="status">View Product</span>
+          <div class="badge-row">
+            <span class="badge badge-early">Founding Customer Pricing</span>
+            <span class="logo-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Custom Logo</span>
+          </div>
+          <div class="card-cta-row">
+            <button type="button" class="btn btn-primary btn-sm" data-modal="reserve" data-product="Comfort Wrap — Men's">Reserve</button>
+            <a href="Product Detail - Stylish Washable Hospital Gown.html" class="btn btn-secondary btn-sm">Learn More</a>
+          </div>
         </div>
-      </a>
-      <a class="product-card" href="Product Detail - Residential Nurse Scrub Set.html">
-        <div class="img-box" data-carousel>
+      </div>
+      <div class="product-card">
+        <a href="Product Detail - Residential Nurse Scrub Set.html" class="img-box" data-carousel>
           <img class="active" src="Concept - Nurse Scrubs - Female Front - 2026-06-15-web.jpg" alt="Comfort Scrubs - Residential Nurse Set">
           <img src="Concept - Nurse Scrubs - Female Back - 2026-06-15-web.jpg" alt="Comfort Scrubs - Residential Nurse Set, back view">
           <img src="Concept - Nurse Scrubs - Female Front - Navy - 2026-06-17-web.jpg" alt="Comfort Scrubs - Residential Nurse Set, navy color">
           <div class="img-dots" aria-hidden="true"><span class="img-dot active"></span><span class="img-dot"></span><span class="img-dot"></span></div>
-        </div>
+        </a>
         <div class="info">
           <div class="name">Comfort Scrubs — Residential Nurse Set</div>
           <div class="price">For the caregivers, too</div>
-          <span class="logo-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Custom Logo</span>
-          <span class="status">View Product</span>
+          <div class="badge-row">
+            <span class="badge badge-early">Founding Customer Pricing</span>
+            <span class="logo-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Custom Logo</span>
+          </div>
+          <div class="card-cta-row">
+            <button type="button" class="btn btn-primary btn-sm" data-modal="reserve" data-product="Comfort Scrubs — Residential Nurse Set">Reserve</button>
+            <a href="Product Detail - Residential Nurse Scrub Set.html" class="btn btn-secondary btn-sm">Learn More</a>
+          </div>
         </div>
-      </a>
-      <a class="product-card" href="Product Detail - Compression Socks.html">
-        <div class="img-box" data-carousel>
+      </div>
+      <div class="product-card">
+        <a href="Product Detail - Compression Socks.html" class="img-box" data-carousel>
           <img class="active" src="Concept - Compression Socks - Ceil Blue - 2026-06-15-web.jpg" alt="Medical-Grade Compression Socks - Nurse/Caregiver Edition, ceil blue">
           <img src="Concept - Compression Socks - Sage - 2026-06-15-web.jpg" alt="Medical-Grade Compression Socks - Nurse/Caregiver Edition, sage">
           <img src="Concept - Compression Socks - Navy - 2026-06-15-web.jpg" alt="Medical-Grade Compression Socks - Nurse/Caregiver Edition, navy">
           <div class="img-dots" aria-hidden="true"><span class="img-dot active"></span><span class="img-dot"></span><span class="img-dot"></span></div>
-        </div>
+        </a>
         <div class="info">
           <div class="name">Compression Socks — Nurse/Caregiver Edition</div>
           <div class="price">$28.00</div>
-          <span class="logo-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Custom Logo</span>
-          <span class="status">View Product</span>
+          <div class="badge-row">
+            <span class="badge badge-early">Founding Customer Pricing</span>
+            <span class="logo-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Custom Logo</span>
+          </div>
+          <div class="card-cta-row">
+            <button type="button" class="btn btn-primary btn-sm" data-modal="reserve" data-product="Compression Socks — Nurse/Caregiver Edition">Reserve</button>
+            <a href="Product Detail - Compression Socks.html" class="btn btn-secondary btn-sm">Learn More</a>
+          </div>
         </div>
-      </a>
-      <a class="product-card" href="Product Detail - AirGuard Collar.html">
-        <div class="img-box">
+      </div>
+      <div class="product-card">
+        <a href="Product Detail - AirGuard Collar.html" class="img-box">
           <img src="Concept - AirGuard Collar - 2026-06-17-web.jpg" alt="AirGuard™ fall-detection collar for senior safety">
-        </div>
+        </a>
         <div class="info">
           <div class="name">AirGuard™ Fall-Detection Collar</div>
           <div class="price" style="color:var(--muted); font-weight:400;">Coming Soon — $89.00</div>
-          <span class="logo-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Custom Logo</span>
-          <span class="status">Learn More</span>
+          <div class="badge-row">
+            <span class="badge badge-early">Early Access</span>
+            <span class="badge badge-ship">Est. Ship Q3 2026</span>
+            <span class="logo-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Custom Logo</span>
+          </div>
+          <div class="card-cta-row">
+            <button type="button" class="btn btn-primary btn-sm" data-modal="waitlist" data-product="AirGuard™ Fall-Detection Collar">Join Waitlist</button>
+            <a href="Product Detail - AirGuard Collar.html" class="btn btn-secondary btn-sm">Learn More</a>
+          </div>
         </div>
-      </a>
-      <a class="product-card" href="Product Detail - MEND Pulse.html">
-        <div class="img-box">
+      </div>
+      <div class="product-card">
+        <a href="Product Detail - MEND Pulse.html" class="img-box">
           <img src="MEND Pulse - Model - 2026-07-26-web.jpg" alt="Woman wearing the MEND Pulse blood pressure monitor on her upper arm">
-        </div>
+        </a>
         <div class="info">
           <div class="name">MEND Pulse — Wireless BP Monitor</div>
           <div class="price" style="color:var(--muted); font-weight:400;">Coming Soon — $129.00</div>
-          <span class="status">New · Learn More</span>
+          <div class="badge-row"><span class="badge badge-early">Early Access</span></div>
+          <div class="card-cta-row">
+            <button type="button" class="btn btn-primary btn-sm" data-modal="waitlist" data-product="MEND Pulse — Wireless BP Monitor">Join Waitlist</button>
+            <a href="Product Detail - MEND Pulse.html" class="btn btn-secondary btn-sm">Learn More</a>
+          </div>
         </div>
-      </a>
-      <a class="product-card" href="Product Detail - MEND Oxi.html">
-        <div class="img-box">
+      </div>
+      <div class="product-card">
+        <a href="Product Detail - MEND Oxi.html" class="img-box">
           <img src="MEND Oxi - Model - 2026-07-29-web.jpg" alt="A man smiling with the MEND Oxi fingertip pulse oximeter worn ring-style on his index finger, its display reading 98% SpO₂ and 72 BPM">
-        </div>
+        </a>
         <div class="info">
           <div class="name">MEND Oxi — Fingertip Pulse Oximeter</div>
           <div class="price" style="color:var(--muted); font-weight:400;">Coming Soon — $59.00</div>
-          <span class="status">New · Learn More</span>
+          <div class="badge-row"><span class="badge badge-early">Early Access</span></div>
+          <div class="card-cta-row">
+            <button type="button" class="btn btn-primary btn-sm" data-modal="waitlist" data-product="MEND Oxi — Fingertip Pulse Oximeter">Join Waitlist</button>
+            <a href="Product Detail - MEND Oxi.html" class="btn btn-secondary btn-sm">Learn More</a>
+          </div>
         </div>
-      </a>
-      <a class="product-card" href="Product Detail - MEND App.html">
-        <div class="img-box">
+      </div>
+      <div class="product-card">
+        <a href="Product Detail - MEND App.html" class="img-box">
           <img src="MEND App - Card - 2026-07-26.svg" alt="MEND App on a phone showing a patient profile, a synced reading, and secure HIPAA-compliant transmission progress">
-        </div>
+        </a>
         <div class="info">
           <div class="name">MEND App — The Hub of Connected Care</div>
           <div class="price" style="color:var(--muted); font-weight:400;">Free — with every MEND device</div>
-          <span class="status">New · Learn More</span>
+          <div class="badge-row"><span class="badge badge-early">Included Free</span></div>
+          <div class="card-cta-row">
+            <a href="Product Detail - MEND App.html" class="btn btn-secondary btn-sm" style="flex:1;">Learn More</a>
+          </div>
         </div>
-      </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Business Audiences: Healthcare Facilities & Distribution Partners -->
+  <div class="section partners" id="partners">
+    <h2>Built for Facilities &amp; Partners, Too</h2>
+    <p class="sub">Bulk pricing, custom branding, and a direct line to our team — for the organizations that outfit patients and caregivers at scale.</p>
+    <div class="partners-grid">
+      <div class="partner-card">
+        <div class="partner-eyebrow">Healthcare Facilities</div>
+        <h3>Hospitals, Surgery Centers &amp; Clinics</h3>
+        <p>Outfitting a hospital, surgery center, clinic, or recovery center? Get facility pricing and priority placement in our manufacturing queue.</p>
+        <div class="partner-cta-row">
+          <button type="button" class="btn btn-primary" data-modal="facilityQuote">Request Facility Pricing</button>
+          <button type="button" class="btn btn-secondary" data-modal="demo">Schedule a Demo</button>
+        </div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-eyebrow">Companies &amp; Distributors</div>
+        <h3>Distributors, Retailers &amp; Supply Companies</h3>
+        <p>Medical distributors, retailers, medical supply companies, home health organizations, and physical therapy practices — let's talk wholesale.</p>
+        <div class="partner-cta-row">
+          <button type="button" class="btn btn-primary" data-modal="distributor">Become a Distribution Partner</button>
+          <a href="#contact" class="btn btn-secondary">Contact Sales</a>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -689,6 +784,11 @@
         <div class="detail">
           <strong>Based in</strong>
           Portland, OR
+        </div>
+        <div class="detail">
+          <strong>Manufacturing Updates</strong>
+          Get occasional emails as we move through production — no spam.
+          <div style="margin-top:10px;"><button type="button" class="btn btn-secondary btn-sm" data-modal="newsletter">Sign Up</button></div>
         </div>
       </div>
       <form id="contactForm">
