@@ -18,15 +18,21 @@ document.querySelectorAll('.section').forEach(function(el) {
 var progressBar = document.createElement('div');
 progressBar.style.cssText = [
   'position:fixed', 'top:0', 'left:0', 'height:2px', 'width:0%',
-  'background:var(--accent)', 'z-index:999', 'pointer-events:none',
+  'background:linear-gradient(90deg, var(--accent-dark), var(--accent))',
+  'z-index:999', 'pointer-events:none',
   'transition:width .1s linear'
 ].join(';');
 document.body.appendChild(progressBar);
 
+// Glass header condenses once the page has scrolled past the hero
+var siteHeader = document.querySelector('header');
+
 window.addEventListener('scroll', function() {
   var pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
   progressBar.style.width = Math.min(pct, 100) + '%';
+  if (siteHeader) siteHeader.classList.toggle('is-scrolled', window.scrollY > 40);
 }, { passive: true });
+if (siteHeader) siteHeader.classList.toggle('is-scrolled', window.scrollY > 40);
 
 // Button ripple on click
 document.addEventListener('click', function(e) {
@@ -51,14 +57,18 @@ document.addEventListener('click', function(e) {
 // Respect users who prefer reduced motion — skip pointer-driven effects below
 var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// Product card 3D tilt
+// Product card 3D tilt + cursor-tracked spotlight glow
 if (!prefersReducedMotion)
 document.querySelectorAll('.product-card').forEach(function(card) {
   card.addEventListener('mousemove', function(e) {
     var r = card.getBoundingClientRect();
-    var rx = ((e.clientY - r.top) / r.height - 0.5) * -10;
-    var ry = ((e.clientX - r.left) / r.width - 0.5) * 10;
+    var px = (e.clientX - r.left) / r.width;
+    var py = (e.clientY - r.top) / r.height;
+    var rx = (py - 0.5) * -10;
+    var ry = (px - 0.5) * 10;
     card.style.transform = 'perspective(800px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) translateY(-8px)';
+    card.style.setProperty('--mx', (px * 100) + '%');
+    card.style.setProperty('--my', (py * 100) + '%');
   });
   card.addEventListener('mouseleave', function() {
     card.style.transform = '';
@@ -276,7 +286,7 @@ window.initBrandIt = function(productLabel, photoSrc, logoBox) {
   });
 };
 
-// Contact form → /api/contact (Resend email forwarding)
+// Contact form → /api/lead (Resend email forwarding)
 // Delegated so this works whether #contactForm is the original section on
 // index.html or a copy injected into the Contact modal on any other page.
 document.addEventListener('submit', function(e) {
@@ -291,12 +301,13 @@ document.addEventListener('submit', function(e) {
   btn.disabled = true;
 
   var data = {
+    type: 'contact',
     name: form.name.value,
     email: form.email.value,
     message: form.message.value
   };
 
-  fetch('/api/contact', {
+  fetch('/api/lead', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
@@ -328,16 +339,126 @@ window.showTab = window.showTab || function(id, btn) {
   btn.classList.add('active');
 };
 
-// ── Popup modals for FAQ, Privacy & Terms, and Contact ──
-// Every page links to these with plain hrefs (FAQ.html, Privacy-Terms.html,
-// index.html#contact) so navigation still works with JS disabled; here we
-// intercept those exact links and show the content in an overlay instead.
+// ── Popup modals for FAQ, Privacy & Terms, Contact, and every lead-capture
+// form (Reserve, Waitlist, Facility Quote, Demo, Distributor, Updates) ──
+// Page-content modals (FAQ/Privacy/Contact) are triggered by their existing
+// plain hrefs so navigation still works with JS disabled. Lead-capture
+// modals are triggered by a `data-modal="type"` attribute on any button —
+// add one to `MODAL_FORMS` below and it's usable anywhere on the site with
+// zero extra wiring. `data-product="…"` on the same button pre-fills the
+// product field where the form has one.
 (function() {
   var MODAL_SOURCES = {
     'FAQ.html': { extract: '#modalBody', label: 'Frequently Asked Questions', inlineStyles: true },
     'Privacy-Terms.html': { extract: '#modalBody', label: 'Privacy & Terms', inlineStyles: true },
     'index.html#contact': { extract: '#contact', label: 'Get in Touch' },
     '#contact': { extract: '#contact', label: 'Get in Touch', src: 'index.html' }
+  };
+
+  // Lead-capture form modals. Each `fields` function receives the trigger's
+  // context (currently just { product }) so a Reserve button on a specific
+  // product card can pre-fill and lock that field.
+  var MODAL_FORMS = {
+    reserve: {
+      eyebrow: 'Founding Customer Program',
+      title: 'Reserve Your Order',
+      subtitle: 'No payment today. Reserving a spot puts you in our first production run and locks in founding-customer pricing — we’ll email you when it’s time to confirm and pay.',
+      submitLabel: 'Reserve My Spot',
+      successTitle: 'You’re reserved.',
+      successBody: 'You’re on the founding customer list. Watch your inbox — we’ll follow up as your order nears production.',
+      fields: function(ctx) {
+        return [
+          { name: 'product', label: 'Product', type: 'text', value: ctx.product || 'MEND Products (not sure yet)', readonly: !!ctx.product },
+          { name: 'quantity', label: 'Quantity', type: 'number', value: '1', min: '1', max: '999' },
+          { name: 'name', label: 'Full Name', type: 'text', required: true },
+          { name: 'email', label: 'Email', type: 'email', required: true },
+          { name: 'procedureDate', label: 'Surgery / procedure date (optional)', type: 'date' }
+        ];
+      }
+    },
+    waitlist: {
+      eyebrow: 'Early Access',
+      title: 'Join the Waitlist',
+      subtitle: 'Be first to know the moment this product is ready to order.',
+      submitLabel: 'Join Waitlist',
+      successTitle: 'You’re on the list.',
+      successBody: 'We’ll email you the moment early access opens.',
+      fields: function(ctx) {
+        return [
+          { name: 'product', label: 'Product', type: 'text', value: ctx.product || '', readonly: !!ctx.product },
+          { name: 'name', label: 'Full Name', type: 'text', required: true },
+          { name: 'email', label: 'Email', type: 'email', required: true }
+        ];
+      }
+    },
+    facilityQuote: {
+      eyebrow: 'Healthcare Facilities',
+      title: 'Request Facility Pricing',
+      subtitle: 'Hospitals, surgery centers, clinics, and recovery centers get volume pricing and priority in our manufacturing queue.',
+      submitLabel: 'Request Quote',
+      successTitle: 'Request received.',
+      successBody: 'Our team will follow up within one business day with facility pricing.',
+      fields: function() {
+        return [
+          { name: 'facility', label: 'Facility Name', type: 'text', required: true },
+          { name: 'facilityType', label: 'Facility Type', type: 'select', required: true, options: ['Hospital', 'Surgery Center', 'Clinic', 'Recovery Center', 'Other'] },
+          { name: 'name', label: 'Your Name', type: 'text', required: true },
+          { name: 'role', label: 'Role / Title', type: 'text' },
+          { name: 'email', label: 'Email', type: 'email', required: true },
+          { name: 'phone', label: 'Phone', type: 'tel' },
+          { name: 'estimatedUnits', label: 'Estimated Units Needed', type: 'select', options: ['Under 50', '50–200', '200–500', '500+'] }
+        ];
+      }
+    },
+    demo: {
+      eyebrow: 'Healthcare Facilities',
+      title: 'Schedule a Demo',
+      subtitle: 'See MEND in action and talk through fit for your facility.',
+      submitLabel: 'Request Demo',
+      successTitle: 'Thanks — request received.',
+      successBody: 'Our team will reach out to find a time that works for you.',
+      fields: function() {
+        return [
+          { name: 'facility', label: 'Facility / Organization', type: 'text', required: true },
+          { name: 'name', label: 'Your Name', type: 'text', required: true },
+          { name: 'email', label: 'Email', type: 'email', required: true },
+          { name: 'phone', label: 'Phone', type: 'tel' },
+          { name: 'preferredTime', label: 'Preferred time (optional)', type: 'text', placeholder: 'e.g. weekday mornings' }
+        ];
+      }
+    },
+    distributor: {
+      eyebrow: 'Companies & Distributors',
+      title: 'Become a Distribution Partner',
+      subtitle: 'Medical distributors, retailers, medical supply companies, home health organizations, and physical therapy practices — let’s talk wholesale.',
+      submitLabel: 'Submit Application',
+      successTitle: 'Application received.',
+      successBody: 'Our partnerships team will review your application and follow up shortly.',
+      fields: function() {
+        return [
+          { name: 'company', label: 'Company Name', type: 'text', required: true },
+          { name: 'businessType', label: 'Business Type', type: 'select', required: true, options: ['Medical Distributor', 'Retailer', 'Medical Supply Company', 'Home Health Organization', 'Physical Therapy Practice', 'Other'] },
+          { name: 'name', label: 'Your Name', type: 'text', required: true },
+          { name: 'email', label: 'Email', type: 'email', required: true },
+          { name: 'phone', label: 'Phone', type: 'tel' },
+          { name: 'website', label: 'Company Website', type: 'text' },
+          { name: 'region', label: 'Region Served', type: 'text' }
+        ];
+      }
+    },
+    newsletter: {
+      eyebrow: 'Stay in the Loop',
+      title: 'Get Manufacturing Updates',
+      subtitle: 'Short, occasional emails as we move through production — no spam.',
+      submitLabel: 'Sign Up',
+      successTitle: 'You’re subscribed.',
+      successBody: 'Watch your inbox for updates as we get closer to launch.',
+      fields: function() {
+        return [
+          { name: 'email', label: 'Email', type: 'email', required: true }
+        ];
+      }
+    }
   };
 
   var style = document.createElement('style');
@@ -370,14 +491,31 @@ window.showTab = window.showTab || function(id, btn) {
     '.mend-modal-panel .detail strong{display:block; color:var(--fg); margin-bottom:4px;}',
     '.mend-modal-panel form{display:flex; flex-direction:column; gap:14px;}',
     '.mend-modal-panel label{font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:6px; display:block;}',
-    '.mend-modal-panel input, .mend-modal-panel textarea{width:100%; padding:12px 14px; border-radius:8px; border:1px solid var(--line); background:var(--panel); color:var(--fg); font-family:inherit; font-size:14px;}',
-    '.mend-modal-panel input:focus, .mend-modal-panel textarea:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(124,139,122,.15);}',
+    '.mend-modal-panel input, .mend-modal-panel textarea, .mend-modal-panel select{width:100%; padding:12px 14px; border-radius:8px; border:1px solid var(--line); background:var(--panel); color:var(--fg); font-family:inherit; font-size:14px;}',
+    '.mend-modal-panel input:focus, .mend-modal-panel textarea:focus, .mend-modal-panel select:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(124,139,122,.15);}',
+    '.mend-modal-panel input[readonly]{color:var(--muted); cursor:not-allowed;}',
     '.mend-modal-panel textarea{resize:vertical; min-height:110px;}',
     '.mend-modal-panel .form-msg{font-size:13px; color:var(--accent); display:none; margin-top:8px;}',
     '.mend-modal-panel .form-msg.show{display:block;}',
+    // Lead-capture form modals (Reserve, Waitlist, Facility Quote, etc.)
+    '.mend-lead-eyebrow{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent-dark); font-weight:600; margin-bottom:10px;}',
+    '.mend-modal-panel .mend-lead-title{font-size:26px; font-weight:600; margin-bottom:8px; line-height:1.2;}',
+    '.mend-lead-subtitle{color:var(--muted); font-size:14px; line-height:1.6; margin-bottom:24px;}',
+    '.mend-lead-form{display:flex; flex-direction:column; gap:14px;}',
+    '.mend-lead-form .mend-lead-row{display:grid; grid-template-columns:1fr 1fr; gap:14px;}',
+    '@media(max-width:480px){.mend-lead-form .mend-lead-row{grid-template-columns:1fr;}}',
+    '.mend-lead-form button[type="submit"]{margin-top:6px;}',
+    '.mend-lead-form select{appearance:none; background-image:url(\'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="%238A857C" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>\'); background-repeat:no-repeat; background-position:right 14px center;}',
+    '.mend-form-error{font-size:13px; color:#c0392b; display:none; margin-top:2px;}',
+    '.mend-form-error.show{display:block;}',
+    '.mend-form-success{text-align:center; padding:12px 0 4px;}',
+    '.mend-success-check{width:52px; height:52px; border-radius:50%; background:var(--accent); color:#fff; font-size:24px; font-weight:700; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; animation:mend-success-pop .5s cubic-bezier(.34,1.56,.64,1);}',
+    '@keyframes mend-success-pop{0%{opacity:0; transform:scale(.6);} 60%{opacity:1; transform:scale(1.08);} 100%{opacity:1; transform:scale(1);}}',
+    '.mend-form-success h2{font-size:22px; font-weight:600; margin-bottom:10px;}',
+    '.mend-form-success p{color:var(--muted); font-size:14px; margin-bottom:22px;}',
     '@media(max-width:640px){.mend-modal-panel{padding:36px 22px 44px; border-radius:16px;}}',
     '@media (prefers-reduced-motion: reduce){',
-    '  .mend-modal-overlay, .mend-modal-panel{transition:none !important;}',
+    '  .mend-modal-overlay, .mend-modal-panel, .mend-success-check{transition:none !important; animation:none !important;}',
     '}'
   ].join('\n');
   document.head.appendChild(style);
@@ -389,14 +527,29 @@ window.showTab = window.showTab || function(id, btn) {
   overlay.innerHTML = '<div class="mend-modal-panel"><button type="button" class="mend-modal-close" aria-label="Close">✕</button><div class="mend-modal-body"><div class="mend-modal-loading">Loading…</div></div></div>';
   document.body.appendChild(overlay);
 
+  var panel = overlay.querySelector('.mend-modal-panel');
   var panelBody = overlay.querySelector('.mend-modal-body');
   var lastFocused = null;
 
   function closeModal() {
     overlay.classList.remove('mend-open');
+    overlay.removeAttribute('aria-labelledby');
     document.body.style.overflow = '';
     if (lastFocused) lastFocused.focus();
   }
+
+  // Basic focus trap: Tab/Shift+Tab cycle within the panel while it's open.
+  panel.addEventListener('keydown', function(e) {
+    if (e.key !== 'Tab') return;
+    var focusable = panel.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    if (!focusable.length) return;
+    var first = focusable[0], last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault(); last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault(); first.focus();
+    }
+  });
 
   var injectedFrom = {};
 
@@ -425,6 +578,7 @@ window.showTab = window.showTab || function(id, btn) {
     overlay.classList.add('mend-open');
     document.body.style.overflow = 'hidden';
     overlay.querySelector('.mend-modal-close').focus();
+    if (window.gtag) gtag('event', 'modal_open', { modal_type: label });
 
     fetch(src).then(function(res) {
       if (!res.ok) throw new Error('Fetch failed');
@@ -440,13 +594,73 @@ window.showTab = window.showTab || function(id, btn) {
     });
   }
 
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function(c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function renderField(f) {
+    var id = 'mendField_' + f.name;
+    var req = f.required ? ' required' : '';
+    if (f.type === 'select') {
+      var opts = (f.options || []).map(function(o) { return '<option value="' + esc(o) + '">' + esc(o) + '</option>'; }).join('');
+      return '<div><label for="' + id + '">' + esc(f.label) + '</label><select id="' + id + '" name="' + f.name + '"' + req + '><option value="">Select…</option>' + opts + '</select></div>';
+    }
+    var attrs = 'id="' + id + '" name="' + f.name + '" type="' + f.type + '"' + req;
+    if (f.value) attrs += ' value="' + esc(f.value) + '"';
+    if (f.readonly) attrs += ' readonly';
+    if (f.min) attrs += ' min="' + f.min + '"';
+    if (f.max) attrs += ' max="' + f.max + '"';
+    if (f.placeholder) attrs += ' placeholder="' + esc(f.placeholder) + '"';
+    return '<div><label for="' + id + '">' + esc(f.label) + '</label><input ' + attrs + '></div>';
+  }
+
+  function openFormModal(type, ctx) {
+    var cfg = MODAL_FORMS[type];
+    if (!cfg) return;
+    ctx = ctx || {};
+    lastFocused = document.activeElement;
+    var fields = cfg.fields(ctx).map(renderField).join('');
+    var titleId = 'mendModalTitle';
+    panelBody.innerHTML = [
+      '<div class="mend-lead-eyebrow">' + esc(cfg.eyebrow) + '</div>',
+      '<h2 class="mend-lead-title" id="' + titleId + '">' + esc(cfg.title) + '</h2>',
+      '<p class="mend-lead-subtitle">' + esc(cfg.subtitle) + '</p>',
+      '<form class="mend-lead-form" data-lead-type="' + esc(type) + '">',
+      fields,
+      '<button type="submit" class="btn btn-primary">' + esc(cfg.submitLabel) + '</button>',
+      '<div class="mend-form-error" role="alert"></div>',
+      '</form>'
+    ].join('');
+    overlay.setAttribute('aria-labelledby', titleId);
+    overlay.classList.add('mend-open');
+    document.body.style.overflow = 'hidden';
+    var firstField = panelBody.querySelector('input:not([readonly]), select');
+    (firstField || overlay.querySelector('.mend-modal-close')).focus();
+    if (window.gtag) gtag('event', 'modal_open', { modal_type: type });
+  }
+
+  function showFormSuccess(cfg) {
+    panelBody.innerHTML = [
+      '<div class="mend-form-success">',
+      '<div class="mend-success-check">✓</div>',
+      '<h2>' + esc(cfg.successTitle) + '</h2>',
+      '<p>' + esc(cfg.successBody) + '</p>',
+      '<button type="button" class="btn btn-secondary mend-modal-done">Close</button>',
+      '</div>'
+    ].join('');
+    panelBody.querySelector('.mend-modal-done').focus();
+  }
+
   overlay.addEventListener('click', function(e) {
-    if (e.target === overlay || e.target.closest('.mend-modal-close')) closeModal();
+    if (e.target === overlay || e.target.closest('.mend-modal-close') || e.target.closest('.mend-modal-done')) closeModal();
   });
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' && overlay.classList.contains('mend-open')) closeModal();
   });
 
+  // Page-content modals (FAQ / Privacy & Terms / Contact) via plain hrefs.
   document.addEventListener('click', function(e) {
     var a = e.target.closest('a[href]');
     if (!a) return;
@@ -456,6 +670,75 @@ window.showTab = window.showTab || function(id, btn) {
     e.preventDefault();
     openModal(config.src || href, config.extract, config.label, config.inlineStyles);
   });
+
+  // Lead-capture modals via data-modal="type" [data-product="…"].
+  document.addEventListener('click', function(e) {
+    var trigger = e.target.closest('[data-modal]');
+    if (!trigger) return;
+    e.preventDefault();
+    openFormModal(trigger.getAttribute('data-modal'), { product: trigger.getAttribute('data-product') || '' });
+  });
+
+  // Lead-capture form submissions → /api/lead.
+  document.addEventListener('submit', function(e) {
+    var form = e.target.closest('.mend-lead-form');
+    if (!form) return;
+    e.preventDefault();
+    var type = form.getAttribute('data-lead-type');
+    var cfg = MODAL_FORMS[type];
+    var errorEl = form.querySelector('.mend-form-error');
+    var submitBtn = form.querySelector('button[type="submit"]');
+    errorEl.classList.remove('show');
+    submitBtn.disabled = true;
+
+    var data = { type: type };
+    new FormData(form).forEach(function(value, key) { data[key] = value; });
+
+    fetch('/api/lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }).then(function(res) {
+      if (!res.ok) throw new Error('Request failed');
+      if (window.gtag) gtag('event', 'lead_submit', { modal_type: type });
+      showFormSuccess(cfg);
+    }).catch(function() {
+      errorEl.textContent = 'Something went wrong — please try again.';
+      errorEl.classList.add('show');
+      submitBtn.disabled = false;
+    });
+  });
+
+  window.MendModal = { open: openFormModal, close: closeModal };
+})();
+
+// Persistent floating Reserve CTA. Opt-in per page via `<body data-sticky-cta>`
+// so it doesn't stack on top of a page (like a PDP) that already has its own
+// persistent purchase CTA in a custom sticky header.
+(function() {
+  if (!document.body.hasAttribute('data-sticky-cta')) return;
+
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'mend-sticky-cta';
+  btn.setAttribute('data-modal', 'reserve');
+  btn.setAttribute('aria-label', 'Reserve your order');
+  btn.innerHTML = '<span class="sticky-cta-desktop">Reserve Your Order</span><span class="sticky-cta-mobile">Pre-Order Now</span>';
+  document.body.appendChild(btn);
+
+  function toggle() {
+    btn.classList.toggle('show', window.scrollY > 400);
+  }
+  window.addEventListener('scroll', toggle, { passive: true });
+  toggle();
+
+  // Hide while any modal is open so it never stacks visually above the overlay.
+  var overlayEl = document.querySelector('.mend-modal-overlay');
+  if (overlayEl) {
+    new MutationObserver(function() {
+      btn.style.display = overlayEl.classList.contains('mend-open') ? 'none' : '';
+    }).observe(overlayEl, { attributes: true, attributeFilter: ['class'] });
+  }
 })();
 
 // Product-card mini slideshow — cards with multiple photos (color/angle variants)
