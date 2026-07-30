@@ -1,6 +1,11 @@
 /* MEND Medical Apparel — main.js */
 
 // Scroll-reveal
+// threshold: 0 (rather than a percentage) so very tall sections — e.g.
+// Products, which stacks into a single column thousands of px tall on
+// narrow phones — still reveal as soon as any part enters the viewport.
+// A percentage threshold never got satisfied for that section on mobile,
+// leaving it stuck at opacity:0 (invisible) after a same-page anchor jump.
 var revealObserver = new IntersectionObserver(function(entries) {
   entries.forEach(function(entry) {
     if (entry.isIntersecting) {
@@ -8,7 +13,7 @@ var revealObserver = new IntersectionObserver(function(entries) {
       revealObserver.unobserve(entry.target);
     }
   });
-}, { threshold: 0.12 });
+}, { threshold: 0 });
 
 document.querySelectorAll('.section').forEach(function(el) {
   revealObserver.observe(el);
