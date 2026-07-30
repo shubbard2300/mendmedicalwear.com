@@ -203,7 +203,13 @@
   .carousel-arrow svg{width:16px; height:16px; stroke:var(--fg); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;}
 
   /* About */
-  .about{padding:92px 0; border-top:1px solid var(--line);}
+  .about{padding:92px 0;}
+  /* Fade-edged section dividers instead of hard full-width lines */
+  .about, .products, .testimonials, .contact{position:relative;}
+  .about::before, .products::before, .testimonials::before, .contact::before{
+    content:''; position:absolute; top:0; left:0; right:0; height:1px;
+    background:linear-gradient(90deg, transparent, var(--line) 20%, var(--line) 80%, transparent);
+  }
   .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start;}
   @media (max-width:860px){ .about-grid{grid-template-columns:1fr;} }
   .about-images{display:flex; flex-direction:column; gap:20px;}
@@ -222,7 +228,7 @@
   .about li:hover::before{transform:scale(1.3) rotate(-10deg);}
 
   /* Products */
-  .products{padding:92px 0; border-top:1px solid var(--line); text-align:center;}
+  .products{padding:92px 0; text-align:center;}
   .products h2{font-size:30px; font-weight:600; margin-bottom:8px; position:relative; display:inline-block; padding-bottom:8px;}
   .products .sub{color:var(--muted); font-size:15px; margin-bottom:48px;}
   .products-feature{margin-bottom:56px; border-radius:16px; overflow:hidden; max-width:640px; margin-left:auto; margin-right:auto; box-shadow:0 24px 60px rgba(0,0,0,.08);}
@@ -247,7 +253,7 @@
   .product-card .info .status{display:inline-block; margin-top:8px; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); background:var(--bg); border:1px solid var(--line); padding:4px 10px; border-radius:999px;}
 
   /* Testimonials (quote carousel) */
-  .testimonials{padding:92px 0; border-top:1px solid var(--line); text-align:center;}
+  .testimonials{padding:92px 0; text-align:center;}
   .testimonials > h2{font-size:30px; font-weight:600; margin-bottom:8px; position:relative; display:inline-block; padding-bottom:8px;}
   .testimonials .sub{color:var(--muted); font-size:15px; margin-bottom:48px; text-align:center;}
   .quote-carousel{margin:0 auto; max-width:760px; position:relative;}
@@ -276,7 +282,7 @@
   .quote-btn:hover{border-color:var(--accent); background:var(--panel);}
 
   /* Contact */
-  .contact{padding:92px 0; border-top:1px solid var(--line);}
+  .contact{padding:92px 0;}
   .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:48px;}
   @media (max-width:860px){ .contact-grid{grid-template-columns:1fr;} }
   .contact h2{font-size:30px; font-weight:600; margin-bottom:12px; position:relative; display:inline-block; padding-bottom:8px;}

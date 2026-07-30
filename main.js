@@ -18,15 +18,21 @@ document.querySelectorAll('.section').forEach(function(el) {
 var progressBar = document.createElement('div');
 progressBar.style.cssText = [
   'position:fixed', 'top:0', 'left:0', 'height:2px', 'width:0%',
-  'background:var(--accent)', 'z-index:999', 'pointer-events:none',
+  'background:linear-gradient(90deg, var(--accent-dark), var(--accent))',
+  'z-index:999', 'pointer-events:none',
   'transition:width .1s linear'
 ].join(';');
 document.body.appendChild(progressBar);
 
+// Glass header condenses once the page has scrolled past the hero
+var siteHeader = document.querySelector('header');
+
 window.addEventListener('scroll', function() {
   var pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
   progressBar.style.width = Math.min(pct, 100) + '%';
+  if (siteHeader) siteHeader.classList.toggle('is-scrolled', window.scrollY > 40);
 }, { passive: true });
+if (siteHeader) siteHeader.classList.toggle('is-scrolled', window.scrollY > 40);
 
 // Button ripple on click
 document.addEventListener('click', function(e) {
@@ -51,14 +57,18 @@ document.addEventListener('click', function(e) {
 // Respect users who prefer reduced motion — skip pointer-driven effects below
 var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// Product card 3D tilt
+// Product card 3D tilt + cursor-tracked spotlight glow
 if (!prefersReducedMotion)
 document.querySelectorAll('.product-card').forEach(function(card) {
   card.addEventListener('mousemove', function(e) {
     var r = card.getBoundingClientRect();
-    var rx = ((e.clientY - r.top) / r.height - 0.5) * -10;
-    var ry = ((e.clientX - r.left) / r.width - 0.5) * 10;
+    var px = (e.clientX - r.left) / r.width;
+    var py = (e.clientY - r.top) / r.height;
+    var rx = (py - 0.5) * -10;
+    var ry = (px - 0.5) * 10;
     card.style.transform = 'perspective(800px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) translateY(-8px)';
+    card.style.setProperty('--mx', (px * 100) + '%');
+    card.style.setProperty('--my', (py * 100) + '%');
   });
   card.addEventListener('mouseleave', function() {
     card.style.transform = '';
