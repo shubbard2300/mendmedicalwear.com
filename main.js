@@ -712,16 +712,47 @@ window.showTab = window.showTab || function(id, btn) {
   window.MendModal = { open: openFormModal, close: closeModal };
 })();
 
-// Persistent floating Reserve CTA. Opt-in per page via `<body data-sticky-cta>`
-// so it doesn't stack on top of a page (like a PDP) that already has its own
-// persistent purchase CTA in a custom sticky header.
+// Persistent floating Reserve CTA. Opt-in per page via `<body data-sticky-cta>`;
+// add `data-sticky-cta-product="…"` to prefill/lock the Reserve modal's
+// product field with the page's own product instead of the generic default.
+// Styles are self-injected (not in styles.css) because several pages that
+// use this CTA — the MEND Pulse/Oxi/App product pages — don't load
+// styles.css at all, the same reason the modal system injects its own CSS.
 (function() {
   if (!document.body.hasAttribute('data-sticky-cta')) return;
+
+  var style = document.createElement('style');
+  style.textContent = [
+    '.mend-sticky-cta{',
+    '  position:fixed; z-index:900; cursor:pointer; border:none; font-family:"Inter",Helvetica,Arial,sans-serif; font-weight:700;',
+    '  letter-spacing:.04em; text-transform:uppercase; background:#7C8B7A; color:#fff;',
+    '  box-shadow:0 14px 34px rgba(0,0,0,.22);',
+    '  transition:transform .3s cubic-bezier(.34,1.56,.64,1), opacity .3s ease, background .2s ease, box-shadow .25s ease;',
+    '  opacity:0; pointer-events:none;',
+    '}',
+    '.mend-sticky-cta.show{opacity:1; pointer-events:auto;}',
+    '.mend-sticky-cta:hover{background:#677866; box-shadow:0 18px 40px rgba(0,0,0,.3);}',
+    '@media(min-width:641px){',
+    '  .mend-sticky-cta{left:24px; bottom:24px; padding:15px 28px; border-radius:999px; font-size:13px; transform:translateY(14px) scale(.94);}',
+    '  .mend-sticky-cta.show{transform:translateY(0) scale(1);}',
+    '  .mend-sticky-cta .sticky-cta-mobile{display:none;}',
+    '}',
+    '@media(max-width:640px){',
+    '  .mend-sticky-cta{left:0; right:0; bottom:0; width:100%; padding:16px; font-size:14px; border-radius:0; box-shadow:0 -8px 24px rgba(0,0,0,.16); transform:translateY(100%); padding-bottom:calc(16px + env(safe-area-inset-bottom));}',
+    '  .mend-sticky-cta.show{transform:translateY(0);}',
+    '  .mend-sticky-cta .sticky-cta-desktop{display:none;}',
+    '}',
+    '@media (prefers-reduced-motion: reduce){ .mend-sticky-cta{transition:opacity .15s linear !important; transform:none !important;} }'
+  ].join('\n');
+  document.head.appendChild(style);
+
+  var product = document.body.getAttribute('data-sticky-cta-product') || '';
 
   var btn = document.createElement('button');
   btn.type = 'button';
   btn.className = 'mend-sticky-cta';
   btn.setAttribute('data-modal', 'reserve');
+  if (product) btn.setAttribute('data-product', product);
   btn.setAttribute('aria-label', 'Reserve your order');
   btn.innerHTML = '<span class="sticky-cta-desktop">Reserve Your Order</span><span class="sticky-cta-mobile">Pre-Order Now</span>';
   document.body.appendChild(btn);
