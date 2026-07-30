@@ -85,11 +85,7 @@
   .coming-soon-banner strong{color:var(--fg);}
 
   .notify-form{display:flex; gap:10px; margin:20px 0; flex-wrap:wrap;}
-  .notify-form input{flex:1; min-width:200px; padding:12px 16px; border:1px solid var(--line); border-radius:10px; background:var(--panel); color:var(--fg); font-family:inherit; font-size:14px; transition:border-color .2s ease, box-shadow .2s ease;}
-  .notify-form input:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(124,139,122,.15);}
   .notify-form .btn{white-space:nowrap;}
-  .notify-msg{font-size:13px; color:var(--accent); display:none; margin-top:8px;}
-  .notify-msg.show{display:block;}
 
   .description{font-size:15px; margin:24px 0; color:var(--fg); line-height:1.7;}
   .features{margin:24px 0;}
@@ -171,11 +167,9 @@
         <p><strong>Coming Soon —</strong> AirGuard™ is in final development. Enter your email to be first on the list when we launch.</p>
       </div>
 
-      <form class="notify-form" id="notifyForm">
-        <input type="email" placeholder="your@email.com" required>
-        <button type="submit" class="btn btn-primary">Notify Me at Launch</button>
-      </form>
-      <div class="notify-msg" id="notifyMsg">You're on the list — we'll reach out the moment AirGuard™ is ready.</div>
+      <div class="notify-form">
+        <button type="button" class="btn btn-primary" data-modal="waitlist" data-product="AirGuard™ Fall-Detection Collar">Notify Me at Launch</button>
+      </div>
 
       <div class="description">
         AirGuard™ is a lightweight wearable collar designed for older adults living independently. It detects the distinct motion signature of a fall the instant it happens — not minutes later — and immediately alerts a designated caregiver or emergency contact. No button to press. No app to open. Just quiet, constant protection that disappears into daily life until it's needed.
@@ -317,11 +311,6 @@
   });
 })();
 
-document.getElementById('notifyForm').addEventListener('submit', function(e){
-  e.preventDefault();
-  document.getElementById('notifyMsg').classList.add('show');
-  this.reset();
-});
 initBrandIt('AirGuard Collar', 'Concept - AirGuard Collar - 2026-06-17-web.jpg', {x:410, y:635, w:150, h:70});
 </script>
 </body>

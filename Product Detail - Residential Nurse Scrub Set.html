@@ -108,7 +108,7 @@
   .bundle-upsell-toggle:hover .bundle-badge{transform:translateY(-2px);}
 
   .cta{display:flex; gap:12px; margin:24px 0;}
-  .cta .btn{flex:1; padding:16px; border-radius:10px; text-transform:none; letter-spacing:normal; font-size:15px; border:1px solid var(--line); overflow:hidden; position:relative;}
+  .cta .btn{flex:1; padding:16px; border-radius:10px; text-transform:none; letter-spacing:normal; font-size:15px; border:1px solid var(--line); overflow:hidden; position:relative; font-family:inherit; cursor:pointer; text-align:center;}
   .cta .btn-primary{background:var(--accent); color:#fff;}
   .cta .btn-primary:hover{background:var(--accent-dark); transform:translateY(-3px); box-shadow:0 14px 30px rgba(124,139,122,.38); letter-spacing:.07em;}
   .cta .btn-secondary{background:transparent; color:var(--fg); border:1.5px solid var(--line);}
@@ -223,8 +223,8 @@
       </div>
 
       <div class="cta">
-        <div class="btn btn-primary" id="ctaPrimary">Pre-Order Now</div>
-        <div class="btn btn-secondary">Save for Later</div>
+        <button type="button" class="btn btn-primary" id="ctaPrimary" data-modal="reserve" data-product="Comfort Scrubs — Residential Nurse Set">Pre-Order Now</button>
+        <button type="button" class="btn btn-secondary" data-modal="waitlist" data-product="Comfort Scrubs — Residential Nurse Set">Save for Later</button>
       </div>
 
       <div class="bundle-upsell">
