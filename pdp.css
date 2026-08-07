@@ -52,7 +52,7 @@ h1{font-size:30px; font-weight:600; margin-bottom:6px;}
 /* Description / features */
 .description{font-size:15px; margin:24px 0; color:var(--fg); line-height:1.7;}
 .features{margin:24px 0;}
-.features h3{font-size:14px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:12px;}
+.features h2{font-size:14px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:12px;}
 .features ul{list-style:none;}
 .features li{padding:10px 8px; border-bottom:1px solid var(--line); font-size:14px; display:flex; justify-content:space-between; gap:16px; border-radius:6px; transition:background .2s ease, padding-left .2s ease;}
 .features li:hover{background:rgba(124,139,122,.07); padding-left:14px;}
@@ -73,14 +73,14 @@ h1{font-size:30px; font-weight:600; margin-bottom:6px;}
 /* Cards */
 .spec-card{background:var(--panel); border-radius:10px; padding:20px; border:1px solid transparent; transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;}
 .spec-card:hover{transform:translateY(-5px); box-shadow:0 14px 32px rgba(0,0,0,.1); border-color:var(--accent);}
-.spec-card h4{font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:10px;}
+.spec-card h3{font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:10px;}
 .spec-card ul{padding-left:18px; font-size:14px;}
 .spec-card li{margin-bottom:6px;}
 
 .step{background:var(--panel); border-radius:12px; padding:24px; border:1px solid transparent; transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;}
 .step:hover{transform:translateY(-5px); box-shadow:0 14px 32px rgba(0,0,0,.1); border-color:var(--accent);}
 .step-num{font-size:28px; font-weight:700; color:var(--accent); margin-bottom:10px; line-height:1;}
-.step h4{font-size:14px; font-weight:600; margin-bottom:6px;}
+.step h3{font-size:14px; font-weight:600; margin-bottom:6px;}
 .step p{font-size:13px; color:var(--muted); line-height:1.6;}
 
 /* Notify form (AirGuard) */
