@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fall Risk Check — MEND Medical Apparel</title>
+<meta name="description" content="A free three-minute fall risk self-assessment built on the CDC STEADI screener, with WHO data on where falls carry the highest burden worldwide. Educational only — not a diagnosis.">
+<meta name="keywords" content="fall risk assessment, STEADI screening, fall prevention, fall risk medications, elderly fall risk, WHO fall mortality">
+<meta name="author" content="MEND Medical Apparel">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#7C8B7A">
+<link rel="canonical" href="https://www.mendmedicalwear.com/fall-risk-assessment.html">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MEND Medical Apparel">
+<meta property="og:title" content="Fall Risk Check — MEND Medical Apparel">
+<meta property="og:description" content="Three minutes, twelve CDC STEADI questions, and a look at medications and withdrawal. Nothing you answer leaves the page.">
+<meta property="og:url" content="https://www.mendmedicalwear.com/fall-risk-assessment.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Fall Risk Check — MEND Medical Apparel">
+<meta name="twitter:description" content="A free fall risk self-assessment built on the CDC STEADI screener, plus WHO data on fall mortality worldwide.">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MedicalWebPage",
+  "name": "MEND Fall Risk Check",
+  "url": "https://www.mendmedicalwear.com/fall-risk-assessment.html",
+  "description": "An educational fall risk self-assessment based on the CDC STEADI Stay Independent screener, presented alongside WHO Global Health Observatory data on age-standardised fall mortality.",
+  "audience": { "@type": "Patient" },
+  "publisher": { "@type": "Organization", "name": "MEND Medical Apparel" },
+  "citation": [
+    "CDC STEADI — Stay Independent brochure, Centers for Disease Control and Prevention",
+    "WHO Global Health Observatory, indicator SA_0000001442 — age-standardised death rates, falls, per 100 000"
+  ]
+}
+</script>
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32x32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="components/fall-risk.css">
+<link rel="preconnect" href="https://unpkg.com" crossorigin>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a href="index.html" class="logo-link"><svg viewBox="0 0 320 90" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MEND Medical Apparel logo">
+  <g class="logo-mark" stroke="#7C8B7A" stroke-width="3" stroke-linecap="round" fill="none">
+    <line x1="45" y1="15" x2="45" y2="75"/>
+    <line x1="15" y1="45" x2="75" y2="45"/>
+    <line x1="22" y1="22" x2="68" y2="68"/>
+  </g>
+  <text class="logo-text" x="100" y="58" font-family="Helvetica, Arial, sans-serif" font-size="38" font-weight="600" letter-spacing="8" fill="#2B2B28">MEND</text>
+  <text class="logo-sub" x="101" y="80" font-family="Helvetica, Arial, sans-serif" font-size="12" letter-spacing="4" fill="#8A857C">MEDICAL APPAREL</text>
+</svg></a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="index.html#products">Products</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <div id="fall-risk-root" data-api="/api/fall-risk-regions" data-top="5">
+      <!-- Server-rendered fallback: without JavaScript the questionnaire cannot score,
+           but the reason for it, and the advice, should still reach the reader. -->
+      <noscript>
+        <section class="fr">
+          <p class="fr-eyebrow">MEND Fall Risk Check</p>
+          <h1 class="fr-title">How likely is a fall — and what would change it?</h1>
+          <p class="fr-lede">
+            This check needs JavaScript to score your answers in the browser. The questions
+            come from the CDC’s STEADI “Stay Independent” screener, which you can complete on
+            paper instead: a score of 4 or more out of 14 is the point at which clinicians
+            begin screening for falls.
+          </p>
+          <p class="fr-note">
+            Whatever your score, two things help almost everyone — asking a pharmacist to
+            review every medicine you take, including anything over the counter, and getting
+            your eyes checked once a year.
+          </p>
+        </section>
+      </noscript>
+    </div>
+  </main>
+
+  <footer>
+    <p>MEND Medical Apparel — Comfort, redesigned for recovery.</p>
+    <p>&copy; 2026 MEND Medical Apparel. All rights reserved.</p>
+    <p><a href="FAQ.html">FAQ</a> &nbsp;·&nbsp; <a href="Privacy-Terms.html">Privacy &amp; Terms</a> &nbsp;·&nbsp; <a href="index.html#contact">Contact</a></p>
+  </footer>
+</div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"
+        integrity="sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z"
+        crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"
+        integrity="sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1"
+        crossorigin="anonymous"></script>
+<script src="fall-risk.js"></script>
+</body>
+</html>
