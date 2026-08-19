@@ -8,7 +8,16 @@
 
 .fr-head{margin-bottom:28px;}
 .fr-eyebrow{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); font-weight:600;}
-.fr-title{font-size:clamp(26px,4vw,36px); font-weight:600; line-height:1.2; margin:8px 0 12px; letter-spacing:-.01em;}
+/* Headings are scoped through .fr so host page rules cannot outrank them. The PDPs
+   style `.section h2` (0,1,1) with a size, bottom border, and an animated ::after
+   underline, which beat a bare `.fr-title` (0,1,0) when the component is embedded
+   in a product page. Anything the host might add is neutralised here explicitly. */
+.fr .fr-title{
+  font-size:clamp(26px,4vw,36px); font-weight:600; line-height:1.2;
+  margin:8px 0 12px; letter-spacing:-.01em;
+  border:0; padding:0; text-transform:none; color:var(--fg);
+}
+.fr .fr-title::after{content:none;}
 .fr-lede{color:var(--muted); max-width:60ch;}
 
 .fr-progress{display:flex; gap:8px; list-style:none; margin:0 0 28px; padding:0;}
@@ -24,8 +33,10 @@
 @media (prefers-reduced-motion:reduce){ .fr-step{animation:none;} }
 .fr-results:focus{outline:2px solid var(--accent); outline-offset:4px;}
 
-.fr-h3{font-size:19px; font-weight:600; margin:0 0 6px;}
-.fr-h4{font-size:15px; font-weight:600; margin:28px 0 8px;}
+.fr .fr-h3{font-size:19px; font-weight:600; margin:0 0 6px; border:0; padding:0; text-transform:none; color:var(--fg);}
+.fr .fr-h3::after{content:none;}
+.fr .fr-h4{font-size:15px; font-weight:600; margin:28px 0 8px; border:0; padding:0; text-transform:none; color:var(--fg);}
+.fr .fr-h4::after{content:none;}
 .fr-hint{color:var(--muted); font-size:14px; margin-bottom:16px; max-width:62ch;}
 .fr-label{display:block; font-weight:500; margin-bottom:4px;}
 .fr-note{font-size:14px; color:var(--muted); max-width:64ch;}

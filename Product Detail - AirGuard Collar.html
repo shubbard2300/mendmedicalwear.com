@@ -119,6 +119,7 @@
   footer{margin-top:32px;}
 </style>
   <link rel="stylesheet" href="pdp.css">
+  <link rel="stylesheet" href="components/fall-risk.css">
 </head>
 <body data-sticky-cta data-sticky-cta-product="AirGuard™ Fall-Detection Collar">
 <div class="wrap">
@@ -135,7 +136,7 @@
     <nav>
       <a href="index.html#about">About</a>
       <a href="index.html#products">Products</a>
-      <a href="fall-risk-assessment.html">Fall Risk Check</a>
+      <a href="#fall-risk">Fall Risk Check</a>
       <a href="index.html#contact">Contact</a>
     </nav>
   </header>
@@ -252,6 +253,20 @@
     </div>
   </div>
 
+  <!-- Fall Risk Check — same component as /fall-risk-assessment.html, mounted at h2
+       so it sits under this page's h1 rather than competing with it. -->
+  <div class="section" id="fall-risk">
+    <div id="fall-risk-root" data-api="/api/fall-risk-regions" data-top="5" data-heading="h2">
+      <noscript>
+        <h2>Check your fall risk</h2>
+        <p>Our fall risk check needs JavaScript to score your answers. The questions come
+        from the CDC’s STEADI “Stay Independent” screener, which you can also complete on
+        paper — a score of 4 or more out of 14 is the point at which clinicians begin
+        screening for falls. <a href="fall-risk-assessment.html">Open the full check</a>.</p>
+      </noscript>
+    </div>
+  </div>
+
   <!-- Brand-It: Custom Logo -->
   <div class="section brand-it">
     <h2>Custom Branding &amp; White Label</h2>
@@ -299,6 +314,13 @@
 </div>
 
 <script src="main.js"></script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"
+        integrity="sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z"
+        crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"
+        integrity="sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1"
+        crossorigin="anonymous"></script>
+<script src="fall-risk.js"></script>
 <script>
 (function(){
   var main = document.getElementById('galleryMain');
