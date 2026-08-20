@@ -15,6 +15,11 @@
  * documented modifiable driver in the literature) but they are house calibration,
  * not a validated published scale. Anything derived from them is presented as a
  * relative index, never as a probability.
+ *
+ * Answers are `true` / `false` / undefined rather than checkbox booleans. An
+ * explicit "no" is what lets the form reveal questions one at a time — with
+ * checkboxes there is no answer event on "no", so there is nothing to advance on,
+ * and a blank box is ambiguous between "no" and "not yet read".
  */
 
 export const STEADI_THRESHOLD = 4;
@@ -53,7 +58,7 @@ export const SECTIONS = [
   {
     id: 'steadi',
     title: 'Balance and mobility',
-    note: 'The 12 questions below are the CDC STEADI “Stay Independent” screener, used as published.',
+    note: 'These 12 questions are the CDC STEADI “Stay Independent” screener, used as published.',
     questions: [
       { id: 's1',  points: 2, text: 'I have fallen in the past year.', driver: 'a fall in the past year' },
       { id: 's2',  points: 2, text: 'I use, or have been advised to use, a cane or walker to get around safely.', driver: 'use of a mobility aid' },
@@ -72,7 +77,7 @@ export const SECTIONS = [
   {
     id: 'medications',
     title: 'Medications',
-    note: 'Check every class you currently take. These are fall-risk-increasing drugs (FRIDs) — the most modifiable driver on this page.',
+    note: 'Answer for each class you currently take. These are fall-risk-increasing drugs (FRIDs) — the most modifiable driver on this page.',
     questions: [
       { id: 'm1', points: 2, text: 'Benzodiazepines or prescription sleep aids (diazepam, lorazepam, zolpidem, and similar).', driver: 'benzodiazepines or sleep aids' },
       { id: 'm2', points: 2, text: 'Opioid pain medicine.', driver: 'opioid pain medicine' },
@@ -137,8 +142,28 @@ export const RISK_BANDS = [
   }
 ];
 
+/** Questions answered so far in a section, in order — the reveal cursor. */
+export function answeredCount(section, answers) {
+  var n = 0;
+  for (var i = 0; i < section.questions.length; i++) {
+    if (answers[section.questions[i].id] === undefined) break;
+    n++;
+  }
+  return n;
+}
+
+export const TOTAL_QUESTIONS = SECTIONS.reduce((n, s) => n + s.questions.length, 0);
+
+/** How far through the whole questionnaire, 0–1, for the progress bar. */
+export function completion(answers) {
+  var done = SECTIONS.reduce(
+    (n, s) => n + s.questions.filter(q => answers[q.id] !== undefined).length, 0
+  );
+  return done / TOTAL_QUESTIONS;
+}
+
 /**
- * @param {{age?: string, sex?: string, answers?: Record<string, boolean>}} input
+ * @param {{age?: string, sex?: string, answers?: Record<string, boolean|undefined>}} input
  */
 export function scoreAssessment(input) {
   const answers = input.answers || {};

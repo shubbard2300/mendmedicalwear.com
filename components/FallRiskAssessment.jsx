@@ -2,129 +2,62 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   AGE_BANDS,
   REGIONS,
-  RISK_BANDS,
   SECTIONS,
   SEX_OPTIONS,
   STEADI_THRESHOLD,
+  answeredCount,
+  completion,
   isComplete,
   scoreAssessment
 } from './fall-risk-model.js';
+import {
+  ContributionChart,
+  CountryChart,
+  ScoreMeter,
+  usePrefersReducedMotion
+} from './fall-risk-charts.jsx';
 
 /**
  * MEND Fall Risk Check.
  *
+ * Questions arrive one at a time: answering reveals the next, and answering the last
+ * in a block moves to the next block on its own. Everything already answered stays on
+ * screen and stays changeable, so the reveal is disclosure, not a wizard that traps you.
+ *
  * Answers live in component state and are never transmitted. The only thing that
- * leaves the browser is the sex and region used to query the global panel, and
- * those go to our own endpoint, which forwards nothing.
+ * leaves the browser is the sex and region used to query the global panel, and those
+ * go to our own endpoint, which stores nothing.
  *
  * Props:
  *   apiPath     — endpoint for the WHO panel (default '/api/fall-risk-regions')
- *   topN        — how many countries and regions to show (default 5)
+ *   topN        — how many countries to chart (default 5)
  *   headingTag  — level for the component title; 'h1' when it owns the page,
  *                 'h2' when embedded below one (default 'h1')
  *   onComplete  — called with the score object when results are first shown
  */
 
 const STEPS = ['about', ...SECTIONS.map(s => s.id), 'results'];
+const ADVANCE_MS = 520;
 
 function bandTone(bandId) {
   return { lower: 'ok', increased: 'watch', high: 'high', veryhigh: 'urgent' }[bandId] || 'ok';
 }
 
-function ScoreDial({ score, max, tone }) {
-  const pct = Math.min(score / max, 1);
-  const r = 52;
-  const circumference = 2 * Math.PI * r;
+function Question({ question, value, onAnswer, isNew }) {
   return (
-    <svg className="fr-dial" viewBox="0 0 130 130" role="img"
-         aria-label={`Score ${score} out of ${max}`}>
-      <circle cx="65" cy="65" r={r} className="fr-dial-track" />
-      <circle
-        cx="65" cy="65" r={r}
-        className={`fr-dial-value fr-tone-${tone}`}
-        strokeDasharray={`${circumference} ${circumference}`}
-        strokeDashoffset={circumference * (1 - pct)}
-        transform="rotate(-90 65 65)"
-      />
-      <text x="65" y="62" className="fr-dial-num">{score}</text>
-      <text x="65" y="82" className="fr-dial-den">of {max}</text>
-    </svg>
-  );
-}
-
-function GlobalPanel({ data, state, error, topN }) {
-  if (error) {
-    return (
-      <p className="fr-note fr-note-quiet">
-        The global comparison is unavailable right now — {error}. Your score above is
-        unaffected; it was calculated in your browser.
-      </p>
-    );
-  }
-  if (state !== 'ready' || !data) {
-    return <p className="fr-note fr-note-quiet">Loading WHO mortality data…</p>;
-  }
-
-  const maxRate = Math.max(...data.topCountries.map(c => c.rate), 1);
-  const sexLabel = { all: 'all adults', male: 'men', female: 'women' }[data.sex] || 'all adults';
-
-  return (
-    <div className="fr-global">
-      <h3 className="fr-h3">Where falls are deadliest, worldwide</h3>
-      <p className="fr-note">
-        The {topN} countries with the highest age-standardised fall death rate among{' '}
-        <strong>{sexLabel}</strong>
-        {data.region ? <> within <strong>{data.region}</strong></> : null}, from the WHO
-        Global Health Observatory. This is population data — it describes where falls carry
-        the heaviest burden, not your own odds in any of these places.
-      </p>
-
-      <ol className="fr-bars">
-        {data.topCountries.map((c, i) => (
-          <li key={c.iso3} className="fr-bar-row">
-            <span className="fr-bar-rank">{i + 1}</span>
-            <span className="fr-bar-name">{c.name}</span>
-            <span className="fr-bar-track">
-              <span className="fr-bar-fill" style={{ width: `${(c.rate / maxRate) * 100}%` }} />
-            </span>
-            <span className="fr-bar-val">{c.rate.toFixed(1)}</span>
-          </li>
-        ))}
-      </ol>
-      <p className="fr-bar-unit">Deaths per 100,000 people per year, age-standardised.</p>
-
-      <h4 className="fr-h4">By WHO region</h4>
-      <div className="fr-table-wrap">
-      <table className="fr-table">
-        <thead>
-          <tr>
-            <th scope="col">Region</th>
-            <th scope="col">Median rate</th>
-            <th scope="col">Highest member state</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.topRegions.map(r => (
-            <tr key={r.region}>
-              <th scope="row">{r.region}</th>
-              <td>{r.medianRate.toFixed(1)}</td>
-              <td>{r.highest.name} <span className="fr-muted">({r.highest.rate.toFixed(1)})</span></td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <li className={`fr-q${isNew ? ' is-new' : ''}${value !== undefined ? ' is-answered' : ''}`}>
+      <p className="fr-q-text" id={`q-${question.id}`}>{question.text}</p>
+      <div className="fr-yn" role="group" aria-labelledby={`q-${question.id}`}>
+        <button type="button"
+                className={`fr-yn-btn${value === true ? ' is-on' : ''}`}
+                aria-pressed={value === true}
+                onClick={() => onAnswer(question.id, true)}>Yes</button>
+        <button type="button"
+                className={`fr-yn-btn${value === false ? ' is-on' : ''}`}
+                aria-pressed={value === false}
+                onClick={() => onAnswer(question.id, false)}>No</button>
       </div>
-
-      <p className="fr-source">
-        Source: {data.source}, indicator {data.indicator} — {data.indicatorName}, {data.dataYear}.
-        Ranked across {data.countriesRanked} member states; global median {data.globalMedian}.
-        {data.live
-          ? ' Queried live.'
-          : ` Served from our cached copy taken ${data.snapshotRetrieved} — the WHO API did not respond.`}
-        {' '}States with populations under about 300,000 are excluded, because a rate over
-        so small a population turns on a handful of deaths.
-      </p>
-    </div>
+    </li>
   );
 }
 
@@ -139,37 +72,64 @@ export default function FallRiskAssessment({
   const [sex, setSex] = useState('all');
   const [region, setRegion] = useState('');
   const [answers, setAnswers] = useState({});
+  const [newest, setNewest] = useState(null);
+
+  // The chart's own filters start from the answers but are then independent, so
+  // someone can compare across groups without their score shifting underneath them.
+  const [chartSex, setChartSex] = useState('all');
+  const [chartRegion, setChartRegion] = useState('');
+
   const [global, setGlobal] = useState({ state: 'idle', data: null, error: null });
   const resultsRef = useRef(null);
   const announcedRef = useRef(false);
+  const advanceRef = useRef(null);
+  const reduced = usePrefersReducedMotion();
 
   const stepId = STEPS[step];
   const onResults = stepId === 'results';
+  const section = SECTIONS.find(s => s.id === stepId) || null;
   const result = useMemo(() => scoreAssessment({ age, sex, answers }), [age, sex, answers]);
-  const canAdvance = stepId !== 'about' || isComplete({ age });
+  const progress = completion(answers);
 
-  const toggle = useCallback(id => {
-    setAnswers(prev => ({ ...prev, [id]: !prev[id] }));
+  const answer = useCallback((id, value) => {
+    setAnswers(prev => ({ ...prev, [id]: value }));
+    setNewest(id);
   }, []);
 
+  const goNext = useCallback(() => setStep(s => Math.min(STEPS.length - 1, s + 1)), []);
+
+  // Answering the final question in a block advances on its own, after a beat long
+  // enough to see the answer register. Any further interaction cancels it.
+  useEffect(() => {
+    if (!section) return undefined;
+    const done = answeredCount(section, answers) === section.questions.length;
+    if (!done) return undefined;
+    advanceRef.current = setTimeout(goNext, reduced ? 0 : ADVANCE_MS);
+    return () => clearTimeout(advanceRef.current);
+  }, [section, answers, goNext, reduced]);
+
   const restart = useCallback(() => {
-    setStep(0);
-    setAnswers({});
-    setAge('');
-    setSex('all');
-    setRegion('');
+    clearTimeout(advanceRef.current);
+    setStep(0); setAnswers({}); setAge(''); setSex('all'); setRegion('');
+    setChartSex('all'); setChartRegion(''); setNewest(null);
     announcedRef.current = false;
   }, []);
 
-  // Fetch the WHO panel only once the person reaches the results step, so nobody
-  // who abandons the form halfway triggers a request at all.
+  // Seed the chart filters from the person's own answers the first time results show.
   useEffect(() => {
-    if (!onResults) return;
+    if (!onResults || announcedRef.current) return;
+    setChartSex(sex);
+    setChartRegion(region);
+  }, [onResults, sex, region]);
+
+  // Fetch only once results are reached, so abandoning the form costs no request.
+  useEffect(() => {
+    if (!onResults) return undefined;
     let cancelled = false;
     setGlobal(g => ({ ...g, state: 'loading', error: null }));
 
-    const params = new URLSearchParams({ sex, limit: String(topN) });
-    if (region) params.set('region', region);
+    const params = new URLSearchParams({ sex: chartSex, limit: String(topN) });
+    if (chartRegion) params.set('region', chartRegion);
 
     fetch(`${apiPath}?${params}`, { headers: { Accept: 'application/json' } })
       .then(res => {
@@ -177,10 +137,12 @@ export default function FallRiskAssessment({
         return res.json();
       })
       .then(data => { if (!cancelled) setGlobal({ state: 'ready', data, error: null }); })
-      .catch(err => { if (!cancelled) setGlobal({ state: 'error', data: null, error: err.message }); });
+      .catch(err => {
+        if (!cancelled) setGlobal(g => ({ state: 'error', data: g.data, error: err.message }));
+      });
 
     return () => { cancelled = true; };
-  }, [onResults, apiPath, sex, region, topN]);
+  }, [onResults, apiPath, chartSex, chartRegion, topN]);
 
   useEffect(() => {
     if (onResults && resultsRef.current) {
@@ -194,6 +156,8 @@ export default function FallRiskAssessment({
 
   const tone = result.band ? bandTone(result.band.id) : 'ok';
   const hasWithdrawalFlag = result.criticalFlags.includes('w1');
+  const revealed = section ? Math.min(answeredCount(section, answers) + 1, section.questions.length) : 0;
+  const canAdvance = stepId !== 'about' || isComplete({ age });
 
   return (
     <section className="fr" aria-labelledby="fr-title">
@@ -201,21 +165,18 @@ export default function FallRiskAssessment({
         <p className="fr-eyebrow">MEND Fall Risk Check</p>
         <Heading className="fr-title" id="fr-title">How likely is a fall — and what would change it?</Heading>
         <p className="fr-lede">
-          Twelve questions from the CDC’s STEADI screener, plus a look at medications,
-          withdrawal, and your home. It takes about three minutes. Nothing you answer
-          leaves this page.
+          Questions from the CDC’s STEADI screener, plus a look at medications,
+          withdrawal, and your home — one at a time, about three minutes. Nothing you
+          answer leaves this page.
         </p>
       </div>
 
-      <ol className="fr-progress" aria-label="Progress">
-        {STEPS.map((id, i) => (
-          <li key={id}
-              className={`fr-progress-dot${i === step ? ' is-current' : ''}${i < step ? ' is-done' : ''}`}
-              aria-current={i === step ? 'step' : undefined}>
-            <span className="fr-sr">Step {i + 1} of {STEPS.length}</span>
-          </li>
-        ))}
-      </ol>
+      <div className="fr-progress" role="progressbar"
+           aria-valuemin={0} aria-valuemax={100}
+           aria-valuenow={Math.round(progress * 100)}
+           aria-label="Questions answered">
+        <span className="fr-progress-fill" style={{ width: `${progress * 100}%` }} />
+      </div>
 
       {stepId === 'about' && (
         <div className="fr-step">
@@ -226,36 +187,34 @@ export default function FallRiskAssessment({
               {AGE_BANDS.map(b => (
                 <label key={b.value} className={`fr-chip${age === b.value ? ' is-on' : ''}`}>
                   <input type="radio" name="fr-age" value={b.value}
-                         checked={age === b.value}
-                         onChange={() => setAge(b.value)} />
+                         checked={age === b.value} onChange={() => setAge(b.value)} />
                   {b.label}
                 </label>
               ))}
             </div>
           </fieldset>
 
-          <fieldset className="fr-field">
+          <fieldset className={`fr-field${age ? ' is-new' : ''}`} disabled={!age}>
             <legend>Sex</legend>
             <p className="fr-hint">
               Fall mortality differs enough between men and women that the WHO publishes
-              them separately, so this changes the global comparison at the end.
+              them separately, so this changes the comparison at the end.
             </p>
             <div className="fr-chips">
               {SEX_OPTIONS.map(o => (
                 <label key={o.value} className={`fr-chip${sex === o.value ? ' is-on' : ''}`}>
                   <input type="radio" name="fr-sex" value={o.value}
-                         checked={sex === o.value}
-                         onChange={() => setSex(o.value)} />
+                         checked={sex === o.value} onChange={() => setSex(o.value)} />
                   {o.label}
                 </label>
               ))}
             </div>
           </fieldset>
 
-          <div className="fr-field">
+          <div className={`fr-field${age ? ' is-new' : ''}`}>
             <label className="fr-label" htmlFor="fr-region">Your region (optional)</label>
-            <p className="fr-hint">Narrows the global comparison to your part of the world.</p>
             <select id="fr-region" className="fr-select" value={region}
+                    disabled={!age}
                     onChange={e => setRegion(e.target.value)}>
               <option value="">Compare worldwide</option>
               {REGIONS.map(r => <option key={r} value={r}>{r}</option>)}
@@ -264,25 +223,21 @@ export default function FallRiskAssessment({
         </div>
       )}
 
-      {SECTIONS.map(section => section.id === stepId && (
+      {section && (
         <div className="fr-step" key={section.id}>
           <h3 className="fr-h3">{section.title}</h3>
           <p className="fr-hint">{section.note}</p>
-          <ul className="fr-questions">
-            {section.questions.map(q => (
-              <li key={q.id}>
-                <label className={`fr-q${answers[q.id] ? ' is-on' : ''}`}>
-                  <input type="checkbox" checked={Boolean(answers[q.id])}
-                         onChange={() => toggle(q.id)} />
-                  <span className="fr-q-box" aria-hidden="true" />
-                  <span className="fr-q-text">{q.text}</span>
-                </label>
-              </li>
+          <ol className="fr-questions">
+            {section.questions.slice(0, revealed).map(q => (
+              <Question key={q.id} question={q} value={answers[q.id]}
+                        onAnswer={answer} isNew={newest === q.id || revealed === 1} />
             ))}
-          </ul>
-          <p className="fr-note fr-note-quiet">Leave anything that does not apply unchecked.</p>
+          </ol>
+          <p className="fr-step-count" aria-live="polite">
+            {answeredCount(section, answers)} of {section.questions.length} answered
+          </p>
         </div>
-      ))}
+      )}
 
       {onResults && (
         <div className="fr-step fr-results" ref={resultsRef} tabIndex={-1}>
@@ -291,9 +246,9 @@ export default function FallRiskAssessment({
               <h3 className="fr-alert-title">Please do not detox alone</h3>
               <p>
                 You told us you are withdrawing from alcohol or sedatives. Beyond the
-                unsteadiness that brought you to this page, withdrawal from either can
-                cause seizures and delirium, and it can be fatal without medical
-                supervision. Falls are the smaller of the two risks here.
+                unsteadiness that brought you here, withdrawal from either can cause
+                seizures and delirium, and it can be fatal without medical supervision.
+                Falls are the smaller of the two risks.
               </p>
               <p>
                 Please speak to a doctor before going further. In the US, the SAMHSA
@@ -305,9 +260,13 @@ export default function FallRiskAssessment({
           )}
 
           <div className="fr-verdict">
-            <ScoreDial score={result.totalScore} max={result.maxScore} tone={tone} />
-            <div className="fr-verdict-body" aria-live="polite">
-              <p className={`fr-band fr-tone-${tone}`}>{result.band.label}</p>
+            <ScoreMeter score={result.totalScore} max={result.maxScore}
+                        tone={tone} bandLabel={result.band.label} />
+            <div className="fr-verdict-body">
+              <p className={`fr-band fr-tone-${tone}`}>
+                <span className="fr-band-dot" aria-hidden="true" />
+                {result.band.label}
+              </p>
               <p className="fr-verdict-summary">{result.band.summary}</p>
               <p className="fr-verdict-meta">
                 {result.meetsSteadiThreshold
@@ -320,40 +279,39 @@ export default function FallRiskAssessment({
             </div>
           </div>
 
-          <div className="fr-cols">
-            <div>
-              <h3 className="fr-h3">What is driving this</h3>
-              {result.topDrivers.length ? (
-                <ul className="fr-drivers">
-                  {result.topDrivers.map(d => <li key={d}>{d}</li>)}
-                </ul>
-              ) : (
-                <p className="fr-note">You did not flag any individual risk factors.</p>
-              )}
-              <table className="fr-table fr-table-compact">
-                <tbody>
-                  {result.sections.map(s => (
-                    <tr key={s.id}>
-                      <th scope="row">{s.title}</th>
-                      <td>{s.score} / {s.max}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <div>
-              <h3 className="fr-h3">What to do next</h3>
-              <p className="fr-advice">{result.band.advice}</p>
-              <p className="fr-note fr-note-quiet">
-                Medication is worth singling out. Sedatives, opioids, and blood pressure
-                medicines are among the few fall risks that can be reduced this month
-                rather than over a year of training — but only with the prescriber who
-                started them. Do not stop anything on the strength of a web page.
-              </p>
-            </div>
-          </div>
+          <h3 className="fr-h3">Where your score comes from</h3>
+          <ContributionChart sections={result.sections} total={result.totalScore} />
 
-          <GlobalPanel data={global.data} state={global.state} error={global.error} topN={topN} />
+          <h3 className="fr-h3 fr-h3-spaced">What to do next</h3>
+          <p className="fr-advice">{result.band.advice}</p>
+          <p className="fr-note fr-note-quiet">
+            Medication is worth singling out. Sedatives, opioids, and blood pressure
+            medicines are among the few fall risks that can be reduced this month rather
+            than over a year of training — but only with the prescriber who started them.
+            Do not stop anything on the strength of a web page.
+          </p>
+
+          <div className="fr-global">
+            <h3 className="fr-h3">Where falls are deadliest, worldwide</h3>
+            <CountryChart
+              data={global.data} state={global.state} error={global.error} topN={topN}
+              sex={chartSex} region={chartRegion}
+              onSexChange={setChartSex} onRegionChange={setChartRegion}
+              regions={REGIONS}
+            />
+            {global.data && (
+              <p className="fr-source">
+                Source: {global.data.source}, indicator {global.data.indicator} —{' '}
+                {global.data.indicatorName}, {global.data.dataYear}. Global median{' '}
+                {global.data.globalMedian}.
+                {global.data.live
+                  ? ' Queried live.'
+                  : ` Served from our cached copy taken ${global.data.snapshotRetrieved} — the WHO API did not respond.`}
+                {' '}States with populations under about 300,000 are excluded, because a
+                rate over so small a population turns on a handful of deaths.
+              </p>
+            )}
+          </div>
 
           <p className="fr-disclaimer">
             <strong>This is not a diagnosis.</strong> The MEND Fall Risk Check is an
@@ -367,7 +325,7 @@ export default function FallRiskAssessment({
 
       <div className="fr-nav">
         <button type="button" className="fr-btn fr-btn-ghost"
-                onClick={() => setStep(s => Math.max(0, s - 1))}
+                onClick={() => { clearTimeout(advanceRef.current); setStep(s => Math.max(0, s - 1)); }}
                 disabled={step === 0}>
           Back
         </button>
@@ -378,9 +336,11 @@ export default function FallRiskAssessment({
           </button>
         ) : (
           <button type="button" className="fr-btn fr-btn-primary"
-                  onClick={() => setStep(s => Math.min(STEPS.length - 1, s + 1))}
+                  onClick={() => { clearTimeout(advanceRef.current); goNext(); }}
                   disabled={!canAdvance}>
-            {STEPS[step + 1] === 'results' ? 'See my results' : 'Continue'}
+            {stepId === 'about'
+              ? 'Start the questions'
+              : STEPS[step + 1] === 'results' ? 'Skip to results' : 'Skip this block'}
           </button>
         )}
       </div>
