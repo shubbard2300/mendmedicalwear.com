@@ -64,7 +64,7 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         from: 'MEND Medical Apparel <no-reply@mendmedicalwear.com>',
-        to: 'contact@stevenjhubbard.com',
+        to: 'contact@mendmedicalwear.com',
         reply_to: body.email,
         subject: 'New ' + info.label + (body.name ? ' from ' + body.name : ''),
         text: lines.join('\n')
