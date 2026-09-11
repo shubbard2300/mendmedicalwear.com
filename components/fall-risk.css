@@ -265,3 +265,10 @@ fieldset[disabled] .fr-chip{cursor:not-allowed;}
     transition-duration:.001ms !important;
   }
 }
+
+
+/* Static, server-rendered prose: the page's indexable content and its intro. */
+.fr-intro{padding-bottom:0;}
+.fr-guide{border-top:1px solid var(--fr-grid); margin-top:40px; padding-top:8px;}
+.fr-guide p{margin-bottom:12px;}
+.fr-guide .fr-table{margin-bottom:18px;}
