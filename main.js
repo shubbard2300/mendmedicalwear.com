@@ -808,3 +808,44 @@ window.showTab = window.showTab || function(id, btn) {
     start();
   });
 })();
+
+// Mobile nav toggle. The header links overflow below 760px, where styles.css collapses
+// them into a dropdown; this drives it. Kept dependency-free and defensive so it is a
+// no-op on any page without the button.
+(function () {
+  var header = document.querySelector('header');
+  var toggle = header && header.querySelector('.nav-toggle');
+  var nav = header && header.querySelector('nav');
+  if (!header || !toggle || !nav) return;
+
+  function setOpen(open) {
+    header.classList.toggle('nav-open', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+
+  toggle.addEventListener('click', function (e) {
+    e.stopPropagation();
+    setOpen(!header.classList.contains('nav-open'));
+  });
+
+  // Anchor links scroll within the page, so the menu has to close itself.
+  nav.addEventListener('click', function (e) {
+    if (e.target.closest('a, button')) setOpen(false);
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && header.classList.contains('nav-open')) {
+      setOpen(false);
+      toggle.focus();
+    }
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!header.contains(e.target)) setOpen(false);
+  });
+
+  // Leaving mobile width with the menu open would otherwise strand the class.
+  window.matchMedia('(min-width: 761px)').addEventListener('change', function (e) {
+    if (e.matches) setOpen(false);
+  });
+})();

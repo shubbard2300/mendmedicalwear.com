@@ -56,7 +56,8 @@
   <text class="logo-text" x="100" y="58" font-family="Helvetica, Arial, sans-serif" font-size="38" font-weight="600" letter-spacing="8" fill="#2B2B28">MEND</text>
   <text class="logo-sub" x="101" y="80" font-family="Helvetica, Arial, sans-serif" font-size="12" letter-spacing="4" fill="#8A857C">MEDICAL APPAREL</text>
 </svg></a>
-    <nav>
+    <button type="button" class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="siteNav"><span class="nav-toggle-bars"></span></button>
+    <nav id="siteNav">
       <a href="/">Home</a>
       <a href="/#products">Products</a>
       <a href="/#contact">Contact</a>
@@ -204,5 +205,17 @@
         integrity="sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1"
         crossorigin="anonymous"></script>
 <script src="fall-risk.js"></script>
+<script>
+/* Mobile nav toggle — same behaviour as the block in main.js, inlined because this
+   page deliberately does not load main.js (37.6 KB) and is the site's most
+   performance-sensitive page. Keep the two in step. */
+(function(){var h=document.querySelector("header"),b=h&&h.querySelector(".nav-toggle"),n=h&&h.querySelector("nav");
+if(!h||!b||!n)return;function s(o){h.classList.toggle("nav-open",o);b.setAttribute("aria-expanded",o?"true":"false");}
+b.addEventListener("click",function(e){e.stopPropagation();s(!h.classList.contains("nav-open"));});
+n.addEventListener("click",function(e){if(e.target.closest("a,button"))s(false);});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&h.classList.contains("nav-open")){s(false);b.focus();}});
+document.addEventListener("click",function(e){if(!h.contains(e.target))s(false);});
+window.matchMedia("(min-width: 761px)").addEventListener("change",function(e){if(e.matches)s(false);});})();
+</script>
 </body>
 </html>
