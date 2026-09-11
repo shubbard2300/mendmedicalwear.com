@@ -1,12 +1,95 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/Product Detail - AirGuard Collar",
+      "destination": "/products/airguard-collar",
+      "permanent": true
+    },
+    {
+      "source": "/Product%20Detail%20-%20AirGuard%20Collar",
+      "destination": "/products/airguard-collar",
+      "permanent": true
+    },
+    {
+      "source": "/Product Detail - Compression Socks",
+      "destination": "/products/compression-socks",
+      "permanent": true
+    },
+    {
+      "source": "/Product%20Detail%20-%20Compression%20Socks",
+      "destination": "/products/compression-socks",
+      "permanent": true
+    },
+    {
+      "source": "/Product Detail - MEND App",
+      "destination": "/products/mend-app",
+      "permanent": true
+    },
+    {
+      "source": "/Product%20Detail%20-%20MEND%20App",
+      "destination": "/products/mend-app",
+      "permanent": true
+    },
+    {
+      "source": "/Product Detail - MEND Oxi",
+      "destination": "/products/mend-oxi",
+      "permanent": true
+    },
+    {
+      "source": "/Product%20Detail%20-%20MEND%20Oxi",
+      "destination": "/products/mend-oxi",
+      "permanent": true
+    },
+    {
+      "source": "/Product Detail - MEND Pulse",
+      "destination": "/products/mend-pulse",
+      "permanent": true
+    },
+    {
+      "source": "/Product%20Detail%20-%20MEND%20Pulse",
+      "destination": "/products/mend-pulse",
+      "permanent": true
+    },
+    {
+      "source": "/Product Detail - Residential Nurse Scrub Set",
+      "destination": "/products/residential-nurse-scrub-set",
+      "permanent": true
+    },
+    {
+      "source": "/Product%20Detail%20-%20Residential%20Nurse%20Scrub%20Set",
+      "destination": "/products/residential-nurse-scrub-set",
+      "permanent": true
+    },
+    {
+      "source": "/Product Detail - Stylish Washable Hospital Gown",
+      "destination": "/products/stylish-washable-hospital-gown",
+      "permanent": true
+    },
+    {
+      "source": "/Product%20Detail%20-%20Stylish%20Washable%20Hospital%20Gown",
+      "destination": "/products/stylish-washable-hospital-gown",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
         {
           "key": "Permissions-Policy",
           "value": "geolocation=(), microphone=(), camera=(), interest-cohort=()"

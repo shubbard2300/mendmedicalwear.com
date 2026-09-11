@@ -8,22 +8,22 @@ Site: https://www.mendmedicalwear.com/
 
 ## Apparel
 
-- [Comfort Wrap — Stylish Washable Hospital Gown](https://www.mendmedicalwear.com/Product%20Detail%20-%20Stylish%20Washable%20Hospital%20Gown.html): A soft, machine-washable recovery gown that replaces the standard hospital gown, with full coverage and one-handed closures.
-- [Comfort Scrubs — Residential Nurse Scrub Set](https://www.mendmedicalwear.com/Product%20Detail%20-%20Residential%20Nurse%20Scrub%20Set.html): A tailored scrub set for residential and home-care nurses in a soft cotton/modal blend.
-- [Medical-Grade Compression Socks](https://www.mendmedicalwear.com/Product%20Detail%20-%20Compression%20Socks.html): 20-30 mmHg graduated compression built for nurses, CNAs, and home health aides.
+- [Comfort Wrap — Stylish Washable Hospital Gown](https://www.mendmedicalwear.com/products/stylish-washable-hospital-gown): A soft, machine-washable recovery gown that replaces the standard hospital gown, with full coverage and one-handed closures.
+- [Comfort Scrubs — Residential Nurse Scrub Set](https://www.mendmedicalwear.com/products/residential-nurse-scrub-set): A tailored scrub set for residential and home-care nurses in a soft cotton/modal blend.
+- [Medical-Grade Compression Socks](https://www.mendmedicalwear.com/products/compression-socks): 20-30 mmHg graduated compression built for nurses, CNAs, and home health aides.
 
 ## Safety and monitoring
 
-- [AirGuard™ Fall-Detection Collar](https://www.mendmedicalwear.com/Product%20Detail%20-%20AirGuard%20Collar.html): Senses a fall the instant it happens and calls for help automatically.
-- [MEND Pulse — Wireless Blood Pressure Monitor](https://www.mendmedicalwear.com/Product%20Detail%20-%20MEND%20Pulse.html): Clinical-grade monitor that syncs every reading to the care team.
-- [MEND Oxi — Fingertip Pulse Oximeter](https://www.mendmedicalwear.com/Product%20Detail%20-%20MEND%20Oxi.html): Clinical-grade oximeter that syncs every SpO₂ and pulse-rate reading.
-- [MEND App](https://www.mendmedicalwear.com/Product%20Detail%20-%20MEND%20App.html): Connects every MEND device to the care team through a HIPAA-compliant pipeline.
+- [AirGuard™ Fall-Detection Collar](https://www.mendmedicalwear.com/products/airguard-collar): Senses a fall the instant it happens and calls for help automatically.
+- [MEND Pulse — Wireless Blood Pressure Monitor](https://www.mendmedicalwear.com/products/mend-pulse): Clinical-grade monitor that syncs every reading to the care team.
+- [MEND Oxi — Fingertip Pulse Oximeter](https://www.mendmedicalwear.com/products/mend-oxi): Clinical-grade oximeter that syncs every SpO₂ and pulse-rate reading.
+- [MEND App](https://www.mendmedicalwear.com/products/mend-app): Connects every MEND device to the care team through a HIPAA-compliant pipeline.
 
 ## Tools and information
 
-- [Fall Risk Check](https://www.mendmedicalwear.com/fall-risk-assessment.html): A free STEADI-based self-assessment with a WHO fall-mortality data panel. No account required.
-- [FAQ](https://www.mendmedicalwear.com/FAQ.html): Sizing, fabric care, shipping, and returns.
-- [Privacy Policy & Terms of Use](https://www.mendmedicalwear.com/Privacy-Terms.html)
+- [Fall Risk Check](https://www.mendmedicalwear.com/fall-risk-assessment): A free STEADI-based self-assessment with a WHO fall-mortality data panel. No account required.
+- [FAQ](https://www.mendmedicalwear.com/FAQ): Sizing, fabric care, shipping, and returns.
+- [Privacy Policy & Terms of Use](https://www.mendmedicalwear.com/Privacy-Terms)
 
 ## Notes
 
