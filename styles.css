@@ -9,6 +9,11 @@
   --bg:#FAFAF8; --fg:#2B2B28; --muted:#8A857C; --line:#E3DFD6;
   --accent:#7C8B7A; --accent-dark:#677866; --panel:#F1EEE7;
 }
+
+/* Sourcing note — what a standards claim does and does not mean */
+.source-note{margin:22px 0 0; padding:18px 20px; border-left:3px solid var(--accent); background:var(--panel); border-radius:0 8px 8px 0; color:var(--muted); font-size:14px; line-height:1.7;}
+.source-note b{color:var(--fg);}
+.source-note a{color:var(--accent-dark);}
 *{box-sizing:border-box; margin:0; padding:0;}
 html{scroll-behavior:smooth;}
 body{font-family:'Inter', Helvetica, Arial, sans-serif; background:var(--bg); color:var(--fg); line-height:1.6; -webkit-font-smoothing:antialiased;}

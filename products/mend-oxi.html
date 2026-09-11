@@ -70,6 +70,13 @@
   --grad-hero:linear-gradient(180deg,#FFFFFF 0%,#EEF4FB 60%,#E6F2F4 100%);
   --grad-accent:linear-gradient(100deg,#2E6BE6,#2BB8A3);
 }
+
+/* Sourcing note — what a standards claim on this page does and does not mean */
+.source-note{max-width:820px; margin:36px auto 0; padding:20px 24px; border-left:3px solid var(--blue); background:var(--mist); border-radius:0 12px 12px 0; color:var(--slate); font-size:14.5px; line-height:1.72;}
+.source-note b{color:var(--ink);}
+.source-note a{color:var(--blue); text-underline-offset:2px;}
+@media(max-width:700px){.source-note{padding:16px 18px; font-size:13.5px;}}
+
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Inter,Roboto,Helvetica,Arial,sans-serif;
@@ -287,6 +294,10 @@ footer a:hover{color:#fff;}
       <div class="fmini rv"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10" rx="2.5"/><path d="M8 10V7a4 4 0 118 0v3"/></svg>HIPAA-compliant cloud</div>
       <div class="fmini rv"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c.6-3.4 2.8-5 5.5-5s4.9 1.6 5.5 5"/><circle cx="17" cy="9" r="2.4"/><path d="M15.5 15.3c2.6.2 4.4 1.7 5 4.7"/></svg>Multi-user support · 8 profiles</div>
       <div class="fmini rv"><svg viewBox="0 0 24 24"><path d="M12 3v10M8.5 9.5L12 13l3.5-3.5"/><path d="M5 15v3a2.5 2.5 0 002.5 2.5h9A2.5 2.5 0 0019 18v-3"/></svg>Firmware updates over Bluetooth</div>
+    </div>
+
+    <div class="source-note rv">
+      <b>What &ldquo;clinical-grade&rdquo; means here.</b> Pulse-oximeter accuracy is expressed as A<sub>RMS</sub> &mdash; the root-mean-square difference from arterial blood-gas samples across the tested range, defined in <b>ISO&nbsp;80601-2-61</b>. <a href="https://www.fda.gov/medical-devices/products-and-medical-procedures/pulse-oximeters" rel="nofollow noopener" target="_blank">FDA clearance</a> for a finger sensor currently expects A<sub>RMS</sub>&nbsp;&le;&nbsp;3&nbsp;%; our &plusmn;2&nbsp;% is the design target across 80&ndash;100&nbsp;% SpO&#8322;. Two limits worth knowing. Accuracy degrades below 80&nbsp;%, which is why the range is stated rather than a single number. And the FDA&rsquo;s January&nbsp;2025 draft guidance tightened testing after research found pulse oximeters read high more often on darker skin &mdash; a bias that can hide low oxygen in the patients least able to afford the delay. MEND&nbsp;Oxi is pending 510(k) clearance and will be tested against the newer criteria, not the old ones.
     </div>
   </div>
 </section>
