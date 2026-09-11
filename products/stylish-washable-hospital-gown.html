@@ -181,11 +181,11 @@
         <div class="zoom-lens" id="zoomLens"></div>
       </div>
       <div class="gallery-thumbs">
-        <button class="active" data-gender="female" data-view="front" onclick="setMain(this,'Concept - Hospital Gown - Female Front - 2026-06-15-web.jpg')"><img src="/Concept%20-%20Hospital%20Gown%20-%20Female%20Front%20-%202026-06-15-web.jpg" alt="Female front" width="1024" height="1024"></button>
-        <button data-gender="female" data-view="back" onclick="setMain(this,'Concept - Hospital Gown - Female Back - 2026-06-15-web.jpg')"><img src="/Concept%20-%20Hospital%20Gown%20-%20Female%20Back%20-%202026-06-15-web.jpg" alt="Female back" width="1024" height="1024"></button>
-        <button data-gender="male" data-view="front" onclick="setMain(this,'Concept - Hospital Gown - Male Front - 2026-06-15-web.jpg')"><img src="/Concept%20-%20Hospital%20Gown%20-%20Male%20Front%20-%202026-06-15-web.jpg" alt="Male front" width="1024" height="1024"></button>
-        <button data-gender="male" data-view="back" onclick="setMain(this,'Concept - Hospital Gown - Male Back - 2026-06-15-web.jpg')"><img src="/Concept%20-%20Hospital%20Gown%20-%20Male%20Back%20-%202026-06-15-web.jpg" alt="Male back" width="1024" height="1024"></button>
-        <button data-gender="" data-view="" onclick="setMain(this,'Concept - Hospital Gown - 2026-06-15-web.jpg')"><img src="/Concept%20-%20Hospital%20Gown%20-%202026-06-15-web.jpg" alt="Original concept" width="1024" height="1024"></button>
+        <button class="active" data-gender="female" data-view="front" onclick="setMain(this,'/Concept - Hospital Gown - Female Front - 2026-06-15-web.jpg')"><img src="/Concept%20-%20Hospital%20Gown%20-%20Female%20Front%20-%202026-06-15-web.jpg" alt="Female front" width="1024" height="1024"></button>
+        <button data-gender="female" data-view="back" onclick="setMain(this,'/Concept - Hospital Gown - Female Back - 2026-06-15-web.jpg')"><img src="/Concept%20-%20Hospital%20Gown%20-%20Female%20Back%20-%202026-06-15-web.jpg" alt="Female back" width="1024" height="1024"></button>
+        <button data-gender="male" data-view="front" onclick="setMain(this,'/Concept - Hospital Gown - Male Front - 2026-06-15-web.jpg')"><img src="/Concept%20-%20Hospital%20Gown%20-%20Male%20Front%20-%202026-06-15-web.jpg" alt="Male front" width="1024" height="1024"></button>
+        <button data-gender="male" data-view="back" onclick="setMain(this,'/Concept - Hospital Gown - Male Back - 2026-06-15-web.jpg')"><img src="/Concept%20-%20Hospital%20Gown%20-%20Male%20Back%20-%202026-06-15-web.jpg" alt="Male back" width="1024" height="1024"></button>
+        <button data-gender="" data-view="" onclick="setMain(this,'/Concept - Hospital Gown - 2026-06-15-web.jpg')"><img src="/Concept%20-%20Hospital%20Gown%20-%202026-06-15-web.jpg" alt="Original concept" width="1024" height="1024"></button>
       </div>
     </div>
 
@@ -505,7 +505,7 @@ function setClosure(btn, view){
     b.classList.toggle('active', match);
   });
 }
-initBrandIt('Comfort Wrap Gown', 'Concept - Hospital Gown - 2026-06-15-web.jpg', {x:550, y:330, w:135, h:100});
+initBrandIt('Comfort Wrap Gown', '/Concept - Hospital Gown - 2026-06-15-web.jpg', {x:550, y:330, w:135, h:100});
 </script>
 </body>
 </html>
