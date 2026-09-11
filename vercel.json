@@ -4,72 +4,72 @@
   "trailingSlash": false,
   "redirects": [
     {
-      "source": "/Product Detail - AirGuard Collar.html",
+      "source": "/Product Detail - AirGuard Collar",
       "destination": "/products/airguard-collar",
       "permanent": true
     },
     {
-      "source": "/Product%20Detail%20-%20AirGuard%20Collar.html",
+      "source": "/Product%20Detail%20-%20AirGuard%20Collar",
       "destination": "/products/airguard-collar",
       "permanent": true
     },
     {
-      "source": "/Product Detail - Compression Socks.html",
+      "source": "/Product Detail - Compression Socks",
       "destination": "/products/compression-socks",
       "permanent": true
     },
     {
-      "source": "/Product%20Detail%20-%20Compression%20Socks.html",
+      "source": "/Product%20Detail%20-%20Compression%20Socks",
       "destination": "/products/compression-socks",
       "permanent": true
     },
     {
-      "source": "/Product Detail - MEND App.html",
+      "source": "/Product Detail - MEND App",
       "destination": "/products/mend-app",
       "permanent": true
     },
     {
-      "source": "/Product%20Detail%20-%20MEND%20App.html",
+      "source": "/Product%20Detail%20-%20MEND%20App",
       "destination": "/products/mend-app",
       "permanent": true
     },
     {
-      "source": "/Product Detail - MEND Oxi.html",
+      "source": "/Product Detail - MEND Oxi",
       "destination": "/products/mend-oxi",
       "permanent": true
     },
     {
-      "source": "/Product%20Detail%20-%20MEND%20Oxi.html",
+      "source": "/Product%20Detail%20-%20MEND%20Oxi",
       "destination": "/products/mend-oxi",
       "permanent": true
     },
     {
-      "source": "/Product Detail - MEND Pulse.html",
+      "source": "/Product Detail - MEND Pulse",
       "destination": "/products/mend-pulse",
       "permanent": true
     },
     {
-      "source": "/Product%20Detail%20-%20MEND%20Pulse.html",
+      "source": "/Product%20Detail%20-%20MEND%20Pulse",
       "destination": "/products/mend-pulse",
       "permanent": true
     },
     {
-      "source": "/Product Detail - Residential Nurse Scrub Set.html",
+      "source": "/Product Detail - Residential Nurse Scrub Set",
       "destination": "/products/residential-nurse-scrub-set",
       "permanent": true
     },
     {
-      "source": "/Product%20Detail%20-%20Residential%20Nurse%20Scrub%20Set.html",
+      "source": "/Product%20Detail%20-%20Residential%20Nurse%20Scrub%20Set",
       "destination": "/products/residential-nurse-scrub-set",
       "permanent": true
     },
     {
-      "source": "/Product Detail - Stylish Washable Hospital Gown.html",
+      "source": "/Product Detail - Stylish Washable Hospital Gown",
       "destination": "/products/stylish-washable-hospital-gown",
       "permanent": true
     },
     {
-      "source": "/Product%20Detail%20-%20Stylish%20Washable%20Hospital%20Gown.html",
+      "source": "/Product%20Detail%20-%20Stylish%20Washable%20Hospital%20Gown",
       "destination": "/products/stylish-washable-hospital-gown",
       "permanent": true
     }
