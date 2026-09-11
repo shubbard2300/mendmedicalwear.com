@@ -231,12 +231,13 @@
   .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start;}
   @media (max-width:860px){ .about-grid{grid-template-columns:1fr;} }
   .about-images{display:flex; flex-direction:column; gap:20px;}
-  .about-images img{width:100%; display:block; border-radius:14px; object-fit:cover; transition:transform .4s ease, box-shadow .4s ease;}
+  .about-images img{width:100%; height:auto; display:block; border-radius:14px; object-fit:cover; transition:transform .4s ease, box-shadow .4s ease;}
   .about-images img:hover{transform:translateY(-6px); box-shadow:0 20px 40px rgba(0,0,0,.13);}
   .about-img-main{aspect-ratio:1/1;}
   .about-img-row{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
   .about-img-row img{aspect-ratio:2/3;}
-  @media (max-width:480px){ .about-img-row{grid-template-columns:1fr;} .about-img-row img{aspect-ratio:4/3;} }
+  /* No 4/3 override here: these files are 1024x1536 portraits and a 4/3 crop cuts the
+     subjects' faces off. Two columns at the native 2:3 keeps them whole and short. */
   .about h2{font-size:30px; font-weight:600; margin-bottom:16px; position:relative; display:inline-block; padding-bottom:8px;}
   .about p{color:var(--muted); margin-bottom:14px; font-size:15px;}
   .about ul{list-style:none; margin-top:20px;}
@@ -250,7 +251,7 @@
   .products h2{font-size:30px; font-weight:600; margin-bottom:8px; position:relative; display:inline-block; padding-bottom:8px;}
   .products .sub{color:var(--muted); font-size:15px; margin-bottom:48px;}
   .products-feature{margin-bottom:56px; border-radius:16px; overflow:hidden; max-width:640px; margin-left:auto; margin-right:auto; box-shadow:0 24px 60px rgba(0,0,0,.08);}
-  .products-feature img{width:100%; display:block; transition:transform .6s ease;}
+  .products-feature img{width:100%; height:auto; display:block; transition:transform .6s ease;}
   .products-feature:hover img{transform:scale(1.03);}
   .product-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:28px;}
   .product-card{background:var(--panel); border-radius:14px; overflow:hidden; text-align:left; text-decoration:none; color:var(--fg); transition:transform .3s ease, box-shadow .3s ease; display:block;}
