@@ -195,7 +195,7 @@ nav a:hover::after{
 
 .btn-secondary{ background:transparent; color:var(--fg); border:1.5px solid var(--line); }
 .btn-secondary::before{ background:linear-gradient(120deg, transparent 0%, rgba(124,139,122,.14) 50%, transparent 100%); }
-.btn-secondary:hover{ transform:translateY(-3px); border-color:var(--accent); color:var(--accent); letter-spacing:.07em; }
+.btn-secondary:hover{ transform:translateY(-3px); border-color:var(--accent); color:var(--accent-dark); letter-spacing:.07em; }
 
 .btn-sm{ padding:9px 18px; font-size:11px; }
 
@@ -237,7 +237,7 @@ footer a:hover::after{transform:scaleX(1); transform-origin:left;}
 .spec-card{transition:transform .25s cubic-bezier(.4,0,.2,1), box-shadow .25s ease, border-color .25s ease;}
 /* Link underline animation for footer links etc */
 a[href]:not(.btn):not(.product-card):not(.logo-link){transition:color .2s ease;}
-a[href]:not(.btn):not(.product-card):not(.logo-link):hover{color:var(--accent);}
+a[href]:not(.btn):not(.product-card):not(.logo-link):hover{color:var(--accent-dark);}
 
 /* ── CUSTOM LOGO BADGE (product cards) ── */
 .product-card .logo-badge{display:inline-flex; align-items:center; gap:5px; margin-top:8px; font-size:10px; letter-spacing:.07em; text-transform:uppercase; color:var(--accent-dark); background:rgba(124,139,122,.1); border:1px solid rgba(124,139,122,.28); padding:3px 9px; border-radius:999px; font-weight:600;}

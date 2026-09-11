@@ -20,7 +20,7 @@
 .fr-num, .fr-row-val{font-variant-numeric:tabular-nums;}
 
 .fr-head{margin-bottom:24px;}
-.fr-eyebrow{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); font-weight:600;}
+.fr-eyebrow{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent-dark); font-weight:600;}
 .fr .fr-title{
   font-size:clamp(26px,4vw,36px); font-weight:600; line-height:1.2;
   margin:8px 0 12px; letter-spacing:-.01em;
