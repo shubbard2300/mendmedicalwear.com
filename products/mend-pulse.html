@@ -123,7 +123,46 @@ header.scrolled{border-color:var(--line);}
 .nav-links a:hover{color:var(--ink);}
 .nav-links .pill{background:var(--ink); color:#fff; padding:9px 20px; border-radius:999px; font-weight:600; transition:background .25s, transform .25s;}
 .nav-links .pill:hover{background:var(--blue); color:#fff; transform:translateY(-1px);}
-@media(max-width:760px){.nav-links a:not(.pill){display:none;}}
+/* display:contents keeps these anchors as direct flex children of .nav-links on
+   desktop, so the wrapper is invisible to layout and the bar is unchanged. Below
+   760px it becomes the dropdown panel. */
+.nav-menu{display:contents;}
+.nav-toggle{display:none;}   /* shown only below 760px — a <button> is not hidden by default */
+
+@media(max-width:760px){
+  .nav{position:relative; padding:12px 18px; gap:10px;}
+  .nav-links{gap:14px;}
+
+  .nav-toggle{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:44px; height:44px; margin-right:-10px;       /* tap target, no taller bar */
+    background:none; border:0; padding:0; cursor:pointer;
+    color:var(--ink); border-radius:10px; -webkit-tap-highlight-color:transparent;
+  }
+  .nav-toggle:focus-visible{outline:2px solid var(--blue); outline-offset:2px;}
+  .nav-toggle-bars, .nav-toggle-bars::before, .nav-toggle-bars::after{
+    content:''; display:block; width:20px; height:1.5px;
+    background:currentColor; border-radius:2px;
+    transition:transform .25s cubic-bezier(.4,0,.2,1);
+  }
+  .nav-toggle-bars::before{transform:translateY(-6px);}
+  .nav-toggle-bars::after{transform:translateY(4.5px);}
+  header.nav-open .nav-toggle-bars{background:transparent;}
+  header.nav-open .nav-toggle-bars::before{transform:translateY(0) rotate(45deg);}
+  header.nav-open .nav-toggle-bars::after{transform:translateY(-1.5px) rotate(-45deg);}
+
+  .nav-menu{
+    display:none;
+    position:absolute; top:100%; left:14px; right:14px;
+    flex-direction:column; align-items:stretch; gap:0;
+    margin-top:8px; padding:8px;
+    background:var(--white); border:1px solid var(--line);
+    border-radius:16px; box-shadow:var(--shadow-soft);
+  }
+  header.nav-open .nav-menu{display:flex;}
+  .nav-menu a{padding:14px; border-radius:10px; color:var(--ink); font-size:15px;}
+  .nav-menu a:hover{background:var(--mist);}
+}
 
 /* ── Buttons ── */
 .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px;
@@ -372,13 +411,16 @@ footer a:hover{color:#fff;}
       MEND&nbsp;<small>Medical</small>
     </a>
     <nav class="nav-links">
-      <a href="#features">Features</a>
-      <a href="#design">Design</a>
-      <a href="#ecosystem">Ecosystem</a>
-      <a href="#app">App</a>
-      <a href="#specs">Specs</a>
+      <span class="nav-menu" id="deviceNav">
+        <a href="#features">Features</a>
+        <a href="#design">Design</a>
+        <a href="#ecosystem">Ecosystem</a>
+        <a href="#app">App</a>
+        <a href="#specs">Specs</a>
+      </span>
       <a href="#get-started" class="pill">Get MEND Pulse</a>
     </nav>
+    <button type="button" class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="deviceNav"><span class="nav-toggle-bars"></span></button>
   </div>
 </header>
 
