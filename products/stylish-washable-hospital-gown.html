@@ -177,15 +177,15 @@
     <!-- Gallery -->
     <div>
       <div class="gallery-main" id="galleryMain">
-        <img id="mainImg" src="/Concept%20-%20Hospital%20Gown%20-%20Female%20Front%20-%202026-06-15-web.jpg" alt="Comfort Wrap gown, female model, front view">
+        <img id="mainImg" src="/Concept%20-%20Hospital%20Gown%20-%20Female%20Front%20-%202026-06-15-web.jpg" alt="Comfort Wrap gown, female model, front view" width="1024" height="1024">
         <div class="zoom-lens" id="zoomLens"></div>
       </div>
       <div class="gallery-thumbs">
-        <button class="active" data-gender="female" data-view="front" onclick="setMain(this,'Concept - Hospital Gown - Female Front - 2026-06-15-web.jpg')"><img src="/Concept%20-%20Hospital%20Gown%20-%20Female%20Front%20-%202026-06-15-web.jpg" alt="Female front"></button>
-        <button data-gender="female" data-view="back" onclick="setMain(this,'Concept - Hospital Gown - Female Back - 2026-06-15-web.jpg')"><img src="/Concept%20-%20Hospital%20Gown%20-%20Female%20Back%20-%202026-06-15-web.jpg" alt="Female back"></button>
-        <button data-gender="male" data-view="front" onclick="setMain(this,'Concept - Hospital Gown - Male Front - 2026-06-15-web.jpg')"><img src="/Concept%20-%20Hospital%20Gown%20-%20Male%20Front%20-%202026-06-15-web.jpg" alt="Male front"></button>
-        <button data-gender="male" data-view="back" onclick="setMain(this,'Concept - Hospital Gown - Male Back - 2026-06-15-web.jpg')"><img src="/Concept%20-%20Hospital%20Gown%20-%20Male%20Back%20-%202026-06-15-web.jpg" alt="Male back"></button>
-        <button data-gender="" data-view="" onclick="setMain(this,'Concept - Hospital Gown - 2026-06-15-web.jpg')"><img src="/Concept%20-%20Hospital%20Gown%20-%202026-06-15-web.jpg" alt="Original concept"></button>
+        <button class="active" data-gender="female" data-view="front" onclick="setMain(this,'/Concept - Hospital Gown - Female Front - 2026-06-15-web.jpg')"><img src="/Concept%20-%20Hospital%20Gown%20-%20Female%20Front%20-%202026-06-15-web.jpg" alt="Female front" width="1024" height="1024"></button>
+        <button data-gender="female" data-view="back" onclick="setMain(this,'/Concept - Hospital Gown - Female Back - 2026-06-15-web.jpg')"><img src="/Concept%20-%20Hospital%20Gown%20-%20Female%20Back%20-%202026-06-15-web.jpg" alt="Female back" width="1024" height="1024"></button>
+        <button data-gender="male" data-view="front" onclick="setMain(this,'/Concept - Hospital Gown - Male Front - 2026-06-15-web.jpg')"><img src="/Concept%20-%20Hospital%20Gown%20-%20Male%20Front%20-%202026-06-15-web.jpg" alt="Male front" width="1024" height="1024"></button>
+        <button data-gender="male" data-view="back" onclick="setMain(this,'/Concept - Hospital Gown - Male Back - 2026-06-15-web.jpg')"><img src="/Concept%20-%20Hospital%20Gown%20-%20Male%20Back%20-%202026-06-15-web.jpg" alt="Male back" width="1024" height="1024"></button>
+        <button data-gender="" data-view="" onclick="setMain(this,'/Concept - Hospital Gown - 2026-06-15-web.jpg')"><img src="/Concept%20-%20Hospital%20Gown%20-%202026-06-15-web.jpg" alt="Original concept" width="1024" height="1024"></button>
       </div>
     </div>
 
@@ -241,6 +241,10 @@
         <button type="button" class="btn btn-primary" data-modal="reserve" data-product="Comfort Wrap — The Stylish Washable Hospital Gown">Pre-Order Now</button>
         <button type="button" class="btn btn-secondary" data-modal="waitlist" data-product="Comfort Wrap — The Stylish Washable Hospital Gown">Save for Later</button>
       </div>
+        <div class="bundle-note">
+          Recovering at home often means long stretches sitting still — the <a href="/products/compression-socks">Medical-Grade Compression Socks</a> are the usual companion.
+        </div>
+
 
       <div class="description">
         Hospital gowns shouldn't feel like hospital gowns. Comfort Wrap is a knee-length, form-fitting robe made from a lightweight cotton/merino wool blend — soft against the skin, breathable, and durable enough for repeated hot-water washing. An attached hood adds warmth and a loungewear feel, while a full-length zipper (front or back) replaces the traditional gap-prone tie closure, so there's no exposure and no fumbling with ties. Every zipper — and most of the hardware on the gown — is repurposed bamboo instead of metal, so it's safe to wear into an MRI suite without a second thought. A discreet chest pocket holds a telemetry monitor, and shoulder-seam zips give clinicians quick IV access without removing the gown.
@@ -266,19 +270,19 @@
     <h2>Front &amp; Back Views — Male &amp; Female</h2>
     <div class="views-grid">
       <div class="view-card" data-gender="female" data-view="front" data-tooltip="Click to preview this view in your selected color, on the main image above." onclick="viewCardClick(this)">
-        <div class="img-box"><img id="viewImgFF" src="/Concept%20-%20Hospital%20Gown%20-%20Female%20Front%20-%202026-06-15-web.jpg" alt="Female front view"></div>
+        <div class="img-box"><img id="viewImgFF" src="/Concept%20-%20Hospital%20Gown%20-%20Female%20Front%20-%202026-06-15-web.jpg" alt="Female front view" width="1024" height="1024"></div>
         <span>Female — Front (front zip, collar to hem)</span>
       </div>
       <div class="view-card" data-gender="female" data-view="back" data-tooltip="Click to preview this view in your selected color, on the main image above." onclick="viewCardClick(this)">
-        <div class="img-box"><img id="viewImgFB" src="/Concept%20-%20Hospital%20Gown%20-%20Female%20Back%20-%202026-06-15-web.jpg" alt="Female back view"></div>
+        <div class="img-box"><img id="viewImgFB" src="/Concept%20-%20Hospital%20Gown%20-%20Female%20Back%20-%202026-06-15-web.jpg" alt="Female back view" width="1024" height="1024"></div>
         <span>Female — Back (zip replaces tie closure)</span>
       </div>
       <div class="view-card" data-gender="male" data-view="front" data-tooltip="Click to preview this view in your selected color, on the main image above." onclick="viewCardClick(this)">
-        <div class="img-box"><img id="viewImgMF" src="/Concept%20-%20Hospital%20Gown%20-%20Male%20Front%20-%202026-06-15-web.jpg" alt="Male front view"></div>
+        <div class="img-box"><img id="viewImgMF" src="/Concept%20-%20Hospital%20Gown%20-%20Male%20Front%20-%202026-06-15-web.jpg" alt="Male front view" width="1024" height="1024"></div>
         <span>Male — Front (front zip, collar to hem)</span>
       </div>
       <div class="view-card" data-gender="male" data-view="back" data-tooltip="Click to preview this view in your selected color, on the main image above." onclick="viewCardClick(this)">
-        <div class="img-box"><img id="viewImgMB" src="/Concept%20-%20Hospital%20Gown%20-%20Male%20Back%20-%202026-06-15-web.jpg" alt="Male back view"></div>
+        <div class="img-box"><img id="viewImgMB" src="/Concept%20-%20Hospital%20Gown%20-%20Male%20Back%20-%202026-06-15-web.jpg" alt="Male back view" width="1024" height="1024"></div>
         <span>Male — Back (zip replaces tie closure)</span>
       </div>
     </div>
@@ -395,7 +399,7 @@ function imgFilename(){
   var genderLabel = currentGender.charAt(0).toUpperCase() + currentGender.slice(1);
   var viewLabel = currentView.charAt(0).toUpperCase() + currentView.slice(1);
   var colorPart = currentColor ? (' - ' + currentColor) : '';
-  return 'Concept - Hospital Gown - ' + genderLabel + ' ' + viewLabel + colorPart + ' - 2026-06-15-web.jpg';
+  return '/Concept - Hospital Gown - ' + genderLabel + ' ' + viewLabel + colorPart + ' - 2026-06-15-web.jpg';
 }
 
 function updateMainImage(){
@@ -407,7 +411,7 @@ function viewFilename(gender, view){
   var genderLabel = gender.charAt(0).toUpperCase() + gender.slice(1);
   var viewLabel = view.charAt(0).toUpperCase() + view.slice(1);
   var colorPart = currentColor ? (' - ' + currentColor) : '';
-  return 'Concept - Hospital Gown - ' + genderLabel + ' ' + viewLabel + colorPart + ' - 2026-06-15-web.jpg';
+  return '/Concept - Hospital Gown - ' + genderLabel + ' ' + viewLabel + colorPart + ' - 2026-06-15-web.jpg';
 }
 
 function updateViewsGrid(){
@@ -501,7 +505,7 @@ function setClosure(btn, view){
     b.classList.toggle('active', match);
   });
 }
-initBrandIt('Comfort Wrap Gown', 'Concept - Hospital Gown - 2026-06-15-web.jpg', {x:550, y:330, w:135, h:100});
+initBrandIt('Comfort Wrap Gown', '/Concept - Hospital Gown - 2026-06-15-web.jpg', {x:550, y:330, w:135, h:100});
 </script>
 </body>
 </html>
