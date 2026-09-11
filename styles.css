@@ -27,8 +27,11 @@
 }
 
 :root{
-  --bg:#FAFAF8; --fg:#2B2B28; --muted:#8A857C; --line:#E3DFD6;
-  --accent:#7C8B7A; --accent-dark:#677866; --panel:#F1EEE7;
+  --bg:#FAFAF8; --fg:#2B2B28; --muted:#706C64; --line:#E3DFD6;
+  --accent:#7C8B7A; --accent-dark:#60705F; --panel:#F1EEE7;
+  /* --muted and --accent-dark darkened 2026-09-11 to clear WCAG AA 4.5:1 on both --bg and
+     --panel. --accent is unchanged: it is decoration (borders, underlines, focus rings) and
+     the logo SVG hardcodes #7C8B7A. Text that used --accent now uses --accent-dark. */
 }
 
 /* Sourcing note — what a standards claim does and does not mean */

@@ -94,7 +94,7 @@ h1{font-size:30px; font-weight:600; margin-bottom:6px;}
 .notify-form input{flex:1; min-width:200px; padding:12px 16px; border:1px solid var(--line); border-radius:10px; background:var(--panel); color:var(--fg); font-family:inherit; font-size:14px; transition:border-color .2s ease, box-shadow .2s ease;}
 .notify-form input:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(124,139,122,.15);}
 .notify-form .btn{white-space:nowrap;}
-.notify-msg{font-size:13px; color:var(--accent); display:none; margin-top:8px;}
+.notify-msg{font-size:13px; color:var(--accent-dark); display:none; margin-top:8px;}
 .notify-msg.show{display:block;}
 
 /* Promo / SEO block */
