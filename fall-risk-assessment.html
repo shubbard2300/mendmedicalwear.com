@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fall Risk Check — MEND Medical Apparel</title>
-<meta name="description" content="A free three-minute fall risk self-assessment built on the CDC STEADI screener, with WHO data on where falls carry the highest burden worldwide. Educational only — not a diagnosis.">
+<meta name="description" content="A free three-minute fall risk self-assessment built on the CDC STEADI screener, plus the four changes that reduce risk most. Educational, not a diagnosis.">
 <meta name="keywords" content="fall risk assessment, STEADI screening, fall prevention, fall risk medications, elderly fall risk, WHO fall mortality">
 <meta name="author" content="MEND Medical Apparel">
 <meta name="robots" content="index, follow">
@@ -63,13 +63,22 @@
   </header>
 
   <main>
-    <div id="fall-risk-root" data-api="/api/fall-risk-regions" data-top="5">
+    <section class="fr fr-intro">
+      <p class="fr-eyebrow">MEND Fall Risk Check</p>
+      <h1 class="fr-title">Fall risk: what raises it, and what lowers it</h1>
+      <p class="fr-lede">
+        A free, three-minute self-assessment built on the CDC’s STEADI screener, scored entirely
+        in your browser. Below it: how the score works, and the four changes that move it most.
+      </p>
+    </section>
+
+    <div id="fall-risk-root" data-api="/api/fall-risk-regions" data-top="5" data-heading="h2">
       <!-- Server-rendered fallback: without JavaScript the questionnaire cannot score,
            but the reason for it, and the advice, should still reach the reader. -->
       <noscript>
         <section class="fr">
           <p class="fr-eyebrow">MEND Fall Risk Check</p>
-          <h1 class="fr-title">How likely is a fall — and what would change it?</h1>
+          <h2 class="fr-title">How likely is a fall — and what would change it?</h2>
           <p class="fr-lede">
             This check needs JavaScript to score your answers in the browser. The questions
             come from the CDC’s STEADI “Stay Independent” screener, which you can complete on
@@ -84,6 +93,100 @@
         </section>
       </noscript>
     </div>
+
+    <section class="fr fr-guide">
+      <h2 class="fr-h3 fr-h3-spaced">What a fall-risk score actually tells you</h2>
+      <p class="fr-lede">
+        A fall-risk score is not a prediction. It is a way of noticing which of the things that
+        make falls more likely are true for you right now — and most of them are things that can
+        be changed. That is the useful part. A high score is not a verdict about getting older;
+        it is a list of what to bring up at your next appointment.
+      </p>
+      <p class="fr-note">
+        Roughly a quarter of adults over 65 report a fall each year, and the majority of those
+        falls cause no injury at all. The reason screening matters is not that falling is
+        common — it is that the drivers are unusually responsive to ordinary, unglamorous fixes.
+      </p>
+
+      <h2 class="fr-h3 fr-h3-spaced">How this check is scored</h2>
+      <p class="fr-note">
+        The clinical backbone is the CDC’s <strong>STEADI “Stay Independent” questionnaire</strong>
+        — 12 statements, 14 possible points, in the public domain and used here as published. A
+        score of <strong>4 or more</strong> is the threshold at which clinicians begin screening
+        for falls. STEADI is a <em>screening</em> instrument, not a diagnostic one, and it is
+        validated for adults aged 65 and over.
+      </p>
+      <table class="fr-table">
+        <thead><tr><th scope="col">Score</th><th scope="col">Band</th><th scope="col">What it means</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">0–3</th><td>Lower risk</td><td>Below the STEADI screening threshold. Worth repeating if anything changes.</td></tr>
+          <tr><th scope="row">4–7</th><td>Increased risk</td><td>At or above the threshold a clinician would act on.</td></tr>
+          <tr><th scope="row">8–13</th><td>High risk</td><td>Several drivers present at once.</td></tr>
+          <tr><th scope="row">14+</th><td>Very high risk</td><td>Worth raising promptly rather than at the next routine visit.</td></tr>
+        </tbody>
+      </table>
+      <p class="fr-note fr-note-quiet">
+        This check adds three blocks beyond STEADI — medication classes, withdrawal or detox
+        state, and home hazards. Those are clinically motivated but they are <strong>our own
+        calibration, not a validated published scale</strong>. Anything derived from them is shown
+        as a relative index and never as a probability. We would rather say that plainly than
+        imply more precision than the instrument has.
+      </p>
+      <p class="fr-note fr-note-quiet">
+        Every answer is scored in your browser. Nothing you enter is transmitted, stored, or
+        attached to you — there is no account, and the server never sees a single response.
+      </p>
+
+      <h2 class="fr-h3 fr-h3-spaced">The four things that change the number most</h2>
+      <h3 class="fr-h4">Ask a pharmacist to review every medicine</h3>
+      <p class="fr-note">
+        Certain drug classes — sedatives, some antidepressants, blood-pressure medicines, anything
+        causing drowsiness or light-headedness on standing — are together the best-documented
+        <em>modifiable</em> driver of falls. Taking four or more medicines raises risk further,
+        independent of which ones they are. A pharmacist will do this review free, and it needs
+        the over-the-counter items and supplements too, because those are the ones people forget
+        to mention.
+      </p>
+      <h3 class="fr-h4">Have your eyes checked once a year</h3>
+      <p class="fr-note">
+        Depth perception and contrast sensitivity fade gradually enough that people compensate
+        without noticing. Bifocals and progressives are worth raising specifically — they blur
+        the ground at exactly the distance stairs occupy.
+      </p>
+      <h3 class="fr-h4">Strength and balance work, not general exercise</h3>
+      <p class="fr-note">
+        The evidence favours programmes that specifically challenge balance — standing on one leg,
+        heel-to-toe walking, tai chi — over walking alone. Walking is good for many things; on its
+        own it moves fall risk very little.
+      </p>
+      <h3 class="fr-h4">Fix the two rooms where it happens</h3>
+      <p class="fr-note">
+        Bathrooms and stairs account for a disproportionate share. Grab bars beside the toilet and
+        in the shower, a light within reach of the bed, both-sides stair rails, and removing loose
+        rugs are cheap, one-off, and boring — which is exactly why they get postponed.
+      </p>
+
+      <h2 class="fr-h3 fr-h3-spaced">Why the global panel is there</h2>
+      <p class="fr-note">
+        The panel beneath your result draws live from the World Health Organization’s Global Health
+        Observatory: age-standardised death rates from falls, per 100,000 people, across 189 member
+        states. It is there for scale, not for alarm. Fall mortality varies several-fold between
+        countries with comparable wealth and life expectancy, which is the clearest available
+        evidence that these outcomes track prevention and care rather than age alone.
+      </p>
+
+      <p class="fr-disclaimer">
+        <strong>This is not a diagnosis.</strong> It is an informational screening tool and it
+        cannot account for your medical history. Nothing here replaces a conversation with a
+        clinician or pharmacist. If you have fallen recently, feel unsteady, or are worried about
+        someone, that conversation is the next step regardless of what any score says.
+      </p>
+      <p class="fr-source">
+        Sources: CDC STEADI “Stay Independent” questionnaire (public domain). World Health
+        Organization Global Health Observatory, indicator SA_0000001442, age-standardised fall
+        death rates per 100,000 population.
+      </p>
+    </section>
   </main>
 
   <footer>
