@@ -1,4 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+/* Inter is loaded by a <link> in each page head — never re-add an @import here.
+   A font @import inside this file serialises the request chain (styles.css must
+   parse before the font CSS is even discovered) and cost ~900-1900 ms of
+   render-blocking on throttled mobile. Measured 2026-09-11. */
 
 /* Native cross-page crossfade in supporting browsers; ignored elsewhere (progressive enhancement) */
 @view-transition{
