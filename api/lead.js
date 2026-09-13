@@ -6,7 +6,7 @@
 
 var TYPE_INFO = {
   contact: { label: 'Contact Form', required: ['name', 'email', 'message'] },
-  reserve: { label: 'Reservation — Founding Customer', required: ['name', 'email'] },
+  reserve: { label: 'Order', required: ['name', 'email'] },
   waitlist: { label: 'Waitlist Signup', required: ['name', 'email'] },
   facilityQuote: { label: 'Facility Pricing Request', required: ['facility', 'facilityType', 'name', 'email'] },
   demo: { label: 'Demo Request', required: ['facility', 'name', 'email'] },
@@ -20,8 +20,37 @@ var FIELD_LABELS = {
   facilityType: 'Facility Type', role: 'Role / Title', phone: 'Phone',
   estimatedUnits: 'Estimated Units', preferredTime: 'Preferred Time',
   company: 'Company', businessType: 'Business Type', website: 'Website',
-  region: 'Region Served'
+  region: 'Region Served', color: 'Color', size: 'Size', closure: 'Closure'
 };
+
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, function(c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+  });
+}
+
+// Inline styles and tables only: Gmail strips <style> blocks and flexbox.
+function renderHtml(title, fields, page) {
+  var rows = fields.map(function(f) {
+    return '<tr>' +
+      '<td style="padding:14px 16px 14px 0;border-bottom:1px solid #E3DFD6;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#6B675F;vertical-align:top;width:36%;">' + esc(f.label) + '</td>' +
+      '<td style="padding:14px 0;border-bottom:1px solid #E3DFD6;font-size:18px;font-weight:700;color:#2B2B28;line-height:1.4;">' + esc(f.value).replace(/\n/g, '<br>') + '</td>' +
+      '</tr>';
+  }).join('');
+  return '<div style="margin:0;padding:32px 16px;background:#F1EEE7;font-family:Helvetica,Arial,sans-serif;">' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;margin:0 auto;background:#FFFFFF;border-radius:12px;overflow:hidden;border-collapse:separate;">' +
+    '<tr><td style="background:#677866;padding:28px 32px;color:#FFFFFF;">' +
+    '<div style="font-size:13px;font-weight:700;letter-spacing:.3em;">MEND</div>' +
+    '<div style="font-size:28px;font-weight:700;margin-top:8px;">' + esc(title) + '</div>' +
+    '</td></tr>' +
+    '<tr><td style="padding:12px 32px 24px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0">' + rows + '</table></td></tr>' +
+    '<tr><td style="background:#F1EEE7;padding:20px 32px;font-size:13px;line-height:1.6;color:#6B675F;">' +
+    '<strong style="color:#2B2B28;">MEND Medical Apparel</strong> · <a href="https://www.mendmedicalwear.com" style="color:#677866;">mendmedicalwear.com</a><br>' +
+    (page ? 'Submitted from mendmedicalwear.com' + esc(page) + '<br>' : '') +
+    'Reply to this email to respond to the sender directly.' +
+    '</td></tr>' +
+    '</table></div>';
+}
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -48,12 +77,13 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Email service not configured' });
   }
 
-  var lines = Object.keys(body)
-    .filter(function(key) { return key !== 'type' && body[key] !== undefined && String(body[key]).trim() !== ''; })
+  var fields = Object.keys(body)
+    .filter(function(key) { return key !== 'type' && key !== 'page' && body[key] !== undefined && String(body[key]).trim() !== ''; })
     .map(function(key) {
-      var label = FIELD_LABELS[key] || key;
-      return label + ': ' + body[key];
+      return { label: FIELD_LABELS[key] || key, value: String(body[key]) };
     });
+  var lines = fields.map(function(f) { return f.label + ': ' + f.value; });
+  var title = 'New ' + info.label;
 
   try {
     var response = await fetch('https://api.resend.com/emails', {
@@ -66,8 +96,9 @@ export default async function handler(req, res) {
         from: 'MEND Medical Apparel <no-reply@mendmedicalwear.com>',
         to: 'contact@mendmedicalwear.com',
         reply_to: body.email,
-        subject: 'New ' + info.label + (body.name ? ' from ' + body.name : ''),
-        text: lines.join('\n')
+        subject: title + (body.name ? ' from ' + body.name : ''),
+        text: lines.join('\n'),
+        html: renderHtml(title, fields, typeof body.page === 'string' ? body.page : '')
       })
     });
 

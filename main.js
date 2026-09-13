@@ -307,6 +307,7 @@ document.addEventListener('submit', function(e) {
 
   var data = {
     type: 'contact',
+    page: location.pathname,
     name: form.name.value,
     email: form.email.value,
     message: form.message.value
@@ -325,6 +326,16 @@ document.addEventListener('submit', function(e) {
   }).finally(function() {
     btn.disabled = false;
   });
+});
+
+// Product-page size/option buttons: one active per row. The gown and scrub
+// pages shipped size buttons with no handler at all, so clicks did nothing and
+// every order read as the default M; the Reserve modal now reads this state.
+document.addEventListener('click', function(e) {
+  var btn = e.target.closest('.sizes .size-btn');
+  if (!btn) return;
+  btn.parentNode.querySelectorAll('.size-btn').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
 });
 
 // FAQ accordion (used by injected FAQ content — FAQ.html itself defines the
@@ -360,6 +371,25 @@ window.showTab = window.showTab || function(id, btn) {
     '#contact': { extract: '#contact', label: 'Get in Touch', src: 'index.html' }
   };
 
+  // Same wording is hardcoded under index.html's contact form. The link is
+  // /Privacy-Terms, not Privacy-Terms.html, so MODAL_SOURCES doesn't swap the
+  // open form out for the policy.
+  var PRIVACY_NOTE = '<p class="mend-form-privacy">We never sell your information or share it for marketing — we use it only to follow up with you. <a href="/Privacy-Terms" target="_blank" rel="noopener">Privacy &amp; Terms</a></p>';
+
+  // The color/size (and gown closure) the visitor picked on a product page's
+  // option buttons; each is '' on pages without that picker.
+  function pageSelection() {
+    function pick(selector) {
+      var el = document.querySelector(selector);
+      return el ? (el.getAttribute('title') || el.textContent).trim() : '';
+    }
+    return {
+      color: pick('.swatches .swatch.active'),
+      size: pick('.sizes:not(#closureGroup) .size-btn.active'),
+      closure: pick('#closureGroup .size-btn.active')
+    };
+  }
+
   // Lead-capture form modals. Each `fields` function receives the trigger's
   // context (currently just { product }) so a Reserve button on a specific
   // product card can pre-fill and lock that field.
@@ -372,13 +402,19 @@ window.showTab = window.showTab || function(id, btn) {
       successTitle: 'You’re reserved.',
       successBody: 'You’re on the founding customer list. Watch your inbox — we’ll follow up as your order nears production.',
       fields: function(ctx) {
+        var sel = pageSelection();
+        var picks = [['color', 'Color'], ['size', 'Size'], ['closure', 'Closure']]
+          .filter(function(p) { return sel[p[0]]; })
+          .map(function(p) { return { name: p[0], label: p[1], type: 'text', value: sel[p[0]], readonly: true }; });
         return [
-          { name: 'product', label: 'Product', type: 'text', value: ctx.product || 'MEND Products (not sure yet)', readonly: !!ctx.product },
+          { name: 'product', label: 'Product', type: 'text', value: ctx.product || 'MEND Products (not sure yet)', readonly: !!ctx.product }
+        ].concat(picks, [
           { name: 'quantity', label: 'Quantity', type: 'number', value: '1', min: '1', max: '999' },
           { name: 'name', label: 'Full Name', type: 'text', required: true },
           { name: 'email', label: 'Email', type: 'email', required: true },
+          { name: 'phone', label: 'Phone (optional)', type: 'tel' },
           { name: 'procedureDate', label: 'Surgery / procedure date (optional)', type: 'date' }
-        ];
+        ]);
       }
     },
     waitlist: {
@@ -513,6 +549,9 @@ window.showTab = window.showTab || function(id, btn) {
     '.mend-lead-form select{appearance:none; background-image:url(\'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="%238A857C" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>\'); background-repeat:no-repeat; background-position:right 14px center;}',
     '.mend-form-error{font-size:13px; color:#c0392b; display:none; margin-top:2px;}',
     '.mend-form-error.show{display:block;}',
+    // Not scoped to the modal: index.html's own contact form carries it too.
+    '.mend-form-privacy{font-size:12px; line-height:1.5; color:#6B675F; margin:0;}',
+    '.mend-form-privacy a{color:inherit; text-decoration:underline;}',
     '.mend-form-success{text-align:center; padding:12px 0 4px;}',
     '.mend-success-check{width:52px; height:52px; border-radius:50%; background:var(--accent); color:#fff; font-size:24px; font-weight:700; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; animation:mend-success-pop .5s cubic-bezier(.34,1.56,.64,1);}',
     '@keyframes mend-success-pop{0%{opacity:0; transform:scale(.6);} 60%{opacity:1; transform:scale(1.08);} 100%{opacity:1; transform:scale(1);}}',
@@ -636,6 +675,7 @@ window.showTab = window.showTab || function(id, btn) {
       fields,
       '<button type="submit" class="btn btn-primary">' + esc(cfg.submitLabel) + '</button>',
       '<div class="mend-form-error" role="alert"></div>',
+      PRIVACY_NOTE,
       '</form>'
     ].join('');
     overlay.setAttribute('aria-labelledby', titleId);
@@ -696,7 +736,7 @@ window.showTab = window.showTab || function(id, btn) {
     errorEl.classList.remove('show');
     submitBtn.disabled = true;
 
-    var data = { type: type };
+    var data = { type: type, page: location.pathname };
     new FormData(form).forEach(function(value, key) { data[key] = value; });
 
     fetch('/api/lead', {
