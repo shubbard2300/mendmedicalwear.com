@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MEND Medical Apparel — Comfort Wrap Recovery Gowns & Scrubs</title>
-<meta name="description" content="MEND makes soft, washable recovery gowns, nurse scrubs, compression socks, the AirGuard™ collar, and connected devices for patients and caregivers.">
+<meta name="description" content="Pre-order MEND recovery gowns, nurse scrubs, and compression socks at founding-customer prices, with no payment today. Soft, washable, dignified care wear.">
 <meta name="keywords" content="recovery hospital gown, washable patient gown, residential nurse scrubs, medical compression socks, fall detection collar, wireless blood pressure monitor, fingertip pulse oximeter, remote patient monitoring app, dignified medical apparel, home health care wear">
 <meta name="author" content="MEND Medical Apparel">
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -53,7 +53,7 @@
         "name": "Comfort Wrap — Stylish Washable Hospital Gown",
         "url": "https://www.mendmedicalwear.com/products/stylish-washable-hospital-gown",
         "image": "https://www.mendmedicalwear.com/Concept%20-%20Hospital%20Gown%20-%20Female%20Front%20-%202026-06-15-web.jpg",
-        "offers": { "@type": "Offer", "price": "68.00", "priceCurrency": "USD" }
+        "offers": { "@type": "Offer", "price": "68.00", "priceCurrency": "USD", "availability": "https://schema.org/PreOrder" }
       }
     },
     {
@@ -64,7 +64,7 @@
         "name": "Comfort Scrubs — Residential Nurse Scrub Set",
         "url": "https://www.mendmedicalwear.com/products/residential-nurse-scrub-set",
         "image": "https://www.mendmedicalwear.com/Concept%20-%20Nurse%20Scrubs%20-%20Female%20Front%20-%202026-06-15-web.jpg",
-        "offers": { "@type": "Offer", "price": "74.00", "priceCurrency": "USD" }
+        "offers": { "@type": "Offer", "price": "74.00", "priceCurrency": "USD", "availability": "https://schema.org/PreOrder" }
       }
     },
     {
@@ -75,7 +75,7 @@
         "name": "Medical-Grade Compression Socks",
         "url": "https://www.mendmedicalwear.com/products/compression-socks",
         "image": "https://www.mendmedicalwear.com/Concept%20-%20Compression%20Socks%20-%20Ceil%20Blue%20-%202026-06-15-web.jpg",
-        "offers": { "@type": "Offer", "price": "28.00", "priceCurrency": "USD" }
+        "offers": { "@type": "Offer", "price": "28.00", "priceCurrency": "USD", "availability": "https://schema.org/PreOrder" }
       }
     },
     {
@@ -97,7 +97,7 @@
         "name": "MEND Pulse — Wireless Blood Pressure Monitor",
         "url": "https://www.mendmedicalwear.com/products/mend-pulse",
         "image": "https://www.mendmedicalwear.com/MEND%20Pulse%20-%20Model%20-%202026-07-26-web.jpg",
-        "offers": { "@type": "Offer", "price": "129.00", "priceCurrency": "USD", "availability": "https://schema.org/PreOrder" }
+        "offers": { "@type": "Offer", "price": "129.00", "priceCurrency": "USD" }
       }
     },
     {
@@ -108,7 +108,7 @@
         "name": "MEND Oxi — Fingertip Pulse Oximeter",
         "url": "https://www.mendmedicalwear.com/products/mend-oxi",
         "image": "https://www.mendmedicalwear.com/MEND%20Oxi%20-%20Model%20-%202026-07-29-web.jpg",
-        "offers": { "@type": "Offer", "price": "59.00", "priceCurrency": "USD", "availability": "https://schema.org/PreOrder" }
+        "offers": { "@type": "Offer", "price": "59.00", "priceCurrency": "USD" }
       }
     },
     {
@@ -210,8 +210,8 @@
   /* About */
   .about{padding:92px 0;}
   /* Fade-edged section dividers instead of hard full-width lines */
-  .about, .products, .partners, .testimonials, .contact{position:relative;}
-  .about::before, .products::before, .partners::before, .testimonials::before, .contact::before{
+  .about, .products, .partners, .contact{position:relative;}
+  .about::before, .products::before, .partners::before, .contact::before{
     content:''; position:absolute; top:0; left:0; right:0; height:1px;
     background:linear-gradient(90deg, transparent, var(--line) 20%, var(--line) 80%, transparent);
   }
@@ -272,35 +272,6 @@
   .product-card .info .price .compare{font-size:12px; color:var(--muted); text-decoration:line-through; margin-left:6px; font-weight:400;}
   .product-card .info .status{display:inline-block; margin-top:8px; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); background:var(--bg); border:1px solid var(--line); padding:4px 10px; border-radius:999px;}
 
-  /* Testimonials (quote carousel) */
-  .testimonials{padding:92px 0; text-align:center;}
-  .testimonials > h2{font-size:30px; font-weight:600; margin-bottom:8px; position:relative; display:inline-block; padding-bottom:8px;}
-  .testimonials .sub{color:var(--muted); font-size:15px; margin-bottom:48px; text-align:center;}
-  .quote-carousel{margin:0 auto; max-width:760px; position:relative;}
-  .quote-track{display:flex; gap:24px; align-items:stretch;}
-  .quote-slide{flex:0 0 100%; display:none; gap:24px; align-items:center;}
-  .quote-slide.active{display:flex;}
-  @media(max-width:640px){.quote-slide{flex-direction:column;}}
-  .quote-img{flex:0 0 260px; border-radius:16px; overflow:hidden; box-shadow:0 24px 60px rgba(0,0,0,.1); transition:box-shadow .4s ease;}
-  .quote-img img{width:100%; height:340px; object-fit:cover; display:block; transition:transform .6s ease;}
-  .quote-img:hover{box-shadow:0 30px 70px rgba(0,0,0,.16);}
-  .quote-img:hover img{transform:scale(1.06);}
-  @keyframes quote-fade-in{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
-  .quote-slide.active{animation:quote-fade-in .5s ease;}
-  @media(max-width:640px){.quote-img{flex:none; width:100%; max-width:280px; margin:0 auto;}}
-  .quote-body{flex:1; text-align:left; display:flex; flex-direction:column; justify-content:center; padding:8px 0;}
-  .quote-body blockquote{font-size:18px; line-height:1.6; color:var(--fg); font-style:italic; margin:0 0 20px; position:relative; padding-left:20px;}
-  .quote-body blockquote::before{content:'\201C'; position:absolute; left:0; top:-4px; font-size:36px; color:var(--accent); line-height:1; font-style:normal;}
-  .quote-body cite{font-size:13px; color:var(--muted); font-style:normal; display:flex; align-items:center; gap:8px; padding-left:20px;}
-  .quote-body cite strong{color:var(--fg); font-weight:600;}
-  .quote-stars{color:#e8a838; font-size:14px; letter-spacing:2px; margin-bottom:12px; padding-left:20px;}
-  .quote-label{display:inline-block; font-size:11px; letter-spacing:.1em; text-transform:uppercase; background:var(--panel); border:1px solid var(--line); border-radius:999px; padding:4px 12px; color:var(--muted); margin-bottom:16px; margin-left:20px;}
-  .quote-nav{display:flex; align-items:center; justify-content:center; gap:12px; margin-top:28px;}
-  .quote-dot{width:8px; height:8px; border-radius:50%; background:var(--line); border:none; cursor:pointer; padding:0; transition:background .2s, transform .2s;}
-  .quote-dot.active{background:var(--accent); transform:scale(1.3);}
-  .quote-btn{background:none; border:1px solid var(--line); border-radius:50%; width:36px; height:36px; cursor:pointer; font-size:16px; color:var(--fg); display:flex; align-items:center; justify-content:center; transition:border-color .2s, background .2s;}
-  .quote-btn:hover{border-color:var(--accent); background:var(--panel);}
-
   /* Contact */
   .contact{padding:92px 0;}
   .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:48px;}
@@ -308,14 +279,13 @@
   .contact h2{font-size:30px; font-weight:600; margin-bottom:12px; position:relative; display:inline-block; padding-bottom:8px;}
 
   /* Animated accent underline that draws in as each section heading scrolls into view */
-  .about h2::after, .products h2::after, .partners h2::after, .testimonials > h2::after, .contact h2::after{
+  .about h2::after, .products h2::after, .partners h2::after, .contact h2::after{
     content:''; position:absolute; left:0; bottom:0; width:48px; height:3px; background:var(--accent);
     border-radius:2px; transform:scaleX(0); transform-origin:left; transition:transform .6s cubic-bezier(.4,0,.2,1) .1s;
   }
   .js .about.in-view h2::after,
   .js .products.in-view h2::after,
   .js .partners.in-view h2::after,
-  .js .testimonials.in-view > h2::after,
   .js .contact.in-view h2::after{transform:scaleX(1);}
   .contact p{color:var(--muted); font-size:15px; margin-bottom:8px;}
   .contact .detail{font-size:14px; margin-top:24px; padding:12px 14px; border-radius:10px; border:1px solid transparent; transition:border-color .22s ease, background .22s ease, transform .22s ease;}
@@ -627,7 +597,6 @@
           <div class="price" style="color:var(--muted); font-weight:400;">Coming Soon — $89.00</div>
           <div class="badge-row">
             <span class="badge badge-early">Early Access</span>
-            <span class="badge badge-ship">Est. Ship Q3 2026</span>
             <span class="logo-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Custom Logo</span>
           </div>
           <div class="card-cta-row">
@@ -702,77 +671,6 @@
           <button type="button" class="btn btn-primary" data-modal="distributor">Become a Distribution Partner</button>
           <a href="#contact" class="btn btn-secondary">Contact Sales</a>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Testimonials -->
-  <div class="section testimonials" id="testimonials">
-    <h2>What People Say</h2>
-    <p class="sub">From patients, caregivers, and the nurses who wear MEND every shift.</p>
-    <div class="quote-carousel">
-      <div class="quote-track">
-
-        <div class="quote-slide active">
-          <div class="quote-img"><a href="/products/stylish-washable-hospital-gown"><picture><source srcset="/concept-hospital-gown-2026-06-15-web.webp" type="image/webp"><img loading="lazy" src="Concept - Hospital Gown - 2026-06-15-web.jpg" alt="Comfort Wrap — Heather Grey" width="1024" height="1024"></picture></a></div>
-          <div class="quote-body">
-            <div class="quote-label">Comfort Wrap Gown</div>
-            <div class="quote-stars">★★★★★</div>
-            <blockquote>After my knee surgery I actually felt like a person, not a patient. The zipper makes everything easier and the hood was a bonus — I wore it for two weeks straight.</blockquote>
-            <cite><strong>Margaret T.</strong> — Portland, OR · Knee Recovery</cite>
-          </div>
-        </div>
-
-        <div class="quote-slide">
-          <div class="quote-img"><a href="/products/stylish-washable-hospital-gown"><picture><source srcset="/concept-hospital-gown-couple-2026-06-15-web.webp" type="image/webp"><img loading="lazy" src="Concept - Hospital Gown - Couple - 2026-06-15-web.jpg" alt="Comfort Wrap — Couple" width="1024" height="1024"></picture></a></div>
-          <div class="quote-body">
-            <div class="quote-label">Comfort Wrap Gown</div>
-            <div class="quote-stars">★★★★★</div>
-            <blockquote>My husband and I both needed surgery within a month of each other. We ordered two. The difference in how we felt wearing these versus a standard gown was night and day.</blockquote>
-            <cite><strong>Sandra &amp; Rob K.</strong> — Eugene, OR · Post-Op Recovery</cite>
-          </div>
-        </div>
-
-        <div class="quote-slide">
-          <div class="quote-img"><a href="/products/residential-nurse-scrub-set"><picture><source srcset="/concept-nurse-scrubs-female-front-2026-06-15-web.webp" type="image/webp"><img loading="lazy" src="Concept - Nurse Scrubs - Female Front - 2026-06-15-web.jpg" alt="Comfort Scrubs" width="1024" height="1024"></picture></a></div>
-          <div class="quote-body">
-            <div class="quote-label">Comfort Scrubs</div>
-            <div class="quote-stars">★★★★★</div>
-            <blockquote>I'm a home health aide and I've worn a lot of scrubs. These are the softest I've ever had and they still look professional. My clients notice the difference too.</blockquote>
-            <cite><strong>Dani R.</strong> — Seattle, WA · Home Health Aide</cite>
-          </div>
-        </div>
-
-        <div class="quote-slide">
-          <div class="quote-img"><a href="/products/stylish-washable-hospital-gown"><picture><source srcset="/concept-hospital-gown-male-front-blue-latino-2026-06-15-web.webp" type="image/webp"><img loading="lazy" src="Concept - Hospital Gown - Male Front - Blue - Latino - 2026-06-15-web.jpg" alt="Comfort Wrap — Blue" width="1024" height="1024"></picture></a></div>
-          <div class="quote-body">
-            <div class="quote-label">Comfort Wrap — Blue</div>
-            <div class="quote-stars">★★★★★</div>
-            <blockquote>I was in the hospital for three days and this gown made it bearable. The short sleeves were perfect — the nurses could reach my IV without any fuss.</blockquote>
-            <cite><strong>Carlos M.</strong> — San Jose, CA · Cardiac Recovery</cite>
-          </div>
-        </div>
-
-        <div class="quote-slide">
-          <div class="quote-img"><a href="/products/compression-socks"><picture><source srcset="/concept-compression-socks-ceil-blue-2026-06-15-web.webp" type="image/webp"><img loading="lazy" src="Concept - Compression Socks - Ceil Blue - 2026-06-15-web.jpg" alt="Compression Socks" width="1024" height="1024"></picture></a></div>
-          <div class="quote-body">
-            <div class="quote-label">Compression Socks</div>
-            <div class="quote-stars">★★★★★</div>
-            <blockquote>I'm on my feet for 12-hour shifts. These are the first compression socks that actually feel good from start to finish — not just the first two hours.</blockquote>
-            <cite><strong>Priya N.</strong> — Chicago, IL · ICU Nurse</cite>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="quote-nav">
-        <button class="quote-btn" id="quotePrev" aria-label="Previous testimonial">&#8592;</button>
-        <button class="quote-dot active" data-idx="0" aria-label="Testimonial 1"></button>
-        <button class="quote-dot" data-idx="1" aria-label="Testimonial 2"></button>
-        <button class="quote-dot" data-idx="2" aria-label="Testimonial 3"></button>
-        <button class="quote-dot" data-idx="3" aria-label="Testimonial 4"></button>
-        <button class="quote-dot" data-idx="4" aria-label="Testimonial 5"></button>
-        <button class="quote-btn" id="quoteNext" aria-label="Next testimonial">&#8594;</button>
       </div>
     </div>
   </div>
@@ -901,38 +799,6 @@
 
   function next() { goTo((cur + 1) % slides.length); }
   timer = setInterval(next, 5000);
-})();
-
-// ── Testimonial quote carousel ──
-(function(){
-  var slides = document.querySelectorAll('.quote-slide');
-  var dots = document.querySelectorAll('.quote-dot');
-  var cur = 0;
-  var timer;
-
-  function show(n){
-    slides[cur].classList.remove('active');
-    dots[cur].classList.remove('active');
-    cur = (n + slides.length) % slides.length;
-    slides[cur].classList.add('active');
-    dots[cur].classList.add('active');
-  }
-
-  function next(){ show(cur + 1); resetTimer(); }
-  function prev(){ show(cur - 1); resetTimer(); }
-
-  function resetTimer(){
-    clearInterval(timer);
-    timer = setInterval(function(){ show(cur + 1); }, 5000);
-  }
-
-  document.getElementById('quoteNext').addEventListener('click', next);
-  document.getElementById('quotePrev').addEventListener('click', prev);
-  dots.forEach(function(d){
-    d.addEventListener('click', function(){ show(+this.dataset.idx); resetTimer(); });
-  });
-
-  resetTimer();
 })();
 
 // Back-to-top button
