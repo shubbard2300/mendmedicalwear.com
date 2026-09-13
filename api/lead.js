@@ -20,7 +20,8 @@ var FIELD_LABELS = {
   facilityType: 'Facility Type', role: 'Role / Title', phone: 'Phone',
   estimatedUnits: 'Estimated Units', preferredTime: 'Preferred Time',
   company: 'Company', businessType: 'Business Type', website: 'Website',
-  region: 'Region Served', color: 'Color', size: 'Size', closure: 'Closure'
+  region: 'Region Served', color: 'Color', size: 'Size', closure: 'Closure',
+  source: 'Source'
 };
 
 function esc(s) {

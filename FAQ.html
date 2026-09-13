@@ -19,10 +19,50 @@
   "mainEntity": [
     {
       "@type": "Question",
+      "name": "How does pre-ordering work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pick your color and size on the Comfort Wrap, Comfort Scrubs, or compression socks page, tap Pre-Order Now, and leave your name and email. That reserves your spot in our first production run. There's no checkout and no payment at this step."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When do I pay for a pre-order?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not when you reserve. As your order nears production, we email you to confirm your details and pay. Nothing is charged until you confirm."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is founding-customer pricing?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Reserving locks in the price shown today for the order you reserve: $68 for Comfort Wrap, $74 for Comfort Scrubs, and $28 for compression socks."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I change or cancel a pre-order?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, any time before you confirm and pay. Reply to any email from us or write to contact@mendmedicalwear.com. Since nothing has been charged, there's nothing to refund."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I pre-order AirGuard™, MEND Pulse, or MEND Oxi?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not yet. All three are pending FDA 510(k) clearance, and we don't take orders or reservations for them until clearance is granted. Join the waitlist on each product's page and we'll email you when they're available."
+      }
+    },
+    {
+      "@type": "Question",
       "name": "What makes MEND gowns different from standard hospital gowns?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Standard hospital gowns are designed for clinical utility — not for the person wearing them. MEND recovery gowns are made from a soft cotton-merino blend, close fully at the back with a dignified design, and feature short sleeves with a front zip — made from repurposed bamboo instead of metal — for IV and catheter access. They're machine washable, available in multiple colors, and built to feel like loungewear, not a paper sheet."
+        "text": "Standard hospital gowns are designed for clinical utility — not for the person wearing them. MEND recovery gowns are made from a soft cotton-merino blend, with full-length sleeves, an attached hood, and a single full-length zip — front or back, your choice — made from repurposed bamboo instead of metal. Shoulder-seam zips give clinicians IV access without removing the gown, so there are no ties and no open back. They're machine washable, come in nine colors and patterns, and feel like loungewear, not a paper sheet."
       }
     },
     {
@@ -46,7 +86,7 @@
       "name": "Are the products FDA-cleared or CE-marked?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Our apparel products (recovery gowns, scrubs, compression socks) are consumer medical-grade apparel and do not require FDA clearance. The MEND AirGuard™ fall-detection collar, MEND Pulse blood pressure monitor, and MEND Oxi pulse oximeter are all medical devices and are currently pending FDA 510(k) clearance and CE Mark. Each is available for pre-order only and will ship only after regulatory clearance is received."
+        "text": "Our apparel products (recovery gowns, scrubs, compression socks) are consumer medical-grade apparel and do not require FDA clearance. The MEND AirGuard™ fall-detection collar, MEND Pulse blood pressure monitor, and MEND Oxi pulse oximeter are all medical devices and are currently pending FDA 510(k) clearance and CE Mark. None of them can be ordered or reserved until clearance is granted; you can join the waitlist on each product's page to hear the moment they're available."
       }
     },
     {
@@ -102,7 +142,7 @@
       "name": "When will the AirGuard™ ship?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "The AirGuard™ is currently in pre-order. Estimated ship date is Q3 2026, pending FDA 510(k) clearance. Pre-order customers will be notified first and charged only at time of shipment. You can cancel your pre-order at any time before shipment with a full refund."
+        "text": "AirGuard™ doesn't have a ship date yet. It is pending FDA 510(k) clearance, and we don't take orders or reservations for it until clearance is granted. Join the waitlist and we'll email you the moment it's available."
       }
     },
     {
@@ -150,7 +190,7 @@
       "name": "Can I change or cancel my order?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes, orders can be changed or cancelled within 24 hours of placing them. After 24 hours, orders enter our fulfillment queue and may have already shipped. Contact us immediately at contact@mendmedicalwear.com if you need to make changes."
+        "text": "Yes. Pre-orders can be changed or cancelled any time before you pay. Once an order is paid, it can be changed or cancelled within 24 hours. After 24 hours, orders enter our fulfillment queue and may have already shipped. Contact us immediately at contact@mendmedicalwear.com if you need to make changes."
       }
     },
     {
@@ -258,6 +298,7 @@
   </div>
 
   <div class="faq-nav section">
+    <a href="#preorders">Pre-Orders</a>
     <a href="#products">Products</a>
     <a href="#airguard">AirGuard™</a>
     <a href="#sizing">Sizing & Fit</a>
@@ -266,13 +307,43 @@
     <a href="#care">Care Instructions</a>
   </div>
 
+  <!-- Pre-Orders -->
+  <div class="faq-group section" id="preorders">
+    <h2>Pre-Orders</h2>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggle(this)">How does pre-ordering work? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Pick your color and size on the <a href="/products/stylish-washable-hospital-gown">Comfort Wrap</a>, <a href="/products/residential-nurse-scrub-set">Comfort Scrubs</a>, or <a href="/products/compression-socks">compression socks</a> page, tap Pre-Order Now, and leave your name and email. That reserves your spot in our first production run. There's no checkout and no payment at this step.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggle(this)">When do I pay for a pre-order? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Not when you reserve. As your order nears production, we email you to confirm your details and pay. Nothing is charged until you confirm.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggle(this)">What is founding-customer pricing? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Reserving locks in the price shown today for the order you reserve: $68 for Comfort Wrap, $74 for Comfort Scrubs, and $28 for compression socks.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggle(this)">Can I change or cancel a pre-order? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Yes, any time before you confirm and pay. Reply to any email from us or write to <a href="/#contact">contact@mendmedicalwear.com</a>. Since nothing has been charged, there's nothing to refund.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggle(this)">Can I pre-order AirGuard™, MEND Pulse, or MEND Oxi? <span class="faq-icon">+</span></button>
+      <div class="faq-a">Not yet. All three are pending FDA 510(k) clearance, and we don't take orders or reservations for them until clearance is granted. Join the waitlist on each product's page and we'll email you when they're available.</div>
+    </div>
+  </div>
+
   <!-- Products -->
   <div class="faq-group section" id="products">
     <h2>Products</h2>
 
     <div class="faq-item">
       <button class="faq-q" onclick="toggle(this)">What makes MEND gowns different from standard hospital gowns? <span class="faq-icon">+</span></button>
-      <div class="faq-a">Standard hospital gowns are designed for clinical utility — not for the person wearing them. MEND recovery gowns are made from a soft cotton-merino blend, close fully at the back with a dignified design, and feature short sleeves with a front zip — made from repurposed bamboo instead of metal — for IV and catheter access. They're machine washable, available in multiple colors, and built to feel like loungewear, not a paper sheet.</div>
+      <div class="faq-a">Standard hospital gowns are designed for clinical utility — not for the person wearing them. MEND recovery gowns are made from a soft cotton-merino blend, with full-length sleeves, an attached hood, and a single full-length zip — front or back, your choice — made from repurposed bamboo instead of metal. Shoulder-seam zips give clinicians IV access without removing the gown, so there are no ties and no open back. They're machine washable, come in nine colors and patterns, and feel like loungewear, not a paper sheet.</div>
     </div>
 
     <div class="faq-item">
@@ -287,7 +358,7 @@
 
     <div class="faq-item">
       <button class="faq-q" onclick="toggle(this)">Are the products FDA-cleared or CE-marked? <span class="faq-icon">+</span></button>
-      <div class="faq-a">Our apparel products (recovery gowns, scrubs, compression socks) are consumer medical-grade apparel and do not require FDA clearance. The MEND AirGuard™ fall-detection collar, MEND Pulse blood pressure monitor, and MEND Oxi pulse oximeter are all medical devices and are currently <strong>pending FDA 510(k) clearance and CE Mark</strong>. Each is available for pre-order only and will ship only after regulatory clearance is received.</div>
+      <div class="faq-a">Our apparel products (recovery gowns, scrubs, compression socks) are consumer medical-grade apparel and do not require FDA clearance. The MEND AirGuard™ fall-detection collar, MEND Pulse blood pressure monitor, and MEND Oxi pulse oximeter are all medical devices and are currently <strong>pending FDA 510(k) clearance and CE Mark</strong>. None of them can be ordered or reserved until clearance is granted; you can join the waitlist on each product's page to hear the moment they're available.</div>
     </div>
 
     <div class="faq-item">
@@ -329,7 +400,7 @@
 
     <div class="faq-item">
       <button class="faq-q" onclick="toggle(this)">When will the AirGuard™ ship? <span class="faq-icon">+</span></button>
-      <div class="faq-a">The AirGuard™ is currently in pre-order. Estimated ship date is <strong>Q3 2026</strong>, pending FDA 510(k) clearance. Pre-order customers will be notified first and charged only at time of shipment. You can cancel your pre-order at any time before shipment with a full refund.</div>
+      <div class="faq-a">AirGuard™ doesn't have a ship date yet. It is pending FDA 510(k) clearance, and we don't take orders or reservations for it until clearance is granted. <a href="/products/airguard-collar">Join the waitlist</a> and we'll email you the moment it's available.</div>
     </div>
 
     <div class="faq-item">
@@ -369,7 +440,7 @@
 
     <div class="faq-item">
       <button class="faq-q" onclick="toggle(this)">Can I change or cancel my order? <span class="faq-icon">+</span></button>
-      <div class="faq-a">Yes, orders can be changed or cancelled within 24 hours of placing them. After 24 hours, orders enter our fulfillment queue and may have already shipped. Contact us immediately at <a href="/#contact">contact@mendmedicalwear.com</a> if you need to make changes.</div>
+      <div class="faq-a">Yes. Pre-orders can be changed or cancelled any time before you pay. Once an order is paid, it can be changed or cancelled within 24 hours. After 24 hours, orders enter our fulfillment queue and may have already shipped. Contact us immediately at <a href="/#contact">contact@mendmedicalwear.com</a> if you need to make changes.</div>
     </div>
   </div>
 

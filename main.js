@@ -291,6 +291,24 @@ window.initBrandIt = function(productLabel, photoSrc, logoBox) {
   });
 };
 
+// First-touch source for this visit (external referrer + UTM tags + landing page), sent
+// with every lead so the email says whether search, an ad, or a link produced it.
+// ponytail: fall-risk-assessment.html doesn't load main.js, so a visit that lands there
+// records its second page as "direct"; inline this block there if that page drives leads.
+try {
+  if (!sessionStorage.getItem('mendSource')) {
+    var srcParams = new URLSearchParams(location.search), srcParts = [];
+    ['utm_source', 'utm_medium', 'utm_campaign'].forEach(function(k) {
+      if (srcParams.get(k)) srcParts.push(k.slice(4) + '=' + srcParams.get(k));
+    });
+    var srcRef = document.referrer && new URL(document.referrer).host !== location.host ? document.referrer : 'direct';
+    sessionStorage.setItem('mendSource', [srcRef].concat(srcParts).join(' · ') + ' → landed on ' + location.pathname);
+  }
+} catch (e) {}
+function leadSource() {
+  try { return sessionStorage.getItem('mendSource') || ''; } catch (e) { return ''; }
+}
+
 // Contact form → /api/lead (Resend email forwarding)
 // Delegated so this works whether #contactForm is the original section on
 // index.html or a copy injected into the Contact modal on any other page.
@@ -310,7 +328,8 @@ document.addEventListener('submit', function(e) {
     page: location.pathname,
     name: form.name.value,
     email: form.email.value,
-    message: form.message.value
+    message: form.message.value,
+    source: leadSource()
   };
 
   fetch('/api/lead', {
@@ -736,7 +755,7 @@ window.showTab = window.showTab || function(id, btn) {
     errorEl.classList.remove('show');
     submitBtn.disabled = true;
 
-    var data = { type: type, page: location.pathname };
+    var data = { type: type, page: location.pathname, source: leadSource() };
     new FormData(form).forEach(function(value, key) { data[key] = value; });
 
     fetch('/api/lead', {
@@ -760,6 +779,9 @@ window.showTab = window.showTab || function(id, btn) {
 // Persistent floating Reserve CTA. Opt-in per page via `<body data-sticky-cta>`;
 // add `data-sticky-cta-product="…"` to prefill/lock the Reserve modal's
 // product field with the page's own product instead of the generic default.
+// Device pages set `data-sticky-cta-type="waitlist"`: a device pending FDA 510(k)
+// may be advertised but must not take orders (FDA CPG 300.600), so their bar
+// opens the waitlist, never the Reserve form.
 // Styles are self-injected (not in styles.css) because several pages that
 // use this CTA — the MEND Pulse/Oxi/App product pages — don't load
 // styles.css at all, the same reason the modal system injects its own CSS.
@@ -792,14 +814,17 @@ window.showTab = window.showTab || function(id, btn) {
   document.head.appendChild(style);
 
   var product = document.body.getAttribute('data-sticky-cta-product') || '';
+  var waitlist = document.body.getAttribute('data-sticky-cta-type') === 'waitlist';
 
   var btn = document.createElement('button');
   btn.type = 'button';
   btn.className = 'mend-sticky-cta';
-  btn.setAttribute('data-modal', 'reserve');
+  btn.setAttribute('data-modal', waitlist ? 'waitlist' : 'reserve');
   if (product) btn.setAttribute('data-product', product);
-  btn.setAttribute('aria-label', 'Reserve your order');
-  btn.innerHTML = '<span class="sticky-cta-desktop">Reserve Your Order</span><span class="sticky-cta-mobile">Pre-Order Now</span>';
+  btn.setAttribute('aria-label', waitlist ? 'Join the waitlist' : 'Reserve your order');
+  btn.innerHTML = waitlist
+    ? '<span class="sticky-cta-desktop">Join the Waitlist</span><span class="sticky-cta-mobile">Join the Waitlist</span>'
+    : '<span class="sticky-cta-desktop">Reserve Your Order</span><span class="sticky-cta-mobile">Pre-Order Now</span>';
   document.body.appendChild(btn);
 
   function toggle() {
