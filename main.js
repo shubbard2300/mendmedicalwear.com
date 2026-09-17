@@ -525,7 +525,7 @@ window.showTab = window.showTab || function(id, btn) {
   style.textContent = [
     // Self-contained palette so extracted content (which uses var(--accent) etc.)
     // renders correctly even on pages that never loaded styles.css.
-    '.mend-modal-panel{--bg:#FAFAF8; --fg:#2B2B28; --muted:#8A857C; --line:#E3DFD6; --accent:#7C8B7A; --accent-dark:#677866; --panel:#F1EEE7;}',
+    '.mend-modal-panel{--bg:#FAFAF8; --fg:#2B2B28; --muted:#706C64; --line:#E3DFD6; --accent:#7C8B7A; --accent-dark:#60705F; --panel:#F1EEE7;}',
     '.mend-modal-overlay{position:fixed; inset:0; z-index:1000; display:flex; align-items:flex-start; justify-content:center;',
     '  padding:6vh 20px; background:rgba(30,28,24,0); overflow-y:auto; opacity:0; pointer-events:none;',
     '  transition:opacity .3s ease, background .3s ease;}',
