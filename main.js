@@ -555,7 +555,7 @@ window.showTab = window.showTab || function(id, btn) {
     '.mend-modal-panel input:focus, .mend-modal-panel textarea:focus, .mend-modal-panel select:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(124,139,122,.15);}',
     '.mend-modal-panel input[readonly]{color:var(--muted); cursor:not-allowed;}',
     '.mend-modal-panel textarea{resize:vertical; min-height:110px;}',
-    '.mend-modal-panel .form-msg{font-size:13px; color:var(--accent); display:none; margin-top:8px;}',
+    '.mend-modal-panel .form-msg{font-size:13px; color:var(--accent-dark); display:none; margin-top:8px;}',
     '.mend-modal-panel .form-msg.show{display:block;}',
     // Lead-capture form modals (Reserve, Waitlist, Facility Quote, etc.)
     '.mend-lead-eyebrow{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent-dark); font-weight:600; margin-bottom:10px;}',
