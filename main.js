@@ -329,6 +329,7 @@ document.addEventListener('submit', function(e) {
     name: form.name.value,
     email: form.email.value,
     message: form.message.value,
+    hp_company: form.hp_company ? form.hp_company.value : '',
     source: leadSource()
   };
 
@@ -356,6 +357,16 @@ document.addEventListener('click', function(e) {
   btn.parentNode.querySelectorAll('.size-btn').forEach(function(b) { b.classList.remove('active'); });
   btn.classList.add('active');
 });
+
+// Product-page option buttons announce which one is picked. Each page's own handlers
+// move `.active`; this mirrors it into aria-pressed after any click.
+function syncPressed() {
+  document.querySelectorAll('button.swatch, button.size-btn').forEach(function(b) {
+    b.setAttribute('aria-pressed', b.classList.contains('active') ? 'true' : 'false');
+  });
+}
+document.addEventListener('click', function() { setTimeout(syncPressed); });
+syncPressed();
 
 // FAQ accordion (used by injected FAQ content — FAQ.html itself defines the
 // same function locally, which simply takes precedence there)
@@ -419,7 +430,7 @@ window.showTab = window.showTab || function(id, btn) {
       subtitle: 'No payment today. Reserving a spot puts you in our first production run and locks in founding-customer pricing — we’ll email you when it’s time to confirm and pay.',
       submitLabel: 'Reserve My Spot',
       successTitle: 'You’re reserved.',
-      successBody: 'You’re on the founding customer list. Watch your inbox — we’ll follow up as your order nears production.',
+      successBody: 'You’re on the founding customer list, and a confirmation is on its way to your inbox. We’ll follow up as your order nears production.',
       fields: function(ctx) {
         var sel = pageSelection();
         var picks = [['color', 'Color'], ['size', 'Size'], ['closure', 'Closure']]
@@ -432,7 +443,9 @@ window.showTab = window.showTab || function(id, btn) {
           { name: 'name', label: 'Full Name', type: 'text', required: true },
           { name: 'email', label: 'Email', type: 'email', required: true },
           { name: 'phone', label: 'Phone (optional)', type: 'tel' },
-          { name: 'procedureDate', label: 'Surgery / procedure date (optional)', type: 'date' }
+          { name: 'procedureDate', label: 'Surgery / procedure date (optional)', type: 'date' },
+          { name: 'buyingFor', label: 'Who is this for? (optional)', type: 'select', options: ['Myself', 'A loved one', 'My patients or facility'] },
+          { name: 'heardAbout', label: 'How did you hear about us? (optional)', type: 'select', options: ['Instagram', 'Facebook', 'TikTok', 'LinkedIn', 'Google search', 'Friend or family', 'Event or convention', 'Other'] }
         ]);
       }
     },
@@ -442,7 +455,7 @@ window.showTab = window.showTab || function(id, btn) {
       subtitle: 'Be first to know the moment this product is ready to order.',
       submitLabel: 'Join Waitlist',
       successTitle: 'You’re on the list.',
-      successBody: 'We’ll email you the moment early access opens.',
+      successBody: 'A confirmation is on its way to your inbox. We’ll email you as soon as this is available.',
       fields: function(ctx) {
         return [
           { name: 'product', label: 'Product', type: 'text', value: ctx.product || '', readonly: !!ctx.product },
@@ -566,6 +579,8 @@ window.showTab = window.showTab || function(id, btn) {
     '@media(max-width:480px){.mend-lead-form .mend-lead-row{grid-template-columns:1fr;}}',
     '.mend-lead-form button[type="submit"]{margin-top:6px;}',
     '.mend-lead-form select{appearance:none; background-image:url(\'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="%238A857C" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>\'); background-repeat:no-repeat; background-position:right 14px center;}',
+    // Honeypot: off-screen, not display:none (some bots skip hidden inputs).
+    '.mend-hp{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;}',
     '.mend-form-error{font-size:13px; color:#c0392b; display:none; margin-top:2px;}',
     '.mend-form-error.show{display:block;}',
     // Not scoped to the modal: index.html's own contact form carries it too.
@@ -597,6 +612,7 @@ window.showTab = window.showTab || function(id, btn) {
   function closeModal() {
     overlay.classList.remove('mend-open');
     overlay.removeAttribute('aria-labelledby');
+    overlay.removeAttribute('aria-label');
     document.body.style.overflow = '';
     if (lastFocused) lastFocused.focus();
   }
@@ -638,6 +654,7 @@ window.showTab = window.showTab || function(id, btn) {
   function openModal(src, extractSelector, label, inlineStyles) {
     lastFocused = document.activeElement;
     panelBody.innerHTML = '<div class="mend-modal-loading">Loading…</div>';
+    overlay.setAttribute('aria-label', label);
     overlay.classList.add('mend-open');
     document.body.style.overflow = 'hidden';
     overlay.querySelector('.mend-modal-close').focus();
@@ -692,11 +709,13 @@ window.showTab = window.showTab || function(id, btn) {
       '<p class="mend-lead-subtitle">' + esc(cfg.subtitle) + '</p>',
       '<form class="mend-lead-form" data-lead-type="' + esc(type) + '">',
       fields,
+      '<div class="mend-hp" aria-hidden="true"><label for="mendField_hp">Company</label><input id="mendField_hp" name="hp_company" type="text" tabindex="-1" autocomplete="off"></div>',
       '<button type="submit" class="btn btn-primary">' + esc(cfg.submitLabel) + '</button>',
       '<div class="mend-form-error" role="alert"></div>',
       PRIVACY_NOTE,
       '</form>'
     ].join('');
+    overlay.removeAttribute('aria-label');
     overlay.setAttribute('aria-labelledby', titleId);
     overlay.classList.add('mend-open');
     document.body.style.overflow = 'hidden';
@@ -705,16 +724,32 @@ window.showTab = window.showTab || function(id, btn) {
     if (window.gtag) gtag('event', 'modal_open', { modal_type: type });
   }
 
-  function showFormSuccess(cfg) {
+  // After a pre-order, offer a share link: the people most likely to reserve next
+  // know someone with a surgery coming up. The UTM tags show up in their lead's source.
+  var SHARE_URL = 'https://www.mendmedicalwear.com/?utm_source=referral&utm_medium=share&utm_campaign=reserve';
+
+  function showFormSuccess(cfg, type) {
+    var share = type === 'reserve';
     panelBody.innerHTML = [
       '<div class="mend-form-success">',
       '<div class="mend-success-check">✓</div>',
       '<h2>' + esc(cfg.successTitle) + '</h2>',
       '<p>' + esc(cfg.successBody) + '</p>',
+      share ? '<p>Know someone with a surgery or hospital stay coming up?</p><button type="button" class="btn btn-primary mend-share" style="margin:0 8px 12px 0;">Share MEND</button>' : '',
       '<button type="button" class="btn btn-secondary mend-modal-done">Close</button>',
       '</div>'
     ].join('');
-    panelBody.querySelector('.mend-modal-done').focus();
+    var shareBtn = panelBody.querySelector('.mend-share');
+    if (shareBtn) shareBtn.addEventListener('click', function() {
+      var native = !!navigator.share;
+      if (window.gtag) gtag('event', 'share', { method: native ? 'native' : 'copy', content_type: 'reserve' });
+      if (native) {
+        navigator.share({ title: 'MEND Medical Apparel', text: 'Recovery gowns that actually close. Reserve with no payment.', url: SHARE_URL }).catch(function() {});
+      } else if (navigator.clipboard) {
+        navigator.clipboard.writeText(SHARE_URL).then(function() { shareBtn.textContent = 'Link copied'; });
+      }
+    });
+    (shareBtn || panelBody.querySelector('.mend-modal-done')).focus();
   }
 
   overlay.addEventListener('click', function(e) {
@@ -764,8 +799,11 @@ window.showTab = window.showTab || function(id, btn) {
       body: JSON.stringify(data)
     }).then(function(res) {
       if (!res.ok) throw new Error('Request failed');
-      if (window.gtag) gtag('event', 'lead_submit', { modal_type: type });
-      showFormSuccess(cfg);
+      if (window.gtag) {
+        gtag('event', 'lead_submit', { modal_type: type });
+        gtag('event', 'generate_lead', { lead_type: type });
+      }
+      showFormSuccess(cfg, type);
     }).catch(function() {
       errorEl.textContent = 'Something went wrong — please try again.';
       errorEl.classList.add('show');
