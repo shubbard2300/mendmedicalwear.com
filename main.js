@@ -525,7 +525,7 @@ window.showTab = window.showTab || function(id, btn) {
   style.textContent = [
     // Self-contained palette so extracted content (which uses var(--accent) etc.)
     // renders correctly even on pages that never loaded styles.css.
-    '.mend-modal-panel{--bg:#FAFAF8; --fg:#2B2B28; --muted:#8A857C; --line:#E3DFD6; --accent:#7C8B7A; --accent-dark:#677866; --panel:#F1EEE7;}',
+    '.mend-modal-panel{--bg:#FAFAF8; --fg:#2B2B28; --muted:#706C64; --line:#E3DFD6; --accent:#7C8B7A; --accent-dark:#60705F; --panel:#F1EEE7;}',
     '.mend-modal-overlay{position:fixed; inset:0; z-index:1000; display:flex; align-items:flex-start; justify-content:center;',
     '  padding:6vh 20px; background:rgba(30,28,24,0); overflow-y:auto; opacity:0; pointer-events:none;',
     '  transition:opacity .3s ease, background .3s ease;}',
@@ -555,7 +555,7 @@ window.showTab = window.showTab || function(id, btn) {
     '.mend-modal-panel input:focus, .mend-modal-panel textarea:focus, .mend-modal-panel select:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(124,139,122,.15);}',
     '.mend-modal-panel input[readonly]{color:var(--muted); cursor:not-allowed;}',
     '.mend-modal-panel textarea{resize:vertical; min-height:110px;}',
-    '.mend-modal-panel .form-msg{font-size:13px; color:var(--accent); display:none; margin-top:8px;}',
+    '.mend-modal-panel .form-msg{font-size:13px; color:var(--accent-dark); display:none; margin-top:8px;}',
     '.mend-modal-panel .form-msg.show{display:block;}',
     // Lead-capture form modals (Reserve, Waitlist, Facility Quote, etc.)
     '.mend-lead-eyebrow{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent-dark); font-weight:600; margin-bottom:10px;}',
