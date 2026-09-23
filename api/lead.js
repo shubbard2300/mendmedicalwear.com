@@ -1,8 +1,11 @@
 // Handles every lead-capture form on the site (Reserve, Waitlist, Facility
 // Quote, Schedule Demo, Distributor Application, Manufacturing Updates, and
-// the general Contact form) through one endpoint, forwarding each as a
-// clearly labeled email via Resend. There is no database/CRM behind this —
-// every submission is routed straight to the inbox.
+// the general Contact form) through one endpoint. Each submission is:
+//   1. emailed to contact@ via Resend (the lead, as before),
+//   2. confirmed to the person who filled the form (all types but Contact),
+//   3. appended as a row to the private "MEND Leads" Google Sheet through an
+//      Apps Script web app (LEADS_WEBHOOK_URL + LEADS_WEBHOOK_TOKEN).
+// A failure in 2 or 3 is logged, never surfaced: the lead email is what matters.
 
 var TYPE_INFO = {
   contact: { label: 'Contact Form', required: ['name', 'email', 'message'] },
@@ -21,78 +24,20 @@ var FIELD_LABELS = {
   estimatedUnits: 'Estimated Units', preferredTime: 'Preferred Time',
   company: 'Company', businessType: 'Business Type', website: 'Website',
   region: 'Region Served', color: 'Color', size: 'Size', closure: 'Closure',
-  buyingFor: 'Buying For', heardAbout: 'Heard About Us', source: 'Source'
+  buyingFor: 'Buying For', heardAbout: 'Heard About Us', marketingOptIn: 'MEND Updates Opt-In',
+  source: 'Source'
 };
 
-// What the person who filled in the form gets back. Contact has no entry: a human
-// replies to those. Device waitlists must never read as a reservation (FDA CPG 300.600).
-var CONFIRM = {
-  reserve: {
-    subject: 'You’re reserved — MEND founding customer list',
-    title: 'You’re reserved.',
-    lines: [
-      'Thanks for reserving with MEND. Here is what happens next:',
-      '1. Nothing has been charged, and nothing will be until you confirm.',
-      '2. As your order nears production, we’ll email you to confirm your size and details and take payment. Your founding price is locked.',
-      '3. Want to change or cancel? Just reply to this email, any time before you pay.'
-    ],
-    share: true
-  },
-  waitlist: {
-    subject: 'You’re on the MEND waitlist',
-    title: 'You’re on the list.',
-    lines: [
-      'Thanks for joining the waitlist. We’ll email you as soon as this is available — nothing to do until then.',
-      'Joining a waitlist is not an order or a reservation, and nothing is ever charged from it.'
-    ]
-  },
-  newsletter: {
-    subject: 'You’re subscribed to MEND manufacturing updates',
-    title: 'You’re subscribed.',
-    lines: ['Short, occasional emails as we move through production. Reply “unsubscribe” any time to stop them.']
-  },
-  facilityQuote: { subject: 'We received your MEND facility request', title: 'Request received.', lines: ['Thanks — our team will follow up within one business day. Reply to this email with anything you’d like us to know first.'] },
-  demo: { subject: 'We received your MEND demo request', title: 'Request received.', lines: ['Thanks — we’ll reach out to find a time that works. Reply to this email with anything you’d like us to know first.'] },
-  distributor: { subject: 'We received your MEND partner application', title: 'Application received.', lines: ['Thanks — our team will review it and follow up shortly. Reply to this email with anything you’d like us to know first.'] }
-};
-
-var SHARE_URL = 'https://www.mendmedicalwear.com/?utm_source=referral&utm_medium=email&utm_campaign=reserve_confirm';
-
-function renderConfirmHtml(c, product) {
-  var body = c.lines.map(function(l) {
-    return '<p style="margin:0 0 14px;font-size:16px;line-height:1.6;color:#2B2B28;">' + esc(l) + '</p>';
-  }).join('');
-  return '<div style="margin:0;padding:32px 16px;background:#F1EEE7;font-family:Helvetica,Arial,sans-serif;">' +
-    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;margin:0 auto;background:#FFFFFF;border-radius:12px;overflow:hidden;border-collapse:separate;">' +
-    '<tr><td style="background:#677866;padding:28px 32px;color:#FFFFFF;">' +
-    '<div style="font-size:13px;font-weight:700;letter-spacing:.3em;">MEND</div>' +
-    '<div style="font-size:28px;font-weight:700;margin-top:8px;">' + esc(c.title) + '</div>' +
-    '</td></tr>' +
-    '<tr><td style="padding:28px 32px 12px;">' +
-    (product ? '<p style="margin:0 0 18px;font-size:14px;color:#6B675F;">' + esc(product) + '</p>' : '') +
-    body +
-    (c.share ? '<p style="margin:22px 0 8px;font-size:15px;color:#2B2B28;">Know someone with a surgery or hospital stay coming up? <a href="' + SHARE_URL + '" style="color:#677866;font-weight:700;">Send them MEND</a>.</p>' : '') +
-    '</td></tr>' +
-    '<tr><td style="background:#F1EEE7;padding:20px 32px;font-size:13px;line-height:1.6;color:#6B675F;">' +
-    '<strong style="color:#2B2B28;">MEND Medical Apparel</strong> · <a href="https://www.mendmedicalwear.com" style="color:#677866;">mendmedicalwear.com</a><br>' +
-    'You’re getting this because this address was entered on our site. Didn’t do that? Ignore this email and we’ll never write again.' +
-    '</td></tr>' +
-    '</table></div>';
-}
-
-function sendEmail(apiKey, payload) {
-  return fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: { Authorization: 'Bearer ' + apiKey, 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  });
-}
+var SITE = 'https://www.mendmedicalwear.com';
+var SHARE_URL = SITE + '/?utm_source=referral&utm_medium=email&utm_campaign=reserve_confirm';
 
 function esc(s) {
   return String(s).replace(/[&<>"']/g, function(c) {
     return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
   });
 }
+
+/* ---------------- Internal lead email (to contact@) ---------------- */
 
 // Inline styles and tables only: Gmail strips <style> blocks and flexbox.
 function renderHtml(title, fields, page) {
@@ -110,12 +55,241 @@ function renderHtml(title, fields, page) {
     '</td></tr>' +
     '<tr><td style="padding:12px 32px 24px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0">' + rows + '</table></td></tr>' +
     '<tr><td style="background:#F1EEE7;padding:20px 32px;font-size:13px;line-height:1.6;color:#6B675F;">' +
-    '<strong style="color:#2B2B28;">MEND Medical Apparel</strong> · <a href="https://www.mendmedicalwear.com" style="color:#677866;">mendmedicalwear.com</a><br>' +
+    '<strong style="color:#2B2B28;">MEND Medical Apparel</strong> · <a href="' + SITE + '" style="color:#677866;">mendmedicalwear.com</a><br>' +
     (page ? 'Submitted from mendmedicalwear.com' + esc(page) + '<br>' : '') +
     'Reply to this email to respond to the sender directly.' +
     '</td></tr>' +
     '</table></div>';
 }
+
+/* ---------------- Customer confirmation emails ---------------- */
+
+// Product → hosted 192px thumbnail + page + founding price. Matched by substring
+// because the product field carries the full product name from the page.
+var PRODUCTS = [
+  { match: /comfort wrap|gown/i, thumb: 'email-thumb-gown.jpg', url: '/products/stylish-washable-hospital-gown', price: '$68.00' },
+  { match: /scrub/i, thumb: 'email-thumb-scrubs.jpg', url: '/products/residential-nurse-scrub-set', price: '$74.00' },
+  { match: /compression|socks/i, thumb: 'email-thumb-socks.jpg', url: '/products/compression-socks', price: '$28.00' },
+  { match: /airguard/i, thumb: 'email-thumb-airguard.jpg', url: '/products/airguard-collar', device: true },
+  { match: /pulse/i, thumb: 'email-thumb-pulse.jpg', url: '/products/mend-pulse', device: true },
+  { match: /oxi/i, thumb: 'email-thumb-oxi.jpg', url: '/products/mend-oxi', device: true }
+];
+function productInfo(name) {
+  if (!name) return null;
+  // Bundles ("Scrub Set + Compression Socks") have no single founding price.
+  var bundle = /bundle|\+/i.test(name);
+  for (var i = 0; i < PRODUCTS.length; i++) {
+    if (PRODUCTS[i].match.test(name)) {
+      var p = Object.assign({}, PRODUCTS[i]);
+      if (bundle) p.price = '';
+      return p;
+    }
+  }
+  return null;
+}
+
+// What each form type says back. Device waitlists must never read as a
+// reservation or order (FDA CPG 300.600).
+var CONFIRM = {
+  reserve: {
+    subject: 'You’re reserved — MEND founding customer list',
+    preheader: 'Nothing has been charged. Here’s what happens next.',
+    title: 'You’re reserved.',
+    intro: 'Your spot in MEND’s first production run is saved, and nothing has been charged.',
+    steps: [
+      ['Reserved, no charge', 'You’re on the founding customer list. Your founding price is locked.'],
+      ['Confirm before production', 'As your order nears production, we’ll email you to confirm your size and details, and that’s when you pay.'],
+      ['Ships from the first run', 'Change or cancel anytime before you pay. Just reply to this email.']
+    ],
+    share: true
+  },
+  waitlist: {
+    subject: 'You’re on the MEND waitlist',
+    preheader: 'We’ll email you as soon as it’s available.',
+    title: 'You’re on the list.',
+    intro: 'We’ll email you as soon as this is available. There’s nothing to do until then.',
+    note: 'Joining a waitlist is not an order or a reservation, and nothing is ever charged from it.'
+  },
+  newsletter: {
+    subject: 'You’re subscribed to MEND updates',
+    preheader: 'Short, occasional notes as we move through production.',
+    title: 'You’re subscribed.',
+    intro: 'Short, occasional emails as we move through production: first samples, launch timing, and founding-customer news.',
+    note: 'To stop them, reply “unsubscribe” anytime.'
+  },
+  facilityQuote: { subject: 'We received your MEND facility request', preheader: 'We’ll follow up within one business day.', title: 'Request received.', intro: 'We’re glad you’re interested in the Founding Facility Pilot. We’ll follow up within one business day with pilot pricing.', b2b: true },
+  demo: { subject: 'We received your MEND demo request', preheader: 'We’ll reach out to find a time.', title: 'Request received.', intro: 'We’ll reach out to find a time that works for you and your team.', b2b: true },
+  distributor: { subject: 'We received your MEND partner application', preheader: 'Our team will review it and follow up.', title: 'Application received.', intro: 'We’ll review your application to carry MEND and follow up shortly.', b2b: true }
+};
+
+var C = { page: '#F1EEE7', card: '#FFFFFF', ink: '#2B2B28', muted: '#6B675F', line: '#E3DFD6', sage: '#677866', sageSoft: '#EEF1EC' };
+var FONT = "-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif";
+
+function button(href, label, primary) {
+  // Table-cell button: survives Outlook's Word renderer, which ignores padding on <a>.
+  return '<table role="presentation" cellpadding="0" cellspacing="0" border="0" class="btn" style="border-collapse:separate;"><tr>' +
+    '<td align="center" bgcolor="' + (primary ? C.sage : C.card) + '"' + (primary ? '' : ' class="btn2"') + ' style="border-radius:999px;' + (primary ? '' : 'border:1.5px solid ' + C.sage + ';') + '">' +
+    '<a href="' + esc(href) + '" style="display:inline-block;padding:14px 28px;font-family:' + FONT + ';font-size:15px;font-weight:700;line-height:1;color:' + (primary ? '#FFFFFF' : C.sage) + ';text-decoration:none;border-radius:999px;">' + esc(label) + '</a>' +
+    '</td></tr></table>';
+}
+
+function renderConfirmHtml(c, body) {
+  var first = String(body.name || '').trim().split(/\s+/)[0];
+  var p = c.b2b ? null : productInfo(body.product);
+  var details = [body.color, body.size, body.closure].filter(Boolean).join(' · ');
+  var qty = body.quantity && String(body.quantity) !== '1' ? 'Qty ' + body.quantity : '';
+
+  var orderCard = '';
+  if (body.product && !c.b2b) {
+    var priceLine = p && p.price && !p.device && body.type === 'reserve'
+      ? '<div class="t-sage" style="margin-top:6px;font-size:14px;color:' + C.sage + ';font-weight:700;">Founding price ' + esc(p.price) + (qty ? ' each' : '') + ' · locked</div>' : '';
+    orderCard =
+      '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="panel" style="background:' + C.sageSoft + ';border-radius:14px;margin:4px 0 28px;"><tr>' +
+      (p ? '<td width="96" valign="top" style="padding:16px 0 16px 16px;"><img src="' + SITE + '/' + p.thumb + '" width="96" height="96" alt="" style="display:block;border-radius:10px;border:0;width:96px;height:96px;"></td>' : '') +
+      '<td valign="middle" style="padding:16px 18px;font-family:' + FONT + ';">' +
+      '<div class="t-ink" style="font-size:16px;font-weight:700;line-height:1.35;color:' + C.ink + ';">' + esc(body.product) + '</div>' +
+      (details || qty ? '<div class="t-muted" style="margin-top:4px;font-size:14px;line-height:1.4;color:' + C.muted + ';">' + esc([details, qty].filter(Boolean).join(' · ')) + '</div>' : '') +
+      priceLine +
+      '</td></tr></table>';
+  }
+  if (c.b2b) {
+    var org = body.facility || body.company;
+    var orgType = body.facilityType || body.businessType;
+    if (org) orderCard =
+      '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="panel" style="background:' + C.sageSoft + ';border-radius:14px;margin:4px 0 28px;"><tr><td style="padding:16px 18px;font-family:' + FONT + ';">' +
+      '<div class="t-ink" style="font-size:16px;font-weight:700;color:' + C.ink + ';">' + esc(org) + '</div>' +
+      (orgType ? '<div class="t-muted" style="margin-top:4px;font-size:14px;color:' + C.muted + ';">' + esc(orgType) + '</div>' : '') +
+      '</td></tr></table>';
+  }
+
+  var steps = '';
+  if (c.steps) {
+    steps = '<div class="t-ink" style="font-family:' + FONT + ';font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:' + C.muted + ';margin:0 0 14px;">What happens next</div>' +
+      '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 28px;">' +
+      c.steps.map(function(s, i) {
+        return '<tr>' +
+          '<td width="40" valign="top" style="padding:0 0 18px;"><div style="width:30px;height:30px;line-height:30px;border-radius:50%;background:' + C.sage + ';color:#FFFFFF;text-align:center;font-family:' + FONT + ';font-size:14px;font-weight:700;">' + (i + 1) + '</div></td>' +
+          '<td valign="top" style="padding:3px 0 18px 8px;font-family:' + FONT + ';">' +
+          '<div class="t-ink" style="font-size:15px;font-weight:700;color:' + C.ink + ';line-height:1.35;">' + esc(s[0]) + '</div>' +
+          '<div class="t-muted" style="margin-top:3px;font-size:14px;line-height:1.55;color:' + C.muted + ';">' + esc(s[1]) + '</div>' +
+          '</td></tr>';
+      }).join('') + '</table>';
+  }
+
+  var ctas = '';
+  if (c.share) {
+    ctas = '<div class="t-ink" style="font-family:' + FONT + ';font-size:15px;line-height:1.55;color:' + C.ink + ';margin:0 0 14px;">Know someone with a surgery or hospital stay coming up? Send them MEND.</div>' +
+      '<table role="presentation" cellpadding="0" cellspacing="0" class="stackwrap"><tr><td class="stack" style="padding:0 10px 10px 0;">' + button(SHARE_URL, 'Share MEND', true) + '</td>' +
+      (p ? '<td class="stack" style="padding:0 0 10px;">' + button(SITE + p.url, 'View your ' + (/(gown|comfort wrap)/i.test(body.product) ? 'gown' : 'order'), false) + '</td>' : '') +
+      '</tr></table>';
+  } else if (!c.b2b) {
+    ctas = button(SITE + (p && p.device ? '/#products' : '/'), p && p.device ? 'See what’s available now' : 'Visit MEND', true);
+  } else {
+    ctas = button(SITE + '/facilities', 'Pilot details', true);
+  }
+
+  var note = c.note ? '<div class="t-muted" style="font-family:' + FONT + ';font-size:13px;line-height:1.6;color:' + C.muted + ';margin:22px 0 0;">' + esc(c.note) + '</div>' : '';
+
+  return '<!DOCTYPE html><html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>' +
+    '<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="x-apple-disable-message-reformatting">' +
+    '<meta name="color-scheme" content="light dark"><meta name="supported-color-schemes" content="light dark">' +
+    '<title>' + esc(c.title) + '</title>' +
+    '<style>' +
+    'body{margin:0;padding:0;-webkit-text-size-adjust:100%;} img{border:0;outline:none;} a{color:' + C.sage + ';}' +
+    '@media (max-width:620px){.container{width:100%!important;} .px{padding-left:22px!important;padding-right:22px!important;} .h1{font-size:28px!important;} .stackwrap{width:100%!important;} .stack{display:block!important;width:100%!important;padding-right:0!important;box-sizing:border-box;} .btn{display:table!important;width:100%!important;} .btn td{width:100%!important;} .btn a{display:block!important;text-align:center!important;}}' +
+    '@media (prefers-color-scheme:dark){.bg-page{background:#141614!important;} .card{background:#1D201C!important;} .panel{background:#262B25!important;} .t-ink{color:#ECEAE4!important;} .t-muted{color:#B3AFA6!important;} .t-sage{color:#A9C0A5!important;} .rule{border-color:#343A32!important;} .btn2{background:transparent!important;} .btn2 a{color:#A9C0A5!important;} .foot{background:#141614!important;}}' +
+    '</style><!--[if mso]><style>*{font-family:Arial,sans-serif!important;}</style><![endif]--></head>' +
+    '<body class="bg-page" style="margin:0;padding:0;background:' + C.page + ';">' +
+    // Preheader: the inbox preview line, hidden in the message itself.
+    '<div style="display:none;max-height:0;overflow:hidden;opacity:0;mso-hide:all;">' + esc(c.preheader) + '&#8203;&zwnj;&nbsp;&#8203;&zwnj;&nbsp;&#8203;&zwnj;&nbsp;&#8203;&zwnj;&nbsp;</div>' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="bg-page" style="background:' + C.page + ';"><tr><td align="center" style="padding:28px 12px;">' +
+    '<!--[if mso]><table role="presentation" width="600" cellpadding="0" cellspacing="0"><tr><td><![endif]-->' +
+    '<table role="presentation" width="600" cellpadding="0" cellspacing="0" class="container card" style="width:600px;max-width:600px;background:' + C.card + ';border-radius:18px;overflow:hidden;">' +
+    // Header band with the logo (a PNG: Gmail won't render SVG).
+    '<tr><td style="background:' + C.sage + ';padding:26px 36px;" class="px"><a href="' + SITE + '" style="text-decoration:none;"><img src="' + SITE + '/mend-email-logo.png" width="170" height="48" alt="MEND Medical Apparel" style="display:block;width:170px;height:48px;border:0;color:#FFFFFF;font-family:' + FONT + ';font-size:20px;font-weight:700;"></a></td></tr>' +
+    '<tr><td class="px" style="padding:36px 36px 8px;font-family:' + FONT + ';">' +
+    '<h1 class="h1 t-ink" style="margin:0 0 12px;font-size:32px;line-height:1.15;font-weight:700;color:' + C.ink + ';letter-spacing:-.01em;">' + esc(c.title) + '</h1>' +
+    '<p class="t-ink" style="margin:0 0 24px;font-size:16px;line-height:1.6;color:' + C.ink + ';">' + (first ? 'Thanks, ' + esc(first) + '. ' : '') + esc(c.intro) + '</p>' +
+    orderCard + steps + ctas + note +
+    '</td></tr>' +
+    '<tr><td class="px" style="padding:28px 36px 32px;font-family:' + FONT + ';"><div class="rule" style="border-top:1px solid ' + C.line + ';padding-top:22px;">' +
+    '<p class="t-muted" style="margin:0 0 6px;font-size:14px;line-height:1.6;color:' + C.muted + ';">Questions? Reply to this email or call <a class="t-sage" href="tel:+19712541565" style="color:' + C.sage + ';font-weight:700;text-decoration:none;white-space:nowrap;">(971) 254-1565</a>.</p>' +
+    '</div></td></tr>' +
+    '</table>' +
+    '<!--[if mso]></td></tr></table><![endif]-->' +
+    '<table role="presentation" width="600" cellpadding="0" cellspacing="0" class="container" style="width:600px;max-width:600px;"><tr><td class="px foot" style="padding:22px 36px 8px;font-family:' + FONT + ';font-size:12px;line-height:1.7;color:' + C.muted + ';text-align:center;">' +
+    '<span class="t-muted"><strong>MEND Medical Apparel</strong> · Portland, OR · <a href="' + SITE + '" style="color:' + C.muted + ';">mendmedicalwear.com</a><br>' +
+    'You’re receiving this because this address was entered on mendmedicalwear.com. If that wasn’t you, ignore this email and we won’t write again.</span>' +
+    '</td></tr></table>' +
+    '</td></tr></table></body></html>';
+}
+
+function renderConfirmText(c, body) {
+  var lines = [c.title, '', (body.name ? 'Thanks, ' + String(body.name).trim().split(/\s+/)[0] + '. ' : '') + c.intro, ''];
+  var details = [body.product, body.color, body.size, body.closure].filter(Boolean).join(' · ');
+  if (details && !c.b2b) lines.push(details, '');
+  if (c.steps) { lines.push('What happens next:'); c.steps.forEach(function(s, i) { lines.push((i + 1) + '. ' + s[0] + ': ' + s[1]); }); lines.push(''); }
+  if (c.share) lines.push('Know someone with a surgery coming up? ' + SHARE_URL, '');
+  if (c.note) lines.push(c.note, '');
+  lines.push('Questions? Reply to this email or call (971) 254-1565.', '', 'MEND Medical Apparel · Portland, OR · mendmedicalwear.com');
+  return lines.join('\n');
+}
+
+/* ---------------- Google Sheet log ---------------- */
+
+// Column header in the "MEND Leads" sheet → value. The Apps Script appends by
+// header name, so column order in the sheet can change without breaking this.
+var SHEET_COLUMNS = {
+  'Submitted At': function() { return new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }); },
+  'Type': function(b) { return TYPE_INFO[b.type].label; },
+  'Name': 'name', 'Email': 'email', 'Phone': 'phone', 'Product': 'product', 'Color': 'color', 'Size': 'size',
+  'Closure': 'closure', 'Quantity': 'quantity', 'Procedure Date': 'procedureDate', 'Buying For': 'buyingFor',
+  'Heard About': 'heardAbout',
+  'Marketing Opt-In': function(b) { return b.type === 'newsletter' || b.marketingOptIn === 'Yes' ? 'Yes' : 'No'; },
+  'Organization': function(b) { return b.facility || b.company || ''; },
+  'Org Type': function(b) { return b.facilityType || b.businessType || ''; },
+  'Role': 'role', 'Est. Units': 'estimatedUnits', 'Website': 'website', 'Region': 'region',
+  'Preferred Time': 'preferredTime', 'Message': 'message', 'Page': 'page', 'Source': 'source'
+};
+
+function sheetRow(body) {
+  var row = {};
+  Object.keys(SHEET_COLUMNS).forEach(function(h) {
+    var col = SHEET_COLUMNS[h];
+    var v = typeof col === 'function' ? col(body) : body[col];
+    row[h] = v === undefined || v === null ? '' : String(v);
+  });
+  return row;
+}
+
+async function logToSheet(body) {
+  var url = process.env.LEADS_WEBHOOK_URL, token = process.env.LEADS_WEBHOOK_TOKEN;
+  if (!url || !token) { console.warn('Lead sheet not configured'); return; }
+  try {
+    // Apps Script answers a POST with a redirect to its output; fetch follows it.
+    var r = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ token: token, row: sheetRow(body) }),
+      redirect: 'follow',
+      signal: AbortSignal.timeout(8000)
+    });
+    var t = await r.text();
+    if (!r.ok || t.indexOf('"ok":true') === -1) console.error('Lead sheet error:', r.status, t.slice(0, 200));
+  } catch (err) {
+    console.error('Lead sheet error:', err && err.message);
+  }
+}
+
+function sendEmail(apiKey, payload) {
+  return fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { Authorization: 'Bearer ' + apiKey, 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+}
+
+/* ---------------- Handler ---------------- */
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -150,6 +324,10 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Email service not configured' });
   }
 
+  // Start the sheet write now so it runs alongside the emails; it's awaited before
+  // every response below (a serverless function may freeze once it answers).
+  var sheet = logToSheet(body);
+
   var fields = Object.keys(body)
     .filter(function(key) { return key !== 'type' && key !== 'page' && key !== 'hp_company' && key !== 'mend_trap' && body[key] !== undefined && String(body[key]).trim() !== ''; })
     .map(function(key) {
@@ -171,6 +349,7 @@ export default async function handler(req, res) {
     if (!response.ok) {
       var errText = await response.text();
       console.error('Resend error:', errText);
+      await sheet;
       return res.status(502).json({ error: 'Failed to send message' });
     }
 
@@ -178,14 +357,13 @@ export default async function handler(req, res) {
     var c = CONFIRM[type];
     if (c && body.email) {
       try {
-        var product = [body.product, body.color, body.size, body.closure].filter(Boolean).join(' · ');
         var confirm = await sendEmail(apiKey, {
           from: 'MEND Medical Apparel <no-reply@mendmedicalwear.com>',
           to: String(body.email),
           reply_to: 'contact@mendmedicalwear.com',
           subject: c.subject,
-          text: (product ? product + '\n\n' : '') + c.lines.join('\n\n') + (c.share ? '\n\nKnow someone with a surgery coming up? ' + SHARE_URL : ''),
-          html: renderConfirmHtml(c, product)
+          text: renderConfirmText(c, body),
+          html: renderConfirmHtml(c, body)
         });
         if (!confirm.ok) console.error('Confirmation email error:', await confirm.text());
       } catch (confirmErr) {
@@ -193,9 +371,11 @@ export default async function handler(req, res) {
       }
     }
 
+    await sheet;
     return res.status(200).json({ ok: true });
   } catch (err) {
     console.error('Lead form error:', err);
+    await sheet;
     return res.status(500).json({ error: 'Failed to send message' });
   }
 }

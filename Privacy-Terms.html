@@ -110,10 +110,11 @@
         </div>
 
         <h2 id="p1">1. What We Collect</h2>
-        <p>We only collect what you type into one of our forms, plus basic usage data from analytics and our web host. Every form submission is sent to our team as an email. There is no customer database, no account system, and no payment processing on this site.</p>
+        <p>We only collect what you type into one of our forms, plus basic usage data from analytics and our web host. Every form submission is sent to our team as an email and saved as a row in a private Google Sheet that only our team can open, so we can keep track of who asked for what. There is no account system and no payment processing on this site.</p>
         <ul>
           <li><strong>Pre-order (Reserve):</strong> the product, color, size, closure style, and quantity you picked; your name and email; and, if you choose to add them, your phone number, surgery or procedure date, who the order is for, and how you heard about us.</li>
           <li><strong>Waitlist:</strong> the product, your name, and your email.</li>
+          <li><strong>MEND updates checkbox:</strong> on the pre-order and waitlist forms, whether you ticked "Email me occasional MEND updates". It's unticked unless you tick it.</li>
           <li><strong>Contact form:</strong> your name, email, and message.</li>
           <li><strong>Facility pricing, demo, and distributor requests:</strong> your organization's name and type, your name, role, email, phone, website, region served, estimated units, and preferred meeting time — whichever of these the form asks for and you fill in.</li>
           <li><strong>Manufacturing updates:</strong> your email.</li>
@@ -128,7 +129,7 @@
         <h2 id="p3">3. How We Use It</h2>
         <ul>
           <li>To reply to you, and to confirm, change, or cancel your pre-order or waitlist spot</li>
-          <li>To send the manufacturing updates you signed up for</li>
+          <li>To send MEND updates, only if you signed up for them or ticked the updates box. Every update lets you unsubscribe by replying.</li>
           <li>To prepare facility quotes, demos, and distribution conversations you requested</li>
           <li>To understand which pages and links bring people to the site, so we can improve it</li>
           <li>To detect and prevent spam or abuse, and to comply with the law</li>
@@ -141,7 +142,7 @@
           <li><strong>Vercel</strong> hosts the website. Like any web host, it keeps short-lived request logs, including IP address, browser type, and the page requested.</li>
           <li><strong>Resend</strong> delivers each form submission to our team as an email, and sends you a one-time confirmation email when you pre-order, join a waitlist, sign up for updates, or send a facility, demo, or distributor request.</li>
           <li><strong>ImprovMX</strong> forwards mail sent to contact@mendmedicalwear.com to our inbox.</li>
-          <li><strong>Google</strong> hosts that inbox (Gmail) and provides Google Analytics (see Section 5).</li>
+          <li><strong>Google</strong> hosts that inbox (Gmail), stores the private Google Sheet of form submissions (through Google Sheets and Apps Script), and provides Google Analytics (see Section 5).</li>
           <li><strong>unpkg</strong> serves the open-source React library used by the Fall Risk Check, on the Fall Risk Check and AirGuard™ pages. Loading it lets unpkg see your IP address and browser details.</li>
         </ul>
         <p>We may also disclose information when required by law, court order, or to protect the rights and safety of our users.</p>
@@ -152,7 +153,7 @@
         <p>We don't use advertising or retargeting cookies.</p>
 
         <h2 id="p6">6. How Long We Keep It</h2>
-        <p>Form submissions live in our email inbox for as long as we need them to follow up on your pre-order, waitlist spot, or request, and we delete them when you ask. Google Analytics keeps usage data for the retention period set in our account, then deletes it. Vercel's request logs are kept only briefly under Vercel's own policies.</p>
+        <p>Form submissions live in our email inbox and our private submissions sheet for as long as we need them to follow up on your pre-order, waitlist spot, or request, and we delete both when you ask. Google Analytics keeps usage data for the retention period set in our account, then deletes it. Vercel's request logs are kept only briefly under Vercel's own policies.</p>
 
         <h2 id="p7">7. Your Choices &amp; Rights</h2>
         <p>You can ask us at any time to:</p>
