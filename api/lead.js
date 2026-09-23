@@ -129,8 +129,11 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Unknown form type' });
   }
 
-  // Honeypot: humans never see this field. Answer 200 so a bot learns nothing.
-  if (body.hp_company && String(body.hp_company).trim()) {
+  // Honeypot: humans never see this field. Answer 200 so a bot learns nothing, but log
+  // it so a false positive shows up in Vercel logs instead of vanishing. The old field,
+  // hp_company, was autofilled by Chrome and is deliberately ignored now.
+  if (body.mend_trap && String(body.mend_trap).trim()) {
+    console.warn('Honeypot tripped:', type, typeof body.page === 'string' ? body.page : '');
     return res.status(200).json({ ok: true });
   }
 
@@ -148,7 +151,7 @@ export default async function handler(req, res) {
   }
 
   var fields = Object.keys(body)
-    .filter(function(key) { return key !== 'type' && key !== 'page' && key !== 'hp_company' && body[key] !== undefined && String(body[key]).trim() !== ''; })
+    .filter(function(key) { return key !== 'type' && key !== 'page' && key !== 'hp_company' && key !== 'mend_trap' && body[key] !== undefined && String(body[key]).trim() !== ''; })
     .map(function(key) {
       return { label: FIELD_LABELS[key] || key, value: String(body[key]) };
     });

@@ -329,7 +329,7 @@ document.addEventListener('submit', function(e) {
     name: form.name.value,
     email: form.email.value,
     message: form.message.value,
-    hp_company: form.hp_company ? form.hp_company.value : '',
+    mend_trap: form.mend_trap ? form.mend_trap.value : '',
     source: leadSource()
   };
 
@@ -709,7 +709,9 @@ window.showTab = window.showTab || function(id, btn) {
       '<p class="mend-lead-subtitle">' + esc(cfg.subtitle) + '</p>',
       '<form class="mend-lead-form" data-lead-type="' + esc(type) + '">',
       fields,
-      '<div class="mend-hp" aria-hidden="true"><label for="mendField_hp">Company</label><input id="mendField_hp" name="hp_company" type="text" tabindex="-1" autocomplete="off"></div>',
+      // Honeypot. Name and label must not look like anything browser autofill fills
+      // (the first version was "Company"/hp_company, and Chrome autofilled it).
+      '<div class="mend-hp" aria-hidden="true"><label for="mendField_trap">Leave this field empty</label><input id="mendField_trap" name="mend_trap" type="text" tabindex="-1" autocomplete="new-password"></div>',
       '<button type="submit" class="btn btn-primary">' + esc(cfg.submitLabel) + '</button>',
       '<div class="mend-form-error" role="alert"></div>',
       PRIVACY_NOTE,
