@@ -196,7 +196,7 @@
       <div class="price">$74.00 <span class="price-note">· Launch price TBA</span></div>
 
       <div class="badges">
-        <span class="badge" data-tooltip="Holds up to daily wear and hot-water washing without losing softness, color, or shape — tested to 100+ wash cycles, built for shift work.">Machine Washable</span>
+        <span class="badge" data-tooltip="Built for daily wear and warm washing without losing softness, color, or shape — designed for 100+ wash cycles and shift work.">Machine Washable</span>
         <span class="badge" data-tooltip="The same soft, breathable cotton and merino wool knit used across the MEND line — comfortable through a full shift.">Cotton / Merino Wool Blend</span>
         <span class="badge" data-tooltip="Top and matching tapered jogger-style pants, designed as a coordinated set in the same fabric and tone.">Matching Set</span>
         <span class="badge" data-tooltip="A modern, tailored silhouette — fitted through the body without being restrictive, unlike boxy traditional scrubs.">Tailored Fit</span>
@@ -206,22 +206,33 @@
       <div class="option-group">
         <label>Color — <span id="colorLabel">Soft Sage</span></label>
         <div class="swatches">
-          <div class="swatch active" style="background:#C7D0C4" data-color="Sage" data-color-label="Soft Sage" data-color-suffix="" title="Soft Sage" data-tooltip="Soft Sage — coordinates directly with the Comfort Wrap Sage gown, so patients and caregivers can match." onclick="setColor(this)"></div>
-          <div class="swatch" style="background:#1B2A4A" data-color="Navy" data-color-label="Navy" data-color-suffix=" - Navy" title="Navy" data-tooltip="Navy — a classic clinical tone that reads polished and professional in any residential or home-care setting." onclick="setColor(this)"></div>
-          <div class="swatch" style="background:#3D3D3D" data-color="Charcoal" data-color-label="Charcoal" data-color-suffix=" - Charcoal" title="Charcoal" data-tooltip="Charcoal — a neutral dark grey that pairs with every gown color in the Comfort Wrap line." onclick="setColor(this)"></div>
-          <div class="swatch" style="background:#7FB3C8" data-color="Ceil Blue" data-color-label="Ceil Blue" data-color-suffix=" - Ceil Blue" title="Ceil Blue" data-tooltip="Ceil Blue — the classic medical blue, familiar and calming in any care environment." onclick="setColor(this)"></div>
+          <button type="button" class="swatch active" style="background:#C7D0C4" data-color="Sage" data-color-label="Soft Sage" data-color-suffix="" title="Soft Sage" aria-label="Soft Sage" data-tooltip="Soft Sage — coordinates directly with the Comfort Wrap Sage gown, so patients and caregivers can match." onclick="setColor(this)"></button>
+          <button type="button" class="swatch" style="background:#1B2A4A" data-color="Navy" data-color-label="Navy" data-color-suffix=" - Navy" title="Navy" aria-label="Navy" data-tooltip="Navy — a classic clinical tone that reads polished and professional in any residential or home-care setting." onclick="setColor(this)"></button>
+          <button type="button" class="swatch" style="background:#3D3D3D" data-color="Charcoal" data-color-label="Charcoal" data-color-suffix=" - Charcoal" title="Charcoal" aria-label="Charcoal" data-tooltip="Charcoal — a neutral dark grey that pairs with every gown color in the Comfort Wrap line." onclick="setColor(this)"></button>
+          <button type="button" class="swatch" style="background:#7FB3C8" data-color="Ceil Blue" data-color-label="Ceil Blue" data-color-suffix=" - Ceil Blue" title="Ceil Blue" aria-label="Ceil Blue" data-tooltip="Ceil Blue — the classic medical blue, familiar and calming in any care environment." onclick="setColor(this)"></button>
         </div>
       </div>
 
       <div class="option-group">
         <label>Size</label>
         <div class="sizes">
-          <div class="size-btn" data-tooltip="XS — best for chest 32–34in.">XS</div>
-          <div class="size-btn" data-tooltip="S — best for chest 34–38in.">S</div>
-          <div class="size-btn active" data-tooltip="M — best for chest 38–42in.">M</div>
-          <div class="size-btn" data-tooltip="L — best for chest 42–46in.">L</div>
-          <div class="size-btn" data-tooltip="XL — best for chest 46–50in.">XL</div>
+          <button type="button" class="size-btn" data-tooltip="XS — best for chest 32–34in.">XS</button>
+          <button type="button" class="size-btn" data-tooltip="S — best for chest 34–38in.">S</button>
+          <button type="button" class="size-btn active" data-tooltip="M — best for chest 38–42in.">M</button>
+          <button type="button" class="size-btn" data-tooltip="L — best for chest 42–46in.">L</button>
+          <button type="button" class="size-btn" data-tooltip="XL — best for chest 46–50in.">XL</button>
         </div>
+        <details class="size-guide">
+          <summary>Size guide</summary>
+          <table>
+            <tr><th>Size</th><th>Chest</th></tr>
+            <tr><td>XS</td><td>32–34 in</td></tr>
+            <tr><td>S</td><td>34–38 in</td></tr>
+            <tr><td>M</td><td>38–42 in</td></tr>
+            <tr><td>L</td><td>42–46 in</td></tr>
+            <tr><td>XL</td><td>46–50 in</td></tr>
+          </table>
+        </details>
       </div>
 
       <div class="cta">
@@ -253,14 +264,24 @@
       <div class="features">
         <h2>Specifications</h2>
         <ul>
-          <li><span>Fabric</span><span>Cotton / merino wool blend, stretch-knit, hot-wash durable</span></li>
+          <li><span>Fabric</span><span>Cotton / superwash merino blend, stretch-knit, warm-wash durable</span></li>
           <li><span>Fit</span><span>Tailored, graded XS–XL</span></li>
           <li><span>Top</span><span>V-neck, chest pocket, drop shoulder</span></li>
           <li><span>Bottoms</span><span>Tapered jogger-style scrub pant, elastic + drawstring waist</span></li>
           <li><span>Branding</span><span>Embroidered MEND cross icon, upper left chest</span></li>
-          <li><span>Care</span><span>Machine washable, tested to 100+ wash cycles with no significant pilling or shrinkage</span></li>
+          <li><span>Care</span><span>Machine washable (warm), designed for 100+ wash cycles — wash testing runs on our first production samples</span></li>
         </ul>
       </div>
+    </div>
+  </div>
+
+  <!-- How pre-ordering works -->
+  <div class="section">
+    <h2>How Pre-Ordering Works</h2>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><h3>Reserve — no payment</h3><p>Pick your color and size, then leave your name and email. Nothing is charged, and you'll get a confirmation email.</p></div>
+      <div class="step"><div class="step-num">2</div><h3>Confirm before production</h3><p>As your order nears production, we email you to confirm your details and pay. Your founding price is locked.</p></div>
+      <div class="step"><div class="step-num">3</div><h3>Ships from the first run</h3><p>Change or cancel any time before you pay — just reply to any email from us.</p></div>
     </div>
   </div>
 
@@ -304,7 +325,7 @@
         <h3>Comfort Scrubs</h3>
         <ul>
           <li>Tailored, graded XS–XL fit that moves with you</li>
-          <li>Cotton/merino wool blend, soft drape, hot-wash durable</li>
+          <li>Cotton/superwash merino blend, soft drape, warm-wash durable</li>
           <li>Embroidered MEND mark matches the Comfort Wrap line</li>
           <li>Tapered jogger pant with elastic + drawstring waist</li>
           <li>Coordinated top-and-pant set in Soft Sage</li>
@@ -327,7 +348,7 @@
           <li>Proof + mockup provided before production runs</li>
           <li>Accepts PNG, SVG, or vector EPS files</li>
           <li>Minimum order: 24 units per SKU per colorway</li>
-          <li>Turnaround: 3–5 business days after proof approval</li>
+          <li>Turnaround quoted with your proof</li>
         </ul>
       </div>
       <div class="brand-it-preview">
@@ -348,7 +369,7 @@
       </div>
     </div>
     <div class="brand-it-cta">
-      <a href="/#contact" class="btn btn-primary">Request a Custom Quote</a>
+      <button type="button" class="btn btn-primary" data-modal="facilityQuote">Request a Custom Quote</button>
       <span class="brand-it-hint">Our team responds within 1 business day.</span>
     </div>
   </div>

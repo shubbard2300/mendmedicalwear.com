@@ -188,6 +188,18 @@
         Organization Global Health Observatory, indicator SA_0000001442, age-standardised fall
         death rates per 100,000 population.
       </p>
+
+      <h2 class="fr-h3 fr-h3-spaced">From the team behind this check</h2>
+      <p class="fr-note">
+        MEND makes recovery wear for the stretch after a hospital stay, for the person
+        recovering and the people caring for them:
+      </p>
+      <ul class="fr-note">
+        <li><a href="/products/stylish-washable-hospital-gown">Comfort Wrap recovery gown</a> — full coverage, no ties, a front or back zip, and no metal anywhere.</li>
+        <li><a href="/products/compression-socks">Compression socks</a> — 20–30&nbsp;mmHg with a full-length grip sole.</li>
+        <li><a href="/products/airguard-collar">AirGuard™ fall-detection collar</a> — pending FDA 510(k) clearance; join the waitlist to hear when it's available.</li>
+      </ul>
+      <p class="fr-note">None of these replaces the four steps above. They make the recovery around them a little easier.</p>
     </section>
   </main>
 
@@ -216,6 +228,12 @@ n.addEventListener("click",function(e){if(e.target.closest("a,button"))s(false);
 document.addEventListener("keydown",function(e){if(e.key==="Escape"&&h.classList.contains("nav-open")){s(false);b.focus();}});
 document.addEventListener("click",function(e){if(!h.contains(e.target))s(false);});
 window.matchMedia("(min-width: 761px)").addEventListener("change",function(e){if(e.matches)s(false);});})();
+/* First-touch lead source — same as the block in main.js, so a social or ad link that
+   lands here is still credited when the visitor reserves on another page. Keep in step. */
+try{if(!sessionStorage.getItem("mendSource")){var q=new URLSearchParams(location.search),p=[];
+["utm_source","utm_medium","utm_campaign"].forEach(function(k){if(q.get(k))p.push(k.slice(4)+"="+q.get(k));});
+var r=document.referrer&&new URL(document.referrer).host!==location.host?document.referrer:"direct";
+sessionStorage.setItem("mendSource",[r].concat(p).join(" · ")+" → landed on "+location.pathname);}}catch(e){}
 </script>
 </body>
 </html>

@@ -85,8 +85,7 @@
         "@type": "Product",
         "name": "AirGuard™ Fall-Detection Collar",
         "url": "https://www.mendmedicalwear.com/products/airguard-collar",
-        "image": "https://www.mendmedicalwear.com/Concept%20-%20AirGuard%20Collar%20-%202026-06-17-web.jpg",
-        "offers": { "@type": "Offer", "price": "89.00", "priceCurrency": "USD" }
+        "image": "https://www.mendmedicalwear.com/Concept%20-%20AirGuard%20Collar%20-%202026-06-17-web.jpg"
       }
     },
     {
@@ -96,8 +95,7 @@
         "@type": "Product",
         "name": "MEND Pulse — Wireless Blood Pressure Monitor",
         "url": "https://www.mendmedicalwear.com/products/mend-pulse",
-        "image": "https://www.mendmedicalwear.com/MEND%20Pulse%20-%20Model%20-%202026-07-26-web.jpg",
-        "offers": { "@type": "Offer", "price": "129.00", "priceCurrency": "USD" }
+        "image": "https://www.mendmedicalwear.com/MEND%20Pulse%20-%20Model%20-%202026-07-26-web.jpg"
       }
     },
     {
@@ -107,8 +105,7 @@
         "@type": "Product",
         "name": "MEND Oxi — Fingertip Pulse Oximeter",
         "url": "https://www.mendmedicalwear.com/products/mend-oxi",
-        "image": "https://www.mendmedicalwear.com/MEND%20Oxi%20-%20Model%20-%202026-07-29-web.jpg",
-        "offers": { "@type": "Offer", "price": "59.00", "priceCurrency": "USD" }
+        "image": "https://www.mendmedicalwear.com/MEND%20Oxi%20-%20Model%20-%202026-07-29-web.jpg"
       }
     },
     {
@@ -146,8 +143,10 @@
   .banner-slide.active{opacity:1; pointer-events:auto;}
   .banner-slide img{width:100%; height:100%; object-fit:cover; object-position:center 30%; display:block; filter:brightness(0.82); animation:banner-kenburns 7s ease-in-out forwards;}
   .banner-dots{position:absolute; bottom:18px; left:50%; transform:translateX(-50%); display:flex; gap:8px; z-index:10;}
-  .banner-dot{width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,.35); border:none; cursor:pointer; padding:0; transition:background .2s, transform .2s;}
-  .banner-dot.active{background:#fff; transform:scale(1.3);}
+  /* 24px hit area, 7px visible dot (WCAG target size) */
+  .banner-dot{width:24px; height:24px; display:grid; place-items:center; background:none; border:none; cursor:pointer; padding:0;}
+  .banner-dot::before{content:''; width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,.35); transition:background .2s, transform .2s;}
+  .banner-dot.active::before{background:#fff; transform:scale(1.3);}
   @keyframes banner-kenburns{
     0%  { transform:scale(1.08) translateX(0px) translateY(0px); }
     50% { transform:scale(1.13) translateX(-8px) translateY(-4px); }
@@ -200,9 +199,10 @@
 
   /* Controls */
   .carousel-nav{display:flex; align-items:center; gap:16px; justify-content:center; padding:32px 0 0;}
-  .carousel-dots{display:flex; gap:8px;}
-  .carousel-dot{width:8px; height:8px; border-radius:50%; background:var(--line); border:none; cursor:pointer; padding:0; transition:background .2s ease, transform .2s ease;}
-  .carousel-dot.active{background:var(--accent); transform:scale(1.3);}
+  .carousel-dots{display:flex; gap:0;}
+  .carousel-dot{width:24px; height:24px; display:grid; place-items:center; background:none; border:none; cursor:pointer; padding:0;}
+  .carousel-dot::before{content:''; width:8px; height:8px; border-radius:50%; background:var(--line); transition:background .2s ease, transform .2s ease;}
+  .carousel-dot.active::before{background:var(--accent); transform:scale(1.3);}
   .carousel-arrow{width:40px; height:40px; border-radius:50%; border:1px solid var(--line); background:var(--panel); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:border-color .2s ease, transform .2s ease;}
   .carousel-arrow:hover{border-color:var(--accent); transform:scale(1.08);}
   .carousel-arrow svg{width:16px; height:16px; stroke:var(--fg); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;}
@@ -360,7 +360,7 @@
     <div class="hero-banner-overlay">
       <div class="hero-banner-eyebrow">Founding Customer Program · First Production Run</div>
       <h2 class="hero-banner-title">Premium Recovery Apparel.<br>Better Than Hospital Gowns.</h2>
-      <p class="hero-banner-sub">Designed for comfort, privacy &amp; dignity. Reserve your spot today — no payment required until your order ships.</p>
+      <p class="hero-banner-sub">Designed for comfort, privacy &amp; dignity. Reserve your spot today — no payment until you confirm your order.</p>
       <div class="hero-banner-cta-row">
         <button type="button" class="btn btn-primary" data-modal="reserve">Reserve Yours Today</button>
         <button type="button" class="btn btn-secondary" data-modal="facilityQuote">For Healthcare Providers</button>
@@ -426,7 +426,7 @@
         <div class="slide-text">
           <div class="slide-eyebrow">Compression Socks</div>
           <h2>Medical-grade compression socks that go the distance.</h2>
-          <p>Graduated compression eases tired legs and keeps circulation moving — comfortable from the first hour to the twelfth.</p>
+          <p>Graduated compression eases tired legs — comfortable from the first hour to the twelfth.</p>
           <div class="cta-row">
             <button type="button" class="btn btn-primary" data-modal="reserve" data-product="Compression Socks — Nurse/Caregiver Edition">Reserve Compression Socks</button>
             <a href="/products/compression-socks" class="btn btn-secondary">Learn More</a>
@@ -488,12 +488,12 @@
         <p>For generations, the hospital gown has remained virtually unchanged—thin, uncomfortable, awkwardly open in the back, and fastened with ties that never seem to stay where they should. At a time when people are often at their most vulnerable, we've accepted clothing that makes them feel anything but comfortable.</p>
         <p>Our story began long before MEND. My father was a respiratory therapist on the Oregon Coast who eventually operated five medical supply stores serving coastal communities. He provided oxygen concentrators, mobility equipment, walkers, canes, and countless other essentials. But the equipment was never the point. What mattered were the people. Every prescription filled, every delivery made, every conversation was about helping someone regain a measure of comfort, confidence, and independence.</p>
         <p>That philosophy became the foundation of MEND Medical Apparel.</p>
-        <p>We create recovery wear that feels as thoughtful as the care behind it. Garments crafted from exceptionally soft cotton-merino blends. Smooth bamboo-derived zipper components that replace cold, cumbersome metal hardware. Designs that simplify dressing for patients, caregivers, and clinicians alike. Most importantly, apparel with a timeless, understated style that people can wear with confidence—inside a hospital, during recovery at home, or beyond.</p>
+        <p>We create recovery wear that feels as thoughtful as the care behind it. Garments crafted from exceptionally soft cotton-merino blends. Metal-free zippers with smooth bamboo pulls that replace cold, cumbersome metal hardware. Designs that simplify dressing for patients, caregivers, and clinicians alike. Most importantly, apparel with a timeless, understated style that people can wear with confidence—inside a hospital, during recovery at home, or beyond.</p>
         <p>Because recovery is deeply personal. The clothing you wear during that journey should offer comfort, preserve dignity, and remind you that being a patient should never mean giving up your sense of self.</p>
         <ul>
           <li>Designed with patients, caregivers, and clinicians</li>
           <li>Machine washable, built to last</li>
-          <li>Bamboo zippers, not metal — adds no MRI risk; implanted devices still need your care team's clearance</li>
+          <li>Metal-free zippers and hardware — adds no MRI risk; implanted devices still need your care team's clearance</li>
           <li>No exposure, no ties — full coverage by design</li>
         </ul>
       </div>
@@ -594,11 +594,8 @@
         </a>
         <div class="info">
           <div class="name">AirGuard™ Fall-Detection Collar</div>
-          <div class="price" style="color:var(--muted); font-weight:400;">Coming Soon — $89.00</div>
-          <div class="badge-row">
-            <span class="badge badge-early">Early Access</span>
-            <span class="logo-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Custom Logo</span>
-          </div>
+          <div class="price" style="color:var(--muted); font-weight:400;">Pending FDA 510(k) · Waitlist open</div>
+          <div class="badge-row"><span class="badge badge-early">Waitlist</span></div>
           <div class="card-cta-row">
             <button type="button" class="btn btn-primary btn-sm" data-modal="waitlist" data-product="AirGuard™ Fall-Detection Collar">Join Waitlist</button>
             <a href="/products/airguard-collar" class="btn btn-secondary btn-sm">Learn More</a>
@@ -611,8 +608,8 @@
         </a>
         <div class="info">
           <div class="name">MEND Pulse — Wireless BP Monitor</div>
-          <div class="price" style="color:var(--muted); font-weight:400;">Coming Soon — $129.00</div>
-          <div class="badge-row"><span class="badge badge-early">Early Access</span></div>
+          <div class="price" style="color:var(--muted); font-weight:400;">Pending FDA 510(k) · Waitlist open</div>
+          <div class="badge-row"><span class="badge badge-early">Waitlist</span></div>
           <div class="card-cta-row">
             <button type="button" class="btn btn-primary btn-sm" data-modal="waitlist" data-product="MEND Pulse — Wireless BP Monitor">Join Waitlist</button>
             <a href="/products/mend-pulse" class="btn btn-secondary btn-sm">Learn More</a>
@@ -625,8 +622,8 @@
         </a>
         <div class="info">
           <div class="name">MEND Oxi — Fingertip Pulse Oximeter</div>
-          <div class="price" style="color:var(--muted); font-weight:400;">Coming Soon — $59.00</div>
-          <div class="badge-row"><span class="badge badge-early">Early Access</span></div>
+          <div class="price" style="color:var(--muted); font-weight:400;">Pending FDA 510(k) · Waitlist open</div>
+          <div class="badge-row"><span class="badge badge-early">Waitlist</span></div>
           <div class="card-cta-row">
             <button type="button" class="btn btn-primary btn-sm" data-modal="waitlist" data-product="MEND Oxi — Fingertip Pulse Oximeter">Join Waitlist</button>
             <a href="/products/mend-oxi" class="btn btn-secondary btn-sm">Learn More</a>
@@ -652,7 +649,7 @@
   <!-- Business Audiences: Healthcare Facilities & Distribution Partners -->
   <div class="section partners" id="partners">
     <h2>Built for Facilities &amp; Partners, Too</h2>
-    <p class="sub">Bulk pricing, custom branding, and a direct line to our team — for the organizations that outfit patients and caregivers at scale.</p>
+    <p class="sub">Bulk pricing, custom branding, and a direct line to our team — for the organizations that outfit patients and caregivers at scale. <a href="/facilities" style="color:var(--accent-dark); font-weight:600;">See the Founding Facility Pilot →</a></p>
     <div class="partners-grid">
       <div class="partner-card">
         <div class="partner-eyebrow">Healthcare Facilities</div>
@@ -708,6 +705,7 @@
           <label for="message">Message</label>
           <textarea id="message" name="message" required></textarea>
         </div>
+        <div class="mend-hp" aria-hidden="true"><label for="hp_company">Company</label><input type="text" id="hp_company" name="hp_company" tabindex="-1" autocomplete="off"></div>
         <button type="submit" class="btn btn-primary" style="border:none; cursor:pointer; align-self:flex-start;">Send Message</button>
         <div class="form-msg" id="formMsg">Thanks for reaching out — we'll get back to you soon.</div>
         <div class="form-msg" id="formError" style="color:#c0392b;">Something went wrong — please email us directly at contact@mendmedicalwear.com.</div>
@@ -719,7 +717,7 @@
   <footer>
     <p>MEND Medical Apparel — Comfort, redesigned for recovery.</p>
     <p>&copy; 2026 MEND Medical Apparel. All rights reserved.</p>
-    <p><a href="/FAQ">FAQ</a> &nbsp;·&nbsp; <a href="/Privacy-Terms">Privacy &amp; Terms</a> &nbsp;·&nbsp; <a href="#contact">Contact</a></p>
+    <p><a href="/facilities">For Facilities</a> &nbsp;·&nbsp; <a href="/FAQ">FAQ</a> &nbsp;·&nbsp; <a href="/Privacy-Terms">Privacy &amp; Terms</a> &nbsp;·&nbsp; <a href="#contact">Contact</a></p>
   </footer>
 </div>
 
@@ -776,9 +774,13 @@
   const dotsEl = document.getElementById('bannerDots');
   let cur = 0, timer;
 
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   slides.forEach((_, i) => {
     const d = document.createElement('button');
+    d.type = 'button';
     d.className = 'banner-dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', 'Show hero image ' + (i + 1));
     d.addEventListener('click', () => goTo(i));
     dotsEl.appendChild(d);
   });
@@ -794,11 +796,11 @@
     slides[cur].classList.add('active');
     dotsEl.children[cur].classList.add('active');
     clearInterval(timer);
-    timer = setInterval(next, 5000);
+    if (!reduceMotion) timer = setInterval(next, 5000);
   }
 
   function next() { goTo((cur + 1) % slides.length); }
-  timer = setInterval(next, 5000);
+  if (!reduceMotion) timer = setInterval(next, 5000);
 })();
 
 // Back-to-top button

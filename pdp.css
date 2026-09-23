@@ -42,6 +42,17 @@ h1{font-size:30px; font-weight:600; margin-bottom:6px;}
 .swatch.active{border-color:var(--accent); box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--accent);}
 
 .size-btn{padding:8px 16px; border:1px solid var(--line); border-radius:8px; background:#fff; font-size:14px; cursor:pointer; transition:border-color .2s ease, background .2s ease, transform .2s ease, box-shadow .2s ease;}
+/* Options are real <button>s so keyboards and screen readers can pick them */
+button.swatch{padding:0; appearance:none;}
+button.size-btn{font-family:inherit; color:var(--fg); line-height:normal;}
+.swatch:focus-visible, .size-btn:focus-visible{outline:2px solid var(--accent-dark); outline-offset:3px;}
+
+/* Size guide (native <details>, works on touch where tooltips can't) */
+.size-guide{margin-top:10px; font-size:13px;}
+.size-guide summary{cursor:pointer; color:var(--accent-dark); font-weight:600; text-decoration:underline;}
+.size-guide table{margin-top:8px; border-collapse:collapse; width:100%; max-width:360px;}
+.size-guide th, .size-guide td{text-align:left; padding:6px 10px 6px 0; border-bottom:1px solid var(--line);}
+.size-guide th{color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:.06em; font-size:11px;}
 .size-btn:hover{border-color:var(--accent); transform:translateY(-3px); box-shadow:0 6px 14px rgba(0,0,0,.08);}
 .size-btn.active{border-color:var(--accent); background:var(--panel); font-weight:600;}
 
