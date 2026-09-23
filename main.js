@@ -423,6 +423,8 @@ window.showTab = window.showTab || function(id, btn) {
   // Lead-capture form modals. Each `fields` function receives the trigger's
   // context (currently just { product }) so a Reserve button on a specific
   // product card can pre-fill and lock that field.
+  var OPT_IN = { name: 'marketingOptIn', label: 'Email me occasional MEND updates. Unsubscribe anytime.', type: 'checkbox' };
+
   var MODAL_FORMS = {
     reserve: {
       eyebrow: 'Founding Customer Program',
@@ -445,7 +447,8 @@ window.showTab = window.showTab || function(id, btn) {
           { name: 'phone', label: 'Phone (optional)', type: 'tel' },
           { name: 'procedureDate', label: 'Surgery / procedure date (optional)', type: 'date' },
           { name: 'buyingFor', label: 'Who is this for? (optional)', type: 'select', options: ['Myself', 'A loved one', 'My patients or facility'] },
-          { name: 'heardAbout', label: 'How did you hear about us? (optional)', type: 'select', options: ['Instagram', 'Facebook', 'TikTok', 'LinkedIn', 'Google search', 'Friend or family', 'Event or convention', 'Other'] }
+          { name: 'heardAbout', label: 'How did you hear about us? (optional)', type: 'select', options: ['Instagram', 'Facebook', 'TikTok', 'LinkedIn', 'Google search', 'Friend or family', 'Event or convention', 'Other'] },
+          OPT_IN
         ]);
       }
     },
@@ -460,7 +463,8 @@ window.showTab = window.showTab || function(id, btn) {
         return [
           { name: 'product', label: 'Product', type: 'text', value: ctx.product || '', readonly: !!ctx.product },
           { name: 'name', label: 'Full Name', type: 'text', required: true },
-          { name: 'email', label: 'Email', type: 'email', required: true }
+          { name: 'email', label: 'Email', type: 'email', required: true },
+          OPT_IN
         ];
       }
     },
@@ -581,6 +585,8 @@ window.showTab = window.showTab || function(id, btn) {
     '.mend-lead-form select{appearance:none; background-image:url(\'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="%238A857C" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>\'); background-repeat:no-repeat; background-position:right 14px center;}',
     // Honeypot: off-screen, not display:none (some bots skip hidden inputs).
     '.mend-hp{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;}',
+    '.mend-optin{display:flex; gap:10px; align-items:flex-start; font-size:13px; line-height:1.5; color:var(--fg); text-transform:none; letter-spacing:0; cursor:pointer; margin:0;}',
+    '.mend-modal-panel .mend-optin input{width:18px; height:18px; margin:1px 0 0; padding:0; flex-shrink:0; accent-color:var(--accent-dark);}',
     '.mend-form-error{font-size:13px; color:#c0392b; display:none; margin-top:2px;}',
     '.mend-form-error.show{display:block;}',
     // Not scoped to the modal: index.html's own contact form carries it too.
@@ -683,6 +689,10 @@ window.showTab = window.showTab || function(id, btn) {
   function renderField(f) {
     var id = 'mendField_' + f.name;
     var req = f.required ? ' required' : '';
+    if (f.type === 'checkbox') {
+      // Unchecked by default: marketing email needs an explicit yes. Absent = "No" server-side.
+      return '<div><label class="mend-optin" for="' + id + '"><input type="checkbox" id="' + id + '" name="' + f.name + '" value="Yes"><span>' + esc(f.label) + '</span></label></div>';
+    }
     if (f.type === 'select') {
       var opts = (f.options || []).map(function(o) { return '<option value="' + esc(o) + '">' + esc(o) + '</option>'; }).join('');
       return '<div><label for="' + id + '">' + esc(f.label) + '</label><select id="' + id + '" name="' + f.name + '"' + req + '><option value="">Select…</option>' + opts + '</select></div>';
