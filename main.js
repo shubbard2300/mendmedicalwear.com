@@ -585,7 +585,8 @@ window.showTab = window.showTab || function(id, btn) {
     '.mend-lead-form select{appearance:none; background-image:url(\'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="%238A857C" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>\'); background-repeat:no-repeat; background-position:right 14px center;}',
     // Honeypot: off-screen, not display:none (some bots skip hidden inputs).
     '.mend-hp{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;}',
-    '.mend-optin{display:flex; gap:10px; align-items:flex-start; font-size:13px; line-height:1.5; color:var(--fg); text-transform:none; letter-spacing:0; cursor:pointer; margin:0;}',
+    // Scoped to outrank ".mend-modal-panel label" (uppercase field-label style).
+    '.mend-modal-panel label.mend-optin{display:flex; gap:10px; align-items:flex-start; font-size:14px; line-height:1.5; color:var(--fg); text-transform:none; letter-spacing:0; cursor:pointer; margin:4px 0 0;}',
     '.mend-modal-panel .mend-optin input{width:18px; height:18px; margin:1px 0 0; padding:0; flex-shrink:0; accent-color:var(--accent-dark);}',
     '.mend-form-error{font-size:13px; color:#c0392b; display:none; margin-top:2px;}',
     '.mend-form-error.show{display:block;}',
