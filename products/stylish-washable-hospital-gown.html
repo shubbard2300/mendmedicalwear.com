@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Comfort Wrap — Stylish Washable Hospital Gown | MEND Medical</title>
-<meta name="description" content="Pre-order the Comfort Wrap: a soft, washable recovery gown with full coverage, no ties, and a metal-free zip. Founding price $68, and no payment today.">
+<meta name="description" content="Pre-order the Comfort Wrap: a soft, washable recovery gown with full coverage, no ties, and a metal-free zip. No payment today. Launch price TBA.">
 <link rel="canonical" href="https://www.mendmedicalwear.com/products/stylish-washable-hospital-gown">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="theme-color" content="#7C8B7A">
@@ -15,8 +15,6 @@
 <meta property="og:image" content="https://www.mendmedicalwear.com/Concept%20-%20Hospital%20Gown%20-%20Female%20Front%20-%202026-06-15-web.jpg">
 <meta property="og:image:alt" content="Comfort Wrap gown, female model, front view">
 <meta property="og:url" content="https://www.mendmedicalwear.com/products/stylish-washable-hospital-gown">
-<meta property="product:price:amount" content="68.00">
-<meta property="product:price:currency" content="USD">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Comfort Wrap — Stylish Washable Hospital Gown">
 <meta name="twitter:description" content="A soft, machine-washable recovery gown that replaces the standard hospital gown — full coverage, metal-free zippers.">
@@ -31,8 +29,6 @@
   "brand": { "@type": "Brand", "name": "MEND Medical Apparel" },
   "offers": {
     "@type": "Offer",
-    "price": "68.00",
-    "priceCurrency": "USD",
     "availability": "https://schema.org/PreOrder",
     "url": "https://www.mendmedicalwear.com/products/stylish-washable-hospital-gown"
   }
@@ -69,7 +65,7 @@
   .zoom-lens{position:absolute; inset:0; background-repeat:no-repeat; background-size:200%; opacity:0; pointer-events:none; transition:opacity .12s ease; z-index:2;}
   .gallery-main:hover .zoom-lens{opacity:1;}
   @media (hover:none){ .zoom-lens{display:none;} .gallery-main{cursor:default;} }
-  .gallery-thumbs{display:grid; grid-template-columns:repeat(5,1fr); gap:8px;}
+  .gallery-thumbs{display:grid; grid-template-columns:repeat(4,1fr); gap:8px;}
   .gallery-thumbs button{border:2px solid transparent; border-radius:8px; padding:0; cursor:pointer; background:var(--panel); aspect-ratio:2/3; transition:border-color .2s ease, transform .2s ease, box-shadow .2s ease;}
   .gallery-thumbs button:hover{transform:translateY(-3px); box-shadow:0 6px 14px rgba(0,0,0,.08);}
   .gallery-thumbs button.active{border-color:var(--accent);}
@@ -92,18 +88,15 @@
   .swatch{width:32px; height:32px; border-radius:50%; border:2px solid var(--line); cursor:pointer; transition:transform .2s ease, box-shadow .2s ease;}
   .swatch:hover{transform:scale(1.2); box-shadow:0 4px 10px rgba(0,0,0,.15);}
   .swatch.active{border-color:var(--accent); box-shadow:0 0 0 2px var(--bg), 0 0 0 4px var(--accent);}
-  .swatch-pattern{
-    background-color:#EAF1F5;
-    background-image:
-      radial-gradient(circle at 25% 25%, #6F93B3 2px, transparent 3px),
-      radial-gradient(circle at 75% 75%, #6F93B3 2px, transparent 3px);
-    background-size:10px 10px;
+  .swatches .swatch.swatch-pattern{
+    background:#EEF2F6 url('/swatch-classic-print.jpg') center/cover no-repeat;
   }
   .swatch-stripe{
     background-color:#fff;
     background-image: repeating-linear-gradient(90deg, #6F93B3 0 4px, #fff 4px 8px);
   }
   .sizes{display:flex; gap:8px;}
+  .closure-note{font-size:12px; color:var(--muted); margin-top:8px;}
   .size-btn{padding:8px 16px; border:1px solid var(--line); border-radius:8px; background:#fff; font-size:14px; cursor:pointer; transition:border-color .2s ease, background .2s ease, transform .15s ease;}
   .size-btn:hover{border-color:var(--accent); transform:translateY(-3px); box-shadow:0 6px 14px rgba(0,0,0,.08);}
   .size-btn.active{border-color:var(--accent); background:var(--panel); font-weight:600;}
@@ -180,12 +173,11 @@
         <img id="mainImg" src="/Concept%20-%20Hospital%20Gown%20-%20Female%20Front%20-%202026-06-15-web.jpg" alt="Comfort Wrap gown, female model, front view" width="1024" height="1024">
         <div class="zoom-lens" id="zoomLens"></div>
       </div>
-      <div class="gallery-thumbs">
+      <div class="gallery-thumbs" id="galleryThumbs">
         <button class="active" data-gender="female" data-view="front" onclick="setMain(this,'/Concept - Hospital Gown - Female Front - 2026-06-15-web.jpg')"><img src="/Concept%20-%20Hospital%20Gown%20-%20Female%20Front%20-%202026-06-15-web.jpg" alt="Female front" width="1024" height="1024"></button>
         <button data-gender="female" data-view="back" onclick="setMain(this,'/Concept - Hospital Gown - Female Back - 2026-06-15-web.jpg')"><img src="/Concept%20-%20Hospital%20Gown%20-%20Female%20Back%20-%202026-06-15-web.jpg" alt="Female back" width="1024" height="1024"></button>
         <button data-gender="male" data-view="front" onclick="setMain(this,'/Concept - Hospital Gown - Male Front - 2026-06-15-web.jpg')"><img src="/Concept%20-%20Hospital%20Gown%20-%20Male%20Front%20-%202026-06-15-web.jpg" alt="Male front" width="1024" height="1024"></button>
         <button data-gender="male" data-view="back" onclick="setMain(this,'/Concept - Hospital Gown - Male Back - 2026-06-15-web.jpg')"><img src="/Concept%20-%20Hospital%20Gown%20-%20Male%20Back%20-%202026-06-15-web.jpg" alt="Male back" width="1024" height="1024"></button>
-        <button data-gender="" data-view="" onclick="setMain(this,'/Concept - Hospital Gown - 2026-06-15-web.jpg')"><img src="/Concept%20-%20Hospital%20Gown%20-%202026-06-15-web.jpg" alt="Original concept" width="1024" height="1024"></button>
       </div>
     </div>
 
@@ -194,13 +186,13 @@
       <h1>Comfort Wrap — The Stylish Washable Hospital Gown</h1>
       <div class="subtitle">A premium, form-fitting recovery gown that replaces the traditional open-back tie gown — soft cotton/merino wool blend, hooded, full metal-free zip closure with a bamboo pull.</div>
 
-      <div class="price">$68.00 <span class="price-note">· Launch price TBA</span></div>
+      <div class="price"><span class="price-note" style="margin-left:0">Launch price TBA</span></div>
 
       <div class="badges">
         <span class="badge" data-tooltip="Toss it in with a regular warm load — designed for 100+ wash cycles, no special hospital laundering needed.">Machine Washable</span>
         <span class="badge" data-tooltip="A soft, breathable cotton and merino wool knit that feels like real clothing — warm, temperature-regulating, and gentle on sensitive skin.">Cotton / Merino Wool Blend</span>
         <span class="badge" data-tooltip="Attached hood adds extra warmth and coverage for trips to and from appointments, or just staying cozy in bed.">Hooded</span>
-        <span class="badge" data-tooltip="A single smooth zipper from collar to hem replaces fumbling with snaps, ties, or buttons — easy to get in and out of, even with limited mobility. Molded plastic teeth and slider with a bamboo pull — no metal anywhere, so it adds no MRI risk.">Metal-Free Zip Closure</span>
+        <span class="badge" data-tooltip="A single smooth zipper from collar to hem replaces fumbling with snaps, ties, or buttons — easy to get in and out of, even with limited mobility. Molded plastic teeth and slider with a bamboo pull — no metal in any zipper or hardware.">Metal-Free Zip Closure</span>
         <span class="badge" data-tooltip="No gaping back, no awkward tie-ups to manage — designed to stay closed and keep you covered, simple and discreet.">No Exposure, No Ties</span>
       </div>
 
@@ -225,6 +217,7 @@
           <button type="button" class="size-btn active" data-tooltip="Front zip — easiest for self-dressing, the zipper sits within easy reach." onclick="setClosure(this,'front')">Front Zip</button>
           <button type="button" class="size-btn" data-tooltip="Back zip — best for caregiver-assisted dressing, keeps the front clean and uninterrupted." onclick="setClosure(this,'back')">Back Zip</button>
         </div>
+        <div class="closure-note" id="closureNote">Long front zip · shoulder IV zips · rear access panel with snaps</div>
       </div>
 
       <div class="option-group">
@@ -257,7 +250,7 @@
 
 
       <div class="description">
-        Hospital gowns shouldn't feel like hospital gowns. Comfort Wrap is a knee-length, form-fitting robe made from a lightweight cotton/merino wool blend — soft against the skin, breathable, and durable enough for repeated warm washing. An attached hood adds warmth and a loungewear feel, while a full-length zipper (front or back) replaces the traditional gap-prone tie closure, so there's no exposure and no fumbling with ties. Every zipper and every piece of hardware on the gown is metal-free — molded plastic teeth and sliders with bamboo pulls — so the gown itself adds no MRI risk. A discreet chest pocket holds a telemetry monitor, and shoulder-seam zips give clinicians quick IV access without removing the gown.
+        Hospital gowns shouldn't feel like hospital gowns. Comfort Wrap is a knee-length, form-fitting robe made from a lightweight cotton/merino wool blend — soft against the skin, breathable, and durable enough for repeated warm washing. An attached hood adds warmth and a loungewear feel, while a full-length zipper replaces the traditional gap-prone tie closure, so there's no exposure and no fumbling with ties. Choose a long front zip or a long back zip; either way, a short zipper along each shoulder seam gives clinicians quick IV access without removing the gown. Every zipper and every piece of hardware on the gown is metal-free — molded plastic teeth and sliders with bamboo pulls. A discreet interior chest pocket holds a telemetry monitor, and the front-zip style adds a rear access panel for toileting and hygiene help.
       </div>
 
       <div class="features">
@@ -267,8 +260,10 @@
           <li><span>Fit</span><span>Form-fitting, graded S–XL (not one-size)</span></li>
           <li><span>Length</span><span>Knee to mid-calf</span></li>
           <li><span>Sleeves</span><span>Short</span></li>
-          <li><span>Closure</span><span>Full front or back zipper — metal-free (molded plastic teeth and slider, bamboo pull), soft fabric placket guard</span></li>
-          <li><span>Access features</span><span>Shoulder-seam zips for IV access, interior telemetry pocket, rear access panel for toileting/hygiene assistance</span></li>
+          <li><span>Closure</span><span>Your choice of a full-length front zipper (neck to hem) or a full-length center-back zipper (hood seam to hem). Metal-free: molded plastic teeth and slider, bamboo pull, soft fabric placket guard</span></li>
+          <li><span>IV access</span><span>Short zipper along each shoulder seam, both shoulders, on every gown in every color and closure style</span></li>
+          <li><span>Telemetry</span><span>Interior chest pocket with a small lead-wire slit</span></li>
+          <li><span>Toileting &amp; hygiene</span><span>Front Zip: rear access panel with 5 snaps at seat level. Back Zip: opens fully along the center-back zip</span></li>
           <li><span>Care</span><span>Machine washable (warm), designed for 100+ wash cycles — wash testing runs on our first production samples</span></li>
         </ul>
       </div>
@@ -327,7 +322,7 @@
         <ul>
           <li>Graded S–XL, form-fitting silhouette</li>
           <li>Cotton/superwash merino blend, soft drape, warm-wash durable</li>
-          <li>Full front or back metal-free zip with a bamboo pull — no gaps, no ties, adds no MRI risk</li>
+          <li>Full front or back metal-free zip with a bamboo pull — no gaps, no ties, no metal hardware</li>
           <li>Attached hood for warmth and a loungewear feel</li>
           <li>Shoulder-seam zips for IV access</li>
           <li>Interior telemetry pocket with lead-wire slit</li>
@@ -336,7 +331,7 @@
     </div>
   </div>
 
-  <!-- Metal-free hardware / MRI safety -->
+  <!-- Metal-free hardware (no MRI-safety claim) -->
   <div class="section">
     <h2>Why Metal-Free</h2>
     <div class="grid-2">
@@ -351,9 +346,9 @@
       <div class="spec-card">
         <h3>MEND's Metal-Free Hardware</h3>
         <ul>
-          <li>Zero ferromagnetic material — nothing for an MRI or other strong magnet to pull</li>
-          <li>Won't heat up or conduct current against your skin</li>
-          <li>Adds no MRI risk, no gown removal required — implanted devices still need your care team's clearance</li>
+          <li>No metal in the zippers, snaps or pulls — molded plastic, resin and bamboo instead</li>
+          <li>Plastic and resin parts don't conduct electricity or rust</li>
+          <li>MEND makes no MRI-safety claim. Metal-free hardware is one less thing to screen, but your imaging team decides what is safe to wear, including with implanted devices</li>
           <li>Same smooth, durable zip action as metal, finished with a bamboo pull</li>
         </ul>
       </div>
@@ -412,24 +407,31 @@
 var currentGender = 'female';
 var currentView = 'front';
 var currentColor = '';
+var currentClosure = 'front';   // 'front' = front zip, 'back' = back zip
 
-function imgFilename(){
-  var genderLabel = currentGender.charAt(0).toUpperCase() + currentGender.slice(1);
-  var viewLabel = currentView.charAt(0).toUpperCase() + currentView.slice(1);
+// Front Zip photos keep the original filenames; Back Zip photos add " - Back Zip".
+function gownFile(gender, view, closure){
+  var genderLabel = gender.charAt(0).toUpperCase() + gender.slice(1);
+  var viewLabel = view.charAt(0).toUpperCase() + view.slice(1);
+  var closurePart = closure === 'back' ? ' - Back Zip' : '';
   var colorPart = currentColor ? (' - ' + currentColor) : '';
-  return '/Concept - Hospital Gown - ' + genderLabel + ' ' + viewLabel + colorPart + ' - 2026-06-15-web.jpg';
+  return '/Concept - Hospital Gown - ' + genderLabel + ' ' + viewLabel + closurePart + colorPart + ' - 2026-06-15-web.jpg';
 }
+function imgFilename(){ return gownFile(currentGender, currentView, currentClosure); }
+function viewFilename(gender, view){ return gownFile(gender, view, currentClosure); }
+
+var VIEW_DESC = {
+  front: { front: 'front zip, collar to hem, shoulder IV zips', back: 'rear access panel with snaps, shoulder IV zips' },
+  back:  { front: 'plain front, shoulder IV zips', back: 'back zip, hood to hem, shoulder IV zips' }
+};
+var CLOSURE_NOTE = {
+  front: 'Long front zip · shoulder IV zips · rear access panel with snaps',
+  back:  'Long back zip (hood to hem) · shoulder IV zips'
+};
 
 function updateMainImage(){
   swapMainImg(imgFilename());
   updateViewsGrid();
-}
-
-function viewFilename(gender, view){
-  var genderLabel = gender.charAt(0).toUpperCase() + gender.slice(1);
-  var viewLabel = view.charAt(0).toUpperCase() + view.slice(1);
-  var colorPart = currentColor ? (' - ' + currentColor) : '';
-  return '/Concept - Hospital Gown - ' + genderLabel + ' ' + viewLabel + colorPart + ' - 2026-06-15-web.jpg';
 }
 
 function updateViewsGrid(){
@@ -438,14 +440,28 @@ function updateViewsGrid(){
     ['front','back'].forEach(function(view){
       var img = document.getElementById(ids[gender][view]);
       var newSrc = viewFilename(gender, view);
-      if(img && img.src.indexOf(newSrc) === -1){
+      if(img && img.src.indexOf(encodeURI(newSrc)) === -1){
         img.style.opacity = 0;
         setTimeout(function(){
           img.src = newSrc;
           img.style.opacity = 1;
         }, 150);
       }
+      var card = img && img.closest('.view-card');
+      if(card){
+        card.querySelector('span').textContent = (gender === 'female' ? 'Female' : 'Male') + ' — ' + (view === 'front' ? 'Front' : 'Back') + ' (' + VIEW_DESC[currentClosure][view] + ')';
+      }
     });
+  });
+  document.querySelectorAll('#galleryThumbs button').forEach(function(b){
+    b.querySelector('img').src = gownFile(b.getAttribute('data-gender'), b.getAttribute('data-view'), currentClosure);
+  });
+  document.getElementById('closureNote').textContent = CLOSURE_NOTE[currentClosure];
+}
+
+function markThumbs(){
+  document.querySelectorAll('#galleryThumbs button').forEach(function(b){
+    b.classList.toggle('active', b.getAttribute('data-gender') === currentGender && b.getAttribute('data-view') === currentView);
   });
 }
 
@@ -474,56 +490,34 @@ function swapMainImg(src){
   img.style.opacity = 0;
   setTimeout(function(){
     img.src = src;
+    img.alt = 'Comfort Wrap gown, ' + currentGender + ' model, ' + currentView + ' view, ' + (currentClosure === 'front' ? 'front zip' : 'back zip');
     img.style.opacity = 1;
   }, 150);
 }
 
-function setMain(btn, src){
-  document.querySelectorAll('.gallery-thumbs button').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-
-  var gender = btn.getAttribute('data-gender');
-  var view = btn.getAttribute('data-view');
-  if(gender){
-    currentGender = gender;
-    currentView = view;
-    document.querySelectorAll('#closureGroup .size-btn').forEach(function(b){
-      b.classList.toggle('active', b.textContent.trim().toLowerCase() === (view + ' zip'));
-    });
-    updateMainImage();
-  } else {
-    swapMainImg(src);
-  }
+function setMain(btn){
+  currentGender = btn.getAttribute('data-gender');
+  currentView = btn.getAttribute('data-view');
+  markThumbs();
+  swapMainImg(imgFilename());
 }
 
 function viewCardClick(card){
   currentGender = card.getAttribute('data-gender');
   currentView = card.getAttribute('data-view');
-
-  document.querySelectorAll('.gallery-thumbs button').forEach(function(b){
-    var match = b.getAttribute('data-gender') === currentGender && b.getAttribute('data-view') === currentView;
-    b.classList.toggle('active', match);
-  });
-  document.querySelectorAll('#closureGroup .size-btn').forEach(function(b){
-    b.classList.toggle('active', b.textContent.trim().toLowerCase() === (currentView + ' zip'));
-  });
-
+  markThumbs();
   swapMainImg(imgFilename());
   document.getElementById('galleryMain').scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
-function setClosure(btn, view){
-  currentView = view;
+// The closure choice picks which photo set is shown (front-zip gown or back-zip gown).
+function setClosure(btn, closure){
+  currentClosure = closure;
   document.querySelectorAll('#closureGroup .size-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   updateMainImage();
-
-  document.querySelectorAll('.gallery-thumbs button').forEach(function(b){
-    var match = b.getAttribute('data-gender') === currentGender && b.getAttribute('data-view') === view;
-    b.classList.toggle('active', match);
-  });
 }
-initBrandIt('Comfort Wrap Gown', '/Concept - Hospital Gown - 2026-06-15-web.jpg', {x:550, y:330, w:135, h:100});
+initBrandIt('Comfort Wrap Gown', '/Concept - Hospital Gown - Female Front - 2026-06-15-web.jpg', {x:572, y:276, w:76, h:68});
 </script>
 </body>
 </html>

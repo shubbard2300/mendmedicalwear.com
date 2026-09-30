@@ -67,9 +67,9 @@ function renderHtml(title, fields, page) {
 // Product → hosted 192px thumbnail + page + founding price. Matched by substring
 // because the product field carries the full product name from the page.
 var PRODUCTS = [
-  { match: /comfort wrap|gown/i, thumb: 'email-thumb-gown.jpg', url: '/products/stylish-washable-hospital-gown', price: '$68.00' },
-  { match: /scrub/i, thumb: 'email-thumb-scrubs.jpg', url: '/products/residential-nurse-scrub-set', price: '$74.00' },
-  { match: /compression|socks/i, thumb: 'email-thumb-socks.jpg', url: '/products/compression-socks', price: '$28.00' },
+  { match: /comfort wrap|gown/i, thumb: 'email-thumb-gown.jpg', url: '/products/stylish-washable-hospital-gown' },
+  { match: /scrub/i, thumb: 'email-thumb-scrubs.jpg', url: '/products/residential-nurse-scrub-set' },
+  { match: /compression|socks/i, thumb: 'email-thumb-socks.jpg', url: '/products/compression-socks' },
   { match: /airguard/i, thumb: 'email-thumb-airguard.jpg', url: '/products/airguard-collar', device: true },
   { match: /pulse/i, thumb: 'email-thumb-pulse.jpg', url: '/products/mend-pulse', device: true },
   { match: /oxi/i, thumb: 'email-thumb-oxi.jpg', url: '/products/mend-oxi', device: true }
