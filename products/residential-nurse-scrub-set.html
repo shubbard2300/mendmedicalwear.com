@@ -64,13 +64,13 @@
   @media (max-width:860px){ .pdp{grid-template-columns:1fr;} }
 
   /* Gallery */
-  .gallery-main{width:100%; aspect-ratio:2/3; background:var(--panel); border-radius:12px; margin-bottom:12px; position:relative; cursor:zoom-in;}
+  .gallery-main{width:100%; aspect-ratio:1/1; background:var(--panel); border-radius:12px; margin-bottom:12px; position:relative; cursor:zoom-in;}
   .gallery-main img{width:100%; height:100%; object-fit:cover; display:block;}
   .zoom-lens{position:absolute; inset:0; background-repeat:no-repeat; background-size:200%; opacity:0; pointer-events:none; transition:opacity .12s ease; z-index:2;}
   .gallery-main:hover .zoom-lens{opacity:1;}
   @media (hover:none){ .zoom-lens{display:none;} .gallery-main{cursor:default;} }
-  .gallery-thumbs{display:grid; grid-template-columns:repeat(4,1fr); gap:8px;}
-  .gallery-thumbs button{border:2px solid transparent; border-radius:8px; padding:0; cursor:pointer; background:var(--panel); aspect-ratio:2/3; transition:border-color .2s ease, transform .2s ease, box-shadow .2s ease;}
+  .gallery-thumbs{display:grid; grid-template-columns:repeat(3,1fr); gap:8px;}
+  .gallery-thumbs button{border:2px solid transparent; border-radius:8px; padding:0; cursor:pointer; background:var(--panel); aspect-ratio:1/1; transition:border-color .2s ease, transform .2s ease, box-shadow .2s ease;}
   .gallery-thumbs button:hover{transform:translateY(-3px); box-shadow:0 6px 14px rgba(0,0,0,.08);}
   .gallery-thumbs button.active{border-color:var(--accent);}
   .gallery-thumbs img{width:100%; height:100%; object-fit:cover; display:block; transition:transform .4s ease;}
@@ -96,6 +96,20 @@
   .size-btn{padding:8px 16px; border:1px solid var(--line); border-radius:8px; background:#fff; font-size:14px; cursor:pointer; transition:border-color .2s ease, background .2s ease, transform .15s ease;}
   .size-btn:hover{border-color:var(--accent); transform:translateY(-3px); box-shadow:0 6px 14px rgba(0,0,0,.08);}
   .size-btn.active{border-color:var(--accent); background:var(--panel); font-weight:600;}
+  .gender-btn{padding:8px 20px; border:1px solid var(--line); border-radius:8px; background:#fff; font-size:14px; cursor:pointer; font-family:inherit; transition:border-color .2s ease, background .2s ease, transform .15s ease;}
+  .gender-btn:hover{border-color:var(--accent); transform:translateY(-3px); box-shadow:0 6px 14px rgba(0,0,0,.08);}
+  .gender-btn.active{border-color:var(--accent); background:var(--panel); font-weight:600;}
+  .genders{display:flex; gap:8px; flex-wrap:wrap;}
+  .size-note{font-size:12px; color:var(--muted); margin-top:8px;}
+  .sizes[hidden], #guideFemale[hidden], #guideMale[hidden]{display:none;}
+  /* pdp.css loads after this block and sets 2:3 tall boxes and a 5-up grid; these photos are square, so win on specificity */
+  .pdp .gallery-main{aspect-ratio:1/1;}
+  .pdp .gallery-thumbs{grid-template-columns:repeat(3,1fr);}
+  .pdp .gallery-thumbs button{aspect-ratio:1/1;}
+  #viewsSection .views-grid{grid-template-columns:repeat(3,1fr); gap:16px;}
+  #viewsSection .views-grid .img-box{aspect-ratio:1/1; overflow:visible;}
+  #viewsSection .views-grid img{border-radius:10px;}
+  @media (max-width:680px){ #viewsSection .views-grid{grid-template-columns:repeat(2,1fr);} }
 
   .bundle-upsell{display:flex; gap:14px; align-items:flex-start; background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:16px; margin:20px 0 0;}
   .bundle-upsell-thumb{width:60px; height:60px; border-radius:8px; flex-shrink:0; background:#fff;}
@@ -106,6 +120,13 @@
   .bundle-upsell-toggle{display:inline-flex; align-items:center; gap:8px; cursor:pointer; font-size:13px;}
   .bundle-badge{background:var(--accent-dark); color:#fff; padding:6px 12px; border-radius:999px; font-size:12px; transition:transform .2s ease;}
   .bundle-upsell-toggle:hover .bundle-badge{transform:translateY(-2px);}
+  .bundle-color{margin-top:12px;}
+  .bundle-color-label{font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:8px;}
+  .bundle-swatches{display:flex; gap:8px; flex-wrap:wrap;}
+  .bundle-swatch{width:26px; height:26px; border-radius:50%; border:2px solid var(--line); cursor:pointer; padding:0; transition:transform .2s ease, box-shadow .2s ease;}
+  .bundle-swatch:hover{transform:scale(1.15);}
+  .bundle-swatch.active{border-color:var(--accent); box-shadow:0 0 0 2px var(--bg), 0 0 0 4px var(--accent);}
+  .bundle-color-note{font-size:12px; color:var(--muted); margin-top:8px;}
 
   .cta{display:flex; gap:12px; margin:24px 0;}
   .cta .btn{flex:1; padding:16px; border-radius:10px; text-transform:none; letter-spacing:normal; font-size:15px; border:1px solid var(--line); overflow:hidden; position:relative; font-family:inherit; cursor:pointer; text-align:center;}
@@ -134,10 +155,11 @@
   .spec-card ul{padding-left:18px; font-size:14px;}
   .spec-card li{margin-bottom:6px;}
 
-  .views-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:16px;}
+  .views-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:16px;}
   @media (max-width:760px){ .views-grid{grid-template-columns:repeat(2,1fr);} }
+  .views-grid h3{grid-column:1/-1; font-size:14px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin:8px 0 -4px;}
   .view-card{text-align:center; cursor:pointer;}
-  .view-card .img-box{aspect-ratio:2/3; background:var(--panel); border-radius:10px; margin-bottom:8px; transition:transform .3s ease, box-shadow .3s ease;}
+  .view-card .img-box{aspect-ratio:1/1; background:var(--panel); border-radius:10px; margin-bottom:8px; transition:transform .3s ease, box-shadow .3s ease;}
   .view-card .img-box:hover{transform:translateY(-4px); box-shadow:0 10px 24px rgba(0,0,0,.1);}
   .view-card img{width:100%; height:100%; object-fit:cover; transition:transform .4s ease, opacity .15s ease;}
   .view-card .img-box:hover img{transform:scale(1.05);}
@@ -180,11 +202,10 @@
         <img id="mainImg" src="/Concept%20-%20Nurse%20Scrubs%20-%20Female%20Front%20-%202026-06-15-web.jpg" alt="Comfort Scrubs nurse set, female model, front view" width="1024" height="1024">
         <div class="zoom-lens" id="zoomLens"></div>
       </div>
-      <div class="gallery-thumbs">
-        <button class="active" data-gender="female" data-view="front" onclick="setMain(this)"><img src="/Concept%20-%20Nurse%20Scrubs%20-%20Female%20Front%20-%202026-06-15-web.jpg" alt="Female front" width="1024" height="1024"></button>
-        <button data-gender="female" data-view="back" onclick="setMain(this)"><img src="/Concept%20-%20Nurse%20Scrubs%20-%20Female%20Back%20-%202026-06-15-web.jpg" alt="Female back" width="1024" height="1024"></button>
-        <button data-gender="male" data-view="front" onclick="setMain(this)"><img src="/Concept%20-%20Nurse%20Scrubs%20-%20Male%20Front%20-%202026-06-15-web.jpg" alt="Male front" width="1024" height="1024"></button>
-        <button data-gender="male" data-view="back" onclick="setMain(this)"><img src="/Concept%20-%20Nurse%20Scrubs%20-%20Male%20Back%20-%202026-06-15-web.jpg" alt="Male back" width="1024" height="1024"></button>
+      <div class="gallery-thumbs" id="galleryThumbs">
+        <button class="active" data-view="front" onclick="setMain(this)" aria-label="Front view"><img src="/Concept%20-%20Nurse%20Scrubs%20-%20Female%20Front%20-%202026-06-15-web.jpg" alt="Front view" width="1024" height="1024"></button>
+        <button data-view="back" onclick="setMain(this)" aria-label="Back view"><img src="/Concept%20-%20Nurse%20Scrubs%20-%20Female%20Back%20-%202026-06-15-web.jpg" alt="Back view" width="1024" height="1024"></button>
+        <button data-view="pockets" onclick="setMain(this)" aria-label="Pockets in use"><img src="/Concept%20-%20Nurse%20Scrubs%20-%20Female%20Pockets%20-%202026-06-15-web.jpg" alt="Pockets in use" width="1024" height="1024"></button>
       </div>
     </div>
 
@@ -204,6 +225,14 @@
       </div>
 
       <div class="option-group">
+        <label>Fit — <span id="genderLabel">Women's</span></label>
+        <div class="genders" id="genderGroup">
+          <button type="button" class="gender-btn active" data-gender="female" aria-pressed="true" onclick="setGender(this)">Women's</button>
+          <button type="button" class="gender-btn" data-gender="male" aria-pressed="false" onclick="setGender(this)">Men's</button>
+        </div>
+      </div>
+
+      <div class="option-group">
         <label>Color — <span id="colorLabel">Soft Sage</span></label>
         <div class="swatches">
           <button type="button" class="swatch active" style="background:#C7D0C4" data-color="Sage" data-color-label="Soft Sage" data-color-suffix="" title="Soft Sage" aria-label="Soft Sage" data-tooltip="Soft Sage — coordinates directly with the Comfort Wrap Sage gown, so patients and caregivers can match." onclick="setColor(this)"></button>
@@ -214,24 +243,44 @@
       </div>
 
       <div class="option-group">
-        <label>Size</label>
-        <div class="sizes">
-          <button type="button" class="size-btn" data-tooltip="XS — best for chest 32–34in.">XS</button>
-          <button type="button" class="size-btn" data-tooltip="S — best for chest 34–38in.">S</button>
-          <button type="button" class="size-btn active" data-tooltip="M — best for chest 38–42in.">M</button>
-          <button type="button" class="size-btn" data-tooltip="L — best for chest 42–46in.">L</button>
-          <button type="button" class="size-btn" data-tooltip="XL — best for chest 46–50in.">XL</button>
+        <label>Size — <span id="sizeFitLabel">Women's</span></label>
+        <div class="sizes" id="sizesFemale">
+          <button type="button" class="size-btn" title="Women's XS" data-tooltip="XS — best for bust 32–34in.">XS</button>
+          <button type="button" class="size-btn" title="Women's S" data-tooltip="S — best for bust 34–36in.">S</button>
+          <button type="button" class="size-btn active" title="Women's M" data-tooltip="M — best for bust 36–38in.">M</button>
+          <button type="button" class="size-btn" title="Women's L" data-tooltip="L — best for bust 38–41in.">L</button>
+          <button type="button" class="size-btn" title="Women's XL" data-tooltip="XL — best for bust 41–44in.">XL</button>
+        </div>
+        <div class="sizes" id="sizesMale" hidden>
+          <button type="button" class="size-btn" title="Men's S" data-tooltip="S — best for chest 34–37in.">S</button>
+          <button type="button" class="size-btn" title="Men's M" data-tooltip="M — best for chest 38–41in.">M</button>
+          <button type="button" class="size-btn" title="Men's L" data-tooltip="L — best for chest 42–45in.">L</button>
+          <button type="button" class="size-btn" title="Men's XL" data-tooltip="XL — best for chest 46–49in.">XL</button>
+          <button type="button" class="size-btn" title="Men's XXL" data-tooltip="XXL — best for chest 50–53in.">XXL</button>
         </div>
         <details class="size-guide">
           <summary>Size guide</summary>
-          <table>
-            <tr><th>Size</th><th>Chest</th></tr>
-            <tr><td>XS</td><td>32–34 in</td></tr>
-            <tr><td>S</td><td>34–38 in</td></tr>
-            <tr><td>M</td><td>38–42 in</td></tr>
-            <tr><td>L</td><td>42–46 in</td></tr>
-            <tr><td>XL</td><td>46–50 in</td></tr>
-          </table>
+          <div id="guideFemale">
+            <table>
+              <tr><th>Women's</th><th>Bust</th><th>Waist</th><th>Hip</th></tr>
+              <tr><td>XS</td><td>32–34 in</td><td>25–27 in</td><td>35–37 in</td></tr>
+              <tr><td>S</td><td>34–36 in</td><td>27–29 in</td><td>37–39 in</td></tr>
+              <tr><td>M</td><td>36–38 in</td><td>29–31 in</td><td>39–41 in</td></tr>
+              <tr><td>L</td><td>38–41 in</td><td>31–34 in</td><td>41–44 in</td></tr>
+              <tr><td>XL</td><td>41–44 in</td><td>34–37 in</td><td>44–47 in</td></tr>
+            </table>
+          </div>
+          <div id="guideMale" hidden>
+            <table>
+              <tr><th>Men's</th><th>Chest</th><th>Waist</th><th>Hip</th></tr>
+              <tr><td>S</td><td>34–37 in</td><td>28–31 in</td><td>34–37 in</td></tr>
+              <tr><td>M</td><td>38–41 in</td><td>32–35 in</td><td>38–41 in</td></tr>
+              <tr><td>L</td><td>42–45 in</td><td>36–39 in</td><td>42–45 in</td></tr>
+              <tr><td>XL</td><td>46–49 in</td><td>40–43 in</td><td>46–49 in</td></tr>
+              <tr><td>XXL</td><td>50–53 in</td><td>44–47 in</td><td>50–53 in</td></tr>
+            </table>
+          </div>
+          <p class="size-note">Body measurements in inches. Measure over light clothing and choose the size that fits your largest measurement. Pants are a 30 in regular inseam with an elastic + drawcord waist. Sizing is finalized at first fit, so between sizes, go up.</p>
         </details>
       </div>
 
@@ -241,7 +290,7 @@
       </div>
 
       <div class="bundle-upsell">
-        <div class="bundle-upsell-thumb"><picture><source srcset="/concept-compression-socks-ceil-blue-2026-06-15-web.webp" type="image/webp"><img src="/Concept%20-%20Compression%20Socks%20-%20Ceil%20Blue%20-%202026-06-15-web.jpg" alt="Medical-Grade Compression Socks — Nurse/Caregiver Edition" width="1024" height="1024"></picture></div>
+        <div class="bundle-upsell-thumb"><picture><source id="bundleThumbSrc" srcset="/concept-compression-socks-sage-2026-06-18-web.webp" type="image/webp"><img id="bundleThumb" src="/Concept%20-%20Compression%20Socks%20-%20Sage%20-%202026-06-18-web.jpg" alt="Medical-Grade Compression Socks — Nurse/Caregiver Edition" width="1024" height="1024"></picture></div>
         <div class="bundle-upsell-info">
           <div class="bundle-upsell-label">Most nurses also grab these →</div>
           <div class="bundle-upsell-name">Medical-Grade Compression Socks — Nurse/Caregiver Edition</div>
@@ -250,6 +299,20 @@
             <input type="checkbox" id="bundleToggle" onchange="toggleBundle(this)">
             <span class="bundle-badge">Bundle &amp; Save 12% — Complete Your Shift Kit</span>
           </label>
+          <div class="bundle-color" id="bundleColor" hidden>
+            <div class="bundle-color-label">Sock color — <span id="bundleColorLabel">Sage</span></div>
+            <div class="bundle-swatches" id="bundleSwatches">
+              <button type="button" class="bundle-swatch" style="background:#7EC8E3" data-sock="Ceil Blue" title="Ceil Blue" aria-label="Ceil Blue socks" aria-pressed="false" onclick="pickSockColor(this)"></button>
+              <button type="button" class="bundle-swatch" style="background:#1F3A5F" data-sock="Navy" title="Navy" aria-label="Navy socks" aria-pressed="false" onclick="pickSockColor(this)"></button>
+              <button type="button" class="bundle-swatch active" style="background:#8A9E84" data-sock="Sage" title="Sage" aria-label="Sage socks" aria-pressed="true" onclick="pickSockColor(this)"></button>
+              <button type="button" class="bundle-swatch" style="background:#4A4A4A" data-sock="Charcoal" title="Charcoal" aria-label="Charcoal socks" aria-pressed="false" onclick="pickSockColor(this)"></button>
+              <button type="button" class="bundle-swatch" style="background:#A8A8A0" data-sock="Heather Grey" title="Heather Grey" aria-label="Heather Grey socks" aria-pressed="false" onclick="pickSockColor(this)"></button>
+              <button type="button" class="bundle-swatch" style="background:#1A1A1A" data-sock="Black" title="Black" aria-label="Black socks" aria-pressed="false" onclick="pickSockColor(this)"></button>
+              <button type="button" class="bundle-swatch" style="background:#E8C4B8" data-sock="Blush" title="Blush" aria-label="Blush socks" aria-pressed="false" onclick="pickSockColor(this)"></button>
+              <button type="button" class="bundle-swatch" style="background:#D4C4A8" data-sock="Oatmeal" title="Oatmeal" aria-label="Oatmeal socks" aria-pressed="false" onclick="pickSockColor(this)"></button>
+            </div>
+            <div class="bundle-color-note">Matches your scrub color to start. Pick a different sock color any time.</div>
+          </div>
         </div>
       </div>
         <div class="bundle-note">
@@ -265,9 +328,9 @@
         <h2>Specifications</h2>
         <ul>
           <li><span>Fabric</span><span>Cotton / superwash merino blend, stretch-knit, warm-wash durable</span></li>
-          <li><span>Fit</span><span>Tailored, graded XS–XL</span></li>
-          <li><span>Top</span><span>V-neck, chest pocket, drop shoulder</span></li>
-          <li><span>Bottoms</span><span>Tapered jogger-style scrub pant, elastic + drawstring waist</span></li>
+          <li><span>Fit</span><span>Tailored. Women's XS–XL, Men's S–XXL</span></li>
+          <li><span>Top</span><span>V-neck, chest patch pocket and two lower patch pockets, drop shoulder</span></li>
+          <li><span>Bottoms</span><span>Tapered jogger-style scrub pant, elastic + drawstring waist, slant side pockets and a back patch pocket</span></li>
           <li><span>Branding</span><span>Embroidered MEND cross icon, upper left chest</span></li>
           <li><span>Care</span><span>Machine washable (warm), designed for 100+ wash cycles — wash testing runs on our first production samples</span></li>
         </ul>
@@ -286,24 +349,34 @@
   </div>
 
   <!-- Front/back views -->
-  <div class="section">
-    <h2>Front &amp; Back Views — Male &amp; Female</h2>
+  <div class="section" id="viewsSection">
+    <h2>Front, Back &amp; Pockets — Women's &amp; Men's</h2>
     <div class="views-grid">
+      <h3>Women's</h3>
       <div class="view-card" data-gender="female" data-view="front" data-tooltip="Click to preview this view on the main image above." onclick="viewCardClick(this)">
-        <div class="img-box"><img id="viewImgFF" src="/Concept%20-%20Nurse%20Scrubs%20-%20Female%20Front%20-%202026-06-15-web.jpg" alt="Female front view" width="1024" height="1024"></div>
-        <span>Female — Front (V-neck top, tapered pant)</span>
+        <div class="img-box"><img id="viewImgFF" src="/Concept%20-%20Nurse%20Scrubs%20-%20Female%20Front%20-%202026-06-15-web.jpg" alt="Women's front view" width="1024" height="1024" loading="lazy"></div>
+        <span>Front: V-neck, chest pocket, two lower pockets</span>
       </div>
       <div class="view-card" data-gender="female" data-view="back" data-tooltip="Click to preview this view on the main image above." onclick="viewCardClick(this)">
-        <div class="img-box"><img id="viewImgFB" src="/Concept%20-%20Nurse%20Scrubs%20-%20Female%20Back%20-%202026-06-15-web.jpg" alt="Female back view" width="1024" height="1024"></div>
-        <span>Female — Back</span>
+        <div class="img-box"><img id="viewImgFB" src="/Concept%20-%20Nurse%20Scrubs%20-%20Female%20Back%20-%202026-06-15-web.jpg" alt="Women's back view" width="1024" height="1024" loading="lazy"></div>
+        <span>Back: yoke seam, back patch pocket on the pant</span>
       </div>
+      <div class="view-card" data-gender="female" data-view="pockets" data-tooltip="Click to preview this view on the main image above." onclick="viewCardClick(this)">
+        <div class="img-box"><img id="viewImgFP" src="/Concept%20-%20Nurse%20Scrubs%20-%20Female%20Pockets%20-%202026-06-15-web.jpg" alt="Women's pockets view" width="1024" height="1024" loading="lazy"></div>
+        <span>Pockets in use: chest, lower and side pockets</span>
+      </div>
+      <h3>Men's</h3>
       <div class="view-card" data-gender="male" data-view="front" data-tooltip="Click to preview this view on the main image above." onclick="viewCardClick(this)">
-        <div class="img-box"><img id="viewImgMF" src="/Concept%20-%20Nurse%20Scrubs%20-%20Male%20Front%20-%202026-06-15-web.jpg" alt="Male front view" width="1024" height="1024"></div>
-        <span>Male — Front (V-neck top, tapered pant)</span>
+        <div class="img-box"><img id="viewImgMF" src="/Concept%20-%20Nurse%20Scrubs%20-%20Male%20Front%20-%202026-06-15-web.jpg" alt="Men's front view" width="1024" height="1024" loading="lazy"></div>
+        <span>Front: V-neck, chest pocket, two lower pockets</span>
       </div>
       <div class="view-card" data-gender="male" data-view="back" data-tooltip="Click to preview this view on the main image above." onclick="viewCardClick(this)">
-        <div class="img-box"><img id="viewImgMB" src="/Concept%20-%20Nurse%20Scrubs%20-%20Male%20Back%20-%202026-06-15-web.jpg" alt="Male back view" width="1024" height="1024"></div>
-        <span>Male — Back</span>
+        <div class="img-box"><img id="viewImgMB" src="/Concept%20-%20Nurse%20Scrubs%20-%20Male%20Back%20-%202026-06-15-web.jpg" alt="Men's back view" width="1024" height="1024" loading="lazy"></div>
+        <span>Back: yoke seam, back patch pocket on the pant</span>
+      </div>
+      <div class="view-card" data-gender="male" data-view="pockets" data-tooltip="Click to preview this view on the main image above." onclick="viewCardClick(this)">
+        <div class="img-box"><img id="viewImgMP" src="/Concept%20-%20Nurse%20Scrubs%20-%20Male%20Pockets%20-%202026-06-15-web.jpg" alt="Men's pockets view" width="1024" height="1024" loading="lazy"></div>
+        <span>Pockets in use: chest, lower and side pockets</span>
       </div>
     </div>
   </div>
@@ -324,7 +397,7 @@
       <div class="spec-card">
         <h3>Comfort Scrubs</h3>
         <ul>
-          <li>Tailored, graded XS–XL fit that moves with you</li>
+          <li>Tailored fit in Women's XS–XL and Men's S–XXL that moves with you</li>
           <li>Cotton/superwash merino blend, soft drape, warm-wash durable</li>
           <li>Embroidered MEND mark matches the Comfort Wrap line</li>
           <li>Tapered jogger pant with elastic + drawstring waist</li>
@@ -386,7 +459,7 @@
 var currentGender = 'female';
 var currentView = 'front';
 var currentColorSuffix = '';
-var currentDate = '2026-06-15';
+var VIEWS = ['front','back','pockets'];
 
 function imgFilename(gender, view){
   gender = gender || currentGender;
@@ -398,17 +471,15 @@ function imgFilename(gender, view){
 }
 
 function updateViewsGrid(){
-  var ids = { female: { front: 'viewImgFF', back: 'viewImgFB' }, male: { front: 'viewImgMF', back: 'viewImgMB' } };
+  var ids = { female: { front: 'viewImgFF', back: 'viewImgFB', pockets: 'viewImgFP' }, male: { front: 'viewImgMF', back: 'viewImgMB', pockets: 'viewImgMP' } };
   ['female','male'].forEach(function(gender){
-    ['front','back'].forEach(function(view){
+    VIEWS.forEach(function(view){
       var img = document.getElementById(ids[gender][view]);
       if(img){ img.src = imgFilename(gender, view); }
     });
   });
-  document.querySelectorAll('.gallery-thumbs button').forEach(function(btn){
-    var g = btn.getAttribute('data-gender');
-    var v = btn.getAttribute('data-view');
-    btn.querySelector('img').src = imgFilename(g, v);
+  document.querySelectorAll('#galleryThumbs button').forEach(function(btn){
+    btn.querySelector('img').src = imgFilename(currentGender, btn.getAttribute('data-view'));
   });
 }
 
@@ -425,15 +496,41 @@ function updateViewsGrid(){
   });
 })();
 
+// Sock colors for the bundle: name -> [file slug, image date]. Every scrub color exists as a sock color.
+var SOCK_IMG = {'Ceil Blue':['ceil-blue','2026-06-15'],'Navy':['navy','2026-06-15'],'Sage':['sage','2026-06-18'],'Charcoal':['charcoal','2026-06-18'],'Heather Grey':['heather-grey','2026-06-18'],'Black':['black','2026-06-18'],'Blush':['blush','2026-06-15'],'Oatmeal':['oatmeal','2026-06-15']};
+var scrubColorName = 'Sage';   // the parent product's selected color
+var sockColorName = 'Sage';    // follows the scrub color until the shopper picks a sock color themselves
+var sockPicked = false;
+
 // The Reserve modal reads data-product from whichever button opened it, so the bundle
-// has to be written onto both the primary CTA and the floating sticky one.
-function toggleBundle(checkbox){
+// has to be written onto both the primary CTA and the floating sticky one. The sock
+// color goes in the product name, which the lead email prints as-is.
+function updateBundle(){
+  var on = document.getElementById('bundleToggle').checked;
   var cta = document.getElementById('ctaPrimary');
-  var product = checkbox.checked
-    ? 'Comfort Scrubs — Residential Nurse Set + Compression Socks (Bundle, save 12%)'
+  var product = on
+    ? 'Comfort Scrubs — Residential Nurse Set + Compression Socks in ' + sockColorName + ' (Bundle, save 12%)'
     : 'Comfort Scrubs — Residential Nurse Set';
-  cta.textContent = checkbox.checked ? 'Pre-Order Bundle — Save 12%' : 'Pre-Order Now';
+  cta.textContent = on ? 'Pre-Order Bundle — Save 12%' : 'Pre-Order Now';
   document.querySelectorAll('#ctaPrimary, .mend-sticky-cta').forEach(function(b){ b.setAttribute('data-product', product); });
+  document.getElementById('bundleColor').hidden = !on;
+  document.getElementById('bundleColorLabel').textContent = sockColorName;
+  document.querySelectorAll('#bundleSwatches .bundle-swatch').forEach(function(b){
+    var active = b.getAttribute('data-sock') === sockColorName;
+    b.classList.toggle('active', active);
+    b.setAttribute('aria-pressed', active ? 'true' : 'false');
+  });
+  var im = SOCK_IMG[sockColorName];
+  document.getElementById('bundleThumbSrc').srcset = '/concept-compression-socks-' + im[0] + '-' + im[1] + '-web.webp';
+  document.getElementById('bundleThumb').src = '/Concept - Compression Socks - ' + sockColorName + ' - ' + im[1] + '-web.jpg';
+}
+
+function toggleBundle(){ updateBundle(); }
+
+function pickSockColor(btn){
+  sockColorName = btn.getAttribute('data-sock');
+  sockPicked = true;
+  updateBundle();
 }
 
 function setColor(swatch){
@@ -441,6 +538,8 @@ function setColor(swatch){
   swatch.classList.add('active');
   currentColorSuffix = swatch.getAttribute('data-color-suffix');
   document.getElementById('colorLabel').textContent = swatch.getAttribute('data-color-label');
+  scrubColorName = swatch.getAttribute('data-color');
+  if(!sockPicked){ sockColorName = scrubColorName; updateBundle(); }
   updateViewsGrid();
   swapMainImg(imgFilename());
 }
@@ -450,31 +549,63 @@ function swapMainImg(src){
   img.style.opacity = 0;
   setTimeout(function(){
     img.src = src;
+    img.alt = (currentGender === 'female' ? "Women's" : "Men's") + ' Comfort Scrubs, ' + currentView + ' view';
     img.style.opacity = 1;
   }, 150);
 }
 
+function markThumb(){
+  document.querySelectorAll('#galleryThumbs button').forEach(function(b){
+    b.classList.toggle('active', b.getAttribute('data-view') === currentView);
+  });
+}
+
 function setMain(btn){
-  document.querySelectorAll('.gallery-thumbs button').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  currentGender = btn.getAttribute('data-gender');
   currentView = btn.getAttribute('data-view');
+  markThumb();
+  swapMainImg(imgFilename());
+}
+
+// Women's / Men's: swaps the photos, the size buttons and the size guide. Only the shown
+// size row keeps an .active button, because the Reserve form reads the first active size.
+function setGender(btn){
+  currentGender = btn.getAttribute('data-gender');
+  var isF = currentGender === 'female';
+  document.querySelectorAll('#genderGroup .gender-btn').forEach(function(b){
+    var on = b === btn;
+    b.classList.toggle('active', on);
+    b.setAttribute('aria-pressed', on ? 'true' : 'false');
+  });
+  var label = isF ? "Women's" : "Men's";
+  document.getElementById('genderLabel').textContent = label;
+  document.getElementById('sizeFitLabel').textContent = label;
+  var shown = document.getElementById(isF ? 'sizesFemale' : 'sizesMale');
+  var hidden = document.getElementById(isF ? 'sizesMale' : 'sizesFemale');
+  var prev = hidden.querySelector('.size-btn.active');
+  var want = prev ? prev.textContent : 'M';
+  hidden.querySelectorAll('.size-btn').forEach(function(b){ b.classList.remove('active'); });
+  hidden.hidden = true;
+  shown.hidden = false;
+  var pick = null;
+  shown.querySelectorAll('.size-btn').forEach(function(b){ if(b.textContent === want) pick = b; });
+  (pick || shown.querySelector('.size-btn:nth-child(2)')).classList.add('active');
+  document.getElementById('guideFemale').hidden = !isF;
+  document.getElementById('guideMale').hidden = isF;
+  updateViewsGrid();
   swapMainImg(imgFilename());
 }
 
 function viewCardClick(card){
-  currentGender = card.getAttribute('data-gender');
+  var g = card.getAttribute('data-gender');
+  if(g !== currentGender){
+    setGender(document.querySelector('#genderGroup .gender-btn[data-gender="' + g + '"]'));
+  }
   currentView = card.getAttribute('data-view');
-
-  document.querySelectorAll('.gallery-thumbs button').forEach(function(b){
-    var match = b.getAttribute('data-gender') === currentGender && b.getAttribute('data-view') === currentView;
-    b.classList.toggle('active', match);
-  });
-
+  markThumb();
   swapMainImg(imgFilename());
   document.getElementById('galleryMain').scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
-initBrandIt('Comfort Scrubs', '/Concept - Nurse Scrubs - Female Front - 2026-06-15-web.jpg', {x:560, y:282, w:120, h:78});
+initBrandIt('Comfort Scrubs', '/Concept - Nurse Scrubs - Female Front - 2026-06-15-web.jpg', {x:594, y:376, w:72, h:62});
 </script>
 </body>
 </html>
