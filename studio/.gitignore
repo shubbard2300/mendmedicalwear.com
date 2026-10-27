@@ -1,0 +1,9 @@
+node_modules
+node_modules.nosync
+dist
+.sanity
+.env
+.env.*
+!.env.example
+*.tsbuildinfo
+.DS_Store

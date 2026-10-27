@@ -1,0 +1,25 @@
+{
+  "name": "mend-studio",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "sanity dev",
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "validate": "sanity schema validate --workspace staging",
+    "typecheck": "tsc --noEmit"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "@sanity/vision": "6.20.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "sanity": "6.20.0",
+    "styled-components": "6.6.0"
+  },
+  "devDependencies": {
+    "typescript": "7.0.2"
+  }
+}

@@ -1,0 +1,11 @@
+node_modules
+node_modules.nosync
+.next
+.env
+.env.*
+!.env.example
+next-env.d.ts
+*.tsbuildinfo
+.DS_Store
+# Written by `next dev` (agent guidance); not part of the port, so it stays out of commits
+AGENTS.md
