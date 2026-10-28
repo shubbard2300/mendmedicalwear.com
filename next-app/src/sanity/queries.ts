@@ -10,11 +10,16 @@ export const SITE_SETTINGS_QUERY = defineQuery(`*[_type == "siteSettings"][0]{
   socialCard{..., "file": asset->originalFilename}
 }`)
 
+// Each card photo's `file` and each linked product's offer kind and breadcrumb name feed the home ItemList: its image is the card photo.
 export const HOME_QUERY = defineQuery(`*[_type == "homePage"][0]{
   ...,
   navMenu->,
   footerMenu->,
-  productsSection{..., cards[]{..., product->{"slug": slug.current}}}
+  productsSection{..., cards[]{
+    ...,
+    images[]{..., "file": asset->originalFilename},
+    product->{"slug": slug.current, offerKind, "breadcrumbName": seo.breadcrumbName}
+  }}
 }`)
 
 export const PRODUCT_QUERY = defineQuery(`*[_type == "product" && slug.current == $slug][0]{

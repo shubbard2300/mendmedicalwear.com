@@ -36,7 +36,7 @@ function Hero({s, v}: {s: Of<'heroSection'>; v: HeroVariant}) {
   return (
     <Wrap className={v.wrap.className}>
       {v.inner ? <div>{content}</div> : content}
-      <SanityImage image={s.image} priority />
+      <SanityImage image={s.image} fetchPriority="high" />
     </Wrap>
   )
 }

@@ -9,8 +9,9 @@ export function imageInfo(ref: string) {
   return {id: m[1], width: Number(m[2]), height: Number(m[3]), ext: m[4]}
 }
 
-export function imageUrl(ref: string, {format}: {format?: string} = {}) {
+export function imageUrl(ref: string, {format, width: w}: {format?: string; width?: number} = {}) {
   const {id, width, height, ext} = imageInfo(ref)
   const url = `https://cdn.sanity.io/images/${projectId}/${dataset}/${id}-${width}x${height}.${ext}`
-  return format ? `${url}?fm=${format}` : url
+  const query = [format && `fm=${format}`, w && `w=${w}`].filter(Boolean).join('&')
+  return query ? `${url}?${query}` : url
 }

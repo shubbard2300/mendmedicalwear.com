@@ -862,7 +862,7 @@ export type SITE_SETTINGS_QUERY_RESULT = {
 
 // Source: ../next-app/src/sanity/queries.ts
 // Variable: HOME_QUERY
-// Query: *[_type == "homePage"][0]{  ...,  navMenu->,  footerMenu->,  productsSection{..., cards[]{..., product->{"slug": slug.current}}}}
+// Query: *[_type == "homePage"][0]{  ...,  navMenu->,  footerMenu->,  productsSection{..., cards[]{    ...,    images[]{..., "file": asset->originalFilename},    product->{"slug": slug.current, offerKind, "breadcrumbName": seo.breadcrumbName}  }}}
 export type HOME_QUERY_RESULT = {
   _id: string;
   _type: "homePage";
@@ -917,14 +917,21 @@ export type HOME_QUERY_RESULT = {
       name: string;
       priceLine?: string;
       badges?: Array<string>;
-      images?: Array<
-        {
-          _key: string;
-        } & ImageWithAlt
-      >;
+      images: Array<{
+        _key: string;
+        _type: "imageWithAlt";
+        asset?: SanityImageAssetReference;
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt: string;
+        file: string | null;
+      }> | null;
       cta?: CtaLink;
       product: {
         slug: string;
+        offerKind: "free" | "none" | "preOrder" | null;
+        breadcrumbName: string | null;
       } | null;
     }> | null;
   } | null;
@@ -1284,7 +1291,7 @@ export type FAQ_QUERY_RESULT = Array<{
 declare global {
   interface SanityQueries {
     '*[_type == "siteSettings"][0]{\n  ...,\n  socialCard{..., "file": asset->originalFilename}\n}': SITE_SETTINGS_QUERY_RESULT;
-    '*[_type == "homePage"][0]{\n  ...,\n  navMenu->,\n  footerMenu->,\n  productsSection{..., cards[]{..., product->{"slug": slug.current}}}\n}': HOME_QUERY_RESULT;
+    '*[_type == "homePage"][0]{\n  ...,\n  navMenu->,\n  footerMenu->,\n  productsSection{..., cards[]{\n    ...,\n    images[]{..., "file": asset->originalFilename},\n    product->{"slug": slug.current, offerKind, "breadcrumbName": seo.breadcrumbName}\n  }}\n}': HOME_QUERY_RESULT;
     '*[_type == "product" && slug.current == $slug][0]{\n  ...,\n  navMenu->,\n  footerMenu->,\n  bundleOffer{..., product->{name, "slug": slug.current, variantGroups}}\n}': PRODUCT_QUERY_RESULT;
     '*[_type == "page" && slug.current == $slug][0]{\n  ...,\n  navMenu->,\n  footerMenu->\n}': PAGE_QUERY_RESULT;
     '*[_type == "faqGroup"] | order(order asc){\n  ...,\n  "items": *[_type == "faqItem" && group._ref == ^._id] | order(order asc)\n}': FAQ_QUERY_RESULT;

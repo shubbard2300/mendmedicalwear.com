@@ -65,6 +65,11 @@ export const PAGE_VARIANTS: Record<string, SectionVariant[]> = {
   ],
 }
 
+// Home product cards: the three markups the live cards use, by card position. The cards store the name, price line, badges, photos and
+// the reserve or waitlist button; the price markup, the badge icon and the Learn More link are code. HomeSections throws if the count changes.
+export type HomeCardKind = 'apparel' | 'device' | 'app'
+export const HOME_CARD_KINDS: HomeCardKind[] = ['apparel', 'apparel', 'apparel', 'apparel', 'device', 'device', 'device', 'app']
+
 // FAQ jump chips: two groups are chipped under a shorter name than their heading. The chip text is not stored in Sanity (the builder
 // rebuilt the chips from the group titles), so these two labels live here until a chip-label field is added to faqGroup.
 export const FAQ_CHIP_LABELS: Record<string, string> = {airguard: 'AirGuard™', returns: 'Returns'}

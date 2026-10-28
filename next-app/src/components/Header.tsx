@@ -4,10 +4,10 @@ import {Cta} from './Cta'
 export type PageMenu = NonNullable<PAGE_QUERY_RESULT>['navMenu']
 
 // The wordmark, the menu toggle and the nav id are copied from the live header; the links come from the page's nav menu document.
-export function Header({menu}: {menu: PageMenu}) {
+export function Header({menu, logoHref = '/'}: {menu: PageMenu; logoHref?: string}) {
   return (
     <header>
-      <a className="logo-link" href="/">
+      <a className="logo-link" href={logoHref}>
         <svg viewBox="0 0 320 90" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MEND Medical Apparel logo">
           <g className="logo-mark" stroke="#7C8B7A" strokeWidth="3" strokeLinecap="round" fill="none">
             <line x1="45" y1="15" x2="45" y2="75" />

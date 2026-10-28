@@ -1,4 +1,4 @@
-import type {BlockContent, FAQ_QUERY_RESULT, Seo} from './types'
+import type {BlockContent, FAQ_QUERY_RESULT, HOME_QUERY_RESULT, SITE_SETTINGS_QUERY_RESULT, Seo} from './types'
 import {absolute} from './head'
 
 const CONTEXT = 'https://schema.org'
@@ -23,6 +23,53 @@ export function faqPageLd(groups: NonNullable<FAQ_QUERY_RESULT>, path: string) {
         acceptedAnswer: {'@type': 'Answer', text: plainText(item.answer)},
       })),
     ),
+  }
+}
+
+export function organizationLd(settings: NonNullable<SITE_SETTINGS_QUERY_RESULT>) {
+  return {
+    '@context': CONTEXT,
+    '@type': 'Organization',
+    name: settings.siteName,
+    url: absolute('/'),
+    logo: absolute('/mend-logo.svg'),
+    description: settings.organizationDescription,
+    telephone: settings.phone,
+    email: settings.contactEmail,
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'customer service',
+      telephone: settings.phone,
+      email: settings.contactEmail,
+      areaServed: 'US',
+      availableLanguage: 'English',
+    },
+  }
+}
+
+type HomeCards = NonNullable<NonNullable<NonNullable<HOME_QUERY_RESULT>['productsSection']>['cards']>
+
+// The home product list: each product once, in card order, named like its breadcrumb, with its first home card photo at today's address.
+export function itemListLd(seo: Seo | undefined, cards: HomeCards | undefined) {
+  const seen = new Set<string>()
+  const items = (cards ?? []).flatMap((card) => {
+    const p = card.product
+    const file = card.images?.[0]?.file
+    if (!p?.slug || !file || seen.has(p.slug)) return []
+    seen.add(p.slug)
+    const offers =
+      p.offerKind === 'preOrder'
+        ? {'@type': 'Offer', availability: 'https://schema.org/PreOrder'}
+        : p.offerKind === 'free'
+          ? {'@type': 'Offer', price: '0.00', priceCurrency: 'USD'}
+          : undefined
+    return [{'@type': 'Product', name: p.breadcrumbName, url: absolute(`/products/${p.slug}`), image: absolute(`/${file}`), ...(offers ? {offers} : {})}]
+  })
+  return {
+    '@context': CONTEXT,
+    '@type': 'ItemList',
+    name: seo?.jsonLdName,
+    itemListElement: items.map((item, i) => ({'@type': 'ListItem', position: i + 1, item})),
   }
 }
 
