@@ -1,4 +1,5 @@
 import type {Metadata} from 'next'
+import {Behavior} from '@/components/Behavior'
 import {SiteHead} from '@/components/SiteHead'
 import '@/styles/styles.css'
 import '@/styles/fall-risk.css'
@@ -16,7 +17,10 @@ export default function ToolLayout({children}: {children: React.ReactNode}) {
       <head>
         <SiteHead analytics={false} />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Behavior kind="tool" />
+      </body>
     </html>
   )
 }

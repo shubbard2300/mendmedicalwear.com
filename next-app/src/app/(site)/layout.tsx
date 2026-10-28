@@ -1,4 +1,5 @@
 import type {Metadata} from 'next'
+import {Behavior} from '@/components/Behavior'
 import {SiteHead} from '@/components/SiteHead'
 import '@/styles/styles.css'
 
@@ -11,11 +12,15 @@ export const metadata: Metadata = {
 
 export default function SiteLayout({children}: {children: React.ReactNode}) {
   return (
-    <html lang="en">
+    // suppressHydrationWarning: the head script adds the `js` class to <html>, which React did not render.
+    <html lang="en" suppressHydrationWarning>
       <head>
-        <SiteHead />
+        <SiteHead jsClass />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Behavior kind="site" />
+      </body>
     </html>
   )
 }

@@ -1,4 +1,5 @@
 import type {Metadata} from 'next'
+import {Behavior} from '@/components/Behavior'
 import {SiteHead} from '@/components/SiteHead'
 
 // P3b shell for MEND App, Pulse and Oxi. These pages carry all their CSS inline and load none of the shared stylesheets, so this
@@ -10,11 +11,15 @@ export const metadata: Metadata = {
 
 export default function MarketingLayout({children}: {children: React.ReactNode}) {
   return (
-    <html lang="en">
+    // suppressHydrationWarning: the head script adds the `js` class to <html>, which React did not render.
+    <html lang="en" suppressHydrationWarning>
       <head>
-        <SiteHead preloadFont={false} />
+        <SiteHead preloadFont={false} jsClass />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Behavior kind="marketing" />
+      </body>
     </html>
   )
 }

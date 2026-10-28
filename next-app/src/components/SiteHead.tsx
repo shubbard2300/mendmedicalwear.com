@@ -8,7 +8,7 @@ import {preload} from 'react-dom'
 const GA_ID = 'G-XT2M4KBL2R'
 const GA_CONFIG = `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`
 
-export function SiteHead({analytics = true, preloadFont = true}: {analytics?: boolean; preloadFont?: boolean}) {
+export function SiteHead({analytics = true, preloadFont = true, jsClass = false}: {analytics?: boolean; preloadFont?: boolean; jsClass?: boolean}) {
   if (preloadFont) preload('/inter-latin-v20.woff2', {as: 'font', type: 'font/woff2', crossOrigin: 'anonymous'})
   return (
     <>
@@ -18,6 +18,8 @@ export function SiteHead({analytics = true, preloadFont = true}: {analytics?: bo
           <script dangerouslySetInnerHTML={{__html: GA_CONFIG}} />
         </>
       )}
+      {/* The shared CSS hides the scroll-reveal sections under .js until the behavior reveals them (P4a); live sets the class here too. */}
+      {jsClass && <script dangerouslySetInnerHTML={{__html: 'document.documentElement.classList.add("js")'}} />}
       <link rel="icon" href="/favicon.ico" sizes="any" />
       <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
       <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
