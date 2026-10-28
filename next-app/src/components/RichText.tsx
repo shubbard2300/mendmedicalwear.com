@@ -16,6 +16,8 @@ export type RichTextProps = {
   lastStyle?: CSSProperties
   /** Inline style on a paragraph by node index (the live pages style a few paragraphs inline). */
   styles?: Record<number, CSSProperties>
+  /** Bare blocks with <b> and <i> marks and nofollow links, as inside a source note (the marketing pages' note sits in a div the page supplies). */
+  legacy?: boolean
 }
 
 /** A text field that can hold a deliberate line break. */
@@ -97,7 +99,7 @@ export function nodeCount(blocks: BlockContent = []) {
   return count
 }
 
-export function RichText({value, bare, classes, h2IdPrefix, tableClass, linkStyle, lastStyle, styles}: RichTextProps) {
+export function RichText({value, bare, classes, h2IdPrefix, tableClass, linkStyle, lastStyle, styles, legacy}: RichTextProps) {
   if (!value?.length) return null
   const blocks = breaksOutsideMarks(value)
   const lastNode = nodeCount(blocks) - 1
@@ -120,6 +122,8 @@ export function RichText({value, bare, classes, h2IdPrefix, tableClass, linkStyl
   })
   // A source note is a div with its text directly inside, and the live note uses <b> (styles.css targets .source-note b) and <i>.
   const noteComponents: PortableTextComponents = {block: {normal: ({children}) => <>{children}</>}, marks: {...marks('nofollow noopener'), strong: ({children}) => <b>{children}</b>, em: ({children}) => <i>{children}</i>}}
+  // A note field stores its blocks in the `sourceNote` style; here they all render bare, whatever their style.
+  if (legacy) return <PortableText value={blocks.map((b) => (b._type === 'block' ? {...b, style: 'normal'} : b)) as PortableTextBlock[]} components={noteComponents} />
 
   const components: PortableTextComponents = {
     block: {
