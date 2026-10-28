@@ -42,3 +42,9 @@ export const FAQ_QUERY = defineQuery(`*[_type == "faqGroup"] | order(order asc){
   ...,
   "items": *[_type == "faqItem" && group._ref == ^._id] | order(order asc)
 }`)
+
+// The sitemap's lastmod: each page document's URL path and last edit.
+export const SITEMAP_QUERY = defineQuery(`*[_type in ["homePage", "page", "product"]]{
+  "path": select(_type == "homePage" => "/", _type == "product" => "/products/" + slug.current, "/" + slug.current),
+  _updatedAt
+}`)

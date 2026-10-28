@@ -1,0 +1,38 @@
+# MEND Medical Apparel
+
+> Adaptive medical apparel and connected home-health devices for patients and the
+> people caring for them. Recovery wear that keeps dignity intact, and monitoring
+> that reaches the care team without a hospital visit.
+
+Site: https://www.mendmedicalwear.com/
+Contact: contact@mendmedicalwear.com · (971) 254-1565 · Portland, OR
+
+## Apparel
+
+- [Comfort Wrap — Stylish Washable Hospital Gown](https://www.mendmedicalwear.com/products/stylish-washable-hospital-gown): A soft, machine-washable recovery gown that replaces the standard hospital gown, with full coverage and one-handed closures.
+- [Comfort Scrubs — Residential Nurse Scrub Set](https://www.mendmedicalwear.com/products/residential-nurse-scrub-set): A tailored scrub set for residential and home-care nurses in a soft cotton/merino blend.
+- [Medical-Grade Compression Socks](https://www.mendmedicalwear.com/products/compression-socks): 20-30 mmHg graduated compression built for nurses, CNAs, and home health aides.
+
+All three apparel products are open for pre-order: no payment to reserve, pay when you confirm before production, cancel any time before paying. The connected devices below are pending FDA 510(k) clearance and are waitlist-only.
+
+## For facilities
+
+- [Founding Facility Pilot](https://www.mendmedicalwear.com/facilities): For surgery centers, orthopedic and oncology programs, home health and hospice, assisted living, rehab, gift shops, and medical supply stores. Pilot pricing is quoted; no payment until the facility approves a pre-production sample.
+
+## Safety and monitoring
+
+- [AirGuard™ Fall-Detection Collar](https://www.mendmedicalwear.com/products/airguard-collar): Senses a fall the instant it happens and calls for help automatically.
+- [MEND Pulse — Wireless Blood Pressure Monitor](https://www.mendmedicalwear.com/products/mend-pulse): Clinical-grade monitor that syncs every reading to the care team.
+- [MEND Oxi — Fingertip Pulse Oximeter](https://www.mendmedicalwear.com/products/mend-oxi): Clinical-grade oximeter that syncs every SpO₂ and pulse-rate reading.
+- [MEND App](https://www.mendmedicalwear.com/products/mend-app): Connects every MEND device to the care team through a HIPAA-compliant pipeline.
+
+## Tools and information
+
+- [Fall Risk Check](https://www.mendmedicalwear.com/fall-risk-assessment): A free STEADI-based self-assessment with a WHO fall-mortality data panel. No account required.
+- [FAQ](https://www.mendmedicalwear.com/FAQ): Sizing, fabric care, shipping, and returns.
+- [Privacy Policy & Terms of Use](https://www.mendmedicalwear.com/Privacy-Terms)
+
+## Notes
+
+- Canonical host is www.mendmedicalwear.com. The apex 308-redirects to it.
+- The Fall Risk Check is informational and is not a medical diagnosis.

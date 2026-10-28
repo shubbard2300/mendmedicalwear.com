@@ -1303,6 +1303,20 @@ export type FAQ_QUERY_RESULT = Array<{
   }>;
 }>;
 
+// Source: ../next-app/src/sanity/queries.ts
+// Variable: SITEMAP_QUERY
+// Query: *[_type in ["homePage", "page", "product"]]{  "path": select(_type == "homePage" => "/", _type == "product" => "/products/" + slug.current, "/" + slug.current),  _updatedAt}
+export type SITEMAP_QUERY_RESULT = Array<
+  | {
+      path: "/";
+      _updatedAt: string;
+    }
+  | {
+      path: string;
+      _updatedAt: string;
+    }
+>;
+
 // Query TypeMap
 declare global {
   interface SanityQueries {
@@ -1311,6 +1325,7 @@ declare global {
     '*[_type == "product" && slug.current == $slug][0]{\n  ...,\n  heroImage{..., "file": asset->originalFilename},\n  imageMatrix[]{..., image{..., "file": asset->originalFilename}},\n  navMenu->,\n  footerMenu->,\n  bundleOffer{..., product->{name, "slug": slug.current, variantGroups}}\n}': PRODUCT_QUERY_RESULT;
     '*[_type == "page" && slug.current == $slug][0]{\n  ...,\n  navMenu->,\n  footerMenu->\n}': PAGE_QUERY_RESULT;
     '*[_type == "faqGroup"] | order(order asc){\n  ...,\n  "items": *[_type == "faqItem" && group._ref == ^._id] | order(order asc)\n}': FAQ_QUERY_RESULT;
+    '*[_type in ["homePage", "page", "product"]]{\n  "path": select(_type == "homePage" => "/", _type == "product" => "/products/" + slug.current, "/" + slug.current),\n  _updatedAt\n}': SITEMAP_QUERY_RESULT;
   }
 }
 // Lets @sanity/client releases that predate the global registry read it too
