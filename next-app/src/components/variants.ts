@@ -183,8 +183,9 @@ export const APPAREL_PAGES: Record<string, ApparelPage> = {
 
 // Marketing pages (MEND App, Pulse, Oxi). The reveal-delay class of each repeated card cannot be derived (Oxi's four feature cards run
 // none, d1, d2, d1), so each page lists them as the live file has them. Components throw if a count differs from the document's.
-export type MarketingPage = {cardDelays: string[]; pairDelays?: string[]; designDelays?: string[]}
+export type MarketingPage = {cardDelays: string[]; pairDelays?: string[]; designDelays?: string[]; securityDelays?: string[]; deviceDelays?: string[]}
 export const MARKETING_PAGES: Record<string, MarketingPage> = {
+  'mend-app': {cardDelays: ['', 'rv-d1', 'rv-d2', 'rv-d3'], securityDelays: ['', 'rv-d1', 'rv-d2', 'rv-d3'], deviceDelays: ['', 'rv-d1', 'rv-d2']},
   'mend-oxi': {cardDelays: ['', 'rv-d1', 'rv-d2', 'rv-d1'], pairDelays: ['', 'rv-d1', 'rv-d2']},
   'mend-pulse': {cardDelays: ['', 'rv-d1', 'rv-d2', 'rv-d3'], designDelays: ['', 'rv-d1', 'rv-d2', 'rv-d3']},
 }

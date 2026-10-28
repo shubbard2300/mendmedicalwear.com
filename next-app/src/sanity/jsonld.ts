@@ -87,6 +87,24 @@ export function productLd(seo: Seo | undefined, product: {heroFile?: string | nu
   }
 }
 
+/** The MEND App page is free: its price tags and its structured data state the same two values. */
+export const FREE_PRICE = {price: '0.00', priceCurrency: 'USD'}
+
+/** The MEND App page's SoftwareApplication block. The category and the operating systems are not stored, so they are here. */
+export function softwareLd(seo: Seo | undefined, app: {heroFile?: string | null; offerKind?: 'preOrder' | 'free' | 'none'}) {
+  return {
+    '@context': CONTEXT,
+    '@type': 'SoftwareApplication',
+    name: seo?.jsonLdName,
+    applicationCategory: 'HealthApplication',
+    operatingSystem: 'iOS, Android',
+    description: seo?.jsonLdDescription,
+    image: app.heroFile ? absolute(`/${app.heroFile}`) : undefined,
+    ...(app.offerKind === 'free' ? {offers: {'@type': 'Offer', ...FREE_PRICE}} : {}),
+    publisher: {'@type': 'Organization', name: seo?.brandName},
+  }
+}
+
 export function breadcrumbLd(seo: Seo | undefined, path: string) {
   return {
     '@context': CONTEXT,

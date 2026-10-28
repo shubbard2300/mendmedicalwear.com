@@ -205,10 +205,10 @@ export function Pair({s, delays}: {s: Of<'relatedSection'>; delays: string[]}) {
   )
 }
 
-/** The spec table and the cert strip. */
-export function Specs({s}: {s: Of<'specSection'>}) {
+/** The spec table and the cert strip. `plain`: the MEND App page's section carries an id and no class. */
+export function Specs({s, plain}: {s: Of<'specSection'>; plain?: boolean}) {
   return (
-    <section className="specs" id={s.anchorId}>
+    <section className={plain ? undefined : 'specs'} id={s.anchorId}>
       <div className="wrap">
         <span className="kicker rv">{s.eyebrow}</span>
         <h2 className="rv">{s.heading}</h2>
