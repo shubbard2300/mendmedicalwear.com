@@ -76,7 +76,13 @@ export const PAGE_VARIANTS: Record<string, SectionVariant[]> = {
 
 // Product pages. The document's sections run: the bundle note (it sits in the info column, so the page lays it out), the blocks below the
 // product area (these tables), then the branding copy and its button (BrandIt).
+const steps: SectionVariant = {type: 'stepsSection', wrap: 'section'}
+const compare: SectionVariant = {type: 'comparisonSection', wrap: 'section'}
+
 export const PRODUCT_VARIANTS: Record<string, {below: SectionVariant[]}> = {
+  // The apparel pages: the steps, then (laid out by ViewsGrid, not here) the views section, then the comparison grids.
+  'stylish-washable-hospital-gown': {below: [steps, compare, compare]},
+  'residential-nurse-scrub-set': {below: [steps, compare]},
   'airguard-collar': {
     below: [
       {type: 'stepsSection', wrap: 'section'},
@@ -89,6 +95,87 @@ export const PRODUCT_VARIANTS: Record<string, {below: SectionVariant[]}> = {
       },
       {type: 'toolSection', inSection: 'airguard'},
     ],
+  },
+}
+
+// The apparel pages (gown, scrubs). The stored content fills the options, tables and photos; what the live markup adds around them is here:
+// which photo the thumbnails and view cards show, their alt text and captions where none is stored, the tooltip line, and the defaults.
+export type Gender = 'female' | 'male'
+type View = 'front' | 'back' | 'pockets'
+type PhotoKey = {gender: Gender; view: View; closure?: 'front'; color?: string}
+
+export type ViewCard = {gender: Gender; view: View; id: string; alt: string; caption?: string}
+export type ViewsSpec = {
+  wrapId?: string
+  tooltip: string
+  lazy?: boolean
+  subheads?: Record<Gender, string>
+  cards: ViewCard[]
+  match: (card: {gender: Gender; view: View}) => PhotoKey
+}
+export type ThumbSpec = {key: {gender: Gender; view: View}; alt: string; ariaLabel?: string; showGender?: boolean}
+export type ApparelPage = {
+  thumbs: ThumbSpec[]
+  colorShowsValue: boolean
+  defaultSize: string
+  /** The scrubs' bundle offer starts with this sock color. */
+  bundleColor?: string
+  views: ViewsSpec
+}
+
+const GOWN_TOOLTIP = 'Click to preview this view in your selected color, on the main image above.'
+const SCRUBS_CAPTIONS: Record<View, string> = {
+  front: 'Front: V-neck, chest pocket, two lower pockets',
+  back: 'Back: yoke seam, back patch pocket on the pant',
+  pockets: 'Pockets in use: chest, lower and side pockets',
+}
+
+export const APPAREL_PAGES: Record<string, ApparelPage> = {
+  'stylish-washable-hospital-gown': {
+    thumbs: [
+      {key: {gender: 'female', view: 'front'}, alt: 'Female front', showGender: true},
+      {key: {gender: 'female', view: 'back'}, alt: 'Female back', showGender: true},
+      {key: {gender: 'male', view: 'front'}, alt: 'Male front', showGender: true},
+      {key: {gender: 'male', view: 'back'}, alt: 'Male back', showGender: true},
+    ],
+    colorShowsValue: false,
+    defaultSize: 'M',
+    views: {
+      tooltip: GOWN_TOOLTIP,
+      cards: [
+        {gender: 'female', view: 'front', id: 'FF', alt: 'Female front view'},
+        {gender: 'female', view: 'back', id: 'FB', alt: 'Female back view'},
+        {gender: 'male', view: 'front', id: 'MF', alt: 'Male front view'},
+        {gender: 'male', view: 'back', id: 'MB', alt: 'Male back view'},
+      ],
+      match: ({gender, view}) => ({gender, view, closure: 'front', color: undefined}), // the default photos: front zip, no color
+    },
+  },
+  'residential-nurse-scrub-set': {
+    thumbs: [
+      {key: {gender: 'female', view: 'front'}, alt: 'Front view', ariaLabel: 'Front view'},
+      {key: {gender: 'female', view: 'back'}, alt: 'Back view', ariaLabel: 'Back view'},
+      {key: {gender: 'female', view: 'pockets'}, alt: 'Pockets in use', ariaLabel: 'Pockets in use'},
+    ],
+    colorShowsValue: true,
+    defaultSize: 'M',
+    bundleColor: 'Sage',
+    views: {
+      wrapId: 'viewsSection',
+      tooltip: 'Click to preview this view on the main image above.',
+      lazy: true,
+      subheads: {female: "Women's", male: "Men's"},
+      cards: (['female', 'male'] as const).flatMap((gender) =>
+        (['front', 'back', 'pockets'] as const).map((view) => ({
+          gender,
+          view,
+          id: `${gender === 'female' ? 'F' : 'M'}${view === 'front' ? 'F' : view === 'back' ? 'B' : 'P'}`,
+          alt: `${gender === 'female' ? "Women's" : "Men's"} ${view} view`,
+          caption: SCRUBS_CAPTIONS[view],
+        })),
+      ),
+      match: ({gender, view}) => ({gender, view, color: 'Sage'}), // the default color's photos
+    },
   },
 }
 

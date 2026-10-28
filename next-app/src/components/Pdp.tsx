@@ -23,12 +23,46 @@ export function PdpFrame({gallery, children}: {gallery: ReactNode; children: Rea
   )
 }
 
-/** The main photo and the zoom lens (behavior arrives in P4). */
-export function Gallery({image}: {image: Product['heroImage']}) {
+type Matrix = NonNullable<Product['imageMatrix']>
+export type Photo = Matrix[number]
+
+/** One photo from the image matrix by what it shows. A key left out is not matched; `color: undefined` matches the photos with no color. */
+export function findPhoto(matrix: Matrix | undefined, key: {gender?: Photo['gender']; view?: Photo['view']; closure?: Photo['closure']; color?: string | undefined}): Photo {
+  const photo = matrix?.find((m) => (!('gender' in key) || m.gender === key.gender) && (!('view' in key) || m.view === key.view) && (!('closure' in key) || m.closure === key.closure) && (!('color' in key) || m.color === key.color))
+  if (!photo?.image) throw new Error(`No photo in the image matrix for ${JSON.stringify(key)}`)
+  return photo
+}
+
+export type Thumb = {photo: Photo; alt: string; view?: string; gender?: string; ariaLabel?: string}
+
+/** The main photo and the zoom lens, and a strip of thumbnails where the product has one (behavior arrives in P4). */
+export function Gallery({image, thumbs}: {image: Product['heroImage']; thumbs?: Thumb[]}) {
   return (
-    <div className="gallery-main" id="galleryMain">
-      <SanityImage image={image} id="mainImg" plain />
-      <div className="zoom-lens" id="zoomLens"></div>
+    <>
+      <div className="gallery-main" id="galleryMain">
+        <SanityImage image={image} id="mainImg" plain />
+        <div className="zoom-lens" id="zoomLens"></div>
+      </div>
+      {thumbs && (
+        <div className="gallery-thumbs" id="galleryThumbs">
+          {thumbs.map((t, i) => (
+            <button key={`${t.gender}-${t.view}`} className={i === 0 ? 'active' : undefined} data-gender={t.gender} data-view={t.view} aria-label={t.ariaLabel}>
+              <SanityImage image={t.photo.image && {...t.photo.image, alt: t.alt}} plain />
+            </button>
+          ))}
+        </div>
+      )}
+    </>
+  )
+}
+
+/** The pre-order and waitlist buttons. */
+export function CtaRow({ctas, firstId}: {ctas: Product['ctas']; firstId?: string}) {
+  return (
+    <div className="cta">
+      {ctas?.map((c, i) => (
+        <Cta key={c._key} cta={c} className={i === 0 ? 'btn btn-primary' : 'btn btn-secondary'} id={i === 0 ? firstId : undefined} />
+      ))}
     </div>
   )
 }
