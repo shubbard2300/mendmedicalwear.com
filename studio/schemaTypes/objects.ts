@@ -34,6 +34,7 @@ export const seo = defineType({
   name: 'seo',
   title: 'SEO',
   type: 'object',
+  fieldsets: [{name: 'share', title: 'Share and structured data', options: {collapsible: true, collapsed: true}}],
   fields: [
     defineField({name: 'title', type: 'string', description: 'The <title>. Live titles run about 45 to 65 characters.', validation: (r) => r.max(70).warning()}),
     defineField({name: 'description', type: 'text', rows: 3, description: 'Meta description. Live ones run 137 to 159 characters.', validation: (r) => r.max(160).warning()}),
@@ -43,6 +44,57 @@ export const seo = defineType({
       rows: 3,
       description: 'The description inside the page JSON-LD block. On the live site it is a different sentence from the meta description, so it is kept on its own.',
     }),
+    // Share tags and structured data (P3a). Canonical, og:url, og:type, twitter:card, twitter:title, the share image and the
+    // Product offers are derived in code from the page itself, not stored here.
+    defineField({
+      name: 'ogTitle',
+      type: 'string',
+      fieldset: 'share',
+      description: 'The Open Graph and Twitter title. Setting it turns the Open Graph and Twitter tags on for this page; leave it empty for a page that has none (FAQ, Privacy-Terms).',
+    }),
+    defineField({name: 'ogDescription', type: 'text', rows: 3, fieldset: 'share', description: 'The Open Graph description.'}),
+    defineField({name: 'twitterDescription', type: 'text', rows: 3, fieldset: 'share', description: 'Only when it differs from the Open Graph description.'}),
+    defineField({
+      name: 'ogImageAlt',
+      type: 'string',
+      fieldset: 'share',
+      description: 'Only when it differs from the alt text of the share image (the product hero photo, or the site social card).',
+    }),
+    defineField({name: 'keywords', type: 'string', fieldset: 'share', description: 'The meta keywords line, as written (home and Fall Risk only today).'}),
+    defineField({name: 'author', type: 'string', fieldset: 'share', description: 'The meta author (home and Fall Risk only today).'}),
+    defineField({
+      name: 'robots',
+      type: 'string',
+      fieldset: 'share',
+      description: 'Empty means no robots tag.',
+      options: {
+        list: [
+          {title: 'Index, follow, large image previews', value: 'index, follow, max-image-preview:large'},
+          {title: 'Index, follow', value: 'index, follow'},
+        ],
+      },
+    }),
+    defineField({
+      name: 'themeColor',
+      type: 'string',
+      fieldset: 'share',
+      description: 'Browser theme color as a hex value, for example #7C8B7A. Empty means no tag.',
+      validation: (r) => r.regex(/^#[0-9A-Fa-f]{6}$/, {name: 'hex color'}).warning('Use a six-digit hex color such as #7C8B7A'),
+    }),
+    defineField({
+      name: 'jsonLdName',
+      type: 'string',
+      fieldset: 'share',
+      description: 'The name in the main structured-data block of the page: the Product name on a product, the page name on Fall Risk, the list name on the home page.',
+    }),
+    defineField({name: 'breadcrumbName', type: 'string', fieldset: 'share', description: 'The last item of the breadcrumb trail (products and Facilities).'}),
+    defineField({
+      name: 'brandName',
+      type: 'string',
+      fieldset: 'share',
+      description: 'The brand (or app publisher) in the structured data: "MEND Medical Apparel" or "MEND Medical".',
+    }),
+    defineField({name: 'citations', type: 'array', fieldset: 'share', description: 'Sources listed in the structured data (Fall Risk).', of: [defineArrayMember({type: 'string'})]}),
   ],
 })
 
