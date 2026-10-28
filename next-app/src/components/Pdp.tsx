@@ -1,4 +1,5 @@
 import type {CSSProperties, ReactNode} from 'react'
+import {imageUrl} from '@/sanity/image'
 import type {BlockContent, CtaLink, PRODUCT_QUERY_RESULT} from '@/sanity/types'
 import {Cta} from './Cta'
 import {RichText} from './RichText'
@@ -27,16 +28,16 @@ type Matrix = NonNullable<Product['imageMatrix']>
 export type Photo = Matrix[number]
 
 /** One photo from the image matrix by what it shows. A key left out is not matched; `color: undefined` matches the photos with no color. */
-export function findPhoto(matrix: Matrix | undefined, key: {gender?: Photo['gender']; view?: Photo['view']; closure?: Photo['closure']; color?: string | undefined}): Photo {
+export function findPhoto(matrix: Matrix | null | undefined, key: {gender?: Photo['gender']; view?: Photo['view']; closure?: Photo['closure']; color?: string | undefined}): Photo {
   const photo = matrix?.find((m) => (!('gender' in key) || m.gender === key.gender) && (!('view' in key) || m.view === key.view) && (!('closure' in key) || m.closure === key.closure) && (!('color' in key) || m.color === key.color))
   if (!photo?.image) throw new Error(`No photo in the image matrix for ${JSON.stringify(key)}`)
   return photo
 }
 
-export type Thumb = {photo: Photo; alt: string; view?: string; gender?: string; ariaLabel?: string}
+export type Thumb = {photo: Photo; alt: string; view?: string; gender?: string; ariaLabel?: string; /** the socks: `data-color`, and `data-src` with the photo's address */ color?: string; withSrc?: boolean}
 
 /** The main photo and the zoom lens, and a strip of thumbnails where the product has one (behavior arrives in P4). */
-export function Gallery({image, thumbs}: {image: Product['heroImage']; thumbs?: Thumb[]}) {
+export function Gallery({image, thumbs, thumbsId = 'galleryThumbs'}: {image: Product['heroImage']; thumbs?: Thumb[]; thumbsId?: string}) {
   return (
     <>
       <div className="gallery-main" id="galleryMain">
@@ -44,9 +45,17 @@ export function Gallery({image, thumbs}: {image: Product['heroImage']; thumbs?: 
         <div className="zoom-lens" id="zoomLens"></div>
       </div>
       {thumbs && (
-        <div className="gallery-thumbs" id="galleryThumbs">
+        <div className="gallery-thumbs" id={thumbsId}>
           {thumbs.map((t, i) => (
-            <button key={`${t.gender}-${t.view}`} className={i === 0 ? 'active' : undefined} data-gender={t.gender} data-view={t.view} aria-label={t.ariaLabel}>
+            <button
+              key={i}
+              className={i === 0 ? 'active' : undefined}
+              data-src={t.withSrc && t.photo.image?.asset ? imageUrl(t.photo.image.asset._ref) : undefined}
+              data-color={t.color}
+              data-gender={t.gender}
+              data-view={t.view}
+              aria-label={t.ariaLabel}
+            >
               <SanityImage image={t.photo.image && {...t.photo.image, alt: t.alt}} plain />
             </button>
           ))}
@@ -68,11 +77,12 @@ export function CtaRow({ctas, firstId}: {ctas: Product['ctas']; firstId?: string
 }
 
 /** Heading, subtitle, price and badges. A product with a priceStyle shows the price as a plain styled line (AirGuard); the others use the price-note span. */
-export function ProductIntro({product, priceStyle}: {product: Product; priceStyle?: CSSProperties}) {
+export function ProductIntro({product, priceStyle, tagline}: {product: Product; priceStyle?: CSSProperties; /** a line under the subtitle (the socks) */ tagline?: string}) {
   return (
     <>
       <h1>{product.name}</h1>
       <div className="subtitle">{product.tagline}</div>
+      {tagline && <div className="tagline">{tagline}</div>}
       {priceStyle ? (
         <div className="price" style={priceStyle}>
           {product.priceText}

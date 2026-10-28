@@ -999,7 +999,7 @@ export type HOME_QUERY_RESULT = {
 
 // Source: ../next-app/src/sanity/queries.ts
 // Variable: PRODUCT_QUERY
-// Query: *[_type == "product" && slug.current == $slug][0]{  ...,  heroImage{..., "file": asset->originalFilename},  navMenu->,  footerMenu->,  bundleOffer{..., product->{name, "slug": slug.current, variantGroups}}}
+// Query: *[_type == "product" && slug.current == $slug][0]{  ...,  heroImage{..., "file": asset->originalFilename},  imageMatrix[]{..., image{..., "file": asset->originalFilename}},  navMenu->,  footerMenu->,  bundleOffer{..., product->{name, "slug": slug.current, variantGroups}}}
 export type PRODUCT_QUERY_RESULT = {
   _id: string;
   _type: "product";
@@ -1023,16 +1023,24 @@ export type PRODUCT_QUERY_RESULT = {
     alt: string;
     file: string | null;
   } | null;
-  imageMatrix?: Array<{
+  imageMatrix: Array<{
     gender?: "female" | "male";
     view?: "back" | "detail" | "front" | "pockets";
     closure?: "back" | "front";
     color?: string;
     label?: string;
-    image?: ImageWithAlt;
+    image: {
+      _type: "imageWithAlt";
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      file: string | null;
+    } | null;
     _type: "matrixImage";
     _key: string;
-  }>;
+  }> | null;
   description?: BlockContent;
   bundleNote?: string;
   banner?: string;
@@ -1300,7 +1308,7 @@ declare global {
   interface SanityQueries {
     '*[_type == "siteSettings"][0]{\n  ...,\n  socialCard{..., "file": asset->originalFilename}\n}': SITE_SETTINGS_QUERY_RESULT;
     '*[_type == "homePage"][0]{\n  ...,\n  navMenu->,\n  footerMenu->,\n  productsSection{..., cards[]{\n    ...,\n    images[]{..., "file": asset->originalFilename},\n    product->{"slug": slug.current, offerKind, "breadcrumbName": seo.breadcrumbName}\n  }}\n}': HOME_QUERY_RESULT;
-    '*[_type == "product" && slug.current == $slug][0]{\n  ...,\n  heroImage{..., "file": asset->originalFilename},\n  navMenu->,\n  footerMenu->,\n  bundleOffer{..., product->{name, "slug": slug.current, variantGroups}}\n}': PRODUCT_QUERY_RESULT;
+    '*[_type == "product" && slug.current == $slug][0]{\n  ...,\n  heroImage{..., "file": asset->originalFilename},\n  imageMatrix[]{..., image{..., "file": asset->originalFilename}},\n  navMenu->,\n  footerMenu->,\n  bundleOffer{..., product->{name, "slug": slug.current, variantGroups}}\n}': PRODUCT_QUERY_RESULT;
     '*[_type == "page" && slug.current == $slug][0]{\n  ...,\n  navMenu->,\n  footerMenu->\n}': PAGE_QUERY_RESULT;
     '*[_type == "faqGroup"] | order(order asc){\n  ...,\n  "items": *[_type == "faqItem" && group._ref == ^._id] | order(order asc)\n}': FAQ_QUERY_RESULT;
   }

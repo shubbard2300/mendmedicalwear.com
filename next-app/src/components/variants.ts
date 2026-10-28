@@ -83,6 +83,8 @@ export const PRODUCT_VARIANTS: Record<string, {below: SectionVariant[]}> = {
   // The apparel pages: the steps, then (laid out by ViewsGrid, not here) the views section, then the comparison grids.
   'stylish-washable-hospital-gown': {below: [steps, compare, compare]},
   'residential-nurse-scrub-set': {below: [steps, compare]},
+  // The socks page: the steps, then (laid out by the page) the webbing, color and non-slip blocks, then the comparison grid.
+  'compression-socks': {below: [steps, compare]},
   'airguard-collar': {
     below: [
       {type: 'stepsSection', wrap: 'section'},
@@ -178,6 +180,9 @@ export const APPAREL_PAGES: Record<string, ApparelPage> = {
     },
   },
 }
+
+/** The socks' size row starts on this size. */
+export const SOCKS_DEFAULT_SIZE = 'M/L'
 
 // Home product cards: the three markups the live cards use, by card position. The cards store the name, price line, badges, photos and
 // the reserve or waitlist button; the price markup, the badge icon and the Learn More link are code. HomeSections throws if the count changes.

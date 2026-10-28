@@ -1,4 +1,6 @@
+import {imageUrl} from '@/sanity/image'
 import type {PRODUCT_QUERY_RESULT, TableBlock} from '@/sanity/types'
+import {findPhoto} from './Pdp'
 import {SanityImage} from './SanityImage'
 
 type Product = NonNullable<PRODUCT_QUERY_RESULT>
@@ -66,6 +68,50 @@ export function ColorPicker({group, showValue}: {group: Group; showValue?: boole
             ></button>
           )
         })}
+      </div>
+    </div>
+  )
+}
+
+/** The socks' color row: a swatch is a button with the color, the photo's address (`data-src`) and a title, and nothing else. */
+export function SockColorPicker({group, matrix}: {group: Group; matrix: Product['imageMatrix']}) {
+  const options = optionsOf(group)
+  return (
+    <div className="option-group">
+      <label>
+        {group.name} — <span id="colorLabel" className="color-label-value">{options[0]?.label}</span>
+      </label>
+      <div className="swatches">
+        {options.map((o, i) => {
+          const ref = findPhoto(matrix, {color: o.value}).image?.asset?._ref
+          return (
+            <button
+              key={o._key}
+              type="button"
+              className={i === 0 ? 'swatch active' : 'swatch'}
+              style={{background: o.swatchColor}}
+              data-color={o.value}
+              data-src={ref ? imageUrl(ref) : undefined}
+              title={o.label}
+            ></button>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+/** The socks' size row: plain buttons, one selected. */
+export function SockSizePicker({group, defaultSize}: {group: Group; defaultSize: string}) {
+  return (
+    <div className="option-group">
+      <label>{group.name}</label>
+      <div className="sizes">
+        {optionsOf(group).map((o) => (
+          <button key={o._key} type="button" className={o.label === defaultSize ? 'size-btn active' : 'size-btn'}>
+            {o.label}
+          </button>
+        ))}
       </div>
     </div>
   )

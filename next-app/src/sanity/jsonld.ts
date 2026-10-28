@@ -73,14 +73,15 @@ export function itemListLd(seo: Seo | undefined, cards: HomeCards | undefined) {
   }
 }
 
-/** A product page's Product block. `offers` follows the product's offer kind: a pre-order offer for apparel, none for AirGuard. */
-export function productLd(seo: Seo | undefined, product: {heroFile?: string | null; offerKind?: 'preOrder' | 'free' | 'none'}, path: string) {
+/** A product page's Product block. `offers` follows the product's offer kind: a pre-order offer for apparel, none for AirGuard. `files` lists
+ *  extra photos (the socks name three); otherwise the one image is the hero photo. */
+export function productLd(seo: Seo | undefined, product: {heroFile?: string | null; files?: string[]; offerKind?: 'preOrder' | 'free' | 'none'}, path: string) {
   return {
     '@context': CONTEXT,
     '@type': 'Product',
     name: seo?.jsonLdName,
     description: seo?.jsonLdDescription,
-    image: product.heroFile ? absolute(`/${product.heroFile}`) : undefined,
+    image: product.files?.length ? product.files.map((f) => absolute(`/${f}`)) : product.heroFile ? absolute(`/${product.heroFile}`) : undefined,
     brand: {'@type': 'Brand', name: seo?.brandName},
     ...(product.offerKind === 'preOrder' ? {offers: {'@type': 'Offer', availability: 'https://schema.org/PreOrder', url: absolute(path)}} : {}),
   }

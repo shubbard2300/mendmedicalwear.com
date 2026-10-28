@@ -118,8 +118,8 @@ export function RichText({value, bare, classes, h2IdPrefix, tableClass, linkStyl
       )
     },
   })
-  // A source note is a div with its text directly inside, and the live note uses <b> (styles.css targets .source-note b).
-  const noteComponents: PortableTextComponents = {block: {normal: ({children}) => <>{children}</>}, marks: {...marks('nofollow noopener'), strong: ({children}) => <b>{children}</b>}}
+  // A source note is a div with its text directly inside, and the live note uses <b> (styles.css targets .source-note b) and <i>.
+  const noteComponents: PortableTextComponents = {block: {normal: ({children}) => <>{children}</>}, marks: {...marks('nofollow noopener'), strong: ({children}) => <b>{children}</b>, em: ({children}) => <i>{children}</i>}}
 
   const components: PortableTextComponents = {
     block: {
