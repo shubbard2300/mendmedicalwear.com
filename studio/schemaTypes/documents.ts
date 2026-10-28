@@ -175,6 +175,21 @@ export const product = defineType({
         defineField({name: 'note', type: 'text', rows: 3}),
       ],
     }),
+    defineField({
+      name: 'bundleOffer',
+      type: 'object',
+      description: 'A cross-sell offer inside the product area (the scrubs page offers the socks). The sock colors come from the referenced product.',
+      fields: [
+        defineField({name: 'image', type: 'imageWithAlt'}),
+        defineField({name: 'eyebrow', type: 'string'}),
+        defineField({name: 'productName', type: 'string'}),
+        defineField({name: 'description', type: 'text', rows: 3}),
+        defineField({name: 'checkboxLabel', type: 'string'}),
+        defineField({name: 'colorLabel', type: 'string'}),
+        defineField({name: 'colorNote', type: 'text', rows: 2}),
+        defineField({name: 'product', type: 'reference', to: [{type: 'product'}]}),
+      ],
+    }),
     defineField({name: 'ctas', type: 'array', description: 'The buttons next to the options (Pre-Order Now, Save for Later, Notify Me at Launch).', of: [defineArrayMember({type: 'ctaLink'})]}),
     defineField({
       name: 'specs',

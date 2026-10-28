@@ -111,8 +111,14 @@ export const cardItem = defineType({
   name: 'cardItem',
   title: 'Card',
   type: 'object',
-  fields: [icon, defineField({name: 'title', type: 'string'}), defineField({name: 'body', type: 'text', rows: 3})],
-  preview: {select: {title: 'title', subtitle: 'body'}},
+  fields: [
+    icon,
+    defineField({name: 'image', type: 'imageWithAlt'}),
+    defineField({name: 'title', type: 'string'}),
+    defineField({name: 'body', type: 'text', rows: 3}),
+    defineField({name: 'href', type: 'string', description: 'Where the whole card links, if anywhere (a path or URL).'}),
+  ],
+  preview: {select: {title: 'title', subtitle: 'body', media: 'image'}},
 })
 
 export const miniItem = defineType({
@@ -197,6 +203,7 @@ export const stepsSection = defineType({
             icon,
             defineField({name: 'title', type: 'string'}),
             defineField({name: 'body', type: 'text', rows: 3}),
+            defineField({name: 'tags', type: 'array', description: 'Short chips under the step text.', of: [defineArrayMember({type: 'string'})]}),
           ],
           preview: {select: {title: 'title', subtitle: 'body'}},
         }),
@@ -255,8 +262,7 @@ export const ctaSection = defineType({
     anchorId,
     heading,
     defineField({name: 'body', type: 'blockContent'}),
-    defineField({name: 'cta', type: 'ctaLink'}),
-    defineField({name: 'secondaryCta', type: 'ctaLink'}),
+    defineField({name: 'ctas', type: 'array', of: [defineArrayMember({type: 'ctaLink'})]}),
     defineField({name: 'footnote', type: 'string'}),
   ],
   preview: titled('Call to action'),
@@ -271,7 +277,7 @@ export const heroSection = defineType({
     heading,
     defineField({name: 'lead', type: 'blockContent'}),
     defineField({name: 'ctas', type: 'array', of: [defineArrayMember({type: 'ctaLink'})]}),
-    defineField({name: 'note', type: 'text', rows: 2, description: 'The small line under the buttons.'}),
+    defineField({name: 'note', type: 'blockContent', description: 'The small line under the buttons (it can hold a link).'}),
     defineField({name: 'image', type: 'imageWithAlt'}),
     defineField({
       name: 'floatingSpecs',
@@ -285,7 +291,7 @@ export const heroSection = defineType({
         }),
       ],
     }),
-    defineField({name: 'trustItems', type: 'array', of: [defineArrayMember({type: 'string'})]}),
+    defineField({name: 'trustItems', type: 'array', of: [defineArrayMember({type: 'miniItem'})]}),
     defineField({
       name: 'storeBadges',
       type: 'array',
@@ -293,7 +299,13 @@ export const heroSection = defineType({
         defineArrayMember({
           type: 'object',
           name: 'storeBadge',
-          fields: [defineField({name: 'prefix', type: 'string'}), defineField({name: 'label', type: 'string'})],
+          fields: [
+            defineField({name: 'prefix', type: 'string'}),
+            defineField({name: 'label', type: 'string'}),
+            defineField({name: 'modal', type: 'string', description: 'The lead form the badge opens.', options: {list: modalNames}}),
+            defineField({name: 'product', type: 'string', description: 'The product text the lead form receives.'}),
+            defineField({name: 'href', type: 'string'}),
+          ],
           preview: {select: {title: 'label', subtitle: 'prefix'}},
         }),
       ],
@@ -361,6 +373,7 @@ export const relatedSection = defineType({
             defineField({name: 'body', type: 'text', rows: 3}),
             defineField({name: 'linkLabel', type: 'string'}),
             defineField({name: 'href', type: 'string'}),
+            defineField({name: 'image', type: 'imageWithAlt'}),
           ],
           preview: {select: {title: 'title', subtitle: 'linkLabel'}},
         }),
