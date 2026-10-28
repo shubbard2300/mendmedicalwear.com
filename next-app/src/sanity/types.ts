@@ -836,7 +836,7 @@ export type AllSanitySchemaTypes =
 
 // Source: ../next-app/src/sanity/queries.ts
 // Variable: SITE_SETTINGS_QUERY
-// Query: *[_type == "siteSettings"][0]
+// Query: *[_type == "siteSettings"][0]{  ...,  socialCard{..., "file": asset->originalFilename}}
 export type SITE_SETTINGS_QUERY_RESULT = {
   _id: string;
   _type: "siteSettings";
@@ -848,7 +848,15 @@ export type SITE_SETTINGS_QUERY_RESULT = {
   phone?: string;
   copyright?: string;
   organizationDescription?: string;
-  socialCard?: ImageWithAlt;
+  socialCard: {
+    _type: "imageWithAlt";
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    file: string | null;
+  } | null;
   defaultSeo?: Seo;
 } | null;
 
@@ -1275,7 +1283,7 @@ export type FAQ_QUERY_RESULT = Array<{
 // Query TypeMap
 declare global {
   interface SanityQueries {
-    '*[_type == "siteSettings"][0]': SITE_SETTINGS_QUERY_RESULT;
+    '*[_type == "siteSettings"][0]{\n  ...,\n  socialCard{..., "file": asset->originalFilename}\n}': SITE_SETTINGS_QUERY_RESULT;
     '*[_type == "homePage"][0]{\n  ...,\n  navMenu->,\n  footerMenu->,\n  productsSection{..., cards[]{..., product->{"slug": slug.current}}}\n}': HOME_QUERY_RESULT;
     '*[_type == "product" && slug.current == $slug][0]{\n  ...,\n  navMenu->,\n  footerMenu->,\n  bundleOffer{..., product->{name, "slug": slug.current, variantGroups}}\n}': PRODUCT_QUERY_RESULT;
     '*[_type == "page" && slug.current == $slug][0]{\n  ...,\n  navMenu->,\n  footerMenu->\n}': PAGE_QUERY_RESULT;

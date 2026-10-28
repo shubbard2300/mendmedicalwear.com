@@ -4,7 +4,11 @@ import {defineQuery} from 'next-sanity'
 // Images stay as stored: `alt` plus the asset reference. P3d turns a reference into a URL and size.
 // After any change here, run `npm run typegen` in studio/ so types.ts matches.
 
-export const SITE_SETTINGS_QUERY = defineQuery(`*[_type == "siteSettings"][0]`)
+// `file` is the stored (percent-encoded) file name; the share-image URLs keep today's address, https://www.mendmedicalwear.com/<file> (D13).
+export const SITE_SETTINGS_QUERY = defineQuery(`*[_type == "siteSettings"][0]{
+  ...,
+  socialCard{..., "file": asset->originalFilename}
+}`)
 
 export const HOME_QUERY = defineQuery(`*[_type == "homePage"][0]{
   ...,
