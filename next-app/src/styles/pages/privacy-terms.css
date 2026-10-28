@@ -1,0 +1,33 @@
+
+  .page-hero{padding:64px 0 48px; border-bottom:1px solid var(--line); margin-bottom:56px;}
+  .page-hero .eyebrow{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent-dark); font-weight:600; margin-bottom:12px;}
+  .page-hero h1{font-size:40px; font-weight:700; margin-bottom:12px; letter-spacing:-.01em;}
+  .page-hero p{color:var(--muted); font-size:15px;}
+
+  .doc-tabs{display:flex; gap:0; border-bottom:2px solid var(--line); margin-bottom:48px;}
+  .doc-tab{padding:12px 24px; font-size:14px; font-weight:600; color:var(--muted); cursor:pointer; border:none; background:none; font-family:inherit; border-bottom:2px solid transparent; margin-bottom:-2px; transition:color .2s, border-color .2s;}
+  .doc-tab.active{color:var(--accent-dark); border-bottom-color:var(--accent);}
+  .doc-tab:hover{color:var(--fg);}
+
+  .doc-panel{display:none;}
+  .doc-panel.active{display:block;}
+
+  .legal-body h2{font-size:18px; font-weight:600; margin:36px 0 10px; color:var(--fg);}
+  .legal-body h2:first-child{margin-top:0;}
+  .legal-body p{font-size:14px; color:var(--muted); line-height:1.8; margin-bottom:14px;}
+  .legal-body ul{margin:0 0 16px 18px;}
+  .legal-body li{font-size:14px; color:var(--muted); line-height:1.8; margin-bottom:6px;}
+  .legal-body a{color:var(--accent-dark); text-decoration:underline; text-underline-offset:2px;}
+  .legal-body a:hover{text-decoration:underline;}
+  .legal-body .updated{font-size:12px; color:var(--muted); margin-bottom:32px; padding:10px 16px; background:var(--panel); border-radius:8px; border-left:3px solid var(--accent);}
+
+  .legal-notice{background:var(--panel); border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:10px; padding:18px 22px; margin-bottom:36px; font-size:14px; line-height:1.75; color:var(--fg);}
+  .legal-notice strong{display:block; margin-bottom:6px;}
+  .legal-notice a{color:var(--accent-dark); text-decoration:underline; text-underline-offset:2px;}
+
+  .legal-toc{background:var(--panel); border-radius:12px; padding:20px 24px; margin-bottom:40px;}
+  .legal-toc p{font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin-bottom:10px;}
+  .legal-toc ol{margin:0 0 0 16px;}
+  .legal-toc li{font-size:13px; line-height:1.9;}
+  .legal-toc a{color:var(--accent-dark); text-decoration:none;}
+  .legal-toc a:hover{text-decoration:underline;}

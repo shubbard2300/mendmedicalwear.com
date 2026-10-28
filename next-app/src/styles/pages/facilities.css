@@ -1,0 +1,27 @@
+
+  .fac-hero{display:grid; grid-template-columns:1.1fr 1fr; gap:48px; align-items:center; padding:24px 0 8px;}
+  @media(max-width:860px){.fac-hero{grid-template-columns:1fr; gap:28px;}}
+  .fac-eyebrow{font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--accent-dark); font-weight:600; margin-bottom:12px;}
+  .fac-hero h1{font-size:40px; line-height:1.15; letter-spacing:-.01em; margin-bottom:16px;}
+  @media(max-width:640px){.fac-hero h1{font-size:30px;}}
+  .fac-lede{font-size:17px; color:var(--muted); line-height:1.65; margin-bottom:24px; max-width:520px;}
+  .fac-cta{display:flex; gap:12px; flex-wrap:wrap;}
+  .fac-hero img{width:100%; height:auto; aspect-ratio:1/1; object-fit:cover; border-radius:16px; display:block;}
+  .fac-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:16px;}
+  @media(max-width:860px){.fac-grid{grid-template-columns:1fr 1fr;}}
+  @media(max-width:560px){.fac-grid{grid-template-columns:1fr;}}
+  .fac-card{background:var(--panel); border-radius:12px; padding:22px;}
+  .fac-card h3{font-size:15px; font-weight:600; margin-bottom:6px;}
+  .fac-card p{font-size:14px; color:var(--muted); line-height:1.6;}
+  .fac-list{list-style:none; margin-top:8px;}
+  .fac-list li{padding:10px 0; border-bottom:1px solid var(--line); font-size:15px; display:flex; gap:10px;}
+  .fac-list li::before{content:'✓'; color:var(--accent-dark); font-weight:700; flex-shrink:0;}
+  .fac-products a{color:var(--accent-dark); font-weight:600;}
+  .fac-note{font-size:13px; color:var(--muted); margin-top:16px; line-height:1.6;}
+  .fac-faq details{border-bottom:1px solid var(--line); padding:14px 0;}
+  .fac-faq summary{cursor:pointer; font-weight:600; font-size:15px;}
+  .fac-faq details p{margin-top:10px; font-size:14px; color:var(--muted); line-height:1.65;}
+  .fac-band{background:var(--panel); border-radius:16px; padding:36px; text-align:center; margin-top:56px;}
+  .fac-band h2{font-size:24px; font-weight:600; margin-bottom:8px;}
+  .fac-band p{color:var(--muted); margin-bottom:20px;}
+  .fac-band .fac-cta{justify-content:center;}

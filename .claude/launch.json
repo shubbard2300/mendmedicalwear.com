@@ -6,6 +6,18 @@
       "runtimeExecutable": "npx",
       "runtimeArgs": ["serve", "-p", "4200", "."],
       "port": 4200
+    },
+    {
+      "name": "mend-next",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "next-app", "run", "dev", "--", "-p", "4300"],
+      "port": 4300
+    },
+    {
+      "name": "mend-next-start",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "next-app", "run", "start", "--", "-p", "4301"],
+      "port": 4301
     }
   ]
 }
