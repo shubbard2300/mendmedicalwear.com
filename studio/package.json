@@ -7,6 +7,7 @@
     "build": "sanity build",
     "deploy": "sanity deploy",
     "validate": "sanity schema validate --workspace staging",
+    "typegen": "sanity schema extract --enforce-required-fields --workspace staging --force && sanity typegen generate",
     "typecheck": "tsc --noEmit"
   },
   "engines": {

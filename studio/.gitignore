@@ -6,4 +6,5 @@ dist
 .env.*
 !.env.example
 *.tsbuildinfo
+schema.json
 .DS_Store
