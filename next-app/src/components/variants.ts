@@ -18,13 +18,22 @@ export type HeroVariant = {
   ctaWrap?: string
   ctaClasses?: string[]
 }
-export type RichVariant = {type: 'richSection'; wrap: string; classes?: Record<number, string>}
+export type RichVariant = {
+  type: 'richSection'
+  wrap: string
+  classes?: Record<number, string>
+  /** Inline styles the live page puts on a panel around the text and on paragraphs by node index. */
+  panel?: CSSProperties
+  styles?: Record<number, CSSProperties>
+}
 export type StepsVariant = {type: 'stepsSection'; wrap: string}
+export type ComparisonVariant = {type: 'comparisonSection'; wrap: string}
 export type CardsVariant = {type: 'cardSection'; wrap: string; noteClasses?: Record<number, string>}
 export type AccordionVariant = {type: 'accordionSection'; wrap: string}
 export type CtaVariant = {type: 'ctaSection'; wrap: string; headingTag: 'h2' | 'h3'; ctaWrap?: string; ctaClasses: string[]; footnote?: 'call'}
-export type ToolVariant = {type: 'toolSection'}
-export type SectionVariant = HeroVariant | RichVariant | StepsVariant | CardsVariant | AccordionVariant | CtaVariant | ToolVariant
+/** `inSection`: the mount sits inside `div.section#<anchorId>` and carries its own no-JavaScript fallback (the product pages), not the Fall Risk page's. */
+export type ToolVariant = {type: 'toolSection'; inSection?: 'airguard'}
+export type SectionVariant = HeroVariant | RichVariant | StepsVariant | ComparisonVariant | CardsVariant | AccordionVariant | CtaVariant | ToolVariant
 
 const contactLink: CSSProperties = {color: 'var(--accent-dark)', textDecoration: 'underline', textUnderlineOffset: '2px'}
 
@@ -63,6 +72,24 @@ export const PAGE_VARIANTS: Record<string, SectionVariant[]> = {
     {type: 'heroSection', wrap: {tag: 'section', className: 'fr fr-intro'}, eyebrow: {tag: 'p', className: 'fr-eyebrow'}, h1Class: 'fr-title', ledeClass: 'fr-lede'},
     {type: 'toolSection'},
   ],
+}
+
+// Product pages. The document's sections run: the bundle note (it sits in the info column, so the page lays it out), the blocks below the
+// product area (these tables), then the branding copy and its button (BrandIt).
+export const PRODUCT_VARIANTS: Record<string, {below: SectionVariant[]}> = {
+  'airguard-collar': {
+    below: [
+      {type: 'stepsSection', wrap: 'section'},
+      {type: 'comparisonSection', wrap: 'section'},
+      {
+        type: 'richSection',
+        wrap: 'section',
+        panel: {background: 'var(--panel)', borderRadius: '12px', padding: '28px', marginTop: '8px'},
+        styles: {0: {fontSize: '15px', marginBottom: '12px'}, 1: {fontSize: '15px', marginBottom: '12px'}, 2: {fontSize: '14px', color: 'var(--muted)'}},
+      },
+      {type: 'toolSection', inSection: 'airguard'},
+    ],
+  },
 }
 
 // Home product cards: the three markups the live cards use, by card position. The cards store the name, price line, badges, photos and

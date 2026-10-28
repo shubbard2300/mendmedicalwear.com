@@ -2,7 +2,7 @@ import type {PAGE_QUERY_RESULT, SITE_SETTINGS_QUERY_RESULT} from '@/sanity/types
 import {Cta} from './Cta'
 import {Multiline, RichText} from './RichText'
 import {SanityImage} from './SanityImage'
-import type {HeroVariant, SectionVariant} from './variants'
+import type {HeroVariant, SectionVariant, ToolVariant} from './variants'
 
 type Section = NonNullable<NonNullable<PAGE_QUERY_RESULT>['sections']>[number]
 type Of<T extends Section['_type']> = Extract<Section, {_type: T}>
@@ -55,6 +55,23 @@ function CallLine({text, phone}: {text: string; phone?: string}) {
   )
 }
 
+/** The Fall Risk tool on a product page (AirGuard): the mount sits in its own section and carries its own short no-JavaScript fallback (tool copy, in code). */
+function ProductTool({anchorId}: {anchorId?: string}) {
+  return (
+    <div className="section" id={anchorId}>
+      <div id="fall-risk-root" data-api="/api/fall-risk-regions" data-top="5" data-heading="h2">
+        <noscript>
+          <h2>Check your fall risk</h2>
+          <p>
+            Our fall risk check needs JavaScript to score your answers. The questions come from the CDC’s STEADI “Stay Independent” screener, which you can also complete on paper — a
+            score of 4 or more out of 14 is the point at which clinicians begin screening for falls. <a href="/fall-risk-assessment">Open the full check</a>.
+          </p>
+        </noscript>
+      </div>
+    </div>
+  )
+}
+
 function SectionView({s, v, settings}: {s: Section; v: SectionVariant; settings: NonNullable<SITE_SETTINGS_QUERY_RESULT>}) {
   switch (s._type) {
     case 'heroSection':
@@ -68,7 +85,33 @@ function SectionView({s, v, settings}: {s: Section; v: SectionVariant; settings:
               <Multiline text={s.heading} />
             </h2>
           )}
-          <RichText value={s.body} classes={rv.classes} />
+          {rv.panel ? (
+            <div style={rv.panel}>
+              <RichText value={s.body} classes={rv.classes} styles={rv.styles} />
+            </div>
+          ) : (
+            <RichText value={s.body} classes={rv.classes} styles={rv.styles} />
+          )}
+        </div>
+      )
+    }
+    case 'comparisonSection': {
+      const cv = v as Extract<SectionVariant, {type: 'comparisonSection'}>
+      return (
+        <div className={cv.wrap}>
+          {s.heading && <h2>{s.heading}</h2>}
+          <div className="grid-2">
+            {s.columns?.map((col) => (
+              <div className="spec-card" key={col._key}>
+                <h3>{col.title}</h3>
+                <ul>
+                  {col.points?.map((point) => (
+                    <li key={point}>{point}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
       )
     }
@@ -134,6 +177,7 @@ function SectionView({s, v, settings}: {s: Section; v: SectionVariant; settings:
       )
     }
     case 'toolSection':
+      if ((v as ToolVariant).inSection) return <ProductTool anchorId={s.anchorId} />
       // The Fall Risk tool mounts here; the tool itself arrives in P5. The no-JavaScript fallback is tool copy, so it stays in code
       // (the P2 extraction never saw it: it sits in a <noscript>).
       return (

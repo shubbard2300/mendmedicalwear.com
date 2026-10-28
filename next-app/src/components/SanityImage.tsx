@@ -10,16 +10,19 @@ type Props = {
   widths?: number[]
   sizes?: string
   className?: string
+  id?: string
+  /** A bare <img> with no <picture> (the product page's main photo). */
+  plain?: boolean
 }
 
 // The live <picture><source><img> structure, with the image served by the Sanity CDN. Plain markup on purpose: next/image would add its own
 // attributes. An SVG is a plain <img> (there is nothing to convert). Each live use sets its own loading attributes, so the caller passes them.
-export function SanityImage({image, loading, fetchPriority, decoding, widths, sizes, className}: Props) {
+export function SanityImage({image, loading, fetchPriority, decoding, widths, sizes, className, id, plain}: Props) {
   const ref = image?.asset?._ref
   if (!image || !ref) return null
   const {width, height, ext} = imageInfo(ref)
-  const img = <img src={imageUrl(ref)} alt={image.alt} width={width} height={height} className={className} loading={loading} fetchPriority={fetchPriority} decoding={decoding} />
-  if (ext === 'svg') return img
+  const img = <img id={id} src={imageUrl(ref)} alt={image.alt} width={width} height={height} className={className} loading={loading} fetchPriority={fetchPriority} decoding={decoding} />
+  if (plain || ext === 'svg') return img
   const srcSet = widths ? widths.map((w) => `${imageUrl(ref, {format: 'webp', width: w})} ${w}w`).join(', ') : imageUrl(ref, {format: 'webp'})
   return (
     <picture>

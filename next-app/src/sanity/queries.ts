@@ -22,8 +22,10 @@ export const HOME_QUERY = defineQuery(`*[_type == "homePage"][0]{
   }}
 }`)
 
+// `heroImage.file` is the stored file name: the share image and the structured-data image keep today's address (D13).
 export const PRODUCT_QUERY = defineQuery(`*[_type == "product" && slug.current == $slug][0]{
   ...,
+  heroImage{..., "file": asset->originalFilename},
   navMenu->,
   footerMenu->,
   bundleOffer{..., product->{name, "slug": slug.current, variantGroups}}

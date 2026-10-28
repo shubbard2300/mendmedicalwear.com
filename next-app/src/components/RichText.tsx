@@ -14,6 +14,8 @@ export type RichTextProps = {
   linkStyle?: CSSProperties
   /** Inline style on the last node when it is a paragraph (the closing line of the terms). */
   lastStyle?: CSSProperties
+  /** Inline style on a paragraph by node index (the live pages style a few paragraphs inline). */
+  styles?: Record<number, CSSProperties>
 }
 
 /** A text field that can hold a deliberate line break. */
@@ -95,7 +97,7 @@ export function nodeCount(blocks: BlockContent = []) {
   return count
 }
 
-export function RichText({value, bare, classes, h2IdPrefix, tableClass, linkStyle, lastStyle}: RichTextProps) {
+export function RichText({value, bare, classes, h2IdPrefix, tableClass, linkStyle, lastStyle, styles}: RichTextProps) {
   if (!value?.length) return null
   const blocks = breaksOutsideMarks(value)
   const lastNode = nodeCount(blocks) - 1
@@ -121,7 +123,7 @@ export function RichText({value, bare, classes, h2IdPrefix, tableClass, linkStyl
 
   const components: PortableTextComponents = {
     block: {
-      normal: ({children, index}) => (bare ? <>{children}</> : <p className={classes?.[index]} style={index === lastNode ? lastStyle : undefined}>{children}</p>),
+      normal: ({children, index}) => (bare ? <>{children}</> : <p className={classes?.[index]} style={styles?.[index] ?? (index === lastNode ? lastStyle : undefined)}>{children}</p>),
       h2: ({children, index, value: v}) => (
         <h2 id={h2IdPrefix ? `${h2IdPrefix}${h2Number.get(v._key ?? '')}` : undefined} className={classes?.[index]}>
           {children}
