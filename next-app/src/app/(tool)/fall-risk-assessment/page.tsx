@@ -1,4 +1,5 @@
 import type {Metadata} from 'next'
+import {FallRiskTool} from '@/components/FallRiskTool'
 import {Footer} from '@/components/Footer'
 import {Header} from '@/components/Header'
 import {JsonLd} from '@/components/JsonLd'
@@ -31,6 +32,7 @@ export default async function FallRiskPage() {
           </section>
         </main>
         <Footer note={doc.footerNote} copyright={settings.copyright} menu={doc.footerMenu} />
+        <FallRiskTool />
       </div>
     </>
   )

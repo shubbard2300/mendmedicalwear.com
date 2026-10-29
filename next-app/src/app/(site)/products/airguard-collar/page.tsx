@@ -1,6 +1,7 @@
 import type {Metadata} from 'next'
 import {notFound} from 'next/navigation'
 import {BrandIt} from '@/components/BrandIt'
+import {FallRiskTool} from '@/components/FallRiskTool'
 import {Footer} from '@/components/Footer'
 import {Header} from '@/components/Header'
 import {JsonLd} from '@/components/JsonLd'
@@ -62,6 +63,7 @@ export default async function AirGuardPage() {
         <BrandIt heading={brand.heading} body={brand.body} cta={brandCta.ctas?.[0]} footnote={brandCta.footnote} />
         <Footer note={doc.footerNote} copyright={settings.copyright} menu={doc.footerMenu} />
         <ProductBehavior page="airguard" />
+        <FallRiskTool />
       </div>
     </>
   )
