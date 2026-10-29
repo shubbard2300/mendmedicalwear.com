@@ -102,7 +102,8 @@ export function Hero({s, imageStyle}: {s: Of<'heroSection'>; imageStyle?: CSSPro
           <div>
             <span className="kicker">{s.eyebrow}</span>
             <h1>
-              {brand} <span>{rest.join(' ')}</span>
+              {`${brand} `}
+              <span>{rest.join(' ')}</span>
             </h1>
             <RichText value={s.lead} classes={{0: 'sub'}} />
             <div className="hero-ctas">
