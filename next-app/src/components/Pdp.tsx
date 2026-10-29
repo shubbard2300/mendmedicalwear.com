@@ -1,4 +1,5 @@
 import type {CSSProperties, ReactNode} from 'react'
+import type {PhotoRow, SockPhoto} from '@/behavior/product'
 import {imageUrl} from '@/sanity/image'
 import type {BlockContent, CtaLink, PRODUCT_QUERY_RESULT} from '@/sanity/types'
 import {Cta} from './Cta'
@@ -32,6 +33,38 @@ export function findPhoto(matrix: Matrix | null | undefined, key: {gender?: Phot
   const photo = matrix?.find((m) => (!('gender' in key) || m.gender === key.gender) && (!('view' in key) || m.view === key.view) && (!('closure' in key) || m.closure === key.closure) && (!('color' in key) || m.color === key.color))
   if (!photo?.image) throw new Error(`No photo in the image matrix for ${JSON.stringify(key)}`)
   return photo
+}
+
+type Key = 'gender' | 'view' | 'closure' | 'color'
+
+/** The matrix as rows for the browser: what each photo shows ('' where a key does not apply) and its address. `expect` lists the values of each
+ *  key the page's pickers can reach; the build fails if a combination has no photo, so a document edit cannot leave a picker with nothing to show. */
+export function photoTable(matrix: Matrix | null | undefined, expect: Partial<Record<Key, string[]>>): PhotoRow[] {
+  const rows = (matrix ?? []).flatMap((m) => {
+    const ref = m.image?.asset?._ref
+    return ref ? [{gender: m.gender ?? '', view: m.view ?? '', closure: m.closure ?? '', color: m.color ?? '', url: imageUrl(ref)}] : []
+  })
+  for (const gender of expect.gender ?? ['']) {
+    for (const view of expect.view ?? ['']) {
+      for (const closure of expect.closure ?? ['']) {
+        for (const color of expect.color ?? ['']) {
+          if (!rows.some((r) => r.gender === gender && r.view === view && r.closure === closure && r.color === color)) {
+            throw new Error(`No photo in the image matrix for ${JSON.stringify({gender, view, closure, color})}`)
+          }
+        }
+      }
+    }
+  }
+  return rows
+}
+
+/** The scrubs bundle's sock photos: for each sock color the photo's address and its webp source. Throws if a color has no photo. */
+export function sockPhotos(matrix: Matrix | null | undefined, colors: string[]): SockPhoto[] {
+  return colors.map((color) => {
+    const ref = findPhoto(matrix, {color}).image?.asset?._ref
+    if (!ref) throw new Error(`No sock photo for ${color}`)
+    return {color, url: imageUrl(ref), webp: imageUrl(ref, {format: 'webp'})}
+  })
 }
 
 export type Thumb = {photo: Photo; alt: string; view?: string; gender?: string; ariaLabel?: string; /** the socks: `data-color`, and `data-src` with the photo's address */ color?: string; withSrc?: boolean}

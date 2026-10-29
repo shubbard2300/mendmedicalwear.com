@@ -4,8 +4,9 @@ import {BrandIt} from '@/components/BrandIt'
 import {Footer} from '@/components/Footer'
 import {Header} from '@/components/Header'
 import {JsonLd} from '@/components/JsonLd'
-import {BundleNote, CtaRow, Description, Gallery, OgTypeProduct, PdpFrame, ProductIntro, SpecList, findPhoto} from '@/components/Pdp'
+import {BundleNote, CtaRow, Description, Gallery, OgTypeProduct, PdpFrame, ProductIntro, SpecList, findPhoto, photoTable} from '@/components/Pdp'
 import {ClosurePicker, ColorPicker, FitPicker, SizePicker, groupsOf} from '@/components/Pickers'
+import {ProductBehavior} from '@/components/ProductBehavior'
 import {Sections} from '@/components/Sections'
 import {APPAREL_PAGES, PRODUCT_VARIANTS} from '@/components/variants'
 import {ViewsGrid} from '@/components/ViewsGrid'
@@ -53,6 +54,11 @@ export default async function GownPage() {
   const [closure] = groupsOf(doc, 'closure')
   const closureNote = doc.pickerNotes?.closureNotes?.find((n) => n.closure === closure.options?.[0]?.value)?.text
   const below = PRODUCT_VARIANTS[SLUG].below
+  // What the pickers can reach, as a table for the browser (the build fails if any combination has no photo), and the notes the script rewrites.
+  const values = (g: {options?: {value?: string}[]}) => (g.options ?? []).map((o) => o.value ?? '')
+  const closures = values(closure)
+  const photos = photoTable(doc.imageMatrix, {gender: values(groupsOf(doc, 'fit')[0]), view: ['front', 'back'], closure: closures, color: values(groupsOf(doc, 'color')[0])})
+  const notes = doc.pickerNotes
 
   return (
     <>
@@ -77,6 +83,15 @@ export default async function GownPage() {
         <Sections sections={compare} variants={below.slice(1)} settings={settings} page={SLUG} />
         <BrandIt heading={brand.heading} body={brand.body} cta={brandCta.ctas?.[0]} footnote={brandCta.footnote} />
         <Footer note={doc.footerNote} copyright={settings.copyright} menu={doc.footerMenu} />
+        <ProductBehavior
+          page="gown"
+          data={{
+            photos,
+            closures,
+            closureNotes: Object.fromEntries((notes?.closureNotes ?? []).map((n) => [n.closure ?? '', n.text ?? ''])),
+            viewNotes: (notes?.viewNotes ?? []).map((n) => ({closure: n.closure ?? '', view: n.view ?? '', text: n.text ?? ''})),
+          }}
+        />
       </div>
     </>
   )

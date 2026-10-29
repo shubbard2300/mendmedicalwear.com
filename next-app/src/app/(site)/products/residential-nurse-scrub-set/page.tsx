@@ -4,8 +4,9 @@ import {BrandIt} from '@/components/BrandIt'
 import {Footer} from '@/components/Footer'
 import {Header} from '@/components/Header'
 import {JsonLd} from '@/components/JsonLd'
-import {BundleNote, CtaRow, Description, Gallery, OgTypeProduct, PdpFrame, ProductIntro, SpecList, findPhoto} from '@/components/Pdp'
+import {BundleNote, CtaRow, Description, Gallery, OgTypeProduct, PdpFrame, ProductIntro, SpecList, findPhoto, photoTable, sockPhotos} from '@/components/Pdp'
 import {BundleOffer, ColorPicker, FitPicker, SizePicker, groupsOf} from '@/components/Pickers'
+import {ProductBehavior} from '@/components/ProductBehavior'
 import {Sections} from '@/components/Sections'
 import {APPAREL_PAGES, PRODUCT_VARIANTS} from '@/components/variants'
 import {ViewsGrid} from '@/components/ViewsGrid'
@@ -53,6 +54,14 @@ export default async function ScrubsPage() {
     ariaLabel: t.ariaLabel,
   }))
   const below = PRODUCT_VARIANTS[SLUG].below
+  // What the pickers can reach, as a table for the browser (the build fails if any combination has no photo), and the bundle's sock photos
+  // (the socks product's matrix, loaded with the same query).
+  const values = (g: {options?: {value?: string}[]}) => (g.options ?? []).map((o) => o.value ?? '')
+  const photos = photoTable(doc.imageMatrix, {gender: values(groupsOf(doc, 'fit')[0]), view: ['front', 'back', 'pockets'], color: values(groupsOf(doc, 'color')[0])})
+  const socksDoc = await sanityFetch({query: PRODUCT_QUERY, params: {slug: doc.bundleOffer.product?.slug ?? ''}})
+  if (!socksDoc) throw new Error(`${SLUG}: the bundle's product is missing`)
+  const sockColors = (doc.bundleOffer.product?.variantGroups?.find((g) => g.kind === 'color')?.options ?? []).map((o) => o.value ?? o.label ?? '')
+  const socks = sockPhotos(socksDoc.imageMatrix, sockColors)
 
   return (
     <>
@@ -77,6 +86,7 @@ export default async function ScrubsPage() {
         <Sections sections={compare} variants={below.slice(1)} settings={settings} page={SLUG} />
         <BrandIt heading={brand.heading} body={brand.body} cta={brandCta.ctas?.[0]} footnote={brandCta.footnote} />
         <Footer note={doc.footerNote} copyright={settings.copyright} menu={doc.footerMenu} />
+        <ProductBehavior page="scrubs" data={{photos, socks}} />
       </div>
     </>
   )

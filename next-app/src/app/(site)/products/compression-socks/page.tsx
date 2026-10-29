@@ -6,6 +6,7 @@ import {Header} from '@/components/Header'
 import {JsonLd} from '@/components/JsonLd'
 import {BundleNote, CtaRow, Description, Gallery, OgTypeProduct, PdpFrame, ProductIntro, SpecList} from '@/components/Pdp'
 import {SockColorPicker, SockSizePicker, groupsOf} from '@/components/Pickers'
+import {ProductBehavior} from '@/components/ProductBehavior'
 import {RichText} from '@/components/RichText'
 import {Sections} from '@/components/Sections'
 import {PRODUCT_VARIANTS, SOCKS_DEFAULT_SIZE} from '@/components/variants'
@@ -84,6 +85,7 @@ export default async function SocksPage() {
         <Sections sections={[compare]} variants={below.slice(1)} settings={settings} page={SLUG} />
         <BrandIt heading={brand.heading} body={brand.body} cta={brandCta.ctas?.[0]} footnote={brandCta.footnote} />
         <Footer note={doc.footerNote} copyright={settings.copyright} menu={doc.footerMenu} />
+        <ProductBehavior page="socks" />
       </div>
     </>
   )

@@ -5,6 +5,7 @@ import {Footer} from '@/components/Footer'
 import {Header} from '@/components/Header'
 import {JsonLd} from '@/components/JsonLd'
 import {BundleNote, ComingSoon, Description, Gallery, NotifyForm, OgTypeProduct, PdpFrame, ProductIntro, SpecList} from '@/components/Pdp'
+import {ProductBehavior} from '@/components/ProductBehavior'
 import {Sections} from '@/components/Sections'
 import {PRODUCT_VARIANTS} from '@/components/variants'
 import {sanityFetch} from '@/sanity/fetch'
@@ -60,6 +61,7 @@ export default async function AirGuardPage() {
         <Sections sections={below} variants={PRODUCT_VARIANTS[SLUG].below} settings={settings} page={SLUG} />
         <BrandIt heading={brand.heading} body={brand.body} cta={brandCta.ctas?.[0]} footnote={brandCta.footnote} />
         <Footer note={doc.footerNote} copyright={settings.copyright} menu={doc.footerMenu} />
+        <ProductBehavior page="airguard" />
       </div>
     </>
   )
