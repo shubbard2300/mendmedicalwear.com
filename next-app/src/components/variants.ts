@@ -144,6 +144,7 @@ export const APPAREL_PAGES: Record<string, ApparelPage> = {
     defaultSize: 'M',
     views: {
       tooltip: GOWN_TOOLTIP,
+      lazy: true,
       cards: [
         {gender: 'female', view: 'front', id: 'FF', alt: 'Female front view'},
         {gender: 'female', view: 'back', id: 'FB', alt: 'Female back view'},
