@@ -272,3 +272,13 @@ fieldset[disabled] .fr-chip{cursor:not-allowed;}
 .fr-guide{border-top:1px solid var(--fr-grid); margin-top:40px; padding-top:8px;}
 .fr-guide p{margin-bottom:12px;}
 .fr-guide .fr-table{margin-bottom:18px;}
+
+/* P6c: keep the tool's space before it mounts, so the guide below does not jump down when it appears (CLS 0.497 on phones, 0.241 on desktop).
+   The two heights sit a little under the tool's measured first-screen height (870 px at 560 px wide and below, 816 px above), so they never add
+   blank space after it mounts. Only when scripts run: without them the noscript fallback fills the root as before. */
+@media (scripting:enabled){
+  .fr-intro + #fall-risk-root{min-height:800px;}
+}
+@media (scripting:enabled) and (max-width:560px){
+  .fr-intro + #fall-risk-root{min-height:860px;}
+}
