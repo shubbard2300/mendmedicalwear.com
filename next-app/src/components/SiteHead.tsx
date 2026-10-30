@@ -8,6 +8,12 @@ import {preload} from 'react-dom'
 const GA_ID = 'G-XT2M4KBL2R'
 const GA_CONFIG = `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`
 
+// The scroll reveal also starts here, as soon as the page is parsed, as main.js does on live. Waiting for the behavior layer to hydrate (P4a)
+// kept the sections invisible 1.3 to 3.3 s longer than live; the layer's own reveal stays as a fallback.
+const JS_CLASS_AND_REVEAL =
+  'document.documentElement.classList.add("js");' +
+  'document.addEventListener("DOMContentLoaded",function(){var o=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in-view");o.unobserve(e.target)}})},{threshold:0});document.querySelectorAll(".section").forEach(function(el){o.observe(el)})})'
+
 export function SiteHead({analytics = true, preloadFont = true, jsClass = false}: {analytics?: boolean; preloadFont?: boolean; jsClass?: boolean}) {
   if (preloadFont) preload('/inter-latin-v20.woff2', {as: 'font', type: 'font/woff2', crossOrigin: 'anonymous'})
   return (
@@ -19,7 +25,7 @@ export function SiteHead({analytics = true, preloadFont = true, jsClass = false}
         </>
       )}
       {/* The shared CSS hides the scroll-reveal sections under .js until the behavior reveals them (P4a); live sets the class here too. */}
-      {jsClass && <script dangerouslySetInnerHTML={{__html: 'document.documentElement.classList.add("js")'}} />}
+      {jsClass && <script dangerouslySetInnerHTML={{__html: JS_CLASS_AND_REVEAL}} />}
       <link rel="icon" href="/favicon.ico" sizes="any" />
       <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
       <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
