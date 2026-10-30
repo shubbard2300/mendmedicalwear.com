@@ -89,7 +89,7 @@ export function Gallery({image, thumbs, thumbsId = 'galleryThumbs'}: {image: Pro
               data-view={t.view}
               aria-label={t.ariaLabel}
             >
-              <SanityImage image={t.photo.image && {...t.photo.image, alt: t.alt}} plain />
+              <SanityImage image={t.photo.image && {...t.photo.image, alt: t.alt}} plain size={240} />
             </button>
           ))}
         </div>

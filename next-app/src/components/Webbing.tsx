@@ -15,7 +15,7 @@ export function FeatureSection({heading, body, image, widePhoto}: {heading?: str
       <h2>{heading}</h2>
       <div className="webbing-section">
         <div className="webbing-img">
-          <SanityImage image={image} />
+          <SanityImage image={image} loading="lazy" />
         </div>
         <div className="webbing-content">
           <RichText value={body} classes={WEBBING_COPY_CLASSES} />
@@ -42,7 +42,7 @@ export function ColorGrid({heading, cards}: {heading?: string; cards?: Card[]}) 
       <div className="color-grid">
         {cards?.map((c) => (
           <div className="color-tile" key={c._key}>
-            <SanityImage image={c.image} />
+            <SanityImage image={c.image} loading="lazy" />
             <div className="color-tile-label">
               {c.title}
               <div className="color-tile-sub">{c.body}</div>
