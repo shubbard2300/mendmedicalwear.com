@@ -50,6 +50,8 @@ export function organizationLd(settings: NonNullable<SITE_SETTINGS_QUERY_RESULT>
 type HomeCards = NonNullable<NonNullable<NonNullable<HOME_QUERY_RESULT>['productsSection']>['cards']>
 
 // The home product list: each product once, in card order, named like its breadcrumb, with its first home card photo at today's address.
+// Plain list items, not Products: no product has a price or a rating to state, and Google's Product type requires one of them. There is no
+// per-page Product block either; bring both back with price, priceCurrency and availability once a launch price is set.
 export function itemListLd(seo: Seo | undefined, cards: HomeCards | undefined) {
   const seen = new Set<string>()
   const items = (cards ?? []).flatMap((card) => {
@@ -57,33 +59,13 @@ export function itemListLd(seo: Seo | undefined, cards: HomeCards | undefined) {
     const file = card.images?.[0]?.file
     if (!p?.slug || !file || seen.has(p.slug)) return []
     seen.add(p.slug)
-    const offers =
-      p.offerKind === 'preOrder'
-        ? {'@type': 'Offer', availability: 'https://schema.org/PreOrder'}
-        : p.offerKind === 'free'
-          ? {'@type': 'Offer', price: '0.00', priceCurrency: 'USD'}
-          : undefined
-    return [{'@type': 'Product', name: p.breadcrumbName, url: absolute(`/products/${p.slug}`), image: absolute(`/${file}`), ...(offers ? {offers} : {})}]
+    return [{name: p.breadcrumbName, url: absolute(`/products/${p.slug}`), image: absolute(`/${file}`)}]
   })
   return {
     '@context': CONTEXT,
     '@type': 'ItemList',
     name: seo?.jsonLdName,
-    itemListElement: items.map((item, i) => ({'@type': 'ListItem', position: i + 1, item})),
-  }
-}
-
-/** A product page's Product block. `offers` follows the product's offer kind: a pre-order offer for apparel, none for AirGuard. `files` lists
- *  extra photos (the socks name three); otherwise the one image is the hero photo. */
-export function productLd(seo: Seo | undefined, product: {heroFile?: string | null; files?: string[]; offerKind?: 'preOrder' | 'free' | 'none'}, path: string) {
-  return {
-    '@context': CONTEXT,
-    '@type': 'Product',
-    name: seo?.jsonLdName,
-    description: seo?.jsonLdDescription,
-    image: product.files?.length ? product.files.map((f) => absolute(`/${f}`)) : product.heroFile ? absolute(`/${product.heroFile}`) : undefined,
-    brand: {'@type': 'Brand', name: seo?.brandName},
-    ...(product.offerKind === 'preOrder' ? {offers: {'@type': 'Offer', availability: 'https://schema.org/PreOrder', url: absolute(path)}} : {}),
+    itemListElement: items.map((item, i) => ({'@type': 'ListItem', position: i + 1, ...item})),
   }
 }
 

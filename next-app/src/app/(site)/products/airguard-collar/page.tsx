@@ -11,7 +11,7 @@ import {Sections} from '@/components/Sections'
 import {PRODUCT_VARIANTS} from '@/components/variants'
 import {sanityFetch} from '@/sanity/fetch'
 import {pageMetadata} from '@/sanity/head'
-import {breadcrumbLd, productLd} from '@/sanity/jsonld'
+import {breadcrumbLd} from '@/sanity/jsonld'
 import {PRODUCT_QUERY, SITE_SETTINGS_QUERY} from '@/sanity/queries'
 // Live order: the shared sheet (layout), then the page's own block, then pdp.css, then fall-risk.css. A later sheet wins a conflict, so the
 // product block comes first and pdp.css overrides it where they disagree (for example the padding of the specification rows).
@@ -47,7 +47,6 @@ export default async function AirGuardPage() {
   return (
     <>
       <OgTypeProduct />
-      <JsonLd data={productLd(doc.seo, {heroFile: doc.heroImage?.file, offerKind: doc.offerKind}, PATH)} />
       <JsonLd data={breadcrumbLd(doc.seo, PATH)} />
       <div className="wrap">
         <Header menu={doc.navMenu} />

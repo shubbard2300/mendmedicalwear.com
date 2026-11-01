@@ -6,7 +6,7 @@ import {OgTypeProduct} from '@/components/Pdp'
 import {MARKETING_PAGES} from '@/components/variants'
 import {sanityFetch} from '@/sanity/fetch'
 import {pageMetadata} from '@/sanity/head'
-import {breadcrumbLd, productLd} from '@/sanity/jsonld'
+import {breadcrumbLd} from '@/sanity/jsonld'
 import {PRODUCT_QUERY, SITE_SETTINGS_QUERY} from '@/sanity/queries'
 // The marketing pages carry all their CSS in one inline block live; this is that block, and nothing else loads here.
 import '@/styles/pages/mend-oxi.css'
@@ -44,7 +44,6 @@ export default async function OxiPage() {
   return (
     <>
       <OgTypeProduct />
-      <JsonLd data={productLd(doc.seo, {heroFile: doc.heroImage?.file, offerKind: doc.offerKind}, PATH)} />
       <JsonLd data={breadcrumbLd(doc.seo, PATH)} />
       <MarketingHeader menu={doc.navMenu} />
       <Hero s={hero} />

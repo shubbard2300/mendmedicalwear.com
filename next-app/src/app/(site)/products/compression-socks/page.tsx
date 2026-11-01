@@ -13,7 +13,7 @@ import {PRODUCT_VARIANTS, SOCKS_DEFAULT_SIZE} from '@/components/variants'
 import {ColorGrid, FeatureSection} from '@/components/Webbing'
 import {sanityFetch} from '@/sanity/fetch'
 import {pageMetadata} from '@/sanity/head'
-import {breadcrumbLd, productLd} from '@/sanity/jsonld'
+import {breadcrumbLd} from '@/sanity/jsonld'
 import {PRODUCT_QUERY, SITE_SETTINGS_QUERY} from '@/sanity/queries'
 // Live order: the shared sheet (layout), the page's own block, pdp.css (it wins where they disagree), then a small extra block that wins over pdp.css.
 import '@/styles/pages/socks.css'
@@ -59,12 +59,10 @@ export default async function SocksPage() {
   // The strip shows every matrix photo in order: the eight colors, then the detail shots (named by their label).
   const thumbs = (doc.imageMatrix ?? []).map((photo) => ({photo, alt: photo.color ?? photo.label ?? '', color: photo.color ?? 'detail', withSrc: true}))
   const below = PRODUCT_VARIANTS[SLUG].below
-  const imageFiles = (doc.imageMatrix ?? []).slice(0, 3).flatMap((m) => (m.image?.file ? [m.image.file] : []))
 
   return (
     <>
       <OgTypeProduct />
-      <JsonLd data={productLd(doc.seo, {heroFile: doc.heroImage?.file, files: imageFiles, offerKind: doc.offerKind}, PATH)} />
       <JsonLd data={breadcrumbLd(doc.seo, PATH)} />
       <div className="wrap">
         <Header menu={doc.navMenu} />

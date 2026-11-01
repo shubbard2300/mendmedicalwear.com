@@ -12,7 +12,7 @@ import {APPAREL_PAGES, PRODUCT_VARIANTS} from '@/components/variants'
 import {ViewsGrid} from '@/components/ViewsGrid'
 import {sanityFetch} from '@/sanity/fetch'
 import {pageMetadata} from '@/sanity/head'
-import {breadcrumbLd, productLd} from '@/sanity/jsonld'
+import {breadcrumbLd} from '@/sanity/jsonld'
 import {PRODUCT_QUERY, SITE_SETTINGS_QUERY} from '@/sanity/queries'
 // Live order: the shared sheet (layout), then the page's own block, then pdp.css (it wins where they disagree).
 import '@/styles/pages/gown.css'
@@ -63,7 +63,6 @@ export default async function GownPage() {
   return (
     <>
       <OgTypeProduct />
-      <JsonLd data={productLd(doc.seo, {heroFile: doc.heroImage?.file, offerKind: doc.offerKind}, PATH)} />
       <JsonLd data={breadcrumbLd(doc.seo, PATH)} />
       <div className="wrap">
         <Header menu={doc.navMenu} />
